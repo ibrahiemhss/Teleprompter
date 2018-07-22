@@ -76,7 +76,7 @@
         app:backgroundTint="@color/colorFAB2"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_clear_white"
+        android:src="@drawable/ic_add_white"
         android:layout_marginEnd="@dimen/fab_margin" />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab1"

@@ -8,3 +8,4 @@
         android:duration="300"
         android:interpolator="@android:anim/linear_interpolator"/>
 </set>
+
