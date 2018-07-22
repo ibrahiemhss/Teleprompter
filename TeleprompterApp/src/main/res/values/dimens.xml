@@ -1,0 +1,28 @@
+<resources>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="app_par_elevation">4dp</dimen>
+
+    <dimen name="detail_title_text_size">32sp</dimen>
+    <dimen name="detail_body_text_size">16sp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="fab_press_translation_z">12dp</dimen>
+    <dimen name="fab_margin">8dp</dimen>
+
+    <!-- recyclerVeiw -->
+    <dimen name="list_side_padding">5dp</dimen>
+    <dimen name="list_top_padding">8dp</dimen>
+    <dimen name="list_bottom_padding">24dp</dimen>
+
+    <!-- list item -->
+    <integer name="list_column_count">2</integer>
+    <dimen name="network_image_height">100dp</dimen>
+    <dimen name="item_layout_margin">4dp</dimen>
+    <dimen name="text_side_margin">12dp</dimen>
+    <dimen name="text_title_top_margin">12dp</dimen>
+    <dimen name="text_title_bottom_margin">4dp</dimen>
+    <dimen name="item_subtitle_top_margin">4dp</dimen>
+    <dimen name="item_subtitle_bottom_margin">8dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+</resources>
