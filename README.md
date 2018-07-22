@@ -12,13 +12,13 @@ Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification
 - Android SDK v28
 - Android Build Tools v28.0.1
 - Android Support Repository 
-   *appcompat-v7:28.0.0-alpha3
-   *support-media-compat:28.0.0-alpha3
-   *support-v4:28.0.0-alpha3
-   *espresso-core:3.0.2
+   * appcompat-v7:28.0.0-alpha3
+   * support-media-compat:28.0.0-alpha3
+   * support-v4:28.0.0-alpha3
+   * espresso-core:3.0.2
 - Other Support Repository 
-   *butterknife:8.8.1
-   *lottie:2.5.5
+   * butterknife:8.8.1
+   * lottie:2.5.5
 
 # Getting started
 This sample uses the Gradle build system. To build this project, use the "gradlew build" command or use "Import Project" in Android Studio.
