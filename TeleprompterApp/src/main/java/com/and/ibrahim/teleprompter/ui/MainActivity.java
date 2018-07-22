@@ -1,14 +1,16 @@
-package com.and.ibrahim.teleprompter;
+package com.and.ibrahim.teleprompter.ui;
 
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import com.and.ibrahim.teleprompter.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,18 +21,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG="MainActivity";
 
     @BindView(R.id.collapsing_toolbar)
-    private
+    protected
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.toolbar)
+    protected
     Toolbar toolbar;
     @BindView(R.id.fab)
-    private
+    protected
     FloatingActionButton mFab;
     @BindView(R.id.fab1)
-    private
+    protected
     FloatingActionButton mFab1;
     @BindView(R.id.fab2)
-    private
+    protected
     FloatingActionButton mFab2;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
