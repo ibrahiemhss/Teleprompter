@@ -1,22 +1,32 @@
 package com.and.ibrahim.teleprompter.modules.main;
 
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
+import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.modules.CustomDialogClass;
 import com.and.ibrahim.teleprompter.mvp.model.Teleprmpter;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
@@ -26,6 +36,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import com.and.ibrahim.teleprompter.util.LinedEditText;
+import com.and.ibrahim.teleprompter.util.getBakeUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,21 +62,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
 
+
+
+    Dialog dialog;
+
     private ArrayList<Teleprmpter> mArrayList;
     private Teleprmpter mTeleprmpter;
-
+    TeleprompterAdapter teleprompterAdapter ;
 
     private Unbinder unbinder;
     private FabAnimations mFabAnimations;
 
-    private final TeleprompterAdapter.OnBakeClickListener onBakeClickListener = new TeleprompterAdapter.OnBakeClickListener() {
+    private final TeleprompterAdapter.OnItemClickListener onItemClickListener = new TeleprompterAdapter.OnItemClickListener() {
 
 
         @Override
-        public void onClick(int position) {
+        public void onClick(final int position) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    MainActivity.this);
 
-        }};
+            // set title
+            alertDialogBuilder.setTitle("Delete");
 
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Click yes to delete this file!")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+
+                           /* ContentValues songValues = new ContentValues();
+                            getContentResolver().delete(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                                    Contract.BakeEntry._ID + " = ?",
+                                    new String[]{songValues.getAsString(String.valueOf(position))});*/
+
+                            if (getBakeUtils.getTeleprmpters(MainActivity.this).size() > 0) {
+
+                                Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
+                                uri = uri.buildUpon().appendPath(null).build();
+                               getContentResolver().delete(uri, null, null);
+                                if (uri != null) {
+                                    Log.d("contentResolver delete", "delete success");
+                                }
+                            }
+                            MainActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+        }
+    };
+
+
+    private final TeleprompterAdapter.OnItemLongClickListener onItemLongClickListener=new TeleprompterAdapter.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClicked(final int position) {
+
+
+            return true;
+        }
+    };
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         unbinder= ButterKnife.bind(this);
 
         mFabAnimations =new FabAnimations(this,mFab,mFab1,mFab2);
+        teleprompterAdapter = new TeleprompterAdapter( getLayoutInflater());
 
         mCollapsingToolbarLayout.setTitle(getString(R.string.app_name));
         mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
@@ -83,10 +153,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mArrayList=new ArrayList<>();
             mTeleprmpter=new Teleprmpter();
             for (int i=0;i<10;i++){
-                mTeleprmpter.setTextTitle("kkgjkjgk jgkgjk gjkgjkg");
-                mTeleprmpter.setTextContent("kgjkgjkjg kjgo dfeooer fdfdkfjd fkdlkfldkf fdlfkdlfkld dfkdlfkldfk dflkdlfkldkf ldkfldfk" +
-                        "dfjdhfjdfh dkfjkdjfkjd dkjfdkjfkdj dkjfkdjfkdj dkjfkdjkdjf dkfjdkjf dkjkd fkjdk dkjfkdj fdkjfk");
-                mArrayList.add(mTeleprmpter);
+            //    mTeleprmpter.setTextTitle("title contents review");
+            //    mTeleprmpter.setTextContent("kgjkgjkjg kjgo dfeooer fdfdkfjd fkdlkfldkf fdlfkdlfkld dfkdlfkldfk dflkdlfkldkf ldkfldfk" +
+             //           "dfjdhfjdfh dkfjkdjfkjd dkjfdkjfkdj dkjfkdjfkdj dkjfkdjkdjf dkfjdkjf dkjkd fkjdk dkjfkdj fdkjfk");
+              //  mArrayList.add(mTeleprmpter);
 
             }
 
@@ -108,8 +178,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.fab2:
-                CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
-                cdd.show();
+               // CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
+                launchDismissDlg();
+                dialog.show();
                 Log.d(TAG,"FabAction is "+"Fab 2");
 
                 break;
@@ -126,16 +197,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         ButterKnife.bind(this);
+        mArrayList=getBakeUtils.getTeleprmpters(this);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false));
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(this, 3);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         //Pass a list of images with inflater ​​in adapter
         TeleprompterAdapter teleprompterAdapter = new TeleprompterAdapter( getLayoutInflater());
         teleprompterAdapter.addNewContent(mArrayList);
-        teleprompterAdapter.setBakeClickListener(onBakeClickListener);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                gridLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        teleprompterAdapter.setItemClickListener(onItemClickListener);
 
         mRecyclerView.setAdapter(teleprompterAdapter);
     }
+
 
     //initialiseList to show values inside mBake_list
     private void initialiseListWithsLargeSize() {
@@ -146,11 +222,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2,
                 GridLayoutManager.VERTICAL, false));
         //Pass a list of images with inflater ​​in adapter
-        TeleprompterAdapter teleprompterAdapter = new TeleprompterAdapter( getLayoutInflater());
+
         teleprompterAdapter.addNewContent(mArrayList);
-        teleprompterAdapter.setBakeClickListener(onBakeClickListener);
+        teleprompterAdapter.setItemClickListener(onItemClickListener);
+        teleprompterAdapter.setmOnItemLongClickListener(onItemLongClickListener);
 
         mRecyclerView.setAdapter(teleprompterAdapter);
-    }
 
+    }
+    private void launchDismissDlg() {
+        dialog = new Dialog(this, R.style.PauseDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog_item);
+        dialog.setCanceledOnTouchOutside(true);
+
+        TextView mAdd=dialog.findViewById(R.id.txt_add);
+        TextView mCancel=dialog.findViewById(R.id.txt_cancel);
+        final LinedEditText mEditContent=dialog.findViewById(R.id.linededit_text_content);
+        final EditText mEditTitle=dialog.findViewById(R.id.edit_title);
+
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog. dismiss();
+                dialog.cancel();
+                dialog.hide();
+
+
+            }
+        });
+
+
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ContentValues values = new ContentValues();
+                values.put(Contract.BakeEntry.COL_TITLE, mEditTitle.getText().toString());
+                values.put(Contract.BakeEntry.COL_COTENTS, mEditContent.getText().toString());
+
+                final Uri uriInsert = getContentResolver().insert(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values);
+                if (uriInsert != null) {
+                    Log.d("contentResolver insert", "first added success");
+
+                }
+
+                mArrayList=getBakeUtils.getTeleprmpters(MainActivity.this);
+                teleprompterAdapter.addNewContent(mArrayList);
+                initialiseListWithsLargeSize();
+
+            }
+        });
+      //  dialog.setCanceledOnTouchOutside(false);
+       // dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+       // dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+    }
 }

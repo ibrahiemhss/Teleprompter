@@ -30,11 +30,14 @@ public class Contract implements BaseColumns {
         public static final Uri PATH_TELEPROMPTER_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH).build();
         //for table of teleprompter
         public static final String TABLE_TELEPROMPTER = "teleprompter_bake";
-        public static final String COL_TEXT = "text";
+        public static final String COL_COTENTS = "contents";
+        public static final String COL_TITLE = "title";
+
         public static final String DROP_TELEPROMPTER_TELEPROMPTER = "DROP TABLE IF EXISTS " + TABLE_TELEPROMPTER;
         public static final String CREATE_TABLE_TELEPROMPTER = "create table " + TABLE_TELEPROMPTER + "(" +
                 _ID + " integer primary key autoincrement not null," +
-                COL_TEXT + " text not null)";
+                COL_TITLE + " text  null," +
+                COL_COTENTS + " text not null)";
 
         //database name
         static final String DB_NAME = "teleprompter_app.db";

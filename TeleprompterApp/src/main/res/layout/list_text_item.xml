@@ -1,20 +1,14 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/item_layout_margin"
     android:clickable="true"
     android:clipToPadding="false"
     android:focusable="true"
     app:cardElevation="@dimen/card_elevation"
+    android:orientation="vertical"
     android:foreground="?selectableItemBackground">
-
-    <LinearLayout
-        android:id="@+id/LinearListContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_title"
@@ -22,27 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="serif"
-            android:maxLines="4"
+            android:textSize="12sp"
             android:paddingBottom="@dimen/text_title_bottom_margin"
             android:paddingLeft="@dimen/text_side_margin"
             android:paddingRight="@dimen/text_side_margin"
             android:paddingTop="@dimen/text_title_top_margin"
             android:textColor="@color/colorPrimaryText" />
 
-        <TextView
-            android:id="@+id/text_content"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif"
-            android:maxLines="2"
-            android:paddingBottom="@dimen/item_subtitle_bottom_margin"
-            android:paddingLeft="@dimen/text_side_margin"
-            android:paddingRight="@dimen/text_side_margin"
-            android:paddingTop="@dimen/item_subtitle_top_margin"
-            android:textColor="@color/colorSecondaryText" />
-    </LinearLayout>
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/text_align_justify_icon"/>
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

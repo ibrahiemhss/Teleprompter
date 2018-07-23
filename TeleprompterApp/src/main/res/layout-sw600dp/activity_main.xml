@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -26,8 +27,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:fontFamily="serif-monospace"
                 android:layout_gravity="end|center"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
@@ -46,25 +45,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="PrivateResource">
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/list_bottom_padding"
+        android:paddingLeft="@dimen/list_side_padding"
+        android:paddingRight="@dimen/list_side_padding"
+        android:paddingTop="@dimen/list_top_padding"
+        android:scrollbarStyle="outsideOverlay" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/list_bottom_padding"
-            android:paddingLeft="@dimen/list_side_padding"
-            android:paddingRight="@dimen/list_side_padding"
-            android:paddingTop="@dimen/list_top_padding"
-            android:scrollbarStyle="outsideOverlay" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
         android:layout_width="wrap_content"

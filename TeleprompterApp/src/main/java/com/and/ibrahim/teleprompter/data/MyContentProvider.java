@@ -16,6 +16,8 @@ public class MyContentProvider extends ContentProvider {
 
     private static final int TELEPROMPTER_CODE = 200;
     private static final int TELEPROMPTER_WITH_ID = 250;
+    private static final int TELEPROMPTER_WITH_NO_ID = 300;
+
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private DbHelper mDbHelper;
@@ -24,7 +26,8 @@ public class MyContentProvider extends ContentProvider {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH, TELEPROMPTER_CODE);
-        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/*", TELEPROMPTER_WITH_ID);
+        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/*", TELEPROMPTER_WITH_NO_ID);
+        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/#", TELEPROMPTER_WITH_ID);
 
         return uriMatcher;
     }
@@ -126,24 +129,29 @@ public class MyContentProvider extends ContentProvider {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         int match = sUriMatcher.match(uri);
-        int ingredientsDeleted; // starts as 0
+        int idDeleted; // starts as 0
 
         switch (match) {
-            case TELEPROMPTER_WITH_ID:
+            case TELEPROMPTER_WITH_NO_ID:
 
                 // Use selections/selectionArgs to filter for this ID
-                ingredientsDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                break;
+
+            case TELEPROMPTER_WITH_ID:
+                idDeleted = db.delete(
+                        Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        if (ingredientsDeleted != 0) {
+        if (idDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
 
-        return ingredientsDeleted;
+        return idDeleted;
     }
 
     @Override

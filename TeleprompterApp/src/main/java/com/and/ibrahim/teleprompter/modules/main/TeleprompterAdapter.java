@@ -24,8 +24,10 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<Teleprmpter> teleprmpterArrayList = new ArrayList<>();
-    private OnBakeClickListener mBakeClickListener;
+    private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
 
+    private Context context;
     public TeleprompterAdapter( LayoutInflater inflater) {
         mLayoutInflater = inflater;
     }
@@ -55,22 +57,21 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     }
 
     //create interface to goo another activity
-    public void setBakeClickListener(OnBakeClickListener listener) {
-        mBakeClickListener = listener;
+    public void setItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+    public void setmOnItemLongClickListener(OnItemLongClickListener listener) {
+        mOnItemLongClickListener = listener;
     }
 
-    public interface OnBakeClickListener {
-
-        void onClick(int position);
-    }
 
     @SuppressWarnings("unused")
-    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         final Context mContext;
         @BindView(R.id.text_title)
         TextView mTextTitle;
-        @BindView(R.id.text_content)
-        TextView mTextContent;
+       // @BindView(R.id.text_content)
+        //TextView mTextContent;
 
         public Holder(View itemView) {
             super(itemView);
@@ -81,7 +82,7 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
         public void bind(Teleprmpter teleprmpter, int position) {
             mTextTitle.setText(teleprmpter.getTextTitle());
-            mTextContent.setText(teleprmpter.getTextContent());
+          //  mTextContent.setText(teleprmpter.getTextContent());
 
 
 
@@ -90,10 +91,29 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
         @Override
         public void onClick(View view) {
-            if (mBakeClickListener != null) {
-                mBakeClickListener.onClick(getAdapterPosition());
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onClick(getAdapterPosition());
             }
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (mOnItemLongClickListener != null) {
+                mOnItemLongClickListener.onItemLongClicked(getAdapterPosition());
+            }
+
+            return false;
+        }
     }
+
+    public interface OnItemLongClickListener {
+         boolean onItemLongClicked(int position);
+    }
+
+    public interface OnItemClickListener {
+
+        void onClick(int position);
+    }
+
 }
 
