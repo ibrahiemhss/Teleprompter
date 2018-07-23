@@ -47,8 +47,6 @@ public class getBakeUtils {
 
                 teleprmpter.setTextTitle(title);
                 teleprmpter.setTextContent(content);
-                teleprmpter.setId(Integer.parseInt(id));
-
                 /*add all new value of movie object to moviesArrayList*/
                 teleprmpterArrayList.add(teleprmpter);
 
