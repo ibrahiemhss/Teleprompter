@@ -55,7 +55,11 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
         teleprmpterArrayList.addAll(teleprmpterList);
         notifyDataSetChanged();
     }
-
+    public void removeContent(List<Teleprmpter> teleprmpterList) {
+        teleprmpterArrayList.remove(teleprmpterList);
+        teleprmpterArrayList.clear();
+        notifyDataSetChanged();
+    }
     //create interface to goo another activity
     public void setItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;

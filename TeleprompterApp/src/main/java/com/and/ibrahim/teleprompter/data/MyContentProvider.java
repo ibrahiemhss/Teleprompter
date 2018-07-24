@@ -39,7 +39,43 @@ public class MyContentProvider extends ContentProvider {
 
         return true;
     }
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        int uriType = 0;
+        int insertCount = 0;
+        try {
 
+            uriType = sUriMatcher.match(uri);
+            SQLiteDatabase sqlDB = mDbHelper.getWritableDatabase();
+
+            switch (uriType) {
+                case TELEPROMPTER_CODE:
+                    try {
+                        sqlDB.beginTransaction();
+                        for (ContentValues value : values) {
+                            if (sqlDB.insertOrThrow(Contract.BakeEntry.TABLE_TELEPROMPTER, null, value) == -1) {
+                                throw new Exception("Unknown error while inserting entry in database.");
+                            }
+                            insertCount++;
+                        }
+
+                        sqlDB.setTransactionSuccessful();
+                    } catch (Exception e) {
+                        // Your error handling
+                    } finally {
+                        sqlDB.endTransaction();
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown URI: " + uri);
+            }
+            // getContext().getContentResolver().notifyChange(uri, null);
+        } catch (Exception e) {
+            // Your error handling
+        }
+
+        return insertCount;
+    }
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -47,7 +83,7 @@ public class MyContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
 
-        Cursor retCursor;
+        Cursor retCursor = null;
 
         switch (match) {
 
@@ -102,7 +138,7 @@ public class MyContentProvider extends ContentProvider {
 
             case TELEPROMPTER_CODE:
 
-                long id = db.insertWithOnConflict(Contract.BakeEntry.TABLE_TELEPROMPTER, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                long id = db.insertWithOnConflict(Contract.BakeEntry.TABLE_TELEPROMPTER, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
                 if (id > 0) {
                     returnUri = ContentUris.withAppendedId(Contract.BakeEntry.PATH_TELEPROMPTER_URI, id);

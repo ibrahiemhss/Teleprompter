@@ -23,6 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(Contract.BakeEntry.CREATE_TABLE_TELEPROMPTER);
+            db.execSQL("CREATE UNIQUE INDEX event_idx ON " + Contract.BakeEntry.TABLE_TELEPROMPTER + " ( " + Contract.BakeEntry._ID + " )");
 
         } catch (SQLException e) {
             Log.d(TAG, e.getMessage());
