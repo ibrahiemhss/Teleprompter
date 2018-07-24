@@ -11,8 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class MyContentProvider extends ContentProvider {
+    private static final String TAG="MyContentProvider";
 
     private static final int TELEPROMPTER_CODE = 200;
     private static final int TELEPROMPTER_WITH_ID = 250;
@@ -169,9 +171,18 @@ public class MyContentProvider extends ContentProvider {
 
         switch (match) {
             case TELEPROMPTER_WITH_NO_ID:
+                String title = uri.getPathSegments().get(1);
+                if(title!=null){
+                    // Use selections/selectionArgs to filter for this ID
+                    idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER,
+                            Contract.BakeEntry.COL_TITLE+" =?",
+                            new String[]{title});
+                    Log.d(TAG,"idDeleted =is "+title);
+                }else {
+                    idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
 
+                }
                 // Use selections/selectionArgs to filter for this ID
-                idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
                 break;
 
             case TELEPROMPTER_WITH_ID:

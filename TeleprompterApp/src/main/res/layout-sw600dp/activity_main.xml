@@ -54,24 +54,37 @@
         android:paddingBottom="@dimen/list_bottom_padding"
         android:paddingLeft="@dimen/list_side_padding"
         android:paddingRight="@dimen/list_side_padding"
-        android:paddingTop="@dimen/list_top_padding"
+        android:paddingTop="?attr/actionBarSize"
         android:scrollbarStyle="outsideOverlay" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="230dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:visibility="invisible"
+        app:backgroundTint="@color/color_fab_add"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        android:src="@drawable/ic_add_white"
+        android:layout_marginEnd="@dimen/fab_margin" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_storag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="160dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorFAB2"
+        app:backgroundTint="@color/color_fab_storag"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_add_white"
+        android:src="@drawable/ic_sd_storage"
         android:layout_marginEnd="@dimen/fab_margin" />
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab1"
+        android:id="@+id/fab_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="90dp"
@@ -79,9 +92,9 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
         app:elevation="6dp"
-        app:backgroundTint="@color/colorFAB1"
+        app:backgroundTint="@color/color_fab_cloud"
         app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_settings_white"
+        android:src="@drawable/ic_cloud_download"
         android:layout_marginEnd="@dimen/fab_margin" />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -23,7 +23,7 @@
         <provider
             android:name=".data.MyContentProvider"
             android:authorities="com.and.ibrahim.teleprompter"
-            android:exported="true"
+            android:exported="false"
             tools:ignore="ExportedContentProvider" />
 
     </application>

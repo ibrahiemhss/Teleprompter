@@ -13,15 +13,16 @@ public class FabAnimations {
 
     private static final String TAG="MainActivity";
     private Context mContext;
-    private FloatingActionButton mFab,mFab1,mFab2;
+    private FloatingActionButton mFab,mFabAdd,mFabStorag,mFabCloud;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     private boolean isFab=false;
 
-    public FabAnimations(Context mContext, FloatingActionButton mFab, FloatingActionButton mFab1, FloatingActionButton mFab2) {
-        this.mFab = mFab;
-        this.mFab1 = mFab1;
-        this.mFab2 = mFab2;
+    public FabAnimations(Context mContext, FloatingActionButton mFab, FloatingActionButton mFabAdd, FloatingActionButton mFabStorag, FloatingActionButton mFabCloud) {
         this.mContext = mContext;
+        this.mFab = mFab;
+        this.mFabAdd = mFabAdd;
+        this.mFabStorag = mFabStorag;
+        this.mFabCloud = mFabCloud;
     }
 
     public void addFabAnimationRes() {
@@ -37,20 +38,28 @@ public class FabAnimations {
         if(isFab){
 
             mFab.startAnimation(rotate_backward);
-            mFab1.startAnimation(fab_close);
-            mFab2.startAnimation(fab_close);
-            mFab1.setClickable(false);
-            mFab2.setClickable(false);
+            mFabAdd.startAnimation(fab_close);
+            mFabStorag.startAnimation(fab_close);
+            mFabCloud.startAnimation(fab_close);
+
+            mFabAdd.setClickable(false);
+            mFabStorag.setClickable(false);
+            mFabCloud.setClickable(false);
+
             isFab = false;
             Log.d(TAG, "FabAction is "+"close");
 
         } else {
 
             mFab.startAnimation(rotate_forward);
-            mFab1.startAnimation(fab_open);
-            mFab2.startAnimation(fab_open);
-            mFab1.setClickable(true);
-            mFab2.setClickable(true);
+            mFabAdd.startAnimation(fab_open);
+            mFabStorag.startAnimation(fab_open);
+            mFabCloud.startAnimation(fab_open);
+
+            mFabAdd.setClickable(true);
+            mFabStorag.setClickable(true);
+            mFabCloud.setClickable(true);
+
             isFab = true;
             Log.d(TAG,"FabAction is "+"open");
 
