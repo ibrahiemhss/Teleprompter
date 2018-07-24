@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
-import com.and.ibrahim.teleprompter.mvp.model.Teleprmpter;
+import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import com.and.ibrahim.teleprompter.mvp.view.RecylerViewClickListener;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
 
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected RecyclerView mRecyclerView;
     Dialog dialog;
 
-    private ArrayList<Teleprmpter> mArrayList;
-    private Teleprmpter mTeleprmpter;
+    private ArrayList<DataObj> mArrayList;
+    private DataObj mDataObj;
     TeleprompterAdapter teleprompterAdapter ;
 
     private Unbinder unbinder;
@@ -84,12 +84,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFab2.setOnClickListener(this);
 
             mArrayList=new ArrayList<>();
-            mTeleprmpter=new Teleprmpter();
+            mDataObj =new DataObj();
             for (int i=0;i<10;i++){
-            //    mTeleprmpter.setTextTitle("title contents review");
-            //    mTeleprmpter.setTextContent("kgjkgjkjg kjgo dfeooer fdfdkfjd fkdlkfldkf fdlfkdlfkld dfkdlfkldfk dflkdlfkldkf ldkfldfk" +
+            //    mDataObj.setTextTitle("title contents review");
+            //    mDataObj.setTextContent("kgjkgjkjg kjgo dfeooer fdfdkfjd fkdlkfldkf fdlfkdlfkld dfkdlfkldfk dflkdlfkldkf ldkfldfk" +
              //           "dfjdhfjdfh dkfjkdjfkjd dkjfdkjfkdj dkjfkdjfkdj dkjfkdjkdjf dkfjdkjf dkjkd fkjdk dkjfkdj fdkjfk");
-              //  mArrayList.add(mTeleprmpter);
+              //  mArrayList.add(mDataObj);
 
             }
 

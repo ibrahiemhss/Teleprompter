@@ -6,11 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
-import com.and.ibrahim.teleprompter.mvp.model.Teleprmpter;
+import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
 
     private final LayoutInflater mLayoutInflater;
-    private final ArrayList<Teleprmpter> teleprmpterArrayList = new ArrayList<>();
+    private final ArrayList<DataObj> dataObjArrayList = new ArrayList<>();
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
@@ -43,21 +42,21 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-        holder.bind(teleprmpterArrayList.get(position), position);
+        holder.bind(dataObjArrayList.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return teleprmpterArrayList.size();
+        return dataObjArrayList.size();
     }
 
-    public void addNewContent(List<Teleprmpter> teleprmpterList) {
-        teleprmpterArrayList.addAll(teleprmpterList);
+    public void addNewContent(List<DataObj> dataObjList) {
+        dataObjArrayList.addAll(dataObjList);
         notifyDataSetChanged();
     }
-    public void removeContent(List<Teleprmpter> teleprmpterList) {
-        teleprmpterArrayList.remove(teleprmpterList);
-        teleprmpterArrayList.clear();
+    public void removeContent(List<DataObj> dataObjList) {
+        dataObjArrayList.remove(dataObjList);
+        dataObjArrayList.clear();
         notifyDataSetChanged();
     }
     //create interface to goo another activity
@@ -84,9 +83,9 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Teleprmpter teleprmpter, int position) {
-            mTextTitle.setText(teleprmpter.getTextTitle());
-          //  mTextContent.setText(teleprmpter.getTextContent());
+        public void bind(DataObj dataObj, int position) {
+            mTextTitle.setText(dataObj.getTextTitle());
+          //  mTextContent.setText(dataObj.getTextContent());
 
 
 
