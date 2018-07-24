@@ -30,19 +30,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
           /*this getContentView  will inherit by the
            child classes to pass their layout */
-        setContentView(getContentView());
+        setContentView(getResourceLayout());
         ButterKnife.bind(this);
         onViewReady(savedInstanceState, getIntent());
+        getExtra();
+        init();
+        setListener();
+        getResourceLayout();
     }
 
     /*
        noted CallSuper to force the call super for the child class so anyone
-        inheriting this class he will has to do  @override super thought
+        inheriting this class it will has to do  @override super thought
         */
     @CallSuper
     //to be used by child activities
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        resolveDaggerDependency();
         //To be used by child activities
     }
 
@@ -52,17 +55,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    /*method will get Dependency inside child activity*/
-    protected void resolveDaggerDependency() {
-    }
+    public abstract int getResourceLayout();
 
+    public abstract  void getExtra();
+
+    public  abstract void init();
+
+    public  abstract void setListener();
 
     /**
      * using generally in child activities to display status of coming data
      * using here
-     * {@linkplain com.and.ibrahim.teleprompter.base.view.MainView}
-     * {@linkplain com.and.ibrahim.teleprompter.base.mvp.presenter}
-     * {@linkplain  com.and.ibrahim.teleprompter.base.modules.home}
+     * {@linkplain com.and.ibrahim.teleprompter.mvp.view.MainView}
+     * {@linkplain com.and.ibrahim.teleprompter.mvp.presenter}
+     * {@linkplain  com.and.ibrahim.teleprompter.modules.main}
      */
     protected void showDialog(String message) {
         if (mProgressDialog == null) {
@@ -82,5 +88,4 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /*
      * this method is mandatory to force every activity to implement it */
-    protected abstract int getContentView();
 }

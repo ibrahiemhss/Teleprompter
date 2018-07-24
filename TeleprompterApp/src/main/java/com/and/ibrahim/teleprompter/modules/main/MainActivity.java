@@ -2,11 +2,9 @@ package com.and.ibrahim.teleprompter.modules.main;
 
 import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,21 +12,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
-import com.and.ibrahim.teleprompter.data.DbHelper;
 import com.and.ibrahim.teleprompter.mvp.model.Teleprmpter;
+import com.and.ibrahim.teleprompter.mvp.view.RecylerViewClickListener;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
 
 import java.util.ArrayList;
@@ -39,8 +34,9 @@ import butterknife.Unbinder;
 
 import com.and.ibrahim.teleprompter.util.GetData;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
+import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener ,TeleprompterAdapter.OnItemLongClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private static final String TAG="MainActivity";
 
@@ -70,14 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Unbinder unbinder;
     private FabAnimations mFabAnimations;
 
-    private final TeleprompterAdapter.OnItemClickListener onItemClickListener = new TeleprompterAdapter.OnItemClickListener() {
-
-
-        @Override
-        public void onClick(final int position) {
-
-        }
-    };
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +94,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             initialiseListWithPhoneScreen();
+
+            mRecyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this, mRecyclerView, new RecylerViewClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                               }
+
+                @Override
+                public void onLongClick(View view, int position) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            MainActivity.this);
+
+                    // set title
+                    alertDialogBuilder.setTitle("Delete");
+
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Click yes to delete this file!")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+
+                           /* ContentValues songValues = new ContentValues();
+                            getContentResolver().delete(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                                    Contract.BakeEntry._ID + " = ?",
+                                    new String[]{songValues.getAsString(String.valueOf(position))});*/
+
+                                    if (GetData.getTeleprmpters(MainActivity.this).size() > 0) {
+
+                                        Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
+                                        uri = uri.buildUpon().appendPath(null).build();
+                                        getContentResolver().delete(uri, null, null);
+                                        if (uri != null) {
+                                            Log.d("contentResolver delete", "delete success");
+                                        }
+                                    }
+                                    MainActivity.this.finish();
+                                }
+                            })
+                            .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();                    }
+            }));
 
         }
 
@@ -150,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 gridLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        teleprompterAdapter.setItemClickListener(onItemClickListener);
 
         mRecyclerView.setAdapter(teleprompterAdapter);
     }
@@ -166,8 +205,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Pass a list of images with inflater ​​in adapter
 
         teleprompterAdapter.addNewContent(mArrayList);
-        teleprompterAdapter.setItemClickListener(onItemClickListener);
-        teleprompterAdapter.setmOnItemLongClickListener(this);
 
         mRecyclerView.setAdapter(teleprompterAdapter);
 
@@ -228,52 +265,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    @Override
-    public boolean onItemLongClicked(int position) {
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                MainActivity.this);
-
-        // set title
-        alertDialogBuilder.setTitle("Delete");
-
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Click yes to delete this file!")
-                .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-
-                           /* ContentValues songValues = new ContentValues();
-                            getContentResolver().delete(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
-                                    Contract.BakeEntry._ID + " = ?",
-                                    new String[]{songValues.getAsString(String.valueOf(position))});*/
-
-                        if (GetData.getTeleprmpters(MainActivity.this).size() > 0) {
-
-                            Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
-                            uri = uri.buildUpon().appendPath(null).build();
-                            getContentResolver().delete(uri, null, null);
-                            if (uri != null) {
-                                Log.d("contentResolver delete", "delete success");
-                            }
-                        }
-                        MainActivity.this.finish();
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-        return true;
-    }
 }
