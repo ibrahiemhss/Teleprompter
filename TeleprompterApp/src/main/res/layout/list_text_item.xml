@@ -1,31 +1,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/item_layout_margin"
+    android:layout_width="@dimen/item_width"
+    android:layout_height="@dimen/item_height"
+    android:layout_gravity="center"
+    android:layout_marginRight="@dimen/item_side_margin"
+    android:layout_marginLeft="@dimen/item_side_margin"
+    android:layout_marginTop="@dimen/item_bottom_margin"
+    android:layout_marginBottom="@dimen/item_top_margin"
     android:clickable="true"
     android:clipToPadding="false"
+    android:background="@drawable/item_background"
     android:focusable="true"
-    app:cardElevation="@dimen/card_elevation"
     android:orientation="vertical"
+    android:elevation="@dimen/card_elevation"
     android:foreground="?selectableItemBackground">
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="20dp"
+    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <TextView
             android:id="@+id/text_title"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:ellipsize="end"
             android:textSize="12sp"
-            android:paddingBottom="@dimen/text_title_bottom_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingBottom="@dimen/text_bottom_margin"
             android:paddingLeft="@dimen/text_side_margin"
             android:paddingRight="@dimen/text_side_margin"
-            android:paddingTop="@dimen/text_title_top_margin"
+            android:paddingTop="@dimen/text_top_margin"
             android:textColor="@color/colorPrimaryText" />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+        android:background="@color/color_white">
 
-       <ImageView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@drawable/text_align_justify_icon"/>
-
+</View>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@drawable/ic_play_circle_filled" />
+</FrameLayout>
 </LinearLayout>

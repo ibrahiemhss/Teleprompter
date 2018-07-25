@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00796B</color>
-    <color name="colorPrimaryDark">#009688</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
     <color name="colorPrimaryLight">#B2DFDB</color>
     <color name="colorAccent">#FF5722</color>
-
-    <color name="white">#FFFFFF</color>
+    <color name="color_item_border">#FF5722</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_graylt2">#e2e2e2</color>
     <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
-    <color name="colorDivider">#BDBDBD</color>
+    <color name="color_graydr">#757575</color>
+    <color name="color_graylt">#BDBDBD</color>
     <color name="color_fab_cloud">#2196F3</color>
     <color name="color_fab_add">#E040FB</color>
     <color name="color_fab_storag">#00796B</color>

@@ -36,7 +36,7 @@
             android:background="@android:color/white"
             android:clickable="true"
             android:text="add new"
-            android:textColor="@color/colorSecondaryText"
+            android:textColor="@color/color_graydr"
             android:textStyle="bold"
             android:layout_alignParentRight="true" />
 
@@ -51,7 +51,7 @@
             android:background="@android:color/white"
             android:clickable="true"
             android:text="cancel"
-            android:textColor="@color/colorSecondaryText"
+            android:textColor="@color/color_graydr"
             android:textStyle="bold" />
 
 </RelativeLayout>

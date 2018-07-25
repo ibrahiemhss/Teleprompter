@@ -38,7 +38,7 @@ public class Contract implements BaseColumns {
         public static final String DROP_TELEPROMPTER_TELEPROMPTER = "DROP TABLE IF EXISTS " + TABLE_TELEPROMPTER;
         public static final String CREATE_TABLE_TELEPROMPTER = "create table " + TABLE_TELEPROMPTER + "(" +
                 _ID + " INTEGER primary key autoincrement not null," +
-                COL_UNIQUE_ID + " INTEGER UNIQUE ," +
+                COL_UNIQUE_ID + " INTEGER  ," +
                 COL_TITLE + " text  null," +
                 COL_COTENTS + " text not null)";
 

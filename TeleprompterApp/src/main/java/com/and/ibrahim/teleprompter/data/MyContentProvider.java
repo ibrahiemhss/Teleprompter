@@ -171,13 +171,13 @@ public class MyContentProvider extends ContentProvider {
 
         switch (match) {
             case TELEPROMPTER_WITH_NO_ID:
-                String title = uri.getPathSegments().get(1);
-                if(title!=null){
+                String id = uri.getPathSegments().get(1);
+                if(id!=null){
                     // Use selections/selectionArgs to filter for this ID
                     idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER,
-                            Contract.BakeEntry.COL_TITLE+" =?",
-                            new String[]{title});
-                    Log.d(TAG,"idDeleted =is "+title);
+                            Contract.BakeEntry.COL_UNIQUE_ID+" =?",
+                            new String[]{id});
+                    Log.d(TAG,"idDeleted =is "+id);
                 }else {
                     idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
 
