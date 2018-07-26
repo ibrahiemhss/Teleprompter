@@ -282,7 +282,7 @@ public class AutomaticScrollTextView extends LinearLayout {
 
     private void expandTextView(TextView textView) {
         ViewGroup.LayoutParams lp = textView.getLayoutParams();
-        lp.width = DisplayActivity.getScreenWidth();
+       // lp.width = DisplayActivity.getScreenWidth();
         textView.setLayoutParams(lp);
     }
 }

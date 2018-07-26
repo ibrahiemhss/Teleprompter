@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 
 public class SlideShowScrollView extends ScrollView {
 
+    ///////////
     private ScrollViewListener scrollViewListener;
     private boolean isScrollable;
 

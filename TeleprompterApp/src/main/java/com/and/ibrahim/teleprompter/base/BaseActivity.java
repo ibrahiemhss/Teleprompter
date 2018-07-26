@@ -39,12 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         getResourceLayout();
     }
 
-    /*
-       noted CallSuper to force the call super for the child class so anyone
-        inheriting this class it will has to do  @override super thought
-        */
-    @CallSuper
-    //to be used by child activities
+
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         //To be used by child activities
     }

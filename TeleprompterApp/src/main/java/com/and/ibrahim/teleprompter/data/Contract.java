@@ -9,7 +9,7 @@ public class Contract implements BaseColumns {
 
 
     //extra strings saved in bundle
-    public static final String EXTRA_STATE_FIRST_OPEN = "state_first_open";
+    public static final String EXTRA_TEXT = "extra_text_show";
     public static final String EXTRA_POSITION = "extra_position";
     public static final String EXTRA_STATE_INDEX = "state_index";
     public static final String EXTRA_ROTATION = "state_rotation";
@@ -17,6 +17,7 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_IS_TABLET = "extra_tablet";
     public static final String EXTRA_TELEPROMPTER_POSITION = "teleprompter_position";
     public static final String EXTRA_TELEPROMPTER_FRAGMENT = "teleprompter_fragment";
+    public static final String EXTRA_SCROLL_POSITION = "extra_scroll_position";
 
 
     //content provider
