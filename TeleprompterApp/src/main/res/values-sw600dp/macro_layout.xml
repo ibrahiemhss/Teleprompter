@@ -23,6 +23,9 @@
     <dimen name="text_bottom_margin">4dp</dimen>
 
     <!-- fragment -->
+    <dimen name="up_view_height">124dp</dimen>
+    <dimen name="down_view_height">190dp</dimen>
 
     <dimen name="widget_margin">8dp</dimen>
+
 </resources>

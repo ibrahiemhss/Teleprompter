@@ -153,8 +153,7 @@ public void moveScrollView(){
         }
     }
     public void getScrollMaxAmount(){
-        int actualWidth = (verticalOuterLayout.getMeasuredHeight()-(256*3));
-        verticalScrollMax   = actualWidth;
+        verticalScrollMax   = (verticalOuterLayout.getMeasuredHeight()-(256*3));
     }
 
 
@@ -198,7 +197,6 @@ public void moveScrollView(){
         });
 
 
-        setSlideShowFontSize(1);
         mScrollText.setText(mScroollString);
 
         mSlideShowScroll.getChildAt(0).setOnClickListener(new View.OnClickListener() {
@@ -357,6 +355,28 @@ public void moveScrollView(){
 
     }
 
+    public void onDestroy(){
+        clearTimerTaks(clickSchedule);
+        clearTimerTaks(scrollerSchedule);
+        clearTimers(scrollTimer);
+        clickSchedule         = null;
+        scrollerSchedule      = null;
+        scrollTimer           = null;
+        super.onDestroy();
+    }
+
+    private void clearTimers(Timer timer){
+        if(timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+    private void clearTimerTaks(TimerTask timerTask){
+        if(timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

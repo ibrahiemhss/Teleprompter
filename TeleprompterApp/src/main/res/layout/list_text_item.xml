@@ -36,7 +36,7 @@
             android:paddingLeft="@dimen/text_side_margin"
             android:paddingRight="@dimen/text_side_margin"
             android:paddingTop="@dimen/text_top_margin"
-            android:textColor="@color/colorPrimaryText" />
+            android:textColor="@color/color_white" />
 <View
     android:layout_width="match_parent"
     android:layout_height="2dp"

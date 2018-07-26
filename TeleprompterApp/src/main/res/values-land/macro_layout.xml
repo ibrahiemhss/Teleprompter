@@ -17,5 +17,8 @@
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="text_top_margin">8dp</dimen>
     <dimen name="text_bottom_margin">4dp</dimen>
+    <!-- fragment -->
+    <dimen name="up_view_height">124dp</dimen>
+    <dimen name="down_view_height">190dp</dimen>
 
 </resources>
