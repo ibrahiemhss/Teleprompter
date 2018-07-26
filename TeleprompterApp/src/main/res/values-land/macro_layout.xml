@@ -1,0 +1,21 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="add_file_margin">16dp</dimen>
+    <dimen name="main_activity_content_margin">16dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
+
+    <!-- list item -->
+    <dimen name="list_margin_top">96dp</dimen>
+    <integer name="list_column_count">4</integer>
+    <dimen name="item_width">108dp</dimen>
+    <dimen name="item_height">164dp</dimen>
+
+    <dimen name="item_layout_margin">4dp</dimen>
+    <dimen name="item_side_margin">20dp</dimen>
+    <dimen name="item_top_margin">4dp</dimen>
+    <dimen name="item_bottom_margin">4dp</dimen>
+    <dimen name="text_side_margin">8dp</dimen>
+    <dimen name="text_top_margin">8dp</dimen>
+    <dimen name="text_bottom_margin">4dp</dimen>
+
+</resources>
