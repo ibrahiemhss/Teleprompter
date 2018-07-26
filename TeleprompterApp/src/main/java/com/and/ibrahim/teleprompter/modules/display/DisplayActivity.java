@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.data.Contract;
-import com.and.ibrahim.teleprompter.modules.fragments.DisplayFragment;
 
 public class DisplayActivity extends BaseActivity {
 

@@ -18,13 +18,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
-
+        <LinearLayout
+            android:id="@+id/vertical_outer_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
         <com.and.ibrahim.teleprompter.modules.ScrollingTextView
             android:id="@+id/text_sroolling"
             android:layout_margin="@dimen/scroll_text_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="24sp" />
+        </LinearLayout>
 
     </ScrollView>
     <LinearLayout
