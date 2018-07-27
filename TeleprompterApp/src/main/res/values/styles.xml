@@ -29,4 +29,9 @@
         <item name="android:windowEnterAnimation">@anim/fadein</item>
         <item name="android:windowExitAnimation">@anim/fadeut</item>
     </style>
+
+    <style name="SlideDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
+    </style>
 </resources>

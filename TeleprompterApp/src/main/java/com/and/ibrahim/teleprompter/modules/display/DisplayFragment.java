@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,7 +15,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
 import android.text.Selection;
@@ -22,21 +27,26 @@ import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -48,8 +58,11 @@ import com.and.ibrahim.teleprompter.modules.CustomView.AutoScrollingTextView;
 import com.and.ibrahim.teleprompter.modules.CustomView.AutomaticScrollTextView;
 import com.and.ibrahim.teleprompter.modules.CustomView.SlideShowScrollView;
 import com.and.ibrahim.teleprompter.modules.ScrollingTextView;
+import com.and.ibrahim.teleprompter.util.LinedEditText;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -70,14 +83,23 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     protected ScrollView mSlideShowScroll;
     @BindView(R.id.play_scroll)
     protected ImageView mPlay;
-    @BindView(R.id.lin_edit_container)
-    protected LinearLayout mLinearLayoutContainer;
-    @BindView(R.id.seek_speed_up)
-    protected SeekBar mSeekToSpeed;
-    @BindView(R.id.img_font_size)
-    protected ImageView mChangFontSize;
     @BindView(R.id.vertical_outer_id)
     protected LinearLayout  verticalOuterLayout;
+///////////////////////////////////////////
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    Dialog dialog;
+
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    CustomDrawerAdapter adapter;
+
+    List<DrawerItem> dataList;
+    private View navHeader;
+    private NavigationView navigationView;
+    protected SeekBar mSeekScrollSpeed;
+    protected SeekBar mSeekTextSize;
 
 
 
@@ -180,6 +202,11 @@ public void moveScrollView(){
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        dataList = new ArrayList<DrawerItem>();
+        mDrawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView)view. findViewById(R.id.nav_view);
+
+        // Navigation view header
 
         // ScrollingTextView.mirror = prefs.getBoolean("pref_mirror", true);
         // mScrollText.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/" + prefs.getString("pref_font", "Roboto") + ".ttf"), 1);
@@ -196,7 +223,6 @@ public void moveScrollView(){
             }
         });
 
-
         mScrollText.setText(mScroollString);
 
         mSlideShowScroll.getChildAt(0).setOnClickListener(new View.OnClickListener() {
@@ -210,6 +236,8 @@ public void moveScrollView(){
                     mPlay.setBackground(getActivity().getDrawable(R.drawable.ic_pause_circle_filled));
                     paused =false;
                     startAutoScrolling(delay,period);
+                    launchDismissDlg();
+                    dialog.show();
 
                 }
                 else {
@@ -234,12 +262,156 @@ public void moveScrollView(){
 
     }
 
+   private void   setSpeed(int progress){
+       if(progress<10){
+           delay=200;
+           period=200;
+
+
+       }else if(progress>11&&progress<20){
+           delay=150;
+           period=150;
+
+
+       }
+       else if(progress>21&&progress<30){
+           delay=100;
+           period=100;
+
+
+
+
+       }
+       else if(progress>31&&progress<40){
+           delay=50;
+           period=50;
+
+       }
+       else  if(progress>46&&progress<50){
+           delay=45;
+           period=45;
+
+       }else if(progress>51&&progress<55){
+           delay=30;
+           period=30;
+
+       }
+       else if(progress>56&&progress<60){
+           delay=25;
+           period=25;
+
+       }
+       else if(progress>61&&progress<65){
+           delay=20;
+           period=20;
+
+       }
+       else  if(progress>66&&progress<70){
+           delay=15;
+           period=15;
+
+       }
+       else  if(progress>71&&progress<75){
+           delay=10;
+           period=10;
+
+       }else if(progress>76&&progress<80){
+           delay=8;
+           period=8;
+
+       }
+
+       else if(progress>81&&progress<85){
+           delay=5;
+           period=5;
+
+       }
+       else  if(progress>86&&progress<90){
+           delay=4;
+           period=4;
+
+       }else  if(progress>91&&progress<100){
+           delay=3;
+           period=3;
+
+       }
+
+   }
     @Override
     public void onPause() {
         super.onPause();
 
     }
+    private void launchDismissDlg() {
 
+    dialog = new Dialog(getActivity());
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.SlideDialogAnimation;
+        dialog.getWindow().setAttributes(lp);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.custom_drawer_item);
+        dialog.setCanceledOnTouchOutside(true);
+        mSeekScrollSpeed = (SeekBar) dialog.findViewById(R.id.seek_speed_up);
+        mSeekTextSize = (SeekBar) dialog.findViewById(R.id.seek_text_size);
+        final LinedEditText mEditContent = dialog.findViewById(R.id.linededit_text_content);
+        final EditText mEditTitle = dialog.findViewById(R.id.edit_title);
+
+        mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                stopAutoScrolling();
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+
+                setSpeed(progress);
+
+
+
+                Log.d("seekBarProgress",String.valueOf(progress));
+
+            }
+        });
+
+
+        mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                stopAutoScrolling();
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+
+                // t1.setTextSize(progress);
+                // time = 100*-progress;
+                mScrollText.setTextSize(progress);
+
+
+                Log.d("seekBarProgress",String.valueOf(progress));
+
+            }
+        });
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -253,7 +425,10 @@ public void moveScrollView(){
                     }
                 });
         }
-        mSeekToSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+
+
+    /*      mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -352,7 +527,7 @@ public void moveScrollView(){
 
             }
         });
-
+*/
     }
 
     public void onDestroy(){

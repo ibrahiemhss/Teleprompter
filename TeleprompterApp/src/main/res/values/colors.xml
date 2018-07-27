@@ -8,7 +8,7 @@
     <color name="colorAccent">#FF5722</color>
     <color name="color_item_border">#FF5722</color>
     <color name="color_white">#ffffff</color>
-    <color name="color_black">#000000</color>
+    <color name="color_black">#ba000000</color>
 
     <color name="color_graylt2">#e2e2e2</color>
     <color name="colorPrimaryText">#212121</color>

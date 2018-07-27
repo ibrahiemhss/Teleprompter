@@ -9,7 +9,7 @@
 
 
     <!-- list item -->
-    <integer name="list_column_count">2</integer>
+    <integer name="list_column_count">1</integer>
     <dimen name="network_image_height">100dp</dimen>
     <dimen name="item_width">128dp</dimen>
     <dimen name="item_height">162dp</dimen>

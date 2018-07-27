@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/itemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:layout_marginTop="0dp"
+        android:background="?android:attr/activatedBackgroundIndicator">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/lin_edit_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lin_edit_container_height"
+                android:background="@color/colorPrimaryLight"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/font_size"/>
+
+                <SeekBar
+                    android:id="@+id/seek_text_size"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/font_size"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lin_edit_container_height"
+                android:background="@color/colorPrimaryLight"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+                <SeekBar
+                    android:id="@+id/seek_speed_up"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/text_font"
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/color_white"
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_weight="1"
+                    android:src="@drawable/font_size"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#DADADC">
+        </View>
+    </LinearLayout>
+</RelativeLayout>

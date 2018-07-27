@@ -161,7 +161,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         GridLayoutManager gridLayoutManager;
        if( GetScreenOrientation.GetListByScreenSize(this)){
-           gridLayoutManager=new GridLayoutManager(this, 4);
+           gridLayoutManager=new GridLayoutManager(this, 3);
 
        }else {
            gridLayoutManager=new GridLayoutManager(this, columnCount);

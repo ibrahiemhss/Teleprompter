@@ -16,12 +16,12 @@
 
 
     <!-- list item -->
-    <integer name="list_column_count">3</integer>
+    <integer name="list_column_count">2</integer>
     <dimen name="item_width">164dp</dimen>
     <dimen name="item_height">108dp</dimen>
 
-    <dimen name="item_layout_margin">4dp</dimen>
-    <dimen name="item_side_margin">8dp</dimen>
+    <dimen name="item_layout_margin">8dp</dimen>
+    <dimen name="item_side_margin">12dp</dimen>
     <dimen name="item_top_margin">4dp</dimen>
     <dimen name="item_bottom_margin">4dp</dimen>
     <dimen name="text_side_margin">8dp</dimen>
