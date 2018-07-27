@@ -12,8 +12,6 @@ import com.and.ibrahim.teleprompter.data.Contract;
 public class DisplayActivity extends BaseActivity {
 
     private Fragment mDisplayFragment;
-
-    /////////////
     @Override
     public int getResourceLayout() {
         return R.layout.activity_display;
