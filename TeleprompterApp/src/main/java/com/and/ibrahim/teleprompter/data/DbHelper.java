@@ -7,11 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
-
 /*
  * Created by ibrahim on 22/05/18.
  */
-public class DbHelper extends SQLiteOpenHelper {
+class DbHelper extends SQLiteOpenHelper {
 
     private static final String TAG = DbHelper.class.getSimpleName();
 

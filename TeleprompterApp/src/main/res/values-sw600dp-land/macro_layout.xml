@@ -2,14 +2,12 @@
     <!-- recyclerVeiw -->
     <dimen name="list_width">300dp</dimen>
     <dimen name="list_side_padding">5dp</dimen>
-    <dimen name="list_top_padding">8dp</dimen>
     <dimen name="list_bottom_padding">24dp</dimen>
     <!-- layoutsw600 -->
     <dimen name="lin_container">96dp</dimen>
 
     <!-- list item -->
     <integer name="list_column_count">2</integer>
-    <dimen name="network_image_height">100dp</dimen>
     <dimen name="item_width">128dp</dimen>
     <dimen name="item_height">162dp</dimen>
 
@@ -21,5 +19,4 @@
     <dimen name="text_top_margin">8dp</dimen>
     <dimen name="text_bottom_margin">4dp</dimen>
 
-    <dimen name="widget_margin">8dp</dimen>
 </resources>

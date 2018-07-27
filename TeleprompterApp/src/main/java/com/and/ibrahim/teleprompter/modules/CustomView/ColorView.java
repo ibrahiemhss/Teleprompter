@@ -14,13 +14,14 @@ import android.view.View;
 
 import com.and.ibrahim.teleprompter.R;
 
+@SuppressWarnings("ALL")
 public class ColorView extends View {
 
     private float luminance = 0;
     private String colorHex = "#000000";
     private final float scale = getResources().getDisplayMetrics().density;
     private boolean showText;
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
 
     public ColorView(Context context) {
         super(context);
@@ -73,7 +74,7 @@ public class ColorView extends View {
     @Override
     public void setBackgroundColor(@ColorInt int color) {
 
-        if(Build.VERSION.SDK_INT< Build.VERSION_CODES.N)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             luminance = (float) ColorUtils.calculateLuminance(color);
         else
             luminance = Color.luminance(color);
@@ -82,6 +83,7 @@ public class ColorView extends View {
         super.setBackgroundColor(color);
     }
 
+    @SuppressWarnings("unused")
     public void setColor(String color) {
         setBackgroundColor(Color.parseColor(color));
     }

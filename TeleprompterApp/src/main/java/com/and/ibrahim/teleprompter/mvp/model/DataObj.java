@@ -1,10 +1,7 @@
 package com.and.ibrahim.teleprompter.mvp.model;
 
-import android.content.Context;
-
 public class DataObj {
-    Context mContext;
-    int id;
+    private int id;
 
     public int getId() {
         return id;
@@ -22,13 +19,9 @@ public class DataObj {
         this.textTitle = textTitle;
     }
 
-    public String getTextContent() {
-        return textContent;
-    }
-
     public void setTextContent(String textContent) {
         this.textContent = textContent;
     }
 
-    private String textTitle,textContent;
+    private String textTitle, textContent;
 }

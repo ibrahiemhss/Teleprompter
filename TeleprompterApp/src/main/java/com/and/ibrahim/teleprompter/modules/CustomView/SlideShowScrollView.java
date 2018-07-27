@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.CustomView;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
@@ -13,7 +14,7 @@ public class SlideShowScrollView extends ScrollView {
     private ScrollViewListener scrollViewListener;
     private boolean isScrollable;
 
-    public interface ScrollViewListener {
+    interface ScrollViewListener {
         void onScrollChanged(SlideShowScrollView scrollView,
                              int x, int y, int oldx, int oldy);
     }
@@ -61,6 +62,7 @@ public class SlideShowScrollView extends ScrollView {
         return isScrollable && super.onInterceptTouchEvent(ev);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
 

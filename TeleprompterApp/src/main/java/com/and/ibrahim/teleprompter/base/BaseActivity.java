@@ -4,7 +4,6 @@ package com.and.ibrahim.teleprompter.base;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -20,6 +19,7 @@ import butterknife.ButterKnife;
 /**
  * the parent Activity for all activities in app
  */
+@SuppressWarnings("ALL")
 public abstract class BaseActivity extends AppCompatActivity {
 
     //ProgressDialog to view any message wanted in the child activity
@@ -33,7 +33,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getResourceLayout());
         ButterKnife.bind(this);
         onViewReady(savedInstanceState, getIntent());
-        getExtra();
         init();
         setListener();
         getResourceLayout();
@@ -50,18 +49,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public abstract int getResourceLayout();
+    protected abstract int getResourceLayout();
 
-    public abstract  void getExtra();
+    protected abstract void init();
 
-    public  abstract void init();
-
-    public  abstract void setListener();
+    protected abstract void setListener();
 
     /**
      * using generally in child activities to display status of coming data
      * using here
-     * {@linkplain com.and.ibrahim.teleprompter.mvp.view.MainView}
+     * {@linkplain com.and.ibrahim.teleprompter.mvp.view}
      * {@linkplain com.and.ibrahim.teleprompter.mvp.presenter}
      * {@linkplain  com.and.ibrahim.teleprompter.modules.main}
      */

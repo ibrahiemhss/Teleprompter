@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/WhiteTransparent"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -23,6 +21,7 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
             android:fitsSystemWindows="true">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,19 +70,21 @@
         app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_add_white"
         android:layout_marginEnd="@dimen/fab_margin" />
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_storag"
+        android:id="@+id/fab_storage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="160dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_storag"
+        app:backgroundTint="@color/color_fab_storage"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_sd_storage"
         android:layout_marginEnd="@dimen/fab_margin" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_cloud"
         android:layout_width="wrap_content"
@@ -97,6 +98,7 @@
         app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_cloud_download"
         android:layout_marginEnd="@dimen/fab_margin" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

@@ -20,14 +20,12 @@ import butterknife.ButterKnife;
 public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapter.Holder> {
 
 
-
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<DataObj> dataObjArrayList = new ArrayList<>();
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
-    private Context context;
-    public TeleprompterAdapter( LayoutInflater inflater) {
+    public TeleprompterAdapter(LayoutInflater inflater) {
         mLayoutInflater = inflater;
     }
 
@@ -54,26 +52,30 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
         dataObjArrayList.addAll(dataObjList);
         notifyDataSetChanged();
     }
-    public void removeContent(List<DataObj> dataObjList) {
-        dataObjArrayList.remove(dataObjList);
+
+    public void removeContent() {
         dataObjArrayList.clear();
         notifyDataSetChanged();
     }
+
     //create interface to goo another activity
+    @SuppressWarnings("unused")
     public void setItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
-    public void setmOnItemLongClickListener(OnItemLongClickListener listener) {
+
+    @SuppressWarnings("unused")
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
         mOnItemLongClickListener = listener;
     }
 
 
     @SuppressWarnings("unused")
-    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         final Context mContext;
         @BindView(R.id.text_title)
         TextView mTextTitle;
-       // @BindView(R.id.text_content)
+        // @BindView(R.id.text_content)
         //TextView mTextContent;
 
         public Holder(View itemView) {
@@ -85,8 +87,7 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
         public void bind(DataObj dataObj, int position) {
             mTextTitle.setText(dataObj.getTextTitle());
-          //  mTextContent.setText(dataObj.getTextContent());
-
+            //  mTextContent.setText(dataObj.getTextContent());
 
 
         }
@@ -109,11 +110,11 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
         }
     }
 
-    public interface OnItemLongClickListener {
-         boolean onItemLongClicked(int position);
+    interface OnItemLongClickListener {
+        void onItemLongClicked(int position);
     }
 
-    public interface OnItemClickListener {
+    interface OnItemClickListener {
 
         void onClick(int position);
     }

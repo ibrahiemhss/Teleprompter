@@ -6,7 +6,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 public class ScrollingTextView extends AppCompatTextView {
-    public static boolean mirror;
+    @SuppressWarnings("unused")
+    private static boolean mirror;
 
     public ScrollingTextView(Context context, AttributeSet attrs) {
         super(context, attrs);

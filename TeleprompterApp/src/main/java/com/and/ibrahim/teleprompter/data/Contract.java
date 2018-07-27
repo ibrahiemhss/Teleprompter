@@ -10,12 +10,6 @@ public class Contract implements BaseColumns {
 
     //extra strings saved in bundle
     public static final String EXTRA_TEXT = "extra_text_show";
-    public static final String EXTRA_POSITION = "extra_position";
-    public static final String EXTRA_STATE_INDEX = "state_index";
-    public static final String EXTRA_ROTATION = "state_rotation";
-    public static final String EXTRA_NO_ROTATION = "state_no_rotation";
-    public static final String EXTRA_IS_TABLET = "extra_tablet";
-    public static final String EXTRA_TELEPROMPTER_POSITION = "teleprompter_position";
     public static final String EXTRA_TELEPROMPTER_FRAGMENT = "teleprompter_fragment";
     public static final String EXTRA_SCROLL_POSITION = "extra_scroll_position";
 
@@ -33,7 +27,7 @@ public class Contract implements BaseColumns {
         public static final String TABLE_TELEPROMPTER = "teleprompter_bake";
         public static final String COL_UNIQUE_ID = "unique_id";
 
-        public static final String COL_COTENTS = "contents";
+        public static final String COL_CONTENTS = "contents";
         public static final String COL_TITLE = "title";
 
         public static final String DROP_TELEPROMPTER_TELEPROMPTER = "DROP TABLE IF EXISTS " + TABLE_TELEPROMPTER;
@@ -41,7 +35,7 @@ public class Contract implements BaseColumns {
                 _ID + " INTEGER primary key autoincrement not null," +
                 COL_UNIQUE_ID + " INTEGER  ," +
                 COL_TITLE + " text  null," +
-                COL_COTENTS + " text not null)";
+                COL_CONTENTS + " text not null)";
 
         //database name
         static final String DB_NAME = "teleprompter_app.db";

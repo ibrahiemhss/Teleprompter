@@ -14,9 +14,11 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "save_contents";
     private static SharedPrefManager mInstance;
     private final SharedPreferences pref;
+
     private SharedPrefManager(Context context) {
         pref = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
     }
+
     public static synchronized SharedPrefManager getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new SharedPrefManager(context);
@@ -27,6 +29,7 @@ public class SharedPrefManager {
     public int getPrefIndex() {
         return pref.getInt(PREF_SEEK_PROGRESS, 0);
     }
+
     public void setPrefIndex(int progress) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(PREF_SEEK_PROGRESS, progress);

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/WhiteTransparent"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -23,6 +22,7 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
             android:fitsSystemWindows="true">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,25 +54,28 @@
         android:paddingBottom="@dimen/list_bottom_padding"
         android:paddingTop="@dimen/lin_container">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="@dimen/list_width"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:layout_gravity="center"
-        android:scrollbarStyle="outsideOverlay" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="@dimen/list_width"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layout_gravity="center"
+            android:scrollbarStyle="outsideOverlay" />
 
         <View
             android:layout_width="1dp"
             android:background="@color/color_graydr"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <FrameLayout
-            android:id="@+id/fram_contianer"
+            android:id="@+id/fram_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="InconsistentLayout">
 
         </FrameLayout>
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
@@ -86,19 +89,21 @@
         app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_add_white"
         android:layout_marginEnd="@dimen/fab_margin" />
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_storag"
+        android:id="@+id/fab_storage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="160dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_storag"
+        app:backgroundTint="@color/color_fab_storage"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_sd_storage"
         android:layout_marginEnd="@dimen/fab_margin" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_cloud"
         android:layout_width="wrap_content"
@@ -112,6 +117,7 @@
         app:pressedTranslationZ="12dp"
         android:src="@drawable/ic_cloud_download"
         android:layout_marginEnd="@dimen/fab_margin" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

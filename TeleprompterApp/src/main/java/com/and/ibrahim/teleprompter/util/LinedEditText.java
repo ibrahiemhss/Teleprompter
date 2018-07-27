@@ -2,17 +2,15 @@ package com.and.ibrahim.teleprompter.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.widget.EditText;
 
 import com.and.ibrahim.teleprompter.R;
 
 public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
-    private Rect mRect;
-    private Paint mPaint;
+    private final Rect mRect;
+    private final Paint mPaint;
 
     // we need this constructor for LayoutInflater
     public LinedEditText(Context context, AttributeSet attrs) {
@@ -21,7 +19,7 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
         mRect = new Rect();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaint.setColor(context.getResources().getColor(R.color.colorPrimaryLight)); 
+        mPaint.setColor(context.getResources().getColor(R.color.colorPrimaryLight));
     }
 
     @Override
@@ -37,12 +35,11 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
             count = getLineCount();//for long text with scrolling
 
         Rect r = mRect;
-        Paint paint = mPaint;
         int baseline = getLineBounds(0, r);//first line
 
         for (int i = 0; i < count; i++) {
 
-            canvas.drawLine(r.left, baseline + 1, r.right, baseline + 1, paint);
+            canvas.drawLine(r.left, baseline + 1, r.right, baseline + 1, mPaint);
             baseline += getLineHeight();//next line
         }
 

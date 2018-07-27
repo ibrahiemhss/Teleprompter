@@ -1,4 +1,5 @@
 package com.and.ibrahim.teleprompter.modules.CustomView;
+
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -14,12 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
-
+@SuppressWarnings("ALL")
 public class AutomaticScrollTextView extends LinearLayout {
 
     // Context of application
-    Context context;
+    private final Context context;
     // TextView
     private TextView mTextField1;
 
@@ -31,11 +31,6 @@ public class AutomaticScrollTextView extends LinearLayout {
     // Out animation
     private Animation mMoveText1TextOut = null;
 
-    // Duration of animation on start
-    private int durationStart;
-    // Duration of animation
-    private int duration;
-
     // Pain for drawing text
     private Paint mPaint;
 
@@ -45,13 +40,13 @@ public class AutomaticScrollTextView extends LinearLayout {
     /**
      * Control the speed. The lower this value, the faster it will scroll.
      */
-    public static final int MS_PER_PX = 80;
+    private static final int MS_PER_PX = 80;
 
     /**
      * Control the pause between the animations. Also, after starting this
      * activity.
      */
-    public static final int PAUSE_BETWEEN_ANIMATIONS = 0;
+    private static final int PAUSE_BETWEEN_ANIMATIONS = 0;
     private boolean mCancelled = false;
 
     // Layout width
@@ -146,7 +141,7 @@ public class AutomaticScrollTextView extends LinearLayout {
         invalidate();
     }
 
-    public void prepareTextFields() {
+    private void prepareTextFields() {
         mTextField1.setEllipsize(TextUtils.TruncateAt.END);
         mTextField1.setVisibility(View.INVISIBLE);
         expandTextView(mTextField1);
@@ -155,8 +150,8 @@ public class AutomaticScrollTextView extends LinearLayout {
     private void setupText1Marquee() {
 
         // Calculate duration of animations
-        durationStart = (int) ((mWidth + mText1TextWidth) * MS_PER_PX);
-        duration = (int) (2 * mWidth * MS_PER_PX);
+        int durationStart = (int) ((mWidth + mText1TextWidth) * MS_PER_PX);
+        int duration = (2 * mWidth * MS_PER_PX);
 
         // On start animation
         mMoveTextOnStart = new TranslateAnimation(0, -mWidth - mText1TextWidth,
@@ -208,6 +203,7 @@ public class AutomaticScrollTextView extends LinearLayout {
 
                     }
 
+                    @SuppressWarnings("UnnecessaryReturnStatement")
                     public void onAnimationEnd(Animation animation) {
 
                         if (mCancelled) {
@@ -237,12 +233,12 @@ public class AutomaticScrollTextView extends LinearLayout {
 
     private void initView(Context context) {
         setOrientation(LinearLayout.VERTICAL);
-        setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-                LayoutParams.FILL_PARENT, Gravity.LEFT));
+        setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT, Gravity.START));
         setPadding(0, 0, 0, 0);
 
         // Scroll View 1
-        LayoutParams sv1lp = new LayoutParams(LayoutParams.FILL_PARENT,
+        LayoutParams sv1lp = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
         sv1lp.gravity = Gravity.CENTER_HORIZONTAL;
         mScrollView1 = new ScrollView(context);
@@ -261,7 +257,7 @@ public class AutomaticScrollTextView extends LinearLayout {
 
     public void setText1(String text) {
 
-        String temp = "";
+        String temp;
         if (text.length() < 10) {
             temp = "         " + text + "         ";
         } else {
@@ -282,7 +278,7 @@ public class AutomaticScrollTextView extends LinearLayout {
 
     private void expandTextView(TextView textView) {
         ViewGroup.LayoutParams lp = textView.getLayoutParams();
-       // lp.width = DisplayActivity.getScreenWidth();
+        // lp.width = DisplayActivity.getScreenWidth();
         textView.setLayoutParams(lp);
     }
 }

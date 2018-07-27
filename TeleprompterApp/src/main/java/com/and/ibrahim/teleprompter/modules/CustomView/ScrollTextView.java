@@ -7,8 +7,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
-import android.widget.TextView;
 
+@SuppressWarnings("unused")
 public class ScrollTextView extends AppCompatTextView {
 
 
@@ -60,7 +60,7 @@ public class ScrollTextView extends AppCompatTextView {
     /**
      * begin to scroll the text from the original position
      */
-    public void startScroll() {
+    private void startScroll() {
         // begin from the very right side
         mXPaused = -1 * getWidth();
         // assume it's paused
@@ -71,7 +71,7 @@ public class ScrollTextView extends AppCompatTextView {
     /**
      * resume the scroll from the pausing point
      */
-    public void resumeScroll() {
+    private void resumeScroll() {
 
         if (!mPaused)
             return;
@@ -86,7 +86,7 @@ public class ScrollTextView extends AppCompatTextView {
 
         int scrollingLen = calculateScrollingLen();
         int distance = scrollingLen - (getWidth() + mXPaused);
-        int duration = (new Double(mRndDuration * distance * 1.00000
+        int duration = (Double.valueOf(mRndDuration * distance * 1.00000
                 / scrollingLen)).intValue();
 
         setVisibility(VISIBLE);
@@ -99,6 +99,7 @@ public class ScrollTextView extends AppCompatTextView {
      *
      * @return the scrolling length in pixels
      */
+    @SuppressWarnings("UnusedAssignment")
     private int calculateScrollingLen() {
         TextPaint tp = getPaint();
         Rect rect = new Rect();

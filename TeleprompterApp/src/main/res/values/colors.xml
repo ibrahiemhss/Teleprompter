@@ -6,19 +6,14 @@
     <color name="colorTransparentWhite">#42ffffff</color>
 
     <color name="colorAccent">#FF5722</color>
-    <color name="color_item_border">#FF5722</color>
     <color name="color_white">#ffffff</color>
     <color name="color_black">#ba000000</color>
 
-    <color name="color_graylt2">#e2e2e2</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="color_graydr">#757575</color>
-    <color name="color_graylt">#BDBDBD</color>
     <color name="color_fab_cloud">#2196F3</color>
     <color name="color_fab_add">#E040FB</color>
-    <color name="color_fab_storag">#00796B</color>
-
-    <color name="WhiteTransparent">#8fff</color>
+    <color name="color_fab_storage">#00796B</color>
 
 
 </resources>

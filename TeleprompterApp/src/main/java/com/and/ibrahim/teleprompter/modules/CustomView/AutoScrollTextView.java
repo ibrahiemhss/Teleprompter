@@ -1,6 +1,8 @@
 package com.and.ibrahim.teleprompter.modules.CustomView;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.Selection;
@@ -11,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
+
+import java.util.Objects;
 
 public class AutoScrollTextView extends AppCompatEditText {
     public AutoScrollTextView(Context context) {
@@ -38,18 +42,22 @@ public class AutoScrollTextView extends AppCompatEditText {
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
-        scrollToEnd();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            scrollToEnd();
+        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void append(CharSequence text, int start, int end) {
         super.append(text, start, end);
         scrollToEnd();
     }
 
-    public void scrollToEnd() {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void scrollToEnd() {
         Editable editable = getText();
-        Selection.setSelection(editable, editable.length());
+        Selection.setSelection(editable, Objects.requireNonNull(editable).length());
     }
 
     @Override

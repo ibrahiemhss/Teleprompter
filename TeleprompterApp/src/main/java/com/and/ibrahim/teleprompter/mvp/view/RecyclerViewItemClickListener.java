@@ -1,6 +1,7 @@
 package com.and.ibrahim.teleprompter.mvp.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -9,8 +10,8 @@ import android.view.View;
 public class RecyclerViewItemClickListener implements RecyclerView.OnItemTouchListener {
 
     //GestureDetector to detect touch event.
-    private GestureDetector gestureDetector;
-    private RecylerViewClickListener recylerViewClickListener;
+    private final GestureDetector gestureDetector;
+    private final RecylerViewClickListener recylerViewClickListener;
 
     public RecyclerViewItemClickListener(Context context, final RecyclerView recyclerView, final RecylerViewClickListener recylerViewClickListener) {
         this.recylerViewClickListener = recylerViewClickListener;
@@ -32,7 +33,7 @@ public class RecyclerViewItemClickListener implements RecyclerView.OnItemTouchLi
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         //On Touch event
         View child = rv.findChildViewUnder(e.getX(), e.getY());
         if (child != null && recylerViewClickListener != null && gestureDetector.onTouchEvent(e)) {
@@ -42,7 +43,7 @@ public class RecyclerViewItemClickListener implements RecyclerView.OnItemTouchLi
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
     }
 
     @Override

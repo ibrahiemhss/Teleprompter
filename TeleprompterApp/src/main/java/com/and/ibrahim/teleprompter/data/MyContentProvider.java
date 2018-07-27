@@ -7,14 +7,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.Objects;
+
 public class MyContentProvider extends ContentProvider {
-    private static final String TAG="MyContentProvider";
+    private static final String TAG = "MyContentProvider";
 
     private static final int TELEPROMPTER_CODE = 200;
     private static final int TELEPROMPTER_WITH_ID = 250;
@@ -41,9 +45,10 @@ public class MyContentProvider extends ContentProvider {
 
         return true;
     }
+
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
-        int uriType = 0;
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+        int uriType;
         int insertCount = 0;
         try {
 
@@ -78,6 +83,7 @@ public class MyContentProvider extends ContentProvider {
 
         return insertCount;
     }
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -85,7 +91,7 @@ public class MyContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
 
-        Cursor retCursor = null;
+        Cursor retCursor;
 
         switch (match) {
 
@@ -115,7 +121,9 @@ public class MyContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            retCursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
+        }
 
         return retCursor;
     }
@@ -145,7 +153,7 @@ public class MyContentProvider extends ContentProvider {
                 if (id > 0) {
                     returnUri = ContentUris.withAppendedId(Contract.BakeEntry.PATH_TELEPROMPTER_URI, id);
                 } else {
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                    throw new SQLException("Failed to insert row into " + uri);
                 }
 
                 break;
@@ -154,7 +162,9 @@ public class MyContentProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        getContext().getContentResolver().notifyChange(uri, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+        }
 
         return returnUri;
     }
@@ -172,13 +182,13 @@ public class MyContentProvider extends ContentProvider {
         switch (match) {
             case TELEPROMPTER_WITH_NO_ID:
                 String id = uri.getPathSegments().get(1);
-                if(id!=null){
+                if (id != null) {
                     // Use selections/selectionArgs to filter for this ID
                     idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER,
-                            Contract.BakeEntry.COL_UNIQUE_ID+" =?",
+                            Contract.BakeEntry.COL_UNIQUE_ID + " =?",
                             new String[]{id});
-                    Log.d(TAG,"idDeleted =is "+id);
-                }else {
+                    Log.d(TAG, "idDeleted =is " + id);
+                } else {
                     idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
 
                 }
@@ -194,7 +204,9 @@ public class MyContentProvider extends ContentProvider {
         }
 
         if (idDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+            }
         }
 
 
@@ -217,7 +229,9 @@ public class MyContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
-        getContext().getContentResolver().notifyChange(uri, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+        }
         return count;
     }
 

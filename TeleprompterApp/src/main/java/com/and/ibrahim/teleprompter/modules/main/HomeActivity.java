@@ -5,9 +5,10 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Point;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -36,13 +37,14 @@ import com.and.ibrahim.teleprompter.util.GetScreenOrientation;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
+@SuppressWarnings("WeakerAccess")
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final String TAG="HomeActivity";
+    private static final String TAG = "HomeActivity";
     @BindView(R.id.collapsing_toolbar)
     protected
     CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -55,21 +57,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.fab_add)
     protected
     FloatingActionButton mFabAdd;
-    @BindView(R.id.fab_storag)
+    @BindView(R.id.fab_storage)
     protected
-    FloatingActionButton mFabStorag;
+    FloatingActionButton mFabStorage;
     @BindView(R.id.fab_cloud)
     protected
     FloatingActionButton mFabCloud;
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
-    Dialog dialog;
+    private Dialog dialog;
 
     private ArrayList<DataObj> mArrayList;
-    private DataObj mDataObj;
-    TeleprompterAdapter teleprompterAdapter ;
+    private TeleprompterAdapter teleprompterAdapter;
 
-    private Unbinder unbinder;
     private FabAnimations mFabAnimations;
 
 
@@ -86,23 +86,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         return R.layout.activity_main;
     }
 
-    @Override
-    public void getExtra() {
 
-    }
-
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void init() {
-        mFabAnimations =new FabAnimations(this,mFab,mFabAdd,mFabStorag,mFabCloud);
-        teleprompterAdapter = new TeleprompterAdapter( getLayoutInflater());
+        mFabAnimations = new FabAnimations(this, mFab, mFabAdd, mFabStorage, mFabCloud);
+        teleprompterAdapter = new TeleprompterAdapter(getLayoutInflater());
         mCollapsingToolbarLayout.setTitle(getString(R.string.app_name));
         mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
         mFabAnimations.addFabAnimationRes();
 
-        mArrayList=new ArrayList<>();
-        mDataObj =new DataObj();
+        mArrayList = new ArrayList<>();
         initialiseListWithPhoneScreen();
     }
 
@@ -110,7 +105,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void setListener() {
         mFab.setOnClickListener(this);
         mFabAdd.setOnClickListener(this);
-        mFabStorag.setOnClickListener(this);
+        mFabStorage.setOnClickListener(this);
         mFabCloud.setOnClickListener(this);
 
         OnTouchRecyclerView();
@@ -119,66 +114,70 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.fab:
                 mFabAnimations.animateFAB();
                 break;
             case R.id.fab_add:
                 launchDismissDlg();
                 dialog.show();
-                Log.d(TAG,"FabAction is "+"Fab Add");
+                Log.d(TAG, "FabAction is " + "Fab Add");
 
                 break;
-            case R.id.fab_storag:
+            case R.id.fab_storage:
 
-                Log.d(TAG,"FabAction is "+"Fab Storag");
+                Log.d(TAG, "FabAction is " + "Fab Storage");
 
                 break;
             case R.id.fab_cloud:
                 // CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
                 launchDismissDlg();
                 dialog.show();
-                Log.d(TAG,"FabAction is "+"Fab Cloud");
+                Log.d(TAG, "FabAction is " + "Fab Cloud");
 
                 break;
         }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialiseListWithPhoneScreen() {
 
         Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics ();
+        DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
-        float density  = getResources().getDisplayMetrics().density;
+        float density = getResources().getDisplayMetrics().density;
         float dpHeight = outMetrics.heightPixels / density;
-        float dpWidth  = outMetrics.widthPixels / density;
+        float dpWidth = outMetrics.widthPixels / density;
 
-        Log.d(TAG,"screen width = "+String.valueOf(dpWidth));
-        Log.d(TAG,"screen height = "+String.valueOf(dpHeight));
+        Log.d(TAG, "screen width = " + String.valueOf(dpWidth));
+        Log.d(TAG, "screen height = " + String.valueOf(dpHeight));
 
-        mArrayList=GetData.getTeleprmpters(this);
+        mArrayList = GetData.getTeleprompters(this);
         mRecyclerView.setHasFixedSize(true);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
-        GridLayoutManager gridLayoutManager;
-       if( GetScreenOrientation.GetListByScreenSize(this)){
-           gridLayoutManager=new GridLayoutManager(this, 3);
+        GridLayoutManager gridLayoutManager = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (GetScreenOrientation.GetListByScreenSize(this)) {
+                gridLayoutManager = new GridLayoutManager(this, 3);
 
-       }else {
-           gridLayoutManager=new GridLayoutManager(this, columnCount);
+            } else {
+                gridLayoutManager = new GridLayoutManager(this, columnCount);
 
-       }
+            }
+        }
         mRecyclerView.setLayoutManager(gridLayoutManager);
         //Pass a list of images with inflater ​​in adapter
-        TeleprompterAdapter teleprompterAdapter = new TeleprompterAdapter( getLayoutInflater());
+        TeleprompterAdapter teleprompterAdapter = new TeleprompterAdapter(getLayoutInflater());
         teleprompterAdapter.addNewContent(mArrayList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                gridLayoutManager.getOrientation());
+                Objects.requireNonNull(gridLayoutManager).getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         mRecyclerView.setAdapter(teleprompterAdapter);
     }
 
-    public void OnTouchRecyclerView(){
+    private void OnTouchRecyclerView() {
         mRecyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this, mRecyclerView, new RecylerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -201,22 +200,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 alertDialogBuilder
                         .setMessage("Click yes to delete this file!")
                         .setCancelable(false)
-                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
                            /* ContentValues songValues = new ContentValues();
                             getContentResolver().delete(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
                                     Contract.BakeEntry._ID + " = ?",
                                     new String[]{songValues.getAsString(String.valueOf(position))});*/
 
-                                if (GetData.getTeleprmpters(HomeActivity.this).size() > 0) {
+                                if (GetData.getTeleprompters(HomeActivity.this).size() > 0) {
 
-                                  //  getContentResolver().delete(uri, null, null);
+                                    //  getContentResolver().delete(uri, null, null);
 
-                                    String mySelection=Contract.BakeEntry._ID+" =?";
 
-                                   // getContentResolver().delete(uri, mySelection, mySelectionArgs);
-                                   // int id = (int) viewHolder.itemView.getTag();
+                                    // getContentResolver().delete(uri, mySelection, mySelectionArgs);
+                                    // int id = (int) viewHolder.itemView.getTag();
 
                                     // Build appropriate uri with String row id appended
                                     String stringId = String.valueOf(mArrayList.get(position).getId());
@@ -227,22 +225,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
                                     // COMPLETED (2) Delete a single row of data using a ContentResolver
                                     getContentResolver().delete(uri, null, null);
-                                    if (uri != null) {
-                                        Log.d("contentResolver delete", "delete success");
-                                       // teleprompterAdapter.removeContent(mArrayList);
-                                        mArrayList.clear();
-                                        teleprompterAdapter.removeContent(mArrayList);
-                                        mArrayList=GetData.getTeleprmpters(HomeActivity.this);
-                                        teleprompterAdapter.addNewContent(mArrayList);
-                                        mRecyclerView.setAdapter(teleprompterAdapter);
-
-                                    }
+                                    Log.d("contentResolver delete", "delete success");
+                                    // teleprompterAdapter.removeContent(mArrayList);
+                                    mArrayList.clear();
+                                    teleprompterAdapter.removeContent();
+                                    mArrayList = GetData.getTeleprompters(HomeActivity.this);
+                                    teleprompterAdapter.addNewContent(mArrayList);
+                                    mRecyclerView.setAdapter(teleprompterAdapter);
 
                                 }
                             }
                         })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 // if this button is clicked, just close
                                 // the dialog box and do nothing
                                 dialog.cancel();
@@ -253,26 +248,28 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 AlertDialog alertDialog = alertDialogBuilder.create();
 
                 // show it
-                alertDialog.show();                    }
+                alertDialog.show();
+            }
         }));
 
     }
+
     private void launchDismissDlg() {
         dialog = new Dialog(this, R.style.PauseDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_item);
         dialog.setCanceledOnTouchOutside(true);
 
-        TextView mAdd=dialog.findViewById(R.id.txt_add);
-        TextView mCancel=dialog.findViewById(R.id.txt_cancel);
-        final LinedEditText mEditContent=dialog.findViewById(R.id.linededit_text_content);
-        final EditText mEditTitle=dialog.findViewById(R.id.edit_title);
+        TextView mAdd = dialog.findViewById(R.id.txt_add);
+        TextView mCancel = dialog.findViewById(R.id.txt_cancel);
+        final LinedEditText mEditContent = dialog.findViewById(R.id.linededit_text_content);
+        final EditText mEditTitle = dialog.findViewById(R.id.edit_title);
 
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                dialog. dismiss();
+                dialog.dismiss();
                 dialog.cancel();
                 dialog.hide();
 
@@ -282,22 +279,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
 
         mAdd.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
 
                 Cursor countCursor = getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
-                        new String[] {"count(*) AS count"},
+                        new String[]{"count(*) AS count"},
                         null,
                         null,
                         null);
 
-                countCursor.moveToFirst();
+                Objects.requireNonNull(countCursor).moveToFirst();
                 int count = countCursor.getInt(0);
 
                 ContentValues values = new ContentValues();
                 values.put(Contract.BakeEntry.COL_TITLE, mEditTitle.getText().toString());
-                values.put(Contract.BakeEntry.COL_COTENTS, mEditContent.getText().toString());
-                values.put(Contract.BakeEntry.COL_UNIQUE_ID, count+1);
+                values.put(Contract.BakeEntry.COL_CONTENTS, Objects.requireNonNull(mEditContent.getText()).toString());
+                values.put(Contract.BakeEntry.COL_UNIQUE_ID, count + 1);
 
 
                 final Uri uriInsert = getContentResolver().insert(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values);
@@ -308,11 +306,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 }
 
                 mArrayList.clear();
-                teleprompterAdapter.removeContent(mArrayList);
-                mArrayList=GetData.getTeleprmpters(HomeActivity.this);
+                teleprompterAdapter.removeContent();
+                mArrayList = GetData.getTeleprompters(HomeActivity.this);
                 teleprompterAdapter.addNewContent(mArrayList);
                 mRecyclerView.setAdapter(teleprompterAdapter);
-                mRecyclerView.smoothScrollToPosition(mRecyclerView.getAdapter().getItemCount()-1);
+                mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
                 values.clear();
 
             }
@@ -323,6 +321,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         dialog.show();
 
     }
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 

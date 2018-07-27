@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.animation.Interpolator;
 import android.widget.OverScroller;
 
-public class FixedSpeedScroller extends OverScroller {
+@SuppressWarnings("unused")
+class FixedSpeedScroller extends OverScroller {
 
     private int mDuration = 2000;
 

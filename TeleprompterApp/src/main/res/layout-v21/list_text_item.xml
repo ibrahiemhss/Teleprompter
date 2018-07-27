@@ -12,6 +12,7 @@
     android:background="@drawable/item_background"
     android:focusable="true"
     android:orientation="vertical"
+    android:elevation="@dimen/card_elevation"
     android:foreground="?selectableItemBackground">
 
     <FrameLayout
