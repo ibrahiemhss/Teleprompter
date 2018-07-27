@@ -266,7 +266,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        dialog.setContentView(R.layout.custom_drawer_item);
+        dialog.setContentView(R.layout.custom_dialog_edit_scroll);
         dialog.setCanceledOnTouchOutside(true);
         SeekBar mSeekScrollSpeed = dialog.findViewById(R.id.seek_speed_up);
         mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(getActivity()).getPrefIndex());

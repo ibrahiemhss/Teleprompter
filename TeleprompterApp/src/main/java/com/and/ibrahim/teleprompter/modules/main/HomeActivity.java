@@ -257,7 +257,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private void launchDismissDlg() {
         dialog = new Dialog(this, R.style.PauseDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_dialog_item);
+        dialog.setContentView(R.layout.custom_dialog_add_content);
         dialog.setCanceledOnTouchOutside(true);
 
         TextView mAdd = dialog.findViewById(R.id.txt_add);
