@@ -54,6 +54,7 @@ import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
+import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.CustomView.AutoScrollingTextView;
 import com.and.ibrahim.teleprompter.modules.CustomView.AutomaticScrollTextView;
 import com.and.ibrahim.teleprompter.modules.CustomView.SlideShowScrollView;
@@ -126,14 +127,16 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     private boolean paused = true;
     private int animationDelayMillis;
     private int scrollOffset;
-    int delay=30;
-    int period=30;
+    SeekBar.OnSeekBarChangeListener mSpeedUpSeekBarListener;
+    SeekBar.OnSeekBarChangeListener mResizeTextSeekBarListener;
+    private int timeSpeed=30;
 
     private int[] mScrollongPosition;
 
 
 /////////////////////////////////////////////////////////////////////////////
-public void startAutoScrolling(int delay,int period){
+public void startAutoScrolling(int time){
+
     if (scrollTimer == null) {
         scrollTimer					=	new Timer();
         final Runnable Timer_Tick 	= 	new Runnable() {
@@ -153,7 +156,9 @@ public void startAutoScrolling(int delay,int period){
             }
         };
 
-        scrollTimer.schedule(scrollerSchedule, delay, period);
+        scrollTimer.schedule(scrollerSchedule, time, time);
+        Log.d("speedScrollViw","\n delay ="+String.valueOf(time)+"\n period ="+String.valueOf(time));
+
     }
 }
 
@@ -200,9 +205,11 @@ public void moveScrollView(){
             readBundle(extras);
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         dataList = new ArrayList<DrawerItem>();
+        final int seekProgress=SharedPrefManager.getInstance(getActivity()).getPrefIndex();
+        setSpeed(seekProgress);
+        int tim=timeSpeed;
         mDrawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)view. findViewById(R.id.nav_view);
 
@@ -218,6 +225,7 @@ public void moveScrollView(){
             @Override
             public void onGlobalLayout() {
                 verticalOuterLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
                 getScrollMaxAmount();
                // startAutoScrolling();
             }
@@ -235,7 +243,7 @@ public void moveScrollView(){
                 if(paused) {
                     mPlay.setBackground(getActivity().getDrawable(R.drawable.ic_pause_circle_filled));
                     paused =false;
-                    startAutoScrolling(delay,period);
+                    startAutoScrolling(timeSpeed);
                     launchDismissDlg();
                     dialog.show();
 
@@ -262,77 +270,63 @@ public void moveScrollView(){
 
     }
 
-   private void   setSpeed(int progress){
-       if(progress<10){
-           delay=200;
-           period=200;
+   private void    setSpeed(int progress){
+       if(progress<=10){
+           timeSpeed=200;
 
 
-       }else if(progress>11&&progress<20){
-           delay=150;
-           period=150;
+       }else if(progress>=11||progress<=20){
+           timeSpeed=150;
 
 
        }
-       else if(progress>21&&progress<30){
-           delay=100;
-           period=100;
+       else if(progress>=21||progress<=30){
+           timeSpeed=100;
 
 
 
 
        }
-       else if(progress>31&&progress<40){
-           delay=50;
-           period=50;
+       else if(progress>=31||progress<=40){
+           timeSpeed=50;
 
        }
-       else  if(progress>46&&progress<50){
-           delay=45;
-           period=45;
+       else  if(progress>=46||progress<=50){
+           timeSpeed=45;
 
-       }else if(progress>51&&progress<55){
-           delay=30;
-           period=30;
+       }else if(progress>=51||progress<=55){
+           timeSpeed=30;
 
        }
-       else if(progress>56&&progress<60){
-           delay=25;
-           period=25;
+       else if(progress>=56||progress<=60){
+           timeSpeed=25;
 
        }
-       else if(progress>61&&progress<65){
-           delay=20;
-           period=20;
+       else if(progress>=61||progress<=65){
+           timeSpeed=20;
 
        }
-       else  if(progress>66&&progress<70){
-           delay=15;
-           period=15;
+       else  if(progress>=66||progress<=70){
+           timeSpeed=15;
 
        }
-       else  if(progress>71&&progress<75){
-           delay=10;
-           period=10;
+       else  if(progress>=71||progress<75){
+           timeSpeed=10;
 
-       }else if(progress>76&&progress<80){
-           delay=8;
-           period=8;
+       }else if(progress>=76||progress<=80){
+           timeSpeed=8;
 
        }
 
        else if(progress>81&&progress<85){
-           delay=5;
-           period=5;
+           timeSpeed=5;
 
        }
        else  if(progress>86&&progress<90){
-           delay=4;
-           period=4;
+           timeSpeed=4;
 
-       }else  if(progress>91&&progress<100){
-           delay=3;
-           period=3;
+       }else  if(progress>=91||progress<100){
+           timeSpeed=3;
 
        }
 
@@ -342,6 +336,8 @@ public void moveScrollView(){
         super.onPause();
 
     }
+
+
     private void launchDismissDlg() {
 
     dialog = new Dialog(getActivity());
@@ -358,59 +354,13 @@ public void moveScrollView(){
         dialog.setContentView(R.layout.custom_drawer_item);
         dialog.setCanceledOnTouchOutside(true);
         mSeekScrollSpeed = (SeekBar) dialog.findViewById(R.id.seek_speed_up);
+        mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(getActivity()).getPrefIndex());
         mSeekTextSize = (SeekBar) dialog.findViewById(R.id.seek_text_size);
         final LinedEditText mEditContent = dialog.findViewById(R.id.linededit_text_content);
         final EditText mEditTitle = dialog.findViewById(R.id.edit_title);
 
-        mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                stopAutoScrolling();
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-
-                setSpeed(progress);
-
-
-
-                Log.d("seekBarProgress",String.valueOf(progress));
-
-            }
-        });
-
-
-        mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                stopAutoScrolling();
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-
-                // t1.setTextSize(progress);
-                // time = 100*-progress;
-                mScrollText.setTextSize(progress);
-
-
-                Log.d("seekBarProgress",String.valueOf(progress));
-
-            }
-        });
+        mSeekTextSize.setOnSeekBarChangeListener(mResizeTextSeekBarListener);
+        mSeekScrollSpeed.setOnSeekBarChangeListener(mSpeedUpSeekBarListener);
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -426,8 +376,39 @@ public void moveScrollView(){
                 });
         }
 
+        mSpeedUpSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                startAutoScrolling(mSeekScrollSpeed.getProgress());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                stopAutoScrolling();
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                timeSpeed=progress;
+                SharedPrefManager.getInstance(getActivity()).setPrefIndex(progress);
+            }
+        };
 
 
+        mResizeTextSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                mScrollText.setTextSize(progress);
+            }
+        };
     /*      mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
