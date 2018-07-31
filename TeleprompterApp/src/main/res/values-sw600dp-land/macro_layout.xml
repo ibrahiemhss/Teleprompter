@@ -1,4 +1,11 @@
 <resources>
+
+    <dimen name="fab_margin">8dp</dimen>
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="toolbar_text_start_margin">48dp</dimen>
+    <dimen name="toolbar_text_end_margin">64dp</dimen>
+    <dimen name="toolbar_text_side_margin">16dp</dimen>
+
     <!-- recyclerVeiw main-->
     <dimen name="list_width">300dp</dimen>
     <dimen name="list_side_padding">5dp</dimen>

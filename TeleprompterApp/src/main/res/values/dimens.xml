@@ -7,7 +7,4 @@
     <dimen name="app_par_elevation">4dp</dimen>
     <dimen name="dialog_elevation">16dp</dimen>
     <dimen name="list_color_elevation">16dp</dimen>
-
-
-
 </resources>

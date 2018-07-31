@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/add_dialog_width"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/edit_title"
@@ -15,44 +16,42 @@
     <com.and.ibrahim.teleprompter.util.LinedEditText
         android:id="@+id/linededit_text_content"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_below="@+id/edit_title"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/add_dialog_etext_height"
+        android:layout_margin="@dimen/add_dialog_etext_margin"
         android:hint="@string/add_your_text"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="16sp"
+        android:textSize="@dimen/add_dialog_etext_size"
         android:textStyle="normal" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/linededit_text_content"
+        android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/txt_add"
-        android:layout_width="100dp"
-        android:layout_below="@+id/linededit_text_content"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/add_dialog_text_width"
+        android:layout_height="@dimen/add_dialog_text_height"
         android:textAlignment="center"
-        android:layout_alignParentEnd="true"
         android:background="@android:color/white"
         android:clickable="true"
         android:text="@string/add_dialog"
         android:textColor="@color/color_graydr"
         android:textStyle="bold"
-        android:layout_alignParentRight="true"
         android:focusable="true" />
 
     <TextView
         android:id="@+id/txt_cancel"
-        android:layout_width="100dp"
-        android:layout_toStartOf="@+id/txt_add"
-        android:layout_below="@+id/linededit_text_content"
+        android:layout_width="@dimen/add_dialog_text_width"
+        android:layout_height="@dimen/add_dialog_text_height"
         android:textAlignment="center"
-        android:layout_height="30dp"
         android:background="@android:color/white"
         android:clickable="true"
         android:text="@string/cancel_dialog"
         android:textColor="@color/color_graydr"
         android:textStyle="bold"
         android:focusable="true"
-        android:layout_toLeftOf="@+id/txt_add" />
-
-</RelativeLayout>
+         />
+    </LinearLayout>
+</LinearLayout>

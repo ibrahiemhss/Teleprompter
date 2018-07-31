@@ -1,7 +1,14 @@
 <resources>
 
-    <dimen name="fab_margin">8dp</dimen>
 
+    <dimen name="fab_margin">8dp</dimen>
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="toolbar_text_start_margin">48dp</dimen>
+    <dimen name="toolbar_text_end_margin">64dp</dimen>
+    <dimen name="toolbar_text_side_margin">16dp</dimen>
+
+
+    <!--mainActivity-->
     <!-- recyclerVeiw main-->
     <dimen name="list_margin_top">96dp</dimen>
     <dimen name="list_width">@dimen/match_parent</dimen>
@@ -19,6 +26,17 @@
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="text_top_margin">12dp</dimen>
     <dimen name="text_bottom_margin">4dp</dimen>
+
+    <!--add content dialog-->
+
+    <dimen name="add_dialog_width">264dp</dimen>
+    <dimen name="add_dialog_etext_height">336dp</dimen>
+    <dimen name="add_dialog_etext_size">16sp</dimen>
+    <dimen name="add_dialog_etext_margin">8dp</dimen>
+    <dimen name="add_dialog_text_width">96dp</dimen>
+    <dimen name="add_dialog_text_height">32dp</dimen>
+
+
 
     <!-- fragment -->
     <dimen name="up_view_height">214dp</dimen>
