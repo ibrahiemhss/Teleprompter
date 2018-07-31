@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
+import com.and.ibrahim.teleprompter.interfaces.OnItemClickListener;
+import com.and.ibrahim.teleprompter.interfaces.OnItemLongClickListener;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
@@ -108,15 +110,6 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
             return false;
         }
-    }
-
-    interface OnItemLongClickListener {
-        void onItemLongClicked(int position);
-    }
-
-    interface OnItemClickListener {
-
-        void onClick(int position);
     }
 
 }

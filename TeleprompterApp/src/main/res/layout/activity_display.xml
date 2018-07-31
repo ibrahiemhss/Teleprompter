@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.display.DisplayActivity">
+    android:id="@+id/fram_container_scroll_text"
+    android:orientation="vertical">
+
 
     <FrameLayout
         android:id="@+id/fram_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </FrameLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/r_toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/back_id"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/app_name"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
+            android:layout_alignParentStart="true"
+            />
+        <ImageView
+            android:id="@+id/play_scroll"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/app_name"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
+            />
+
+        <ImageView
+            android:id="@+id/show_setting"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/photo_toolbar_side_margen"
+            android:src="@drawable/ic_settings_white"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>
+

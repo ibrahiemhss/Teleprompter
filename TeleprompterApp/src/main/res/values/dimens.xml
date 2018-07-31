@@ -1,8 +1,13 @@
 <resources>
     <item name="match_parent" type="dimen">-1</item>
-
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="fab_press_translation_z">12dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="app_par_elevation">4dp</dimen>
+    <dimen name="dialog_elevation">16dp</dimen>
+    <dimen name="list_color_elevation">16dp</dimen>
+
 
 
 </resources>

@@ -1,62 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:openDrawer="start">
-
-    <FrameLayout
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#080808"
+    android:id="@+id/fram_container_scroll_text"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <View
-                android:id="@+id/up_veiw"
-                android:layout_width="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_height="@dimen/up_view_height"
-                android:background="@color/colorTransparentWhite" />
-
-            <LinearLayout
-                android:id="@+id/toggle_id"
-                android:layout_width="39dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/toggle_side_margin"
-                android:layout_marginBottom="@dimen/toggle_side_margin"
-                android:layout_below="@+id/up_veiw"
-                android:gravity="end"
-                android:background="@drawable/toggle_marker"
-                android:orientation="horizontal" />
-
-            <View
-                android:id="@+id/down_veiw"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/toggle_id"
-                android:layout_height="@dimen/down_view_height"
-                android:layout_gravity="bottom"
-                android:background="@color/colorTransparentWhite" />
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/play_scroll"
-            android:layout_width="@dimen/image_play_width"
-            android:layout_height="@dimen/image_play_height"
-            android:clickable="true"
-            android:contentDescription="@string/app_name"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/image_play_margin"
-            android:focusable="true"
-            android:background="@drawable/click_play" />
 
         <ScrollView
             android:id="@+id/slide_show_scroll"
             android:layout_width="match_parent"
+            android:background="@color/Black"
             android:layout_height="match_parent"
             android:scrollbars="none">
 
@@ -72,6 +26,7 @@
                     android:layout_margin="@dimen/scroll_text_margin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:text="@string/mytest"
                     android:textColor="@color/color_white"
                     android:textSize="24sp" />
             </LinearLayout>
@@ -80,131 +35,73 @@
 
 
         <RelativeLayout
+            android:id="@+id/r_toolbar_container"
             android:layout_width="match_parent"
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
             android:layout_height="?attr/actionBarSize">
 
             <ImageView
+                android:id="@+id/back_id"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/app_name"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/ic_arrow_back"
-                android:layout_alignParentStart="true" />
+                android:src="@drawable/ic_menu_animatable"
+                android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
+                android:layout_alignParentStart="true"
+                 />
+            <ImageView
+                android:id="@+id/play_scroll"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/app_name"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
+                />
 
             <ImageView
                 android:id="@+id/show_setting"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:contentDescription="@string/app_name"
                 android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/photo_toolbar_side_margen"
                 android:src="@drawable/ic_settings_white"
                 android:layout_alignParentRight="true" />
 
         </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/up_veiw"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="@dimen/up_view_height"
+            android:background="@color/colorTransparentWhite" />
+
+        <ImageView
+            android:id="@+id/show_play"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:visibility="invisible"
+            android:contentDescription="@string/app_name"
+            android:layout_below="@+id/up_veiw"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"/>
+        <View
+            android:id="@+id/down_veiw"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/show_play"
+            android:layout_height="@dimen/down_view_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorTransparentWhite" />
+    </RelativeLayout>
 
     </FrameLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_marginTop="350dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start">
-
-
-        <LinearLayout
-            android:id="@+id/itemLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:orientation="vertical"
-            android:layout_marginTop="0dp"
-            android:background="?android:attr/activatedBackgroundIndicator"
-            android:layout_alignParentStart="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/lin_edit_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lin_edit_container_height"
-                    android:background="@color/colorPrimaryLight"
-                    android:layout_gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/app_name"
-                        android:layout_marginRight="16dp"
-                        android:src="@drawable/font_size"
-                        android:layout_marginEnd="16dp" />
-
-                    <SeekBar
-                        android:id="@+id/seek_text_size"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent" />
-
-                    <ImageView
-                        android:layout_width="96dp"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="16dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/font_size"
-                        android:layout_marginEnd="16dp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lin_edit_container_height"
-                    android:background="@color/colorPrimaryLight"
-                    android:layout_gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <SeekBar
-                        android:id="@+id/seek_speed_up"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent" />
-
-                    <TextView
-                        android:id="@+id/text_font"
-                        android:layout_width="96dp"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="16dp"
-                        android:background="@color/color_white"
-                        android:textColor="@color/colorPrimaryText"
-                        android:layout_weight="1"
-                        android:src="@drawable/font_size"
-                        android:layout_marginEnd="16dp" />
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="#DADADC"/>
-        </LinearLayout>
-
-    </android.support.design.widget.NavigationView>
-
-</android.support.v4.widget.DrawerLayout>

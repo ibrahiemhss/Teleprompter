@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_graylt"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout

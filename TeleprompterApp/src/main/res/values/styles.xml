@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" tools:keep="@style/AppTheme_AppBarOverlay">
@@ -14,18 +15,36 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" tools:keep="@style/AppTheme_PopupOverlay" />
 
-
-    <style name="PauseDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+    <style name="ToUptAnimation">
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/push_up_out</item>
     </style>
 
-    <style name="PauseDialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/fadein</item>
-        <item name="android:windowExitAnimation">@anim/fadeut</item>
+
+    <style name="ToRightAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="SlideDialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
+    <style name="ToLiftAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_left</item>
+    </style>
+
+
+
+    <style name="DialogStyleLight">
+        <!-- anything can be left out: -->
+<!--
+        <item name="titleTextColor">@color/dialog_title_text</item>
+
+        <item name="titleSeparatorColor">@color/dialog_title_separator</item>
+        <item name="messageTextColor">@color/dialog_message_text</item>
+        <item name="buttonTextColor">@color/dialog_button_text</item>
+        <item name="buttonSeparatorColor">@color/dialog_button_separator</item>
+        <item name="buttonBackgroundColorNormal">@color/dialog_button_normal</item>
+        <item name="buttonBackgroundColorPressed">@color/dialog_button_pressed</item>
+        <item name="buttonBackgroundColorFocused">@color/dialog_button_focused</item>
+        <item name="dialogBackground">@drawable/dialog_background</item> -->
     </style>
 </resources>

@@ -1,17 +1,15 @@
 <resources>
-    <!-- recyclerVeiw -->
+    <!-- recyclerVeiw main-->
     <dimen name="list_width">300dp</dimen>
     <dimen name="list_side_padding">5dp</dimen>
     <dimen name="list_bottom_padding">24dp</dimen>
     <!-- layoutsw600 -->
     <dimen name="lin_container">96dp</dimen>
 
-
-    <!-- list item -->
+    <!-- list item main-->
     <integer name="list_column_count">1</integer>
     <dimen name="item_width">128dp</dimen>
     <dimen name="item_height">162dp</dimen>
-
     <dimen name="item_layout_margin">4dp</dimen>
     <dimen name="item_side_margin">8dp</dimen>
     <dimen name="item_top_margin">4dp</dimen>
@@ -23,6 +21,26 @@
     <!-- fragment -->
     <dimen name="up_view_height">124dp</dimen>
     <dimen name="down_view_height">190dp</dimen>
+
+    <!--custom edit dialog-->
+    <dimen name="edit_dialog_width">312dp</dimen>
+    <dimen name="edit_dialog_height">500dp</dimen>
+    <dimen name="edit_dialog_veiw_group_width">@dimen/match_parent</dimen>
+    <dimen name="edit_dialog_veiw_group_height">72dp</dimen>
+    <dimen name="edit_dialog_veiw_group_side_margin">8dp</dimen>
+    <dimen name="edit_dialog_veiw_group_top_margin">8dp</dimen>
+    <dimen name="edit_dialog_veiw_group_bottom_margin">8dp</dimen>
+    <dimen name="edit_dialog_small_image_font_width">24dp</dimen>
+    <dimen name="edit_dialog_small_image_font_height">24dp</dimen>
+    <dimen name="edit_dialog_big_image_font_width">24dp</dimen>
+    <dimen name="edit_dialog_big_image_font_height">24dp</dimen>
+    <dimen name="edit_dialog_image_color_width">56dp</dimen>
+    <dimen name="edit_dialog_image_color_height">56dp</dimen>
+    <dimen name="edit_dialog_text_size">18sp</dimen>
+
+    <!--dailog colors-->
+    <dimen name="colors_dialog_width">384dp</dimen>
+    <dimen name="colors_dialog_height">244dp</dimen>
 
 
 </resources>

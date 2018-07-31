@@ -66,6 +66,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
     private Dialog dialog;
+    private boolean isAdded=false;
+    private boolean isOpen=false;
 
     private ArrayList<DataObj> mArrayList;
     private TeleprompterAdapter teleprompterAdapter;
@@ -119,8 +121,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 mFabAnimations.animateFAB();
                 break;
             case R.id.fab_add:
-                launchDismissDlg();
-                dialog.show();
+                if(!isOpen){
+                    isOpen=true;
+
+                    launchDismissDlg();
+                    dialog.show();
+
+                }
                 Log.d(TAG, "FabAction is " + "Fab Add");
 
                 break;
@@ -136,6 +143,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
 
                 break;
+
         }
     }
 
@@ -255,7 +263,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void launchDismissDlg() {
-        dialog = new Dialog(this, R.style.PauseDialog);
+        isAdded=false;
+        dialog = new Dialog(this, R.style.ToUptAnimation);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_add_content);
         dialog.setCanceledOnTouchOutside(true);
@@ -278,47 +287,58 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         });
 
 
-        mAdd.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
 
-                Cursor countCursor = getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
-                        new String[]{"count(*) AS count"},
-                        null,
-                        null,
-                        null);
+            mAdd.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onClick(View v) {
 
-                Objects.requireNonNull(countCursor).moveToFirst();
-                int count = countCursor.getInt(0);
+                    if(!isAdded){
+                        Cursor countCursor = getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                                new String[]{"count(*) AS count"},
+                                null,
+                                null,
+                                null);
 
-                ContentValues values = new ContentValues();
-                values.put(Contract.BakeEntry.COL_TITLE, mEditTitle.getText().toString());
-                values.put(Contract.BakeEntry.COL_CONTENTS, Objects.requireNonNull(mEditContent.getText()).toString());
-                values.put(Contract.BakeEntry.COL_UNIQUE_ID, count + 1);
+                        Objects.requireNonNull(countCursor).moveToFirst();
+                        int count = countCursor.getInt(0);
+
+                        ContentValues values = new ContentValues();
+                        values.put(Contract.BakeEntry.COL_TITLE, mEditTitle.getText().toString());
+                        values.put(Contract.BakeEntry.COL_CONTENTS, Objects.requireNonNull(mEditContent.getText()).toString());
+                        values.put(Contract.BakeEntry.COL_UNIQUE_ID, count + 1);
 
 
-                final Uri uriInsert = getContentResolver().insert(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values);
-                if (uriInsert != null) {
-                    Log.d("contentResolver insert", "first added success");
+                        final Uri uriInsert = getContentResolver().insert(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values);
+                        if (uriInsert != null) {
+                            Log.d("contentResolver insert", "first added success");
 
-                    values.clear();
+                            values.clear();
+                        }
+
+                        mArrayList.clear();
+                        teleprompterAdapter.removeContent();
+                        mArrayList = GetData.getTeleprompters(HomeActivity.this);
+                        teleprompterAdapter.addNewContent(mArrayList);
+                        mRecyclerView.setAdapter(teleprompterAdapter);
+                        mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
+                        values.clear();
+                        isAdded=true;
+                    }
+
+
                 }
+            });
 
-                mArrayList.clear();
-                teleprompterAdapter.removeContent();
-                mArrayList = GetData.getTeleprompters(HomeActivity.this);
-                teleprompterAdapter.addNewContent(mArrayList);
-                mRecyclerView.setAdapter(teleprompterAdapter);
-                mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
-                values.clear();
 
-            }
-        });
+
+
         //  dialog.setCanceledOnTouchOutside(false);
         // dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         dialog.show();
+        isOpen=false;
+
 
     }
 

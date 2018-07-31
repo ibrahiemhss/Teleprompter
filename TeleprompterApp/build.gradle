@@ -39,6 +39,15 @@ dependencies {
 
     //Lottie library for  animations effects
     implementation 'com.airbnb.android:lottie:2.5.5'
+    //circleimageview library
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //setting
+    implementation 'com.android.support:preference-v7:28.0.0-beta01'
+
+    implementation 'com.pavelsikun:material-seekbar-preference:2.3.0+'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

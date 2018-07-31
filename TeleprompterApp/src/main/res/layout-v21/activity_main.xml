@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_green"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -67,7 +68,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginStart="@dimen/fab_margin"
         android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_add"
+        app:backgroundTint="@color/sea_green"
         app:elevation="@dimen/fab_elevation"
         app:pressedTranslationZ="@dimen/fab_press_translation_z"
         android:src="@drawable/ic_add_white"
@@ -80,7 +81,7 @@
         android:layout_marginBottom="160dp"
         android:layout_gravity="bottom|end"
         android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_storage"
+        app:backgroundTint="@color/lime_green"
         app:elevation="@dimen/fab_elevation"
         app:pressedTranslationZ="@dimen/fab_press_translation_z"
         android:src="@drawable/ic_sd_storage"
