@@ -71,7 +71,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     protected RelativeLayout mToolbarContainer;
     @BindView(R.id.show_play)
     protected ImageView mPlayStatus;
-    private TextView  mTextSpeed;
+    private TextView mTextSpeed;
     private Dialog mDialog;
     private Dialog mDialogTextColors;
     private Dialog mDialogBackgroundtColors;
@@ -79,24 +79,22 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     private int[] mBackGroundColorrArray;
 
 
-
     private Timer scrollTimer = null;
     private int verticalScrollMax = 0;
     private TimerTask clickSchedule;
     private TimerTask scrollerSchedule;
-    private boolean isOpen=false;
+    private boolean isOpen = false;
     private int textSpeedValue;
     private boolean isUp;
     private int mTextColor;
     private int mBackgroundColor;
-    private boolean isFirstOpen=false;
+    private boolean isFirstOpen = false;
 
     private RecyclerView mColorsRV;
     private ListView mBackgroundColorListView;
 
-    private  ColorsAdapter mColorAdapter;
+    private ColorsAdapter mColorAdapter;
     private Colors mColors;
-
 
 
     private String mScrollString;
@@ -180,26 +178,26 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
             readBundle(extras);
         }
         isUp = true;
-        textSpeedValue=1;
+        textSpeedValue = 1;
         mTextColorrArray = getActivity().getResources().getIntArray(R.array.text_colors);
         mBackGroundColorrArray = getActivity().getResources().getIntArray(R.array.background_colors);
 
 
-        isFirstOpen=SharedPrefManager.getInstance(getActivity()).isFirstOpen();
+        isFirstOpen = SharedPrefManager.getInstance(getActivity()).isFirstOpen();
 
         mToolbarContainer.setVisibility(View.VISIBLE);
         mPlay.setBackground(Objects.requireNonNull(getActivity()).getDrawable(R.drawable.ic_arrow));
         mPlayStatus.setBackground(Objects.requireNonNull(getActivity()).getDrawable(R.drawable.ic_arrow));
         final int seekProgress = SharedPrefManager.getInstance(getActivity()).getPrefSpeed();
 
-       if (!isFirstOpen) {
-            mTextColor=getActivity().getResources().getColor(R.color.White);
-            mBackgroundColor=getActivity().getResources().getColor(R.color.Black);
+        if (!isFirstOpen) {
+            mTextColor = getActivity().getResources().getColor(R.color.White);
+            mBackgroundColor = getActivity().getResources().getColor(R.color.Black);
             SharedPrefManager.getInstance(getActivity()).setPrefFirstOpen(true);
-        }else {
+        } else {
 
-            mTextColor=SharedPrefManager.getInstance(getActivity()).getPrefTextColor();
-            mBackgroundColor=SharedPrefManager.getInstance(getActivity()).getPrefBackgroundColr();
+            mTextColor = SharedPrefManager.getInstance(getActivity()).getPrefTextColor();
+            mBackgroundColor = SharedPrefManager.getInstance(getActivity()).getPrefBackgroundColr();
 
         }
 
@@ -230,7 +228,6 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
 
 
         clickToScrolling();
-
 
 
         return view;
@@ -295,7 +292,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void clickToScrolling(){
+    public void clickToScrolling() {
         mSlideShowScroll.getChildAt(0).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -329,8 +326,9 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
 
         });
     }
+
     // slide the view from below itself to the current position
-    public void slideUp(View view){
+    public void slideUp(View view) {
         view.setVisibility(View.VISIBLE);
         TranslateAnimation animate = new TranslateAnimation(
                 0,                 // fromXDelta
@@ -343,7 +341,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     }
 
     // slide the view from its current position to below itself
-    public void slideDown(View view){
+    public void slideDown(View view) {
         TranslateAnimation animate = new TranslateAnimation(
                 0,                 // fromXDelta
                 0,                 // toXDelta
@@ -416,14 +414,14 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchEditDlg() {
-        isOpen=false;
+        isOpen = false;
 
         mDialog = new Dialog(Objects.requireNonNull(getActivity()));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(Objects.requireNonNull(mDialog.getWindow()).getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = LEFT|BOTTOM;
+        lp.gravity = LEFT | BOTTOM;
         lp.windowAnimations = R.style.ToLiftAnimation;
         mDialog.getWindow().setAttributes(lp);
 
@@ -433,8 +431,8 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
         mDialog.setContentView(R.layout.custom_dialog_edit_scroll);
         SeekBar mSeekScrollSpeed = mDialog.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mDialog.findViewById(R.id.seek_text_size);
-        final LinearLayout onClickDialogTextColor=mDialog.findViewById(R.id.ln_launch_text_color);
-        TextView cancelBtn=mDialog.findViewById(R.id.cancel_edit_dialog);
+        final LinearLayout onClickDialogTextColor = mDialog.findViewById(R.id.ln_launch_text_color);
+        TextView cancelBtn = mDialog.findViewById(R.id.cancel_edit_dialog);
 
         mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(getActivity()).getPrefSpeed());
         mSeekTextSize.setProgress(SharedPrefManager.getInstance(getActivity()).getPrefTextSize());
@@ -445,12 +443,11 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
         mSeekScrollSpeed.setOnSeekBarChangeListener(mSpeedUpSeekBarListener);
 
 
-
-        textSpeedValue=SharedPrefManager.getInstance(getActivity()).getPrefSpeed();
-        if(textSpeedValue>0){
+        textSpeedValue = SharedPrefManager.getInstance(getActivity()).getPrefSpeed();
+        if (textSpeedValue > 0) {
             mTextSpeed.setText(String.valueOf(textSpeedValue));
 
-        }else {
+        } else {
             mTextSpeed.setText("");
         }
 
@@ -459,7 +456,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 launchDlgTextColors();
                 if (!isOpen) {
-                    isOpen=true;
+                    isOpen = true;
                     launchDlgTextColors();
                 }
             }
@@ -472,6 +469,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchDlgTextColors() {
 
@@ -480,7 +478,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
         lp.copyFrom(Objects.requireNonNull(mDialogTextColors.getWindow()).getAttributes());
         lp.width = 48;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = BOTTOM|START;
+        lp.gravity = BOTTOM | START;
         lp.windowAnimations = R.style.ToRightAnimation;
         mDialogTextColors.getWindow().setAttributes(lp);
 
@@ -488,17 +486,17 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
         mDialogTextColors.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialogTextColors.setContentView(R.layout.dialog_colors);
 
-        FloatingActionButton fab =mDialogTextColors.findViewById(R.id.cancel_text_color_dialog);
+        FloatingActionButton fab = mDialogTextColors.findViewById(R.id.cancel_text_color_dialog);
 
-        mColorsRV=mDialogTextColors.findViewById(R.id.rv_colors);
+        mColorsRV = mDialogTextColors.findViewById(R.id.rv_colors);
 
-        mColors =new Colors();
+        mColors = new Colors();
         mColorsRV.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = null;
-                gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mColorsRV.setLayoutManager(gridLayoutManager);
 
-        mColorAdapter= new ColorsAdapter(getActivity(),getActivity().getLayoutInflater());
+        mColorAdapter = new ColorsAdapter(getActivity(), getActivity().getLayoutInflater());
 
         mColorsRV.setAdapter(mColorAdapter);
 
@@ -530,7 +528,7 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
         });
         mDialogTextColors.show();
 
-        isOpen=false;
+        isOpen = false;
     }
    /* @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchDlgBackgrounColors() {
@@ -614,11 +612,11 @@ public class DisplayFragment extends Fragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
-        int getView=view.getId();
-        switch (getView){
+        int getView = view.getId();
+        switch (getView) {
             case R.id.show_setting:
-                if(!isOpen){
-                    isOpen=true;
+                if (!isOpen) {
+                    isOpen = true;
                     launchEditDlg();
                     mDialog.show();
 

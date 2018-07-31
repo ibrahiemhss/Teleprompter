@@ -17,7 +17,6 @@
     <integer name="list_column_count">2</integer>
     <dimen name="item_width">128dp</dimen>
     <dimen name="item_height">162dp</dimen>
-
     <dimen name="item_layout_margin">4dp</dimen>
     <dimen name="item_side_margin">8dp</dimen>
     <dimen name="item_top_margin">4dp</dimen>
@@ -25,6 +24,8 @@
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="text_top_margin">8dp</dimen>
     <dimen name="text_bottom_margin">4dp</dimen>
+    <dimen name="item_image_width">48dp</dimen>
+    <dimen name="item_image_height">48dp</dimen>
 
     <!--custom edit dialog-->
     <dimen name="edit_dialog_width">500dp</dimen>

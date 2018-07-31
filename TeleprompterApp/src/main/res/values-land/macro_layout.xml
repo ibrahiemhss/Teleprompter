@@ -18,6 +18,8 @@
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="text_top_margin">8dp</dimen>
     <dimen name="text_bottom_margin">4dp</dimen>
+    <dimen name="item_image_width">48dp</dimen>
+    <dimen name="item_image_height">48dp</dimen>
 
     <!-- fragment -->
     <dimen name="up_view_height">124dp</dimen>

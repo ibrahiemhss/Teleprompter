@@ -17,7 +17,6 @@ public class SharedPrefManager {
     private static final String PREF_FIRST_OPEN = "first_open";
 
 
-
     private static final String SHARED_PREF_NAME = "save_contents";
     private static SharedPrefManager mInstance;
     private final SharedPreferences pref;
@@ -65,6 +64,7 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
+
     public int getPrefBackgroundColr() {
         return pref.getInt(PREF_BACKGROUND_COLOR, 0);
     }

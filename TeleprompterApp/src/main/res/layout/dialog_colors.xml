@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_margin="@dimen/colors_dialog_margin"
     android:layout_height="wrap_content"
     android:layout_gravity="start"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="@dimen/list_color_elevation"
     android:orientation="vertical">
-<android.support.v7.widget.RecyclerView
 
-    android:id="@+id/rv_colors"
-    android:layout_width="@dimen/colors_dialog_width"
-    android:layout_gravity="center"
-    android:layout_height="@dimen/colors_dialog_height">
+    <android.support.v7.widget.RecyclerView
 
-</android.support.v7.widget.RecyclerView>
+        android:id="@+id/rv_colors"
+        android:layout_width="@dimen/colors_dialog_width"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/colors_dialog_height">
+
+    </android.support.v7.widget.RecyclerView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/cancel_text_color_dialog"
         android:layout_width="wrap_content"

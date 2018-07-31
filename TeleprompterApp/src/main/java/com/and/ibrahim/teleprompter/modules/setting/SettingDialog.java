@@ -53,7 +53,6 @@ public class SettingDialog extends Dialog implements
         mTextSpeed.setOnClickListener(this);
 
 
-
     }
 
     private void onSeekBarChanProgress() {
@@ -62,7 +61,7 @@ public class SettingDialog extends Dialog implements
         mSpeedUpSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               // startAutoScrolling(timeSpeed);
+                // startAutoScrolling(timeSpeed);
             }
 
             @Override
@@ -90,13 +89,13 @@ public class SettingDialog extends Dialog implements
 
             @Override
             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-               // mScrollText.setTextSize(progress);
+                // mScrollText.setTextSize(progress);
                 SharedPrefManager.getInstance(mContext).setPrefTextSize(progress);
 
             }
         };
 
-}
+    }
 
     @Override
     public void onClick(View v) {

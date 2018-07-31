@@ -11,6 +11,7 @@
         android:id="@+id/rv44"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:id="@+id/lin_edit_container"
             android:layout_width="match_parent"
@@ -32,8 +33,7 @@
                 android:layout_alignParentLeft="true"
                 android:elevation="6dp"
                 android:layout_marginLeft="16dp"
-                android:src="@drawable/font_size"/>
-
+                android:src="@drawable/font_size" />
 
 
             <ImageView
@@ -46,10 +46,10 @@
                 android:layout_marginRight="16dp"
                 android:elevation="6dp"
                 android:src="@drawable/font_size"
-                android:layout_marginEnd="16dp"
-                />
+                android:layout_marginEnd="16dp" />
 
         </RelativeLayout>
+
         <SeekBar
             android:id="@+id/seek_text_size"
             android:layout_width="match_parent"
@@ -63,22 +63,23 @@
             android:layout_below="@+id/seek_text_size"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/lime_green"/>
+            android:background="@color/lime_green" />
 
         <RelativeLayout
             android:id="@+id/rv2"
             android:layout_height="@dimen/edit_dialog_veiw_group_height"
             android:layout_width="@dimen/edit_dialog_veiw_group_width"
             android:layout_weight="1"
-            android:layout_below="@+id/view1"
-            >
+            android:layout_below="@+id/view1">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/edit_dialog_text_size"
                 android:textColor="@color/orange_light"
                 android:layout_marginLeft="@dimen/edit_dialog_text_side_margin"
-                android:text="slow"/>
+                android:text="slow" />
+
             <TextView
                 android:id="@+id/text_font"
                 android:layout_width="@dimen/edit_dialog_text_width"
@@ -89,6 +90,7 @@
                 android:textColor="@color/lime_green"
                 android:textSize="16sp"
                 android:textAlignment="center" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,14 +99,15 @@
                 android:textSize="@dimen/edit_dialog_text_size"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/edit_dialog_text_side_margin"
-                android:textColor="@color/orange_light"
-                />
+                android:textColor="@color/orange_light" />
         </RelativeLayout>
+
         <SeekBar
             android:id="@+id/seek_speed_up"
             android:layout_width="match_parent"
             android:layout_below="@+id/rv2"
             android:layout_height="wrap_content" />
+
         <View
             android:id="@+id/rv55"
             android:layout_below="@+id/seek_speed_up"
@@ -112,7 +115,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_height="1dp"
-            android:background="@color/lime_green"/>
+            android:background="@color/lime_green" />
 
         <LinearLayout
             android:layout_below="@+id/rv55"
@@ -130,7 +133,7 @@
                     android:id="@+id/ln_launch_text_color"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="@dimen/lin_color_container_height">
+                    android:layout_height="@dimen/edit_dialog_veiw_group_height">
 
                     <ImageView
                         android:id="@+id/font_color"
@@ -139,8 +142,8 @@
                         android:layout_marginTop="@dimen/edit_dialog_img_veiw_top_margin"
                         android:layout_marginLeft="@dimen/edit_dialog_img_veiw_side_margin"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/circle_sahpe"
-                        />
+                        android:src="@drawable/circle_sahpe" />
+
                     <TextView
                         android:layout_below="@+id/font_color"
                         android:layout_width="wrap_content"
@@ -151,20 +154,20 @@
                         android:layout_marginTop="@dimen/edit_dialog_text_top_margin"
                         android:layout_marginLeft="@dimen/edit_dialog_text_side_margin"
                         android:textSize="@dimen/edit_dialog_text_size"
-                        android:textColor="@color/orange_light"
-                        />
+                        android:textColor="@color/orange_light" />
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/lime_green"/>
+                    android:background="@color/lime_green" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    >
+                    android:layout_weight="1">
+
                     <CheckBox
                         android:id="@+id/check_toggle"
                         android:layout_width="wrap_content"
@@ -174,7 +177,8 @@
                         android:button="@drawable/checkbox_background"
                         android:scaleX="1"
                         android:scaleY="1"
-                        android:layout_alignParentLeft="true"/>
+                        android:layout_alignParentLeft="true" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -183,56 +187,60 @@
                         android:layout_marginTop="@dimen/edit_dialog_text_top_margin"
                         android:layout_marginLeft="@dimen/edit_dialog_text_side_margin"
                         android:layout_toRightOf="@+id/check_toggle"
-                        android:textColor="@color/orange_light"
-                        />
+                        android:textColor="@color/orange_light" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
-  <RelativeLayout
-    android:layout_width="match_parent"
-      android:layout_alignParentBottom="true"
-    android:layout_height="wrap_content">
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lime_green"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="@dimen/edit_dialog_text_width"
-            android:layout_height="@dimen/edit_dialog_text_height"
-            android:textAlignment="center"
-            android:background="@drawable/white_back"
-            android:textColor="@color/colorPrimaryText"
-            android:layout_weight="1"
-            android:text="reset"
-            android:layout_margin="@dimen/text_side_margin" />
-        <TextView
-            android:id="@+id/cancel_edit_dialog"
-            android:layout_width="@dimen/edit_dialog_text_width"
-            android:layout_height="@dimen/edit_dialog_text_height"
-            android:textAlignment="center"
-            android:background="@drawable/accent_back"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/text_side_margin"
-            android:textColor="@color/color_white"
-            android:text="@string/cancel_dialog"/>
-        <TextView
-            android:layout_width="@dimen/edit_dialog_text_width"
-            android:layout_height="@dimen/edit_dialog_text_height"
-            android:textAlignment="center"
-            android:background="@drawable/white_back"
-            android:textColor="@color/colorPrimaryText"
-            android:layout_weight="1"
-            android:text="save"
-            android:layout_margin="@dimen/text_side_margin" />
-    </LinearLayout>
-</RelativeLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lime_green" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/edit_dialog_text_width"
+                android:layout_height="@dimen/edit_dialog_text_height"
+                android:textAlignment="center"
+                android:background="@drawable/white_back"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_weight="1"
+                android:text="reset"
+                android:layout_margin="@dimen/text_side_margin" />
+
+            <TextView
+                android:id="@+id/cancel_edit_dialog"
+                android:layout_width="@dimen/edit_dialog_text_width"
+                android:layout_height="@dimen/edit_dialog_text_height"
+                android:textAlignment="center"
+                android:background="@drawable/accent_back"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/text_side_margin"
+                android:textColor="@color/color_white"
+                android:text="@string/cancel_dialog" />
+
+            <TextView
+                android:layout_width="@dimen/edit_dialog_text_width"
+                android:layout_height="@dimen/edit_dialog_text_height"
+                android:textAlignment="center"
+                android:background="@drawable/white_back"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_weight="1"
+                android:text="save"
+                android:layout_margin="@dimen/text_side_margin" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

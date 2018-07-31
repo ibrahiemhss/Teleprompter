@@ -35,15 +35,15 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<Integer> dataObjArrayList = new ArrayList<>();
 
-    public ColorsAdapter(Context context,LayoutInflater inflater) {
+    public ColorsAdapter(Context context, LayoutInflater inflater) {
         mLayoutInflater = inflater;
-        mContext=context;
+        mContext = context;
 
         colorBackgroundArray = mContext.getResources().getIntArray(R.array.background_colors);
         colorTextArray = mContext.getResources().getIntArray(R.array.text_colors);
-        for(int i : colorTextArray) {
+        for (int i : colorTextArray) {
             dataObjArrayList.add(i);
-           // colorBackgroundArray.add(i);
+            // colorBackgroundArray.add(i);
 
         }
 
@@ -60,7 +60,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull ColorsAdapter.Holder holder, int position) {
 
-        holder.bind( position);
+        holder.bind(position);
         Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
 
 
@@ -74,7 +74,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
     public int getItemCount() {
         return dataObjArrayList.size();
     }
-
 
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,7 +94,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
         }
 
-        public void bind( int position) {
+        public void bind(int position) {
             mBackgroundColor.setBackgroundColor(colorBackgroundArray[position]);
             mTextColor.setBackgroundColor(colorTextArray[position]);
 

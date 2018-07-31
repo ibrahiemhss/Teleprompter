@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/fram_container_scroll_text"
-        android:orientation="vertical">
+    android:orientation="vertical">
 
 
-        <ScrollView
-            android:id="@+id/slide_show_scroll"
+    <ScrollView
+        android:id="@+id/slide_show_scroll"
+        android:layout_width="match_parent"
+        android:background="@color/Black"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/vertical_outer_id"
             android:layout_width="match_parent"
-            android:background="@color/Black"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/vertical_outer_id"
+            <com.and.ibrahim.teleprompter.modules.ScrollingTextView
+                android:id="@+id/text_scrolling"
+                android:layout_margin="@dimen/scroll_text_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:text="@string/mytest"
+                android:textColor="@color/color_white"
+                android:textSize="24sp" />
+        </LinearLayout>
 
-                <com.and.ibrahim.teleprompter.modules.ScrollingTextView
-                    android:id="@+id/text_scrolling"
-                    android:layout_margin="@dimen/scroll_text_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/mytest"
-                    android:textColor="@color/color_white"
-                    android:textSize="24sp" />
-            </LinearLayout>
-
-        </ScrollView>
+    </ScrollView>
 
 
-        <RelativeLayout
-            android:id="@+id/r_toolbar_container"
-            android:layout_width="match_parent"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            android:layout_height="?attr/actionBarSize">
+    <RelativeLayout
+        android:id="@+id/r_toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/toolbar_container_margin"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize">
 
-            <ImageView
-                android:id="@+id/back_id"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/app_name"
-                android:layout_centerInParent="true"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/ic_menu_animatable"
-                android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
-                android:layout_alignParentStart="true"
-                 />
-            <ImageView
-                android:id="@+id/play_scroll"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/app_name"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
-                />
+        <ImageView
+            android:id="@+id/back_id"
+            android:layout_width="@dimen/image_toolbar_width"
+            android:layout_height="@dimen/image_toolbar_height"
+            android:contentDescription="@string/app_name"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_menu_animatable"
+            android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
+            android:layout_alignParentStart="true" />
 
-            <ImageView
-                android:id="@+id/show_setting"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_centerInParent="true"
-                android:contentDescription="@string/app_name"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/photo_toolbar_side_margen"
-                android:src="@drawable/ic_settings_white"
-                android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/play_scroll"
+            android:layout_width="@dimen/image_toolbar_width"
+            android:layout_height="@dimen/image_toolbar_height"
+            android:contentDescription="@string/app_name"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/photo_toolbar_side_margen" />
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/show_setting"
+            android:layout_width="@dimen/image_toolbar_width"
+            android:layout_height="@dimen/image_toolbar_height"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/photo_toolbar_side_margen"
+            android:src="@drawable/ic_settings_white"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,13 +86,14 @@
 
         <ImageView
             android:id="@+id/show_play"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="@dimen/image_play_height"
+            android:layout_height="@dimen/image_play_width"
             android:visibility="invisible"
             android:contentDescription="@string/app_name"
             android:layout_below="@+id/up_veiw"
             android:layout_centerInParent="true"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
+
         <View
             android:id="@+id/down_veiw"
             android:layout_width="match_parent"
@@ -103,5 +103,5 @@
             android:background="@color/colorTransparentWhite" />
     </RelativeLayout>
 
-    </FrameLayout>
+</FrameLayout>
 

@@ -20,12 +20,16 @@
     <dimen name="item_width">164dp</dimen>
     <dimen name="item_height">164dp</dimen>
     <dimen name="item_layout_margin">8dp</dimen>
+    <dimen name="item_text_side_margin">8dp</dimen>
+    <dimen name="item_padding">8dp</dimen>
     <dimen name="item_side_margin">12dp</dimen>
     <dimen name="item_top_margin">4dp</dimen>
     <dimen name="item_bottom_margin">4dp</dimen>
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="text_top_margin">12dp</dimen>
     <dimen name="text_bottom_margin">4dp</dimen>
+    <dimen name="item_image_width">48dp</dimen>
+    <dimen name="item_image_height">48dp</dimen>
 
     <!--add content dialog-->
 
@@ -37,17 +41,16 @@
     <dimen name="add_dialog_text_height">32dp</dimen>
 
 
-
     <!-- fragment -->
     <dimen name="up_view_height">214dp</dimen>
     <dimen name="down_view_height">250dp</dimen>
     <dimen name="toggle_side_margin">8dp</dimen>
-    <dimen name="image_play_width">190dp</dimen>
-    <dimen name="image_play_height">190dp</dimen>
-
+    <dimen name="image_play_width">96dp</dimen>
+    <dimen name="image_play_height">96dp</dimen>
+    <dimen name="image_toolbar_height">24dp</dimen>
+    <dimen name="image_toolbar_width">24dp</dimen>
+    <dimen name="toolbar_container_margin">8dp</dimen>
     <dimen name="image_play_margin">64dp</dimen>
-    <dimen name="lin_edit_container_height">56dp</dimen>
-    <dimen name="lin_color_container_height">72dp</dimen>
     <dimen name="scroll_text_margin">8dp</dimen>
     <dimen name="photo_toolbar_side_margen">16dp</dimen>
 
@@ -87,9 +90,6 @@
     <dimen name="colors_item_image_width">48dp</dimen>
     <dimen name="colors_item_image_height">48dp</dimen>
     <dimen name="colors_item_margin">4dp</dimen>
-
-
-
 
 
 </resources>

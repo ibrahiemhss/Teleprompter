@@ -39,6 +39,7 @@
                 android:layout_marginRight="8dp"
                 android:text="klklklkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
                 android:textColor="@color/lime_green" />
+
             <ImageView
                 android:id="@+id/note"
                 android:layout_width="48dp"
