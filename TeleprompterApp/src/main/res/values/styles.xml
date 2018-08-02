@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:actionBarStyle">@style/NavigationViewStyle</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" tools:keep="@style/AppTheme_AppBarOverlay">
@@ -14,6 +16,16 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" tools:keep="@style/AppTheme_PopupOverlay" />
+
+    <style name="NavigationViewStyle" >
+        <item name="android:listPreferredItemHeightSmall">25dp</item><!-- menu item height-->
+    </style>
+    <style name="Theme_Dialog" parent="android:Theme.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/push_down_in</item>
+        <item name="android:windowExitAnimation">@anim/push_down_out</item>
+    </style>
 
     <style name="ToUptAnimation">
         <item name="android:windowEnterAnimation">@anim/push_up_in</item>

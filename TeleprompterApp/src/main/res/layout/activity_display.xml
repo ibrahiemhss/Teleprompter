@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical"
+tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
+
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fram_container_scroll_text"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
 
     <FrameLayout
-        android:id="@+id/fram_container"
+        android:id="@+id/frame_show_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/text_empty_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="45dp"
+            android:visibility="gone"
+            android:text="select your text from list to began show"/>
+        <include
+            android:id="@+id/includ_list"
+            layout="@layout/app_bar_display"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-    <RelativeLayout
-        android:id="@+id/r_toolbar_container"
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
-        android:layout_height="?attr/actionBarSize">
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop ="@dimen/abc_action_bar_default_height_material"
+        android:fitsSystemWindows="true"
+        android:labelFor="@+id/app_bar_main"
+        android:layout_marginBottom="10dp"
+        >
+        <include
+            layout="@layout/nave_contents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/back_id"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/app_name"
-            android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_arrow_back"
-            android:layout_marginLeft="@dimen/photo_toolbar_side_margen"
-            android:layout_alignParentStart="true" />
-
-        <ImageView
-            android:id="@+id/play_scroll"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/app_name"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/photo_toolbar_side_margen" />
-
-        <ImageView
-            android:id="@+id/show_setting"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerInParent="true"
-            android:contentDescription="@string/app_name"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/photo_toolbar_side_margen"
-            android:src="@drawable/ic_settings_white"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
+    </android.support.design.widget.NavigationView>
 
 
-</FrameLayout>
+</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>
 

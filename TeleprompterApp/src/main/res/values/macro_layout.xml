@@ -15,6 +15,8 @@
     <dimen name="list_side_padding">5dp</dimen>
     <dimen name="list_bottom_padding">24dp</dimen>
 
+
+
     <!-- list item main-->
     <integer name="list_column_count">1</integer>
     <dimen name="item_width">164dp</dimen>
@@ -32,16 +34,17 @@
     <dimen name="item_image_height">48dp</dimen>
 
     <!--add content dialog-->
-
     <dimen name="add_dialog_width">264dp</dimen>
     <dimen name="add_dialog_etext_height">336dp</dimen>
     <dimen name="add_dialog_etext_size">16sp</dimen>
     <dimen name="add_dialog_etext_margin">8dp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_text_height">32dp</dimen>
+    <dimen name="add_dailog_margin_bottom">8dp</dimen>
 
 
-    <!-- fragment -->
+
+    <!-- DisPlayActivity -->
     <dimen name="up_view_height">214dp</dimen>
     <dimen name="down_view_height">250dp</dimen>
     <dimen name="toggle_side_margin">8dp</dimen>
@@ -54,29 +57,29 @@
     <dimen name="scroll_text_margin">8dp</dimen>
     <dimen name="photo_toolbar_side_margen">16dp</dimen>
 
-    <!--dialog edit-->
-    <dimen name="edit_dialog_width">216dp</dimen>
-    <dimen name="edit_dialog_height">408dp</dimen>
-    <dimen name="edit_dialog_veiw_group_width">@dimen/match_parent</dimen>
-    <dimen name="edit_dialog_veiw_group_height">56dp</dimen>
-    <dimen name="edit_dialog_veiw_group_side_margin">8dp</dimen>
-    <dimen name="edit_dialog_veiw_group_top_margin">8dp</dimen>
-    <dimen name="edit_dialog_veiw_group_bottom_margin">8dp</dimen>
-    <dimen name="edit_dialog_small_image_font_width">12dp</dimen>
-    <dimen name="edit_dialog_small_image_font_height">12dp</dimen>
-    <dimen name="edit_dialog_big_image_font_width">24dp</dimen>
-    <dimen name="edit_dialog_big_image_font_height">24dp</dimen>
-    <dimen name="edit_dialog_image_color_width">32dp</dimen>
-    <dimen name="edit_dialog_image_color_height">32dp</dimen>
-    <dimen name="edit_dialog_img_veiw_side_margin">16dp</dimen>
-    <dimen name="edit_dialog_img_veiw_top_margin">8dp</dimen>
-    <dimen name="edit_dialog_img_veiw_bottom_margin">8dp</dimen>
-    <dimen name="edit_dialog_text_width">48dp</dimen>
-    <dimen name="edit_dialog_text_height">24dp</dimen>
-    <dimen name="edit_dialog_text_side_margin">16dp</dimen>
-    <dimen name="edit_dialog_text_top_margin">8dp</dimen>
-    <dimen name="edit_dialog_text_bottom_margin">8dp</dimen>
-    <dimen name="edit_dialog_text_size">18sp</dimen>
+    <!--navigation contents-->
+    <dimen name="nav_width">216dp</dimen>
+    <dimen name="nav_height">@dimen/match_parent</dimen>
+    <dimen name="nav_veiw_group_width">@dimen/match_parent</dimen>
+    <dimen name="nav_veiw_group_height">56dp</dimen>
+    <dimen name="nav_veiw_group_side_margin">8dp</dimen>
+    <dimen name="nav_veiw_group_top_margin">8dp</dimen>
+    <dimen name="nav_veiw_group_bottom_margin">8dp</dimen>
+    <dimen name="nav_small_image_font_width">12dp</dimen>
+    <dimen name="nav_small_image_font_height">12dp</dimen>
+    <dimen name="nav_big_image_font_width">24dp</dimen>
+    <dimen name="nav_big_image_font_height">24dp</dimen>
+    <dimen name="nav_image_color_width">32dp</dimen>
+    <dimen name="nav_image_color_height">32dp</dimen>
+    <dimen name="nav_img_veiw_side_margin">16dp</dimen>
+    <dimen name="nav_img_veiw_top_margin">8dp</dimen>
+    <dimen name="nav_img_veiw_bottom_margin">8dp</dimen>
+    <dimen name="nav_text_width">48dp</dimen>
+    <dimen name="nav_text_height">24dp</dimen>
+    <dimen name="nav_text_side_margin">16dp</dimen>
+    <dimen name="nav_text_top_margin">8dp</dimen>
+    <dimen name="nav_text_bottom_margin">8dp</dimen>
+    <dimen name="nav_text_size">18sp</dimen>
 
     <!--dailog colors-->
     <dimen name="colors_dialog_width">384dp</dimen>

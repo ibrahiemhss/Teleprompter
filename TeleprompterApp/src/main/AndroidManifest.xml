@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".modules.main.HomeActivity">
+        <activity android:name=".modules.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,12 @@
             android:exported="false"
             tools:ignore="ExportedContentProvider" />
 
-        <activity android:name=".modules.display.DisplayActivity" />
+        <activity android:name=".modules.display.DisplayActivity"
+            android:theme="@style/AppThemeNoActionBar"
+
+            />
+        <activity android:name=".modules.listContents.ListContentsActivity"/>
+
     </application>
 
 </manifest>

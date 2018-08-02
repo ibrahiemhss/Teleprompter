@@ -60,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * using here
      * {@linkplain com.and.ibrahim.teleprompter.mvp.view}
      * {@linkplain com.and.ibrahim.teleprompter.mvp.presenter}
-     * {@linkplain  com.and.ibrahim.teleprompter.modules.main}
+     * {@linkplain  com.and.ibrahim.teleprompter.modules.listContents}
      */
     protected void showDialog(String message) {
         if (mProgressDialog == null) {

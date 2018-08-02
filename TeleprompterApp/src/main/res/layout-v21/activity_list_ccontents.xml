@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_graylt"
+    android:background="@color/light_green"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="@dimen/app_par_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+            android:id="@+id/list_contents_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -36,9 +37,10 @@
 
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/list_contents_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:elevation="@dimen/toolbar_elevation"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin" />
 
@@ -57,8 +59,6 @@
         android:paddingLeft="@dimen/list_side_padding"
         android:paddingRight="@dimen/list_side_padding"
         android:paddingTop="@dimen/list_margin_top"
-        android:background="@color/color_graylt"
-
         android:scrollbarStyle="outsideOverlay" />
 
     <android.support.design.widget.FloatingActionButton
@@ -67,51 +67,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="230dp"
         android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
         android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_add"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/sea_green"
+        app:elevation="@dimen/fab_elevation"
+        app:pressedTranslationZ="@dimen/fab_press_translation_z"
         android:src="@drawable/ic_add_white"
         android:layout_marginEnd="@dimen/fab_margin" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_storage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="160dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:visibility="invisible"
-        app:backgroundTint="@color/color_fab_storage"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_sd_storage"
-        android:layout_marginEnd="@dimen/fab_margin" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_cloud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:visibility="invisible"
-        app:elevation="6dp"
-        app:backgroundTint="@color/color_fab_cloud"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_cloud_download"
-        android:layout_marginEnd="@dimen/fab_margin" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:elevation="6dp"
-        app:backgroundTint="@color/colorAccent"
-        app:pressedTranslationZ="12dp"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add_white" />
+    <FrameLayout
+        android:id="@+id/contents_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </android.support.design.widget.CoordinatorLayout>

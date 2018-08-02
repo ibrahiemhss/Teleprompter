@@ -10,7 +10,7 @@
     <color name="lime_green">#25d366</color>
     <color name="sea_green">#2E8B57</color>
     <color name="sky_blue">#34b7f1</color>
-    <color name="colorTransparentBlck">#c8000000</color>
+    <color name="colorTransparentBlck">#da075e54</color>
     <color name="orange_light">#f7a101</color>
 
 
@@ -35,6 +35,10 @@
 
 
     <array name="background_colors">
+        <item name="color_black">@color/color_black</item>
+        <item name="White">@color/White1</item>
+
+
         <item name="Red">@color/Red</item>
 
         <item name="White">@color/White1</item>
@@ -54,6 +58,10 @@
         <item name="Snow">@color/Snow</item>
     </array>
     <array name="text_colors">
+        <item name="White">@color/White1</item>
+
+        <item name="color_black">@color/color_black</item>
+
         <item name="White">@color/White1</item>
 
         <item name="Red">@color/Red</item>

@@ -8,17 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.interfaces.OnItemClickListener;
-import com.and.ibrahim.teleprompter.modules.main.TeleprompterAdapter;
-import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
