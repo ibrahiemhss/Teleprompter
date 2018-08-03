@@ -99,7 +99,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         @Override
         public void onClick(View view) {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onClick(getAdapterPosition());
+               // mOnItemClickListener.onClick(getAdapterPosition());
             }
         }
     }

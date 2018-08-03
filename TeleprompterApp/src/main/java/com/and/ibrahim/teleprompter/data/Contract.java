@@ -13,6 +13,8 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_TELEPROMPTER_FRAGMENT = "teleprompter_fragment";
     public static final String EXTRA_SCROLL_POSITION = "extra_scroll_position";
     public static final String EXTRA_IS_TABLET = "extra_is_tablet";
+    public static final String EXTRA_SELECTED = "extra_selected";
+
 
 
     //content provider

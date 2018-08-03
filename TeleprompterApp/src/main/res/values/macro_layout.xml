@@ -21,6 +21,8 @@
     <integer name="list_column_count">1</integer>
     <dimen name="item_width">164dp</dimen>
     <dimen name="item_height">164dp</dimen>
+    <dimen name="item_image_edit_height">24dp</dimen>
+    <dimen name="item_image_edit_width">24dp</dimen>
     <dimen name="item_layout_margin">8dp</dimen>
     <dimen name="item_text_side_margin">8dp</dimen>
     <dimen name="item_padding">8dp</dimen>

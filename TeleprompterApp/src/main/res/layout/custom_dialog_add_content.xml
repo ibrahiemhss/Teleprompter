@@ -1,58 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/add_dialog_width"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center|bottom"
     android:layout_marginBottom="@dimen/add_dailog_margin_bottom"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_bg"
     android:orientation="vertical">
 
-    <EditText
+  <!--  <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_title"
+        android:textColorHint="@color/orange_light"
+        android:backgroundTint="@color/color_graylt"
+        />-->
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_title"
-        android:src="@drawable/ic_fullscreen"
-        android:inputType="textCapSentences" />
+        android:textCursorDrawable="@drawable/text_cursor_cyan"
+        android:textSize="12sp"
+        app:met_baseColor="@color/orange_light"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="20"
+        app:met_primaryColor="?colorAccent"
+        app:met_singleLineEllipsis="true" />
 
     <com.and.ibrahim.teleprompter.util.LinedEditText
         android:id="@+id/linededit_text_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/add_dialog_etext_height"
-        android:layout_margin="@dimen/add_dialog_etext_margin"
         android:hint="@string/add_your_text"
-        android:textAlignment="center"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/add_dialog_etext_size"
         android:textStyle="normal" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_below="@+id/linededit_text_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="@dimen/add_dialog_text_width"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/ThemeOverlay.MaterialComponents.Dialog"
+            android:padding="8dp"
+            android:textSize="12sp"            android:background="@drawable/oranglt_back"
+            android:clickable="true"
+            android:text="@string/cancel_dialog"
+            android:textColor="@color/color_white"
+            android:textStyle="bold"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/txt_add"
             android:layout_width="@dimen/add_dialog_text_width"
-            android:layout_height="@dimen/add_dialog_text_height"
+            android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:background="@android:color/white"
+            android:layout_alignParentRight="true"
+            android:textAppearance="@style/ThemeOverlay.MaterialComponents.Dialog"
+            android:padding="8dp"
+            android:textSize="12sp"
+            android:layout_gravity="right"
+            android:background="@drawable/oranglt_back"
             android:clickable="true"
             android:text="@string/add_dialog"
-            android:textColor="@color/color_graydr"
+            android:textColor="@color/color_white"
             android:textStyle="bold"
             android:focusable="true" />
 
-        <TextView
-            android:id="@+id/txt_cancel"
-            android:layout_width="@dimen/add_dialog_text_width"
-            android:layout_height="@dimen/add_dialog_text_height"
-            android:textAlignment="center"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:text="@string/cancel_dialog"
-            android:textColor="@color/color_graydr"
-            android:textStyle="bold"
-            android:focusable="true" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

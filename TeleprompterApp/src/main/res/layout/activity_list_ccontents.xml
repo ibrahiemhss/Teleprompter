@@ -10,6 +10,7 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="@dimen/app_par_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:fitsSystemWindows="true">
 
@@ -23,21 +24,28 @@
             app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
             android:fitsSystemWindows="true">
 
-            <TextView
-                android:layout_width="match_parent"
+
+            <!--<TextView
+                android:id="@+id/text_app_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_white"
-                android:layout_gravity="end|center"
+                android:layout_gravity="center|left"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/toolbar_text_side_margin"
                 android:layout_marginLeft="@dimen/toolbar_text_side_margin"
                 android:layout_marginStart="@dimen/toolbar_text_side_margin"
                 android:textSize="@dimen/toolbar_text_size"
                 android:contentDescription="@string/app_name"
                 android:text="@string/app_name" />
+-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/list_contents_toolbar"
                 android:layout_width="match_parent"
+                app:title="@string/app_name"
                 android:layout_height="?attr/actionBarSize"
+                android:elevation="@dimen/toolbar_elevation"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin" />
 
@@ -45,10 +53,48 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <FrameLayout
-        android:id="@+id/contents_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:paddingTop="?attr/actionBarSize"
+
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/edit_container"
+            android:layout_width="wrap_content"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/text_delet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorPrimaryText"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/select_all"
+                android:text="Delet All"/>
+            <ImageView
+                android:id="@+id/delete_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/text_delet"
+                android:visibility="gone"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/ic_delete"
+                />
+            <CheckBox
+                android:id="@+id/select_all"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/select_all"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/contents_container"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/edit_container"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

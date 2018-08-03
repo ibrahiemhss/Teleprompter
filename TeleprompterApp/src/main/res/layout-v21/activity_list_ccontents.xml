@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_green"
+    android:background="@color/color_graylt"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -24,21 +24,26 @@
             app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
             android:fitsSystemWindows="true">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_white"
-                android:layout_gravity="end|center"
-                android:layout_marginLeft="@dimen/toolbar_text_side_margin"
-                android:layout_marginStart="@dimen/toolbar_text_side_margin"
-                android:textSize="@dimen/toolbar_text_size"
-                android:contentDescription="@string/app_name"
-                android:text="@string/app_name" />
 
+                <!--<TextView
+                    android:id="@+id/text_app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_white"
+                    android:layout_gravity="center|left"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/toolbar_text_side_margin"
+                    android:layout_marginLeft="@dimen/toolbar_text_side_margin"
+                    android:layout_marginStart="@dimen/toolbar_text_side_margin"
+                    android:textSize="@dimen/toolbar_text_size"
+                    android:contentDescription="@string/app_name"
+                    android:text="@string/app_name" />
+-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/list_contents_toolbar"
                 android:layout_width="match_parent"
+                app:title="@string/app_name"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="@dimen/toolbar_elevation"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -48,36 +53,48 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingTop="?attr/actionBarSize"
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="@dimen/list_width"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/list_bottom_padding"
-        android:layout_gravity="center"
-        android:paddingLeft="@dimen/list_side_padding"
-        android:paddingRight="@dimen/list_side_padding"
-        android:paddingTop="@dimen/list_margin_top"
-        android:scrollbarStyle="outsideOverlay" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/edit_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="230dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:visibility="invisible"
-        app:backgroundTint="@color/sea_green"
-        app:elevation="@dimen/fab_elevation"
-        app:pressedTranslationZ="@dimen/fab_press_translation_z"
-        android:src="@drawable/ic_add_white"
-        android:layout_marginEnd="@dimen/fab_margin" />
+        android:padding="8dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_delet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_centerInParent="true"
 
+            android:visibility="gone"
+            android:layout_toRightOf="@+id/select_all"
+            android:text="Delet All"/>
+        <ImageView
+            android:id="@+id/delete_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_delet"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_delete"
+            />
+        <CheckBox
+            android:id="@+id/select_all"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/select_all"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/contents_container"
         android:layout_width="match_parent"
+        android:layout_below="@+id/edit_container"
         android:layout_height="match_parent"/>
+</RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

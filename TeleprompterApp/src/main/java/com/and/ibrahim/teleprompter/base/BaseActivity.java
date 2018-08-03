@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 
 
@@ -40,7 +42,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        //To be used by child activities
+
+
+
     }
 
     @Override

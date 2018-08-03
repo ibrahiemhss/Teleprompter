@@ -10,6 +10,10 @@
         <item name="android:actionBarStyle">@style/NavigationViewStyle</item>
 
     </style>
+    <style name="MyPopupMenu" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:popupBackground">#0F213F</item>
+        <item name="android:disabledAlpha">0.5</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" tools:keep="@style/AppTheme_AppBarOverlay">
 
@@ -20,11 +24,10 @@
     <style name="NavigationViewStyle" >
         <item name="android:listPreferredItemHeightSmall">25dp</item><!-- menu item height-->
     </style>
-    <style name="Theme_Dialog" parent="android:Theme.Light">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+    <style name="Theme_Dialog">
         <item name="android:windowEnterAnimation">@anim/push_down_in</item>
         <item name="android:windowExitAnimation">@anim/push_down_out</item>
+
     </style>
 
     <style name="ToUptAnimation">
@@ -42,7 +45,10 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_left</item>
         <item name="android:windowExitAnimation">@anim/slide_out_left</item>
     </style>
-
+    <style name="SearchViewTheme" >
+        <item name="colorControlActivated">@color/color_graylt</item>
+        <item name="colorControlNormal">@color/lime_green</item>
+    </style>
 
     <style name="DialogStyleLight">
         <!-- anything can be left out: -->

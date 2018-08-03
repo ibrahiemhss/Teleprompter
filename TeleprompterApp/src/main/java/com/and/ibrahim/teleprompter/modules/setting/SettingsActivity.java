@@ -18,8 +18,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_settings);
         ActionBar actionBar = this.getSupportActionBar();
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+   //     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
 
         // Set the action bar back button to look like an up button

@@ -23,7 +23,7 @@ Do am he horrible distance marriage so although. Afraid assure square so happen 
 </string>
     <string name="enter_title">enter title</string>
     <string name="add_your_text">add your text</string>
-    <string name="add_dialog">@android:string/ok</string>
+    <string name="add_dialog">Save</string>
     <string name="cancel_dialog">@android:string/cancel</string>
     <string name="text_color">Text Color</string>
     <string name="background_color">Background Color</string>
@@ -86,5 +86,9 @@ Do am he horrible distance marriage so although. Afraid assure square so happen 
     <string name="pref_color_green_value" translatable="false">green</string>
     <string name="Open">open</string>
     <string name="Close">close</string>
+    <string name="search">search</string>
+    <string name="setting">Setting</string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
 
 </resources>

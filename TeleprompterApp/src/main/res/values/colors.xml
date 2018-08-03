@@ -19,13 +19,13 @@
 
 
     <color name="colorPrimaryText">#212121</color>
-    <color name="color_gray">#bebebe</color>
+    <color name="color_gray">#90A4AE</color>
 
-    <color name="color_graydr">#757575</color>
-    <color name="color_graylt">#ffe0e0e0</color>
-    <color name="color_fab_cloud">#2196F3</color>
-    <color name="color_fab_add">#E040FB</color>
-    <color name="color_fab_storage">#00796B</color>
+    <color name="color_graydr">#78909C</color>
+    <color name="color_graylt">#CFD8DC</color>
+    <color name="color_fab_cloud">#78909C</color>
+    <color name="color_fab_add">#78909C</color>
+    <color name="color_fab_storage">#78909C</color>
 
     <color name="color_fab_storage1">#00796B</color>
     <color name="White1">#FFFFFF</color>

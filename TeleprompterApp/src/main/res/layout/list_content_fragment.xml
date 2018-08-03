@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/color_graylt"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="@dimen/list_width"
@@ -13,7 +15,6 @@
         android:layout_gravity="center"
         android:paddingLeft="@dimen/list_side_padding"
         android:paddingRight="@dimen/list_side_padding"
-        android:paddingTop="@dimen/list_margin_top"
         android:scrollbarStyle="outsideOverlay" />
 
     <android.support.design.widget.FloatingActionButton
