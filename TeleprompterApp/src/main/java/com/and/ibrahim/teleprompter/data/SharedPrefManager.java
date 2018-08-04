@@ -15,6 +15,8 @@ public class SharedPrefManager {
     private static final String PREF_TEXT_COLOR = "pref_text_color";
     private static final String PREF_BACKGROUND_COLOR = "pref_background_color";
     private static final String PREF_FIRST_OPEN = "first_open";
+    private static final String PREF_IS_ِِADDED= "first_is_added";
+
 
 
     private static final String SHARED_PREF_NAME = "save_contents";
@@ -83,6 +85,17 @@ public class SharedPrefManager {
     public void setPrefFirstOpen(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(PREF_FIRST_OPEN, is);
+        editor.apply();
+        editor.commit();
+    }
+
+    public boolean isAdded() {
+        return pref.getBoolean(PREF_IS_ِِADDED, false);
+    }
+
+    public void setPrefIsِِadded(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_IS_ِِADDED, is);
         editor.apply();
         editor.commit();
     }

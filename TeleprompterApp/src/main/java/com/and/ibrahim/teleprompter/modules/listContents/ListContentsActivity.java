@@ -1,47 +1,30 @@
 package com.and.ibrahim.teleprompter.modules.listContents;
 
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.support.v7.widget.SearchView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.data.Contract;
+import com.and.ibrahim.teleprompter.interfaces.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.Objects;
 
 import butterknife.BindView;
-
-import static android.view.Gravity.BOTTOM;
-import static android.view.Gravity.START;
 
 public class ListContentsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -54,29 +37,31 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     private SearchView.OnQueryTextListener queryTextListener;
    // @BindView(R.id.text_app_name)
    // protected TextView mTxtAppName;
-    @BindView(R.id.edit_container)
-    protected RelativeLayout mEditContainer;
-    @BindView(R.id.delete_all)
-    protected ImageView mDeletImage;
-    @BindView(R.id.select_all)
-    protected CheckBox mCheckBox;
-    @BindView(R.id.text_delet)
-    protected TextView mDeletText;
+    boolean isSelcted;
+
     @BindView(R.id.list_contents_collapsing_toolbar)
     protected
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
+    private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
     private SearchManager searchManager;
-    boolean isVisibl;
+    private boolean isVisibl;
 
+    private boolean ischeked;
 
 
     private Fragment mContentListFragment;
 
     @BindView(R.id.list_contents_toolbar)
      protected Toolbar mToolbar;
-
+    int mFlag;
+    public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
+        return fragmentEditListRefreshListener;
+    }
+    public void setFragmentEditListRefreshListener(FragmentEditListRefreshListener fragmentEditListRefreshListener) {
+        this.fragmentEditListRefreshListener = fragmentEditListRefreshListener;
+    }
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
@@ -91,11 +76,12 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         setupSearchToolbar();
         // mImgSearch.setOnClickListener(this);
         isVisibl = false;
+        ischeked=false;
         /*SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
 */
+
     }
 
 
@@ -110,7 +96,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void init() {
 
-        initFragment();
+        initFragment(false);
     }
 
     @Override
@@ -164,7 +150,10 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
                 // Not implemented here
              break;
             case R.id.action_select:
-                mEditContainer.setVisibility(View.VISIBLE);
+                ischeked=true;
+                if(getFragmentEditListRefreshListener()!=null){
+                    getFragmentEditListRefreshListener().onRefresh();
+                }
                 break;
 
             case R.id.action_setting:
@@ -180,20 +169,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void setListener() {
-        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if(b){
-                    mDeletImage.setVisibility(View.VISIBLE);
-                    mDeletText.setVisibility(View.VISIBLE);
-                }else {
-                    mDeletImage.setVisibility(View.GONE);
-                    mDeletText.setVisibility(View.GONE);
-                }
-
-            }
-        });
 
      /*   searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -220,14 +195,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-           case R.id.check_item:
-               if(mCheckBox.isChecked()){
-                   mDeletImage.setVisibility(View.VISIBLE);
-                   mDeletText.setVisibility(View.VISIBLE);
-               }else {
-                   mDeletImage.setVisibility(View.GONE);
-                   mDeletText.setVisibility(View.GONE);
-               }
 
               //  mEtSearch.setVisibility(View.VISIBLE);
 /*
@@ -249,10 +216,13 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    private void initFragment(){
+    private void initFragment(boolean b){
         Bundle bundle = new Bundle();
 
         bundle.putString(Contract.EXTRA_TEXT, getResources().getString(R.string.mytest));
+
+        bundle.putBoolean(Contract.EXTRA_SELECTED, b);
+
         mContentListFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()

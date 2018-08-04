@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
+import com.and.ibrahim.teleprompter.interfaces.OnCheckBoxChangeListner;
 import com.and.ibrahim.teleprompter.interfaces.OnItemClickListener;
 import com.and.ibrahim.teleprompter.interfaces.OnItemLongClickListener;
 import com.and.ibrahim.teleprompter.interfaces.OnItemViewClickListner;
@@ -36,11 +38,13 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
     private OnItemViewClickListner mOnItemViewClickListner;
+    private OnCheckBoxChangeListner mOnCheckBoxChangeListner;
 
     private Context mC;
-    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListner listner) {
+    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListner listner,OnCheckBoxChangeListner listner2) {
         mLayoutInflater = inflater;
         mOnItemViewClickListner=listner;
+        mOnCheckBoxChangeListner=listner2;
         mC=mC;
     }
 
@@ -55,16 +59,6 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     @Override
     public void onBindViewHolder(@NonNull final Holder holder, final int position) {
         holder.isCheked.setOnCheckedChangeListener(null);
-
-        //if true, your checkbox will be selected, else unselected
-        holder.isCheked.setChecked(dataObjArrayList.get(position).isChecked());
-
-        holder.isCheked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                dataObjArrayList.get(holder.getAdapterPosition()).setChecked(isChecked);
-            }
-        });
 
         holder.bind(dataObjArrayList.get(position), position);
     }
@@ -100,7 +94,7 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
 
     @SuppressWarnings("unused")
-    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,CompoundButton.OnCheckedChangeListener {
         final Context mContext;
         @BindView(R.id.text_title)
         protected TextView mTextTitle;
@@ -123,15 +117,24 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             mIconImg.setOnClickListener(this);
             mTextTitle.setOnClickListener(this);
             mLinearLayout.setOnClickListener(this);
-            isCheked.setOnClickListener(this);
+            isCheked.setOnCheckedChangeListener(this);
 
         }
 
         public void bind( DataObj dataObj, int position) {
             mTextTitle.setText(dataObj.getTextTitle());
+
             //  mTextContent.setText(dataObj.getTextContent());
-            isCheked.setChecked(dataObj.isChecked());
-            isCheked.setVisibility(View.GONE);
+            if (dataObj.getIsChecked()==0){
+                isCheked.setChecked(false);
+                isCheked.setVisibility(View.GONE);
+
+            }else if (dataObj.getIsChecked()==1){
+                isCheked.setChecked(true);
+                isCheked.setVisibility(View.VISIBLE);
+                Log.d("TAG", "myFlag in adapter " + String.valueOf(dataObj.getIsChecked()));
+
+            }
 
 
         }
@@ -174,6 +177,13 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             }
 
             return false;
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            mOnCheckBoxChangeListner.onChekedListner(getAdapterPosition(),compoundButton,b);
+            Log.d("TAG", "myFlag in listner " + String.valueOf(b));
+
         }
     }
 

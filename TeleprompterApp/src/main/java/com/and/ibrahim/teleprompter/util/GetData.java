@@ -46,6 +46,7 @@ public class GetData {
 
                 String title = c.getString(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_TITLE));
                 String content = c.getString(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_CONTENTS));
+                int isSelcted=c.getInt(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_SELECT));
 
                 /*while cursor movement will get value of every column this value will save inside all movie object from Movies Class*/
 
@@ -53,10 +54,11 @@ public class GetData {
                 dataObj.setTextTitle(title);
                 dataObj.setId(Integer.parseInt(id));
                 dataObj.setTextContent(content);
+                dataObj.setIsChecked(isSelcted);
                 /*add all new value of movie object to moviesArrayList*/
                 dataObjArrayList.add(dataObj);
 
-                Log.i(TAG, "FetchTeleprompterTexts \n title =" + title + "\n content =" + content);
+                Log.i(TAG, "FetchTeleprompterTexts \n title =" + title + "\n content =" + content+"\nSelcted value ="+String.valueOf(isSelcted));
             }
             c.close();
         }

@@ -14,6 +14,9 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_SCROLL_POSITION = "extra_scroll_position";
     public static final String EXTRA_IS_TABLET = "extra_is_tablet";
     public static final String EXTRA_SELECTED = "extra_selected";
+    public static final String EXTRA_FLAG = "extra_flag";
+    public static final String EXTRA_LIST_POSITION = "extra_list_position";
+
 
 
 
@@ -32,13 +35,15 @@ public class Contract implements BaseColumns {
 
         public static final String COL_CONTENTS = "contents";
         public static final String COL_TITLE = "title";
+        public static final String COL_SELECT="flag";
 
         public static final String DROP_TELEPROMPTER_TELEPROMPTER = "DROP TABLE IF EXISTS " + TABLE_TELEPROMPTER;
         public static final String CREATE_TABLE_TELEPROMPTER = "create table " + TABLE_TELEPROMPTER + "(" +
                 _ID + " INTEGER primary key autoincrement not null," +
                 COL_UNIQUE_ID + " INTEGER  ," +
                 COL_TITLE + " text  null," +
-                COL_CONTENTS + " text not null)";
+                COL_CONTENTS + " text not null ,"+
+                COL_SELECT+" INTEGER )";
 
         //database name
         static final String DB_NAME = "teleprompter_app.db";

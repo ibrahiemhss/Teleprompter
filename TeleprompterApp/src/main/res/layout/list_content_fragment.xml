@@ -5,6 +5,45 @@
     android:layout_width="match_parent"
     android:background="@color/color_graylt"
     android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/edit_container"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:paddingTop="?attr/actionBarSize"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/text_delet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_centerInParent="true"
+
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/select_all"
+                android:text="Delet All"/>
+            <ImageView
+                android:id="@+id/delete_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/text_delet"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_delete"
+                />
+            <CheckBox
+                android:id="@+id/select_all"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/select_all"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="48dp"
+                android:src="@drawable/move_up"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -12,6 +51,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/list_bottom_padding"
+        android:layout_below="@+id/edit_container"
         android:layout_gravity="center"
         android:paddingLeft="@dimen/list_side_padding"
         android:paddingRight="@dimen/list_side_padding"

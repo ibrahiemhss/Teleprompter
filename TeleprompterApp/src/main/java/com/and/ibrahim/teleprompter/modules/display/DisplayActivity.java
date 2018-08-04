@@ -142,6 +142,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         mContentListFragment = new ListContentsFragment();
+
+        View headerView= LayoutInflater.from(this).inflate(R.layout.nav_header, null);
+        mNavView.addHeaderView(headerView);
+        mNavView.getHeaderView(0).setVisibility(View.GONE);
+
+        ViewTreeObserver vto = verticalOuterLayout.getViewTreeObserver();
+
+
         if (savedInstanceState != null) {
             mContentListFragment = (ListContentsFragment) getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_TELEPROMPTER_FRAGMENT);
 
@@ -176,10 +184,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         mPlayStatus.setVisibility(View.VISIBLE);
 
-        View headerView= LayoutInflater.from(this).inflate(R.layout.nav_header, null);
-        mNavView.addHeaderView(headerView);
-        mNavView.getHeaderView(0).setVisibility(View.GONE);
-
 
     }
 
@@ -187,6 +191,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void setListener() {
         mImgSetting.setOnClickListener(this);
         mBackImg.setOnClickListener(this);
+       // mNavView.setDrawerIndicatorEnabled(false);
+
         ViewTreeObserver vto = verticalOuterLayout.getViewTreeObserver();
 
 

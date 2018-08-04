@@ -53,48 +53,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:paddingTop="?attr/actionBarSize"
 
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/edit_container"
-            android:layout_width="wrap_content"
-            android:padding="8dp"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/text_delet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textColor="@color/colorPrimaryText"
-                android:visibility="gone"
-                android:layout_toRightOf="@+id/select_all"
-                android:text="Delet All"/>
-            <ImageView
-                android:id="@+id/delete_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/text_delet"
-                android:visibility="gone"
-                android:layout_marginTop="6dp"
-                android:src="@drawable/ic_delete"
-                />
-            <CheckBox
-                android:id="@+id/select_all"
-                android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/select_all"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-        <FrameLayout
-            android:id="@+id/contents_container"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/edit_container"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/contents_container"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/edit_container"
+        android:layout_height="match_parent"/>
 
 </android.support.design.widget.CoordinatorLayout>
