@@ -23,28 +23,25 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
+import com.and.ibrahim.teleprompter.callback.OnDataPass;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsActivity;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
@@ -60,7 +57,7 @@ import butterknife.BindView;
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.START;
 
-public class DisplayActivity extends BaseActivity implements View.OnClickListener ,ListContentsFragment.OnDataPass {
+public class DisplayActivity extends BaseActivity implements View.OnClickListener ,OnDataPass {
 
 
     private Fragment mContentListFragment;

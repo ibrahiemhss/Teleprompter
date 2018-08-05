@@ -2,26 +2,20 @@ package com.and.ibrahim.teleprompter.modules.listContents;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.view.ContextThemeWrapper;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
-import com.and.ibrahim.teleprompter.interfaces.OnCheckBoxChangeListner;
-import com.and.ibrahim.teleprompter.interfaces.OnItemClickListener;
-import com.and.ibrahim.teleprompter.interfaces.OnItemLongClickListener;
-import com.and.ibrahim.teleprompter.interfaces.OnItemViewClickListner;
+import com.and.ibrahim.teleprompter.callback.OnItemClickListener;
+import com.and.ibrahim.teleprompter.callback.OnItemLongClickListener;
+import com.and.ibrahim.teleprompter.callback.OnItemViewClickListner;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
@@ -38,15 +32,16 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
     private OnItemViewClickListner mOnItemViewClickListner;
-    private OnCheckBoxChangeListner mOnCheckBoxChangeListner;
+
 
     private Context mC;
-    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListner listner,OnCheckBoxChangeListner listner2) {
+    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListner listner) {
         mLayoutInflater = inflater;
         mOnItemViewClickListner=listner;
-        mOnCheckBoxChangeListner=listner2;
         mC=mC;
     }
+
+
 
     @NonNull
     @Override
@@ -58,7 +53,6 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final Holder holder, final int position) {
-        holder.isCheked.setOnCheckedChangeListener(null);
 
         holder.bind(dataObjArrayList.get(position), position);
     }
@@ -94,7 +88,7 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
 
     @SuppressWarnings("unused")
-    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,CompoundButton.OnCheckedChangeListener {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         final Context mContext;
         @BindView(R.id.text_title)
         protected TextView mTextTitle;
@@ -105,8 +99,9 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
         @BindView(R.id.lin_view)
         protected LinearLayout mLinearLayout;
         @BindView(R.id.check_item)
-        protected CheckBox isCheked;
-
+        protected CheckBox mCheckBox;
+        @BindView(R.id.text_content)
+        protected TextView mTextContent;
         public Holder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -117,21 +112,21 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             mIconImg.setOnClickListener(this);
             mTextTitle.setOnClickListener(this);
             mLinearLayout.setOnClickListener(this);
-            isCheked.setOnCheckedChangeListener(this);
+            mCheckBox.setOnClickListener(this);
 
         }
 
         public void bind( DataObj dataObj, int position) {
             mTextTitle.setText(dataObj.getTextTitle());
 
-            //  mTextContent.setText(dataObj.getTextContent());
+              mTextContent.setText(dataObj.getTextContent());
             if (dataObj.getIsChecked()==0){
-                isCheked.setChecked(false);
-                isCheked.setVisibility(View.GONE);
+                mCheckBox.setChecked(false);
+                mCheckBox.setVisibility(View.GONE);
 
             }else if (dataObj.getIsChecked()==1){
-                isCheked.setChecked(true);
-                isCheked.setVisibility(View.VISIBLE);
+                mCheckBox.setChecked(true);
+                mCheckBox.setVisibility(View.VISIBLE);
                 Log.d("TAG", "myFlag in adapter " + String.valueOf(dataObj.getIsChecked()));
 
             }
@@ -162,6 +157,16 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
                 case R.id.check_item:
 
+                    if (mCheckBox.isChecked()) {
+                        mOnItemViewClickListner.onItemUncheck(getAdapterPosition(),view);
+                        Log.d("adapter", "cheked_item = unchecked");
+                    } else {
+
+
+                        mOnItemViewClickListner.onItemCheck(getAdapterPosition(),view);
+                        Log.d("adapter", "cheked_item = checked" );
+
+                    }
                     default:
                         break;
 
@@ -179,12 +184,6 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             return false;
         }
 
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            mOnCheckBoxChangeListner.onChekedListner(getAdapterPosition(),compoundButton,b);
-            Log.d("TAG", "myFlag in listner " + String.valueOf(b));
-
-        }
     }
 
 }

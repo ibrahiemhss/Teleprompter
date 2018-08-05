@@ -38,10 +38,9 @@ import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
-import com.and.ibrahim.teleprompter.interfaces.FragmentEditListRefreshListener;
-import com.and.ibrahim.teleprompter.interfaces.OnCheckBoxChangeListner;
-import com.and.ibrahim.teleprompter.interfaces.OnItemViewClickListner;
-import com.and.ibrahim.teleprompter.interfaces.onDisplayActivityCallBackListner;
+import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
+import com.and.ibrahim.teleprompter.callback.OnDataPass;
+import com.and.ibrahim.teleprompter.callback.OnItemViewClickListner;
 import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
@@ -72,55 +71,51 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     protected CheckBox mCheckBox;
     @BindView(R.id.text_delet)
     protected TextView mDeletText;
-
+    @BindView(R.id.return_up)
+    protected ImageView mReturnUp;
     @BindView(R.id.fab)
-    protected
-    FloatingActionButton mFab;
+    protected FloatingActionButton mFab;
     @BindView(R.id.fab_add)
-    protected
-    FloatingActionButton mFabAdd;
+    protected FloatingActionButton mFabAdd;
     @BindView(R.id.fab_storage)
-    protected
-    FloatingActionButton mFabStorage;
+    protected FloatingActionButton mFabStorage;
     @BindView(R.id.fab_cloud)
-    protected
-    FloatingActionButton mFabCloud;
+    protected FloatingActionButton mFabCloud;
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
-    private Dialog dialog;
+
+    private Dialog mDialog;
     private boolean isAdded = false;
     private boolean isOpen = false;
     private String mData;
-    OnDataPass dataPasser;
+    private OnDataPass dataPasser;
     private ArrayList<DataObj> mArrayList;
     private TeleprompterAdapter teleprompterAdapter;
     private int mFlag;
     boolean isFirstOpen;
     private boolean isCheked;
-
     private FabAnimations mFabAnimations;
 
-    private onDisplayActivityCallBackListner mOnDisplayActivityCallBackListner;
-
+//////////////get Value from activity////////////
     private void readBundle(Bundle bundle) {
-
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
             //mScrollString = bundle.getString(Contract.EXTRA_TEXT);
-           mFlag =bundle.getInt(Contract.EXTRA_FLAG);
-           isCheked=bundle.getBoolean(Contract.EXTRA_SELECTED);
+            mFlag = bundle.getInt(Contract.EXTRA_FLAG);
+            isCheked = bundle.getBoolean(Contract.EXTRA_SELECTED);
             Log.d(TAG, "myFlag is " + String.valueOf(mFlag));
 
 
         }
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_content_fragment, container, false);
         ButterKnife.bind(this, view);
-        isFirstOpen=true;
+        isFirstOpen = true;
         Bundle extras = this.getArguments();
         if (extras != null) {
             readBundle(extras);
@@ -129,22 +124,18 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         initializeList();
 
 
-
-        ((ListContentsActivity)getActivity()).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
+        ((ListContentsActivity) getActivity()).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
             @Override
             public void onRefresh() {
 
-                    mEditContainer.setVisibility(View.VISIBLE);
-                    }
+                mEditContainer.setVisibility(View.VISIBLE);
+            }
         });
         return view;
 
     }
 
 
-    public interface OnDataPass {
-        public void onDataPass(String data);
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -154,52 +145,48 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
         }
     }
+
     public void passData(String data) {
         dataPasser.onDataPass(data);
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null) {
 
-                    }
+        }
 
         mFab.setOnClickListener(this);
         mFabAdd.setOnClickListener(this);
         mFabStorage.setOnClickListener(this);
         mFabCloud.setOnClickListener(this);
+        mDeletImage.setOnClickListener(this);
+        mReturnUp.setOnClickListener(this);
 
         OnTouchRecyclerView();
 
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                ContentValues values = new ContentValues();
 
-                if(b){
+                if (b) {
                     mDeletImage.setVisibility(View.VISIBLE);
                     mDeletText.setVisibility(View.VISIBLE);
-                    values.put(Contract.BakeEntry.COL_SELECT, 1);
+                    chekAll();
 
-
-                }else {
+                } else {
                     mDeletImage.setVisibility(View.GONE);
                     mDeletText.setVisibility(View.GONE);
-                    values.put(Contract.BakeEntry.COL_SELECT, 0);
-
+                    unCheckAll();
                 }
 
-                getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,null,null);
-
-                refreshList();
-                values.clear();
 
             }
         });
 
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -216,7 +203,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     isOpen = true;
 
                     launchAddDailog();
-                    dialog.show();
+                    mDialog.show();
 
                 }
                 Log.d(TAG, "FabAction is " + "Fab Add");
@@ -230,9 +217,15 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             case R.id.fab_cloud:
                 // CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
                 launchAddDailog();
-                dialog.show();
+                mDialog.show();
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
-
+            case R.id.delete_all:
+                launchSelctedDialog();
+                break;
+            case R.id.return_up:
+                mEditContainer.setVisibility(View.GONE);
+                unCheckAll();
+            default:
                 break;
 
         }
@@ -241,8 +234,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
 
-
-    public void initializeView(){
+    public void initializeView() {
         mFabAnimations = new FabAnimations(getActivity(), mFab, mFabAdd, mFabStorage, mFabCloud);
         teleprompterAdapter = new TeleprompterAdapter(getActivity(), getLayoutInflater(), new OnItemViewClickListner() {
             @Override
@@ -291,24 +283,37 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 }
 
             }
-        }, new OnCheckBoxChangeListner() {
+
             @Override
-            public void onChekedListner(int position, CompoundButton v, boolean is) {
+            public void onItemCheck(int pos, View item) {
+
                 ContentValues values = new ContentValues();
-                int id=mArrayList.get(position).getId();
-                if(is){
-                    values.put(Contract.BakeEntry.COL_SELECT, 1);
-                    getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,
-                            Contract.BakeEntry._ID+"=?",
-                            new String[]{String.valueOf(id)});
-                    values.clear();
-                }else {
-                    values.put(Contract.BakeEntry.COL_SELECT, 0);
-                    getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,
-                            Contract.BakeEntry._ID+"=?",
-                            new String[]{String.valueOf(id)});
-                    values.clear();
-                }
+                int id = mArrayList.get(pos).getId();
+
+                values.put(Contract.BakeEntry.COL_SELECT, 1);
+                getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,
+                        Contract.BakeEntry._ID + "=?",
+                        new String[]{String.valueOf(id)});
+                values.clear();
+                Log.d(TAG, "cheked_ite = checked" + String.valueOf(id));
+                //  refreshList();
+
+
+            }
+
+            @Override
+            public void onItemUncheck(int pos, View item) {
+                ContentValues values = new ContentValues();
+                int id = mArrayList.get(pos).getId();
+
+                values.put(Contract.BakeEntry.COL_SELECT, 0);
+                getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,
+                        Contract.BakeEntry._ID + "=?",
+                        new String[]{String.valueOf(id)});
+                values.clear();
+                Log.d(TAG, "cheked_item = unchecked" + String.valueOf(id));
+
+                // refreshList();
 
 
             }
@@ -375,7 +380,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     }
 
-    private void launchPopUpMenu(View view,final  int position){
+    private void launchPopUpMenu(View view, final int position) {
 
         Context wrapper = new ContextThemeWrapper(getActivity(), R.style.MyPopupMenu);
         PopupMenu popup = new PopupMenu(wrapper, view);
@@ -400,6 +405,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                         launchDeletDialog(position);
                         break;
 
+
                     default:
                         break;
                 }
@@ -410,34 +416,33 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchAddDailog() {
         isAdded = false;
 
-        dialog = new Dialog(Objects.requireNonNull(getActivity()));
+        mDialog = new Dialog(Objects.requireNonNull(getActivity()));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(Objects.requireNonNull(dialog.getWindow()).getAttributes());
+        lp.copyFrom(Objects.requireNonNull(mDialog.getWindow()).getAttributes());
         lp.width = 48;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = BOTTOM | CENTER;
         lp.windowAnimations = R.style.Theme_Dialog;
-        dialog.getWindow().setAttributes(lp);
+        mDialog.getWindow().setAttributes(lp);
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_dialog_add_content);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.custom_dialog_add_content);
 
-        TextView mAdd = dialog.findViewById(R.id.txt_add);
-        TextView mCancel = dialog.findViewById(R.id.txt_cancel);
-        final LinedEditText mEditContent = dialog.findViewById(R.id.linededit_text_content);
-        final MaterialEditText mEditTitle = dialog.findViewById(R.id.edit_title);
+        TextView mAdd = mDialog.findViewById(R.id.txt_add);
+        TextView mCancel = mDialog.findViewById(R.id.txt_cancel);
+        final LinedEditText mEditContent = mDialog.findViewById(R.id.linededit_text_content);
+        final MaterialEditText mEditTitle = mDialog.findViewById(R.id.edit_title);
 
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                dialog.dismiss();
-                dialog.cancel();
-                dialog.hide();
+                mDialog.dismiss();
 
 
             }
@@ -485,24 +490,20 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         //  dialog.setCanceledOnTouchOutside(false);
         // dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.show();
+        mDialog.show();
         isOpen = false;
 
 
     }
-    public boolean isTablet() {
-        return (getActivity().getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
 
-    public void launchDeletDialog(final int position){
+    private void launchSelctedDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getActivity());        alertDialogBuilder.setTitle("Delete");
+                getActivity());
+        alertDialogBuilder.setTitle("Delete");
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Click yes to delete this file!")
+                .setMessage("Click yes to delete selcted files!")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -515,22 +516,34 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                         if (GetData.getTeleprompters(getActivity()).size() > 0) {
 
                             //  getContentResolver().delete(uri, null, null);
+                            for (int i = 0; i < mArrayList.size(); i++) {
+                                DataObj item = mArrayList.get(i);
 
+                                if (item.getIsChecked() == 1) {
+
+
+                                    //getActivity().getContentResolver().delete(uri, null, null);
+
+                                    // String stringId = String.valueOf(item.getId());
+                                    //Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
+                                    // getActivity().getContentResolver().delete(uri, Contract.BakeEntry._ID+"=?", new String[]{stringId});
+                                    // Log.d("checked_item_content", stringId);
+
+                                    deletSelectedItem(i);
+                                }
+
+
+                            }
 
                             // getContentResolver().delete(uri, mySelection, mySelectionArgs);
                             // int id = (int) viewHolder.itemView.getTag();
 
                             // Build appropriate uri with String row id appended
-                            String stringId = String.valueOf(mArrayList.get(position).getId());
 
-                            Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
-
-                            uri = uri.buildUpon().appendPath(stringId).build();
 
                             // COMPLETED (2) Delete a single row of data using a ContentResolver
-                            getActivity().getContentResolver().delete(uri, null, null);
-                            Log.d("contentResolver delete", "delete success");
                             // teleprompterAdapter.removeContent(mArrayList);
+                            unCheckAll();
                             refreshList();
                         }
                     }
@@ -548,15 +561,128 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
         // show it
         alertDialog.show();
+
+
     }
 
-    private void refreshList(){
+    public boolean isTablet() {
+        return (getActivity().getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public void launchDeletDialog(final int position) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+        alertDialogBuilder.setTitle("Delete");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Click yes to delete this file!")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        deletSelectedItem(position);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    private void deletSelectedItem(int position) {
+
+             /* ContentValues songValues = new ContentValues();
+                            getContentResolver().delete(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                                    Contract.BakeEntry._ID + " = ?",
+                                    new String[]{songValues.getAsString(String.valueOf(position))});*/
+
+        if (GetData.getTeleprompters(getActivity()).size() > 0) {
+
+            //  getContentResolver().delete(uri, null, null);
+
+
+            // getContentResolver().delete(uri, mySelection, mySelectionArgs);
+            // int id = (int) viewHolder.itemView.getTag();
+
+            // Build appropriate uri with String row id appended
+            String stringId = String.valueOf(mArrayList.get(position).getId());
+
+            Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
+
+            uri = uri.buildUpon().appendPath(stringId).build();
+
+            // COMPLETED (2) Delete a single row of data using a ContentResolver
+            getActivity().getContentResolver().delete(uri, null, null);
+            Log.d("contentResolver delete", "delete success");
+            // teleprompterAdapter.removeContent(mArrayList);
+            refreshList();
+            if (mArrayList.size() > 4) {
+                mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
+
+            }
+
+        }
+    }
+
+    private void refreshList() {
         mArrayList.clear();
         teleprompterAdapter.removeContent();
         mArrayList = GetData.getTeleprompters(getActivity());
         teleprompterAdapter.addNewContent(mArrayList);
         mRecyclerView.setAdapter(teleprompterAdapter);
-        mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unCheckAll();
+        mEditContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unCheckAll();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        unCheckAll();
+
+    }
+
+    private void chekAll() {
+        ContentValues values = new ContentValues();
+        values.put(Contract.BakeEntry.COL_SELECT, 1);
+        getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
+
+        refreshList();
+        values.clear();
+
+
+    }
+
+    private void unCheckAll() {
+        ContentValues values = new ContentValues();
+        values.put(Contract.BakeEntry.COL_SELECT, 0);
+        getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
+
+        refreshList();
+        values.clear();
 
     }
 }

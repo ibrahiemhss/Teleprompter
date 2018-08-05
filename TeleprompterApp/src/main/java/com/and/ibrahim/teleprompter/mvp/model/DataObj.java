@@ -5,6 +5,10 @@ public class DataObj {
     int isChecked;
     private String textTitle, textContent;
 
+    public String getTextContent() {
+        return textContent;
+    }
+
     public int getIsChecked() {
         return isChecked;
     }

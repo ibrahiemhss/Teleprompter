@@ -21,7 +21,7 @@ import android.support.v7.widget.SearchView;
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.data.Contract;
-import com.and.ibrahim.teleprompter.interfaces.FragmentEditListRefreshListener;
+import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 
 import butterknife.BindView;

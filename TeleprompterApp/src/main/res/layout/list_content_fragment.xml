@@ -39,6 +39,7 @@
                 android:src="@drawable/select_all"
                 android:layout_height="wrap_content" />
             <ImageView
+                android:id="@+id/return_up"
                 android:layout_width="96dp"
                 android:layout_height="48dp"
                 android:src="@drawable/move_up"

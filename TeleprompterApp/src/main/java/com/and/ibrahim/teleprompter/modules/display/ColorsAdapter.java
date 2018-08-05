@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.and.ibrahim.teleprompter.R;
-import com.and.ibrahim.teleprompter.interfaces.OnItemClickListener;
+import com.and.ibrahim.teleprompter.callback.OnItemClickListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
