@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:actionBarStyle">@style/NavigationViewStyle</item>
+        <item name="android:windowFullscreen">true</item>
+
 
     </style>
     <style name="MyPopupMenu" parent="Theme.AppCompat.Light.NoActionBar">
@@ -15,7 +17,8 @@
         <item name="android:disabledAlpha">0.5</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" tools:keep="@style/AppTheme_AppBarOverlay">
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:keep="@style/AppTheme_AppBarOverlay">
 
     </style>
 

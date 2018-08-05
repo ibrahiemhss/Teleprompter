@@ -1,46 +1,20 @@
 <resources>
-
+    <!--//////////////general///////////////////////////////-->
     <dimen name="fab_margin">8dp</dimen>
     <dimen name="toolbar_text_size">20sp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
     <dimen name="toolbar_text_side_margin">16dp</dimen>
-
-    <!-- recyclerVeiw main-->
-    <dimen name="list_width">300dp</dimen>
-    <dimen name="list_side_padding">5dp</dimen>
-    <dimen name="list_bottom_padding">24dp</dimen>
-    <!-- layoutsw600 -->
-    <dimen name="lin_container">96dp</dimen>
+    <!--///////////////////////////////////////////////////-->
 
 
+    <!--//////////////displayActivity////////////////////////-->
+    <dimen name="scroll_view_margin_top">88dp</dimen>
+    <dimen name="up_view_height">361dp</dimen>
+    <dimen name="down_view_height">329dp</dimen>
 
-    <!--add content dialog-->
-    <dimen name="add_dialog_width">264dp</dimen>
-    <dimen name="add_dialog_etext_height">336dp</dimen>
-    <dimen name="add_dialog_etext_size">16sp</dimen>
-    <dimen name="add_dialog_etext_margin">8dp</dimen>
-    <dimen name="add_dialog_text_width">96dp</dimen>
-    <dimen name="add_dialog_text_height">32dp</dimen>
-    <dimen name="add_dailog_margin_bottom">16dp</dimen>
-
-
-    <!-- list item  main-->
-    <integer name="list_column_count">2</integer>
-    <dimen name="item_width">128dp</dimen>
-    <dimen name="item_height">162dp</dimen>
-    <dimen name="item_layout_margin">4dp</dimen>
-    <dimen name="item_side_margin">8dp</dimen>
-    <dimen name="item_top_margin">4dp</dimen>
-    <dimen name="item_bottom_margin">4dp</dimen>
-    <dimen name="text_side_margin">8dp</dimen>
-    <dimen name="text_top_margin">8dp</dimen>
-    <dimen name="text_bottom_margin">4dp</dimen>
-    <dimen name="item_image_width">48dp</dimen>
-    <dimen name="item_image_height">48dp</dimen>
-
-    <!--navigation contents-->
-    <dimen name="nav_width">500dp</dimen>
+    <!--navigation-->
+    <dimen name="nav_width">282dp</dimen>
     <dimen name="nav_height">192dp</dimen>
     <dimen name="nav_veiw_group_width">@dimen/match_parent</dimen>
     <dimen name="nav_veiw_group_height">56dp</dimen>
@@ -56,10 +30,40 @@
     <dimen name="nav_image_color_width">56dp</dimen>
     <dimen name="nav_image_color_height">56dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>
-
     <!--dailog colors-->
     <dimen name="colors_dialog_width">384dp</dimen>
     <dimen name="colors_dialog_height">244dp</dimen>
+    <!--////////////////////////////////////////////////////-->
 
-
+    <!-- ////////////////fragment //////////////////////////-->
+    <dimen name="container_margin_top">88dp</dimen>
+    <dimen name="container_width">282dp</dimen>
+    <!-- recyclerVeiw -->
+    <dimen name="list_width">300dp</dimen>
+    <dimen name="list_side_padding">5dp</dimen>
+    <dimen name="list_bottom_padding">24dp</dimen>
+    <!-- layoutsw600 -->
+    <dimen name="lin_container">96dp</dimen>
+    <!--add content dialog-->
+    <dimen name="add_dialog_width">264dp</dimen>
+    <dimen name="add_dialog_etext_height">336dp</dimen>
+    <dimen name="add_dialog_etext_size">16sp</dimen>
+    <dimen name="add_dialog_etext_margin">8dp</dimen>
+    <dimen name="add_dialog_text_width">96dp</dimen>
+    <dimen name="add_dialog_text_height">32dp</dimen>
+    <dimen name="add_dailog_margin_bottom">16dp</dimen>
+    <!-- list item  main-->
+    <integer name="list_column_count">2</integer>
+    <dimen name="item_width">128dp</dimen>
+    <dimen name="item_height">162dp</dimen>
+    <dimen name="item_layout_margin">4dp</dimen>
+    <dimen name="item_side_margin">8dp</dimen>
+    <dimen name="item_top_margin">4dp</dimen>
+    <dimen name="item_bottom_margin">4dp</dimen>
+    <dimen name="text_side_margin">8dp</dimen>
+    <dimen name="text_top_margin">8dp</dimen>
+    <dimen name="text_bottom_margin">4dp</dimen>
+    <dimen name="item_image_width">48dp</dimen>
+    <dimen name="item_image_height">48dp</dimen>
+    <!-- ///////////////////// //////////////////////////-->
 </resources>

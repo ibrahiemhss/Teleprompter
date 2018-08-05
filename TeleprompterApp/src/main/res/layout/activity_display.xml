@@ -37,13 +37,11 @@ tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="170dp"
+        android:layout_width="@dimen/nav_width"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginTop ="@dimen/abc_action_bar_default_height_material"
-        android:fitsSystemWindows="true"
+        android:layout_marginTop ="@dimen/nav_margin_top"
         android:labelFor="@+id/app_bar_main"
-        android:layout_marginBottom="10dp"
         >
         <include
             layout="@layout/nave_contents"

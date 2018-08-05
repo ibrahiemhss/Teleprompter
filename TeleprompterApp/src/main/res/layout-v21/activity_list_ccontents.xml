@@ -56,8 +56,8 @@
 
     <FrameLayout
         android:id="@+id/contents_container"
-        android:paddingTop="?attr/actionBarSize"
-        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/container_margin_top"
+        android:layout_width="@dimen/container_width"
         android:layout_below="@+id/edit_container"
         android:layout_height="match_parent"/>
 

@@ -2,6 +2,8 @@ package com.and.ibrahim.teleprompter.modules.display;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -20,9 +22,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -43,6 +50,7 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.callback.OnDataPass;
+import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsActivity;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
@@ -63,8 +71,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     private Fragment mContentListFragment;
 
-    //@BindView(R.id.display_toolbar)
-  //  protected Toolbar mToolbar;
+    @BindView(R.id.display_toolbar)
+    protected Toolbar mToolbar;
+
     @BindView(R.id.display_collapsing_toolbar)
     protected CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.display_app_bar_layout)
@@ -79,10 +88,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected FrameLayout mFramShowContainer;
     @BindView(R.id.text_empty_show)
     protected TextView mEmptyTextShow;
-    @BindView(R.id.show_setting)
-    protected ImageView mImgSetting;
-    @BindView(R.id.back_id)
-    protected ImageView mBackImg;
     @BindView(R.id.show_play)
     protected ImageView mPlayStatus;
     @BindView(R.id.nav_view)
@@ -90,6 +95,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawerLayout;
 
+    private ImageView mImgSetting;
+    private ImageView mBackImg;
     private ActionBarDrawerToggle mBarDrawerToggle;
     private SeekBar mSeekScrollSpeed;
     private SeekBar mSeekTextSize;
@@ -99,6 +106,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private int[] mTextColorrArray;
     private int[] mBackGroundColorrArray;
 
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
+    private boolean ischeked;
 
     private Timer scrollTimer = null;
     private int verticalScrollMax = 0;
@@ -148,13 +158,21 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         super.onViewReady(savedInstanceState, intent);
         mContentListFragment = new ListContentsFragment();
 
-        View headerView= LayoutInflater.from(this).inflate(R.layout.nav_header, null);
-        mNavView.addHeaderView(headerView);
-        mNavView.getHeaderView(0).setVisibility(View.GONE);
+        Configuration configuration = getResources().getConfiguration();
+        int screenWidthDp = configuration.screenWidthDp; //The current width of the available screen space, in dp units, corresponding to screen width resource qualifier.
+        int screenHeightDp = configuration.screenHeightDp; //The smallest screen size an application will see in normal operation, corresponding to smallest screen width resource qualifier.
+        Log.d("screenSize","\nWidthDp="+String.valueOf(screenWidthDp)+"\nHeightDp="+String.valueOf(screenHeightDp));
+      //  View headerView= LayoutInflater.from(this).inflate(R.layout.nav_header, null);
+      //  mNavView.addHeaderView(headerView);
+       // mNavView.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
 
         ViewTreeObserver vto = verticalOuterLayout.getViewTreeObserver();
 
 
+        if (!isTablet()) {
+             mImgSetting=findViewById(R.id.show_setting);
+             mBackImg=findViewById(R.id.back_id);
+        }
         if (savedInstanceState != null) {
             mContentListFragment = (ListContentsFragment) getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
@@ -167,12 +185,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mScrollString = extras.getString(Contract.EXTRA_TEXT);
         }
 
-        mNavView.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
         if (isTablet()) {
-           // mToolbar.setVisibility(View.GONE);
-            mFramShowContainer.setVisibility(View.GONE);
+           // mScrollString=getResources().getString(R.string.mytest);
 
+
+            setupSearchToolbar();
             if(mScrollString==null){
+               // mFramShowContainer.setVisibility(View.GONE);
                 mEmptyTextShow.setVisibility(View.VISIBLE);
             }else {
                 mFramShowContainer.setVisibility(View.VISIBLE);
@@ -194,8 +213,36 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setListener() {
-        mImgSetting.setOnClickListener(this);
-        mBackImg.setOnClickListener(this);
+        if (!isTablet()) {
+            mImgSetting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mOpenDrawer) {
+                        mDrawerLayout.closeDrawer(Gravity.START);
+                        mOpenDrawer=false;
+                    }else {
+                        mDrawerLayout.openDrawer(Gravity.START);
+                        mOpenDrawer=true;
+
+                    }
+                }
+            });
+            mBackImg.setOnClickListener(new View.OnClickListener() {
+                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                 @Override
+                public void onClick(View view) {
+
+                     Intent intent = new Intent(DisplayActivity.this, ListContentsActivity.class);
+                     startActivity(intent);
+                     AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.ic_menu_animatable);
+                     // mBackImg.setImageDrawable(drawable);
+                     drawable.start();
+
+                   }
+              });
+        }
+
+        mPlayStatus.setOnClickListener(this);
        // mNavView.setDrawerIndicatorEnabled(false);
 
         ViewTreeObserver vto = verticalOuterLayout.getViewTreeObserver();
@@ -230,12 +277,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         isFirstOpen = SharedPrefManager.getInstance(this).isFirstOpen();
 
-        if(!isTablet()){
-            mPlayStatus.setBackground(Objects.requireNonNull(this).getDrawable(R.drawable.ic_play_circle_filled));
+
+        final int seekProgress = SharedPrefManager.getInstance(this).getPrefSpeed();
+        mPlayStatus.setBackground(Objects.requireNonNull(this).getDrawable(R.drawable.ic_play_circle_filled));
+        if (isTablet()) {
+            initFragment();
 
         }
-        final int seekProgress = SharedPrefManager.getInstance(this).getPrefSpeed();
-
         if (!isFirstOpen) {
             mTextColor = getResources().getColor(R.color.White);
             mBackgroundColor = getResources().getColor(R.color.Black);
@@ -247,24 +295,90 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         }
 
+
+
         mScrollText.setTextColor(mTextColor);
         mSlideShowScroll.setBackgroundColor(mBackgroundColor);
         mScrollText.setText(mScrollString);
 
         setSpeed(seekProgress);
 
+            if(mScrollText.equals("")){
+                if(isTablet()){
 
+                TextView emptytxt=findViewById(R.id.text_empty_show);
+                emptytxt.setVisibility(View.VISIBLE);
 
+            }
+        }
         clickToScrolling();
 
         initNavigationDrawer();
-        if (isTablet()) {
-            initFragment();
 
-        }
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.content_list_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.i("onQueryTextChange", newText);
+
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("onQueryTextSubmit", query);
+
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        super.onCreateOptionsMenu(menu);
+        return  super.onCreateOptionsMenu(menu);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+
+                // Not implemented here
+                break;
+            case R.id.action_select:
+                ischeked=true;
+                if(getFragmentEditListRefreshListener()!=null){
+                    getFragmentEditListRefreshListener().onRefresh();
+                }
+                break;
+
+            case R.id.action_setting:
+                Intent intent=(new Intent(DisplayActivity.this, SettingsActivity.class));
+                startActivity(intent);
+
+            default:
+                break;
+        }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -287,11 +401,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 .commit();
     }
 
-    public boolean isTablet() {
-        return (DisplayActivity.this.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -352,25 +461,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         int getView = view.getId();
         switch (getView) {
-            case R.id.show_setting:
-                if (mOpenDrawer) {
-                    mDrawerLayout.closeDrawer(Gravity.START);
-                    mOpenDrawer=false;
-                }else {
-                    mDrawerLayout.openDrawer(Gravity.START);
-                    mOpenDrawer=true;
-
-                }
-
-                break;
-
-            case R.id.back_id:
-                Intent intent = new Intent(this, ListContentsActivity.class);
-                startActivity(intent);
-                AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.ic_menu_animatable);
-                // mBackImg.setImageDrawable(drawable);
-                drawable.start();
-                break;
 
            /* case R.id.tablet_setting:
                 if (!isOpen) {
@@ -395,7 +485,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 if (paused) {
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
-
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mSlideShowScroll.getLayoutParams();
+                    params.setMargins(0, 0, 0, 0);
+                    mSlideShowScroll.setLayoutParams(params);
                     paused = false;
                     startAutoScrolling(timeSpeed);
                     mPlayStatus.postDelayed(new Runnable() {
@@ -407,7 +499,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 } else {
                     mPlayStatus.setVisibility(View.VISIBLE);
+                    mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mSlideShowScroll.getLayoutParams();
+                    if(isTablet()){
+                        params.setMargins(0, 180, 0, 0);
 
+                    }else {
+                        params.setMargins(0, 150, 0, 0);
+
+                    }
+                    mSlideShowScroll.setLayoutParams(params);
                     //  mPlay.setBackground(Objects.requireNonNull(getActivity()).getDrawable(R.drawable.ic_arrow));
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
                     paused = true;
@@ -417,11 +518,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 }
 
 
-                if (!isTablet()) {
                    onSlideView(mAppBarLayout);
 
 
-                }
+
             }
 
         });
@@ -504,7 +604,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
-        TextView cancelBtn = mNavView.findViewById(R.id.cancel_edit_dialog);
 
 
         mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(this).getPrefSpeed());
@@ -676,4 +775,21 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             }
         }
     }
+
+    private void setupSearchToolbar() {
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            mCollapsingToolbarLayout.setTitleEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            mToolbar.setTitle(getResources().getString(R.string.app_name));
+
+        }
+    }
+    public boolean isTablet() {
+        return (DisplayActivity.this.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
 }

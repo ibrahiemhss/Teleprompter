@@ -79,10 +79,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-<ScrollView
+    <ScrollView
         android:id="@+id/slide_show_scroll"
         android:layout_width="match_parent"
         android:background="@color/Black"
+        android:layout_marginTop="@dimen/scroll_view_margin_top"
         android:layout_height="match_parent"
         android:scrollbars="none">
 

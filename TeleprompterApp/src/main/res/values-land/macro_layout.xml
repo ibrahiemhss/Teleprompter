@@ -1,42 +1,17 @@
 <resources>
+
+    <!--//////////////general///////////////////////////////-->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="toolbar_text_size">20sp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
     <dimen name="toolbar_text_side_margin">16dp</dimen>
+    <!--/////////////////////////////////////////////////////-->
 
-
-
-
-    <!-- list item -->
-    <dimen name="list_margin_top">96dp</dimen>
-    <integer name="list_column_count">4</integer>
-    <dimen name="item_width">164dp</dimen>
-    <dimen name="item_height">108dp</dimen>
-    <dimen name="item_layout_margin">1dp</dimen>
-    <dimen name="item_side_margin">20dp</dimen>
-    <dimen name="item_top_margin">4dp</dimen>
-    <dimen name="item_bottom_margin">4dp</dimen>
-    <dimen name="text_side_margin">8dp</dimen>
-    <dimen name="text_top_margin">8dp</dimen>
-    <dimen name="text_bottom_margin">4dp</dimen>
-    <dimen name="item_image_width">48dp</dimen>
-    <dimen name="item_image_height">48dp</dimen>
-
-    <!--add content dialog-->
-    <dimen name="add_dialog_width">264dp</dimen>
-    <dimen name="add_dialog_etext_height">336dp</dimen>
-    <dimen name="add_dialog_etext_size">16sp</dimen>
-    <dimen name="add_dialog_etext_margin">8dp</dimen>
-    <dimen name="add_dialog_text_width">96dp</dimen>
-    <dimen name="add_dialog_text_height">32dp</dimen>
-    <dimen name="add_dailog_margin_bottom">8dp</dimen>
-
-
-    <!-- fragment -->
+    <!--//////////////displayActivity////////////////////////-->
+    <dimen name="scroll_view_margin_top">64dp</dimen>
     <dimen name="up_view_height">124dp</dimen>
     <dimen name="down_view_height">190dp</dimen>
-
     <!--navigation contents-->
     <dimen name="nav_width">408dp</dimen>
     <dimen name="nav_height">144dp</dimen>
@@ -57,10 +32,35 @@
     <dimen name="nav_text_top_margin">8dp</dimen>
     <dimen name="nav_text_bottom_margin">8dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>
-
     <!--dailog colors-->
     <dimen name="colors_dialog_width">384dp</dimen>
     <dimen name="colors_dialog_height">244dp</dimen>
 
-
+    <!-- ////////////////fragment //////////////////////////-->
+    <dimen name="container_margin_top">64dp</dimen>
+    <dimen name="container_width">@dimen/match_parent</dimen>
+    <!-- recyclerVeiw -->
+    <!-- list item -->
+    <dimen name="list_margin_top">96dp</dimen>
+    <integer name="list_column_count">4</integer>
+    <dimen name="item_width">164dp</dimen>
+    <dimen name="item_height">108dp</dimen>
+    <dimen name="item_layout_margin">1dp</dimen>
+    <dimen name="item_side_margin">20dp</dimen>
+    <dimen name="item_top_margin">4dp</dimen>
+    <dimen name="item_bottom_margin">4dp</dimen>
+    <dimen name="text_side_margin">8dp</dimen>
+    <dimen name="text_top_margin">8dp</dimen>
+    <dimen name="text_bottom_margin">4dp</dimen>
+    <dimen name="item_image_width">48dp</dimen>
+    <dimen name="item_image_height">48dp</dimen>
+    <!--add content dialog-->
+    <dimen name="add_dialog_width">264dp</dimen>
+    <dimen name="add_dialog_etext_height">336dp</dimen>
+    <dimen name="add_dialog_etext_size">16sp</dimen>
+    <dimen name="add_dialog_etext_margin">8dp</dimen>
+    <dimen name="add_dialog_text_width">96dp</dimen>
+    <dimen name="add_dialog_text_height">32dp</dimen>
+    <dimen name="add_dailog_margin_bottom">8dp</dimen>
+    <!-- /////////////////////// //////////////////////////-->
 </resources>

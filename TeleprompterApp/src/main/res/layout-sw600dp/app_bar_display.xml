@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_graylt"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/display_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/toolbar_container_margin"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/display_collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="@dimen/toolbar_text_start_margin"
+            app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
+            android:fitsSystemWindows="true">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/display_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/contents_container"
+        android:layout_width="@dimen/container_width"
+        android:layout_marginTop="@dimen/container_margin_top"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:id="@+id/slide_show_scroll"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/scroll_view_margin_top"
+            android:layout_toRightOf="@+id/contents_container"
+            android:background="@color/Black"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/vertical_outer_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.and.ibrahim.teleprompter.util.ScrollingTextView
+                    android:id="@+id/text_scrolling"
+                    android:layout_margin="@dimen/scroll_text_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/mytest"
+                    android:textColor="@color/color_white"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+        </ScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/up_veiw"
+                android:layout_width="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_height="@dimen/up_view_height"
+                android:background="@color/colorTransparentWhite" />
+
+            <ImageView
+                android:id="@+id/show_play"
+                android:layout_width="@dimen/image_play_height"
+                android:layout_height="@dimen/image_play_width"
+                android:visibility="invisible"
+                android:contentDescription="@string/app_name"
+                android:layout_below="@+id/up_veiw"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center" />
+
+            <View
+                android:id="@+id/down_veiw"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/show_play"
+                android:layout_height="@dimen/down_view_height"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorTransparentWhite" />
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

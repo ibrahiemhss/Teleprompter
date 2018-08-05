@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 
 
-/*
- *
- * Created by ibrahim on 22/05/18.
- */
 
 /**
  * the parent Activity for all activities in app

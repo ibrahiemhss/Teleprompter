@@ -16,6 +16,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (isTablet()) {
             mIntent= new Intent(this, DisplayActivity.class);
+           // mIntent= new Intent(this, ListContentsActivity.class);
+
 
         }else {
             mIntent= new Intent(this, ListContentsActivity.class);
