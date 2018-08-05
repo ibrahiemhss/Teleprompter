@@ -39,6 +39,7 @@ import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
+import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.callback.OnDataPass;
@@ -127,7 +128,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private int timeSpeed = 30;
 
     private int[] mScrollPosition;
+    private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
+    public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
+        return fragmentEditListRefreshListener;
+    }
+    public void setFragmentEditListRefreshListener(FragmentEditListRefreshListener fragmentEditListRefreshListener) {
+        this.fragmentEditListRefreshListener = fragmentEditListRefreshListener;
+    }
     @Override
     public int getResourceLayout() {
         return R.layout.activity_display;
@@ -148,7 +156,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
 
         if (savedInstanceState != null) {
-            mContentListFragment = (ListContentsFragment) getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_TELEPROMPTER_FRAGMENT);
+            mContentListFragment = (ListContentsFragment) getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
         }
 
@@ -222,7 +230,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         isFirstOpen = SharedPrefManager.getInstance(this).isFirstOpen();
 
-        mPlayStatus.setBackground(Objects.requireNonNull(this).getDrawable(R.drawable.ic_play_circle_filled));
+        if(!isTablet()){
+            mPlayStatus.setBackground(Objects.requireNonNull(this).getDrawable(R.drawable.ic_play_circle_filled));
+
+        }
         final int seekProgress = SharedPrefManager.getInstance(this).getPrefSpeed();
 
         if (!isFirstOpen) {
@@ -260,7 +271,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         outState.putIntArray(Contract.EXTRA_SCROLL_POSITION,
                 new int[]{mSlideShowScroll.getScrollX(), mSlideShowScroll.getScrollY()});
         if (isTablet()) {
-            getSupportFragmentManager().putFragment(outState, Contract.EXTRA_TELEPROMPTER_FRAGMENT, mContentListFragment);
+            getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
 
         }
         super.onSaveInstanceState(outState);

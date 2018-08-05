@@ -68,7 +68,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         mContentListFragment = new ListContentsFragment();
         if (savedInstanceState != null) {
-            mContentListFragment =  getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_TELEPROMPTER_FRAGMENT);
+            mContentListFragment =  getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
         }
         mCollapsingToolbarLayout.setTitleEnabled(false);
@@ -187,9 +187,9 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-
         super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
+
     }
     @Override
     public void onClick(View view) {

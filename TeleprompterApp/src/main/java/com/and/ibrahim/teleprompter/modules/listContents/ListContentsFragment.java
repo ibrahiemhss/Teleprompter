@@ -95,8 +95,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     boolean isFirstOpen;
     private boolean isCheked;
     private FabAnimations mFabAnimations;
+    private boolean isDialogShow;
+    private String mLastTitleAdding;
+    private String mLastContentAdding;
+    private LinedEditText mEditContent ;
+    private MaterialEditText mEditTitle;
 
-//////////////get Value from activity////////////
+
+    //////////////get Value from activity////////////
     private void readBundle(Bundle bundle) {
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
             //mScrollString = bundle.getString(Contract.EXTRA_TEXT);
@@ -124,13 +130,28 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         initializeList();
 
 
-        ((ListContentsActivity) getActivity()).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
-            @Override
-            public void onRefresh() {
+        if(isTablet()){
+            ((DisplayActivity) getActivity()).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
+                @Override
+                public void onRefresh() {
 
-                mEditContainer.setVisibility(View.VISIBLE);
-            }
-        });
+                    mEditContainer.setVisibility(View.VISIBLE);
+                }
+            });
+
+        }
+        if(!isTablet()){
+            ((ListContentsActivity) getActivity()).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                    mEditContainer.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+
+
         return view;
 
     }
@@ -154,8 +175,18 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         if (savedInstanceState != null) {
 
+            isDialogShow=savedInstanceState.getBoolean(Contract.EXTRA_SHOW_DIALOG);
+            if(isDialogShow){
+                mLastTitleAdding=savedInstanceState.getString(Contract.EXTRA_STRING_CONTENT);
+                mLastTitleAdding=savedInstanceState.getString(Contract.EXTRA_STRING_TITLE);
+                launchAddDailog(mLastTitleAdding,mLastContentAdding);
+                mDialog.show();
+                Log.d("Saved_dialog_text", "Title ="+mLastTitleAdding+"\nConten ="+mLastContentAdding);
+
+            }
         }
 
         mFab.setOnClickListener(this);
@@ -202,7 +233,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 if (!isOpen) {
                     isOpen = true;
 
-                    launchAddDailog();
+                    launchAddDailog(null,null);
                     mDialog.show();
 
                 }
@@ -216,7 +247,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.fab_cloud:
                 // CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
-                launchAddDailog();
+                launchAddDailog(null,null);
                 mDialog.show();
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
             case R.id.delete_all:
@@ -346,15 +377,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         mRecyclerView.setHasFixedSize(true);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         GridLayoutManager gridLayoutManager = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (GetScreenOrientation.GetListByScreenSize(getActivity())) {
-                gridLayoutManager = new GridLayoutManager(getActivity(), 3);
 
-            } else {
-                gridLayoutManager = new GridLayoutManager(getActivity(), columnCount);
+                gridLayoutManager = new GridLayoutManager(getActivity(), 1);
 
-            }
-        }
         mRecyclerView.setLayoutManager(gridLayoutManager);
         //Pass a list of images with inflater ​​in adapter
 
@@ -418,7 +443,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void launchAddDailog() {
+    private void launchAddDailog(String title,String content) {
         isAdded = false;
 
         mDialog = new Dialog(Objects.requireNonNull(getActivity()));
@@ -435,15 +460,22 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
         TextView mAdd = mDialog.findViewById(R.id.txt_add);
         TextView mCancel = mDialog.findViewById(R.id.txt_cancel);
-        final LinedEditText mEditContent = mDialog.findViewById(R.id.linededit_text_content);
-        final MaterialEditText mEditTitle = mDialog.findViewById(R.id.edit_title);
+         mEditContent = mDialog.findViewById(R.id.linededit_text_content);
+         mEditTitle = mDialog.findViewById(R.id.edit_title);
 
+        if (title != null||content!=null) {
+            mEditTitle.setText(title);
+            mEditContent.setText(content);
+        }
+        mLastTitleAdding=mEditTitle.getText().toString();
+        mLastContentAdding=mEditContent.getText().toString();
+        isDialogShow=true;
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 mDialog.dismiss();
-
+                isDialogShow=false;
 
             }
         });
@@ -453,6 +485,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+                isDialogShow=false;
 
                 if (!isAdded) {
                     Cursor countCursor = getActivity().getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
@@ -516,6 +549,15 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                         if (GetData.getTeleprompters(getActivity()).size() > 0) {
 
                             //  getContentResolver().delete(uri, null, null);
+
+                            Cursor countCursor = getActivity().getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                                    new String[]{"count(*) AS count"},
+                                    null,
+                                    null,
+                                    null);
+
+                            Objects.requireNonNull(countCursor).moveToFirst();
+                            int count = countCursor.getInt(0);
                             for (int i = 0; i < mArrayList.size(); i++) {
                                 DataObj item = mArrayList.get(i);
 
@@ -530,6 +572,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                                     // Log.d("checked_item_content", stringId);
 
                                     deletSelectedItem(i);
+                                   // Log.d(TAG,"valueInSelction"+mArrayList.get(i).getTextTitle());
+
                                 }
 
 
@@ -643,6 +687,17 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         teleprompterAdapter.addNewContent(mArrayList);
         mRecyclerView.setAdapter(teleprompterAdapter);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(mEditTitle!=null&&mEditContent!=null){
+            outState.putString(Contract.EXTRA_STRING_TITLE,mEditTitle.getText().toString());
+            outState.putString(Contract.EXTRA_STRING_CONTENT,mEditContent.getText().toString());
+
+        }
+        outState.putBoolean(Contract.EXTRA_SHOW_DIALOG,isDialogShow);
     }
 
     @Override
