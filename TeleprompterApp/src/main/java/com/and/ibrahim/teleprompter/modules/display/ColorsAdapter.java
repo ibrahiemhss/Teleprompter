@@ -21,23 +21,16 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
     private final int[] colorBackgroundArray;
     private final int[] colorTextArray;
-    private OnItemClickListener mOnItemClickListener;
-
-
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<Integer> dataObjArrayList = new ArrayList<>();
 
     public ColorsAdapter(Context context, LayoutInflater inflater) {
         mLayoutInflater = inflater;
-
         colorBackgroundArray = context.getResources().getIntArray(R.array.background_colors);
         colorTextArray = context.getResources().getIntArray(R.array.text_colors);
         for (int i : colorTextArray) {
             dataObjArrayList.add(i);
-            // colorBackgroundArray.add(i);
-
         }
-
     }
 
     @NonNull
@@ -54,11 +47,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
         holder.bind(position);
 
-
-        int lastPosition = position;
-        lastPosition = position;
-
-        //viewHolder.mTxtColorName.setText(colorNameArray[position]);
     }
 
     @Override
@@ -74,9 +62,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         @BindView(R.id.img_text_color)
         RoundedImageView mTextColor;
 
-        // @BindView(R.id.text_content)
-        //TextView mTextContent;
-
         Holder(View itemView) {
             super(itemView);
             mContext = itemView.getContext();
@@ -88,8 +73,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         void bind(int position) {
             mBackgroundColor.setBackgroundColor(colorBackgroundArray[position]);
             mTextColor.setBackgroundColor(colorTextArray[position]);
-
-
         }
 
         @Override

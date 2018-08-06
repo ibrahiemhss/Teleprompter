@@ -10,17 +10,15 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -46,15 +44,15 @@ import android.widget.TextView;
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
+import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
-import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
-import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
-import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsActivity;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
+import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecylerViewClickListener;
+import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 
 import java.util.Objects;
 import java.util.Timer;
@@ -66,7 +64,7 @@ import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.START;
 
 @SuppressWarnings("WeakerAccess")
-public class DisplayActivity extends BaseActivity implements View.OnClickListener ,OnDataPassListener {
+public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener {
 
     @BindView(R.id.display_toolbar)
     protected Toolbar mToolbar;
@@ -132,31 +130,31 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         Configuration configuration = getResources().getConfiguration();
         int screenWidthDp = configuration.screenWidthDp; //The current width of the available screen space, in dp units, corresponding to screen width resource qualifier.
         int screenHeightDp = configuration.screenHeightDp; //The smallest screen size an application will see in normal operation, corresponding to smallest screen width resource qualifier.
-        Log.d("screenSize","\nWidthDp="+String.valueOf(screenWidthDp)+"\nHeightDp="+String.valueOf(screenHeightDp));
+        Log.d("screenSize", "\nWidthDp=" + String.valueOf(screenWidthDp) + "\nHeightDp=" + String.valueOf(screenHeightDp));
 
         if (savedInstanceState != null) {//save state case
             mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
         }
         if (!isTablet()) {//in tablet screen size make main toolbar to one screen for all views
-             mImgSetting=findViewById(R.id.show_setting);
-             mBackImg=findViewById(R.id.back_id);
+            mImgSetting = findViewById(R.id.show_setting);
+            mBackImg = findViewById(R.id.back_id);
         }
         params = (AppBarLayout.LayoutParams) mCollapsingToolbarLayout.getLayoutParams();
         params.setScrollFlags(0);  // clear all scroll flags
         Bundle extras = intent.getExtras();
-        if(extras!=null){
+        if (extras != null) {
             mScrollString = extras.getString(Contract.EXTRA_TEXT);
         }
 
         if (isTablet()) {//custom view in tablet devices
             setupSearchToolbar();
-            if(mScrollString==null){
+            if (mScrollString == null) {
                 mEmptyTextShow.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mFramShowContainer.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             mEmptyTextShow.setVisibility(View.GONE);
             mFramShowContainer.setVisibility(View.VISIBLE);
         }
@@ -201,9 +199,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         setSpeed(seekProgress);//get suitable value of speed by bas seekbar progress
 
-        if(mScrollText.equals("")){//in tablet DisplayActivity is first activity and text will be empty
-            if(isTablet()){//so scroll view will hide if mScrollText have null value
-                TextView emptytxt=findViewById(R.id.text_empty_show);
+        if (mScrollText.equals("")) {//in tablet DisplayActivity is first activity and text will be empty
+            if (isTablet()) {//so scroll view will hide if mScrollText have null value
+                TextView emptytxt = findViewById(R.id.text_empty_show);
                 emptytxt.setVisibility(View.VISIBLE);
             }
         }
@@ -219,23 +217,23 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 public void onClick(View view) {
                     if (mOpenDrawer) {
                         mDrawerLayout.closeDrawer(Gravity.START);
-                        mOpenDrawer=false;
-                    }else {
+                        mOpenDrawer = false;
+                    } else {
                         mDrawerLayout.openDrawer(Gravity.START);
-                        mOpenDrawer=true;
+                        mOpenDrawer = true;
                     }
                 }
             });
             mBackImg.setOnClickListener(new View.OnClickListener() {
-                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                 @Override
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
                 public void onClick(View view) {
-                     Intent intent = new Intent(DisplayActivity.this, ListContentsActivity.class);
-                     startActivity(intent);
-                     AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.ic_menu_animatable);
-                     drawable.start();
-                   }
-              });
+                    Intent intent = new Intent(DisplayActivity.this, ListContentsActivity.class);
+                    startActivity(intent);
+                    AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.ic_menu_animatable);
+                    drawable.start();
+                }
+            });
         }
 
         mPlayStatus.setOnClickListener(this);
@@ -265,6 +263,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                     return true;
                 }
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQueryTextSubmit", query);
@@ -275,7 +274,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             searchView.setOnQueryTextListener(queryTextListener);
         }
         super.onCreateOptionsMenu(menu);
-        return  super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -286,13 +285,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.action_select:
                 boolean ischecked = true;
-                if(getFragmentEditListRefreshListener()!=null){
+                if (getFragmentEditListRefreshListener() != null) {
                     getFragmentEditListRefreshListener().onRefresh();
                 }
                 break;
 
             case R.id.action_setting:
-                Intent intent=(new Intent(DisplayActivity.this, SettingsActivity.class));
+                Intent intent = (new Intent(DisplayActivity.this, SettingsActivity.class));
                 startActivity(intent);
 
             default:
@@ -312,7 +311,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         super.onSaveInstanceState(outState);
     }
-    private void initFragment(){
+
+    private void initFragment() {
         Bundle bundle = new Bundle();
         if (bundle != null) {
             mContentListFragment.setArguments(bundle);
@@ -323,8 +323,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 .commit();
     }
 
-//////////all methods responsible for for auto scrolling for scrolling textt//////////////////////////////////////////////
-   public void startAutoScrolling(int time) {
+    //////////all methods responsible for for auto scrolling for scrolling textt//////////////////////////////////////////////
+    public void startAutoScrolling(int time) {
         if (scrollTimer == null) {
             scrollTimer = new Timer();
             final Runnable Timer_Tick = new Runnable() {
@@ -383,6 +383,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         });
 
     }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void clickToScrolling() {
         mSlideShowScroll.getChildAt(0).setOnClickListener(new View.OnClickListener() {
@@ -416,8 +417,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 }
 
 
-                   onSlideView(mAppBarLayout);
-
+                onSlideView(mAppBarLayout);
 
 
             }
@@ -491,7 +491,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void initNavigationDrawer(){
+    private void initNavigationDrawer() {
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
@@ -500,41 +500,41 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mSeekTextSize.setProgress(SharedPrefManager.getInstance(this).getPrefTextSize());
         mTextSpeed = mNavView.findViewById(R.id.text_font);
         mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-             @Override
-             public void onStopTrackingTouch(SeekBar seekBar) {
-                 startAutoScrolling(timeSpeed);
-             }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                startAutoScrolling(timeSpeed);
+            }
 
-             @Override
-             public void onStartTrackingTouch(SeekBar seekBar) {
-                 stopAutoScrolling();
-             }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                stopAutoScrolling();
+            }
 
-             @Override
-             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-                 setSpeed(progress);
-                 mTextSpeed.setText(String.valueOf(progress));
-                 SharedPrefManager.getInstance(DisplayActivity.this).setPrefSpeed(progress);
-             }
-         });
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                setSpeed(progress);
+                mTextSpeed.setText(String.valueOf(progress));
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefSpeed(progress);
+            }
+        });
 
 
         mSeekTextSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-           @Override
-           public void onStopTrackingTouch(SeekBar seekBar) {
-           }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
 
-           @Override
-           public void onStartTrackingTouch(SeekBar seekBar) {
-           }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
-           @Override
-           public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-               mScrollText.setTextSize(progress);
-               SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextSize(progress);
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                mScrollText.setTextSize(progress);
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextSize(progress);
 
-           }
-       });
+            }
+        });
 
 
         textSpeedValue = SharedPrefManager.getInstance(this).getPrefSpeed();
@@ -556,7 +556,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         });
-
 
 
     }
@@ -642,7 +641,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -655,9 +653,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onDataPass(String data) {
         if (isTablet()) {
-            mScrollString=data;
+            mScrollString = data;
 
-            if(mScrollString!=null){
+            if (mScrollString != null) {
                 mScrollText.setText(mScrollString);
                 mFramShowContainer.setVisibility(View.VISIBLE);
                 mEmptyTextShow.setVisibility(View.GONE);
@@ -678,6 +676,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         }
     }
+
     public boolean isTablet() {
         return (DisplayActivity.this.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
@@ -687,6 +686,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
         return fragmentEditListRefreshListener;
     }
+
     public void setFragmentEditListRefreshListener(FragmentEditListRefreshListener fragmentEditListRefreshListener) {
         this.fragmentEditListRefreshListener = fragmentEditListRefreshListener;
     }

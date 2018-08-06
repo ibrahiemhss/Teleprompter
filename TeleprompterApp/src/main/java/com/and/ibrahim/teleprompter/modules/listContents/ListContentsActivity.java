@@ -10,18 +10,18 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v7.widget.SearchView;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
-import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
+import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 
 import java.util.Objects;
@@ -32,62 +32,46 @@ import butterknife.BindView;
 public class ListContentsActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "ListContentsActivity";
-    //@BindView(R.id.et_search)
-    // protected AppCompatEditText mEtSearch;
-    //@BindView(R.id.img_search)
-    // protected ImageView mImgSearch;
-    private SearchView searchView = null;
-    private SearchView.OnQueryTextListener queryTextListener;
-
     @BindView(R.id.list_contents_collapsing_toolbar)
     protected
     CollapsingToolbarLayout mCollapsingToolbarLayout;
-
-    private FragmentEditListRefreshListener fragmentEditListRefreshListener;
-
-    private boolean ischecked;
-
-
-    private Fragment mContentListFragment;
-
     @BindView(R.id.list_contents_toolbar)
     protected Toolbar mToolbar;
     int mFlag;
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
+    private FragmentEditListRefreshListener fragmentEditListRefreshListener;
+    private boolean ischecked;
+    private Fragment mContentListFragment;
+
     private FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
         return fragmentEditListRefreshListener;
     }
+
     public void setFragmentEditListRefreshListener(FragmentEditListRefreshListener fragmentEditListRefreshListener) {
         this.fragmentEditListRefreshListener = fragmentEditListRefreshListener;
     }
+
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
         mContentListFragment = new ListContentsFragment();
         if (savedInstanceState != null) {
-            mContentListFragment =  getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
+            mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
         }
         mCollapsingToolbarLayout.setTitleEnabled(false);
 
         setupSearchToolbar();
-        // mImgSearch.setOnClickListener(this);
         boolean isVisible = false;
-        ischecked=false;
-        /*SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-*/
-
+        ischecked = false;
     }
-
-
 
     @Override
     public int getResourceLayout() {
         return R.layout.activity_list_ccontents;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -95,7 +79,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         initFragment();
     }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,23 +97,22 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.i("onQueryTextChange", newText);
-
                     return true;
                 }
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQueryTextSubmit", query);
-
                     return true;
                 }
             };
             searchView.setOnQueryTextListener(queryTextListener);
         }
         super.onCreateOptionsMenu(menu);
-        return  super.onCreateOptionsMenu(menu);
-
+        return super.onCreateOptionsMenu(menu);
 
     }
+
     private void setupSearchToolbar() {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -140,22 +122,23 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
 
                 // Not implemented here
-             break;
+                break;
             case R.id.action_select:
-                ischecked=true;
-                if(getFragmentEditListRefreshListener()!=null){
+                ischecked = true;
+                if (getFragmentEditListRefreshListener() != null) {
                     getFragmentEditListRefreshListener().onRefresh();
                 }
                 break;
 
             case R.id.action_setting:
-                Intent intent=(new Intent(ListContentsActivity.this, SettingsActivity.class));
+                Intent intent = (new Intent(ListContentsActivity.this, SettingsActivity.class));
                 startActivity(intent);
 
             default:
@@ -168,34 +151,20 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void setListener() {
 
-     /*   searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-               // searchFor(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-               // filterSearchFor(query);
-                return true;
-            }
-        });*/
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
-
     }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
     }
 
-
-    private void initFragment(){
+    private void initFragment() {
         Bundle bundle = new Bundle();
 
         bundle.putString(Contract.EXTRA_TEXT, getResources().getString(R.string.mytest));
@@ -209,12 +178,10 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
                 .commit();
     }
 
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
 
     public boolean isTablet() {
         return (ListContentsActivity.this.getResources().getConfiguration().screenLayout
