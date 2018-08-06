@@ -2,7 +2,7 @@ package com.and.ibrahim.teleprompter.mvp.model;
 
 public class DataObj {
     private int id;
-    int isChecked;
+    private int isChecked;
     private String textTitle, textContent;
 
     public String getTextContent() {

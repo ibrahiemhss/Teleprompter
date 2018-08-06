@@ -24,8 +24,11 @@ import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 
+@SuppressWarnings("ALL")
 public class ListContentsActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "ListContentsActivity";
@@ -35,9 +38,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     // protected ImageView mImgSearch;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-   // @BindView(R.id.text_app_name)
-   // protected TextView mTxtAppName;
-    boolean isSelcted;
 
     @BindView(R.id.list_contents_collapsing_toolbar)
     protected
@@ -45,18 +45,15 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
-    private SearchManager searchManager;
-    private boolean isVisibl;
-
-    private boolean ischeked;
+    private boolean ischecked;
 
 
     private Fragment mContentListFragment;
 
     @BindView(R.id.list_contents_toolbar)
-     protected Toolbar mToolbar;
+    protected Toolbar mToolbar;
     int mFlag;
-    public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
+    private FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
         return fragmentEditListRefreshListener;
     }
     public void setFragmentEditListRefreshListener(FragmentEditListRefreshListener fragmentEditListRefreshListener) {
@@ -75,8 +72,8 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         setupSearchToolbar();
         // mImgSearch.setOnClickListener(this);
-        isVisibl = false;
-        ischeked=false;
+        boolean isVisible = false;
+        ischecked=false;
         /*SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -96,9 +93,10 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void init() {
 
-        initFragment(false);
+        initFragment();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -110,7 +108,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
             searchView = (SearchView) searchItem.getActionView();
         }
         if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setSearchableInfo(Objects.requireNonNull(searchManager).getSearchableInfo(getComponentName()));
 
             queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
@@ -150,7 +148,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
                 // Not implemented here
              break;
             case R.id.action_select:
-                ischeked=true;
+                ischecked=true;
                 if(getFragmentEditListRefreshListener()!=null){
                     getFragmentEditListRefreshListener().onRefresh();
                 }
@@ -194,34 +192,15 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id) {
-
-              //  mEtSearch.setVisibility(View.VISIBLE);
-/*
-
-                if (isVisibl) {
-                    mEtSearch.setVisibility(View.GONE);
-                    isVisibl=false;
-                }else {
-                    mEtSearch.setVisibility(View.VISIBLE);
-                    Toast.makeText(this,"search from list",Toast.LENGTH_LONG).show();
-                    isVisibl=true;
-                }
-
-*/
-
-
-
-        }
     }
 
 
-    private void initFragment(boolean b){
+    private void initFragment(){
         Bundle bundle = new Bundle();
 
         bundle.putString(Contract.EXTRA_TEXT, getResources().getString(R.string.mytest));
 
-        bundle.putBoolean(Contract.EXTRA_SELECTED, b);
+        bundle.putBoolean(Contract.EXTRA_SELECTED, false);
 
         mContentListFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();

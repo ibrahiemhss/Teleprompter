@@ -13,6 +13,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,7 +39,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -49,7 +48,7 @@ import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
-import com.and.ibrahim.teleprompter.callback.OnDataPass;
+import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsActivity;
@@ -66,7 +65,8 @@ import butterknife.BindView;
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.START;
 
-public class DisplayActivity extends BaseActivity implements View.OnClickListener ,OnDataPass {
+@SuppressWarnings("WeakerAccess")
+public class DisplayActivity extends BaseActivity implements View.OnClickListener ,OnDataPassListener {
 
 
     private Fragment mContentListFragment;
@@ -88,6 +88,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected FrameLayout mFramShowContainer;
     @BindView(R.id.text_empty_show)
     protected TextView mEmptyTextShow;
+    @SuppressWarnings("WeakerAccess")
     @BindView(R.id.show_play)
     protected ImageView mPlayStatus;
     @BindView(R.id.nav_view)
@@ -97,18 +98,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     private ImageView mImgSetting;
     private ImageView mBackImg;
-    private ActionBarDrawerToggle mBarDrawerToggle;
-    private SeekBar mSeekScrollSpeed;
-    private SeekBar mSeekTextSize;
     private TextView mTextSpeed;
-    private Dialog mDialog;
     private Dialog mDialogTextColors;
-    private int[] mTextColorrArray;
+    private int[] mTextColorArray;
     private int[] mBackGroundColorrArray;
 
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    private boolean ischeked;
 
     private Timer scrollTimer = null;
     private int verticalScrollMax = 0;
@@ -117,27 +113,17 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean isOpen = false;
     private int textSpeedValue;
     private boolean isUp;
-    private int mTextColor;
-    private int mBackgroundColor;
-    private boolean isFirstOpen = false;
-    private boolean isTablet;
 
     private boolean mOpenDrawer;
-    private RecyclerView mColorsRV;
-    private ListView mBackgroundColorListView;
 
-    private ColorsAdapter mColorAdapter;
     AppBarLayout.LayoutParams params;
 
 
 
     private String mScrollString;
     private boolean paused = true;
-    private SeekBar.OnSeekBarChangeListener mSpeedUpSeekBarListener;
-    private SeekBar.OnSeekBarChangeListener mResizeTextSeekBarListener;
     private int timeSpeed = 30;
 
-    private int[] mScrollPosition;
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
     public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
@@ -166,7 +152,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
       //  mNavView.addHeaderView(headerView);
        // mNavView.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
 
-        ViewTreeObserver vto = verticalOuterLayout.getViewTreeObserver();
 
 
         if (!isTablet()) {
@@ -174,7 +159,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
              mBackImg=findViewById(R.id.back_id);
         }
         if (savedInstanceState != null) {
-            mContentListFragment = (ListContentsFragment) getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
+            mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
         }
 
@@ -258,7 +243,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         });
 
 
-        mBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.Open, R.string.Close);
+        ActionBarDrawerToggle mBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
         mDrawerLayout.addDrawerListener(mBarDrawerToggle);
         mBarDrawerToggle.syncState();
 
@@ -271,11 +256,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void init() {
         isUp = true;
         textSpeedValue = 1;
-        mTextColorrArray = getResources().getIntArray(R.array.text_colors);
+        mTextColorArray = getResources().getIntArray(R.array.text_colors);
         mBackGroundColorrArray = getResources().getIntArray(R.array.background_colors);
 
 
-        isFirstOpen = SharedPrefManager.getInstance(this).isFirstOpen();
+        boolean isFirstOpen = SharedPrefManager.getInstance(this).isFirstOpen();
 
 
         final int seekProgress = SharedPrefManager.getInstance(this).getPrefSpeed();
@@ -284,6 +269,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             initFragment();
 
         }
+        int mBackgroundColor;
+        int mTextColor;
         if (!isFirstOpen) {
             mTextColor = getResources().getColor(R.color.White);
             mBackgroundColor = getResources().getColor(R.color.Black);
@@ -291,7 +278,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         } else {
 
             mTextColor = SharedPrefManager.getInstance(this).getPrefTextColor();
-            mBackgroundColor = SharedPrefManager.getInstance(this).getPrefBackgroundColr();
+            mBackgroundColor = SharedPrefManager.getInstance(this).getPrefBackgroundColor();
 
         }
 
@@ -318,6 +305,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -329,7 +317,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             searchView = (SearchView) searchItem.getActionView();
         }
         if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setSearchableInfo(Objects.requireNonNull(searchManager).getSearchableInfo(getComponentName()));
 
             queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
@@ -361,7 +349,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 // Not implemented here
                 break;
             case R.id.action_select:
-                ischeked=true;
+                boolean ischecked = true;
                 if(getFragmentEditListRefreshListener()!=null){
                     getFragmentEditListRefreshListener().onRefresh();
                 }
@@ -460,18 +448,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         int getView = view.getId();
-        switch (getView) {
-
-           /* case R.id.tablet_setting:
-                if (!isOpen) {
-                    isOpen = true;
-                    launchEditDlg();
-                    mDialog.show();
-                }
-                break;*/
-
-
-        }
 
 
     }
@@ -485,9 +461,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 if (paused) {
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
-                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mSlideShowScroll.getLayoutParams();
-                    params.setMargins(0, 0, 0, 0);
-                    mSlideShowScroll.setLayoutParams(params);
+
+
                     paused = false;
                     startAutoScrolling(timeSpeed);
                     mPlayStatus.postDelayed(new Runnable() {
@@ -500,15 +475,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     mPlayStatus.setVisibility(View.VISIBLE);
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
-                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mSlideShowScroll.getLayoutParams();
-                    if(isTablet()){
-                        params.setMargins(0, 180, 0, 0);
 
-                    }else {
-                        params.setMargins(0, 150, 0, 0);
-
-                    }
-                    mSlideShowScroll.setLayoutParams(params);
                     //  mPlay.setBackground(Objects.requireNonNull(getActivity()).getDrawable(R.drawable.ic_arrow));
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
                     paused = true;
@@ -690,22 +657,22 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         FloatingActionButton fab = mDialogTextColors.findViewById(R.id.cancel_text_color_dialog);
 
-        mColorsRV = mDialogTextColors.findViewById(R.id.rv_colors);
+        RecyclerView mColorsRV = mDialogTextColors.findViewById(R.id.rv_colors);
 
         mColorsRV.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = null;
         gridLayoutManager = new GridLayoutManager(this, 3);
         mColorsRV.setLayoutManager(gridLayoutManager);
 
-        mColorAdapter = new ColorsAdapter(this, getLayoutInflater());
+        ColorsAdapter mColorAdapter = new ColorsAdapter(this, getLayoutInflater());
 
         mColorsRV.setAdapter(mColorAdapter);
 
         mColorsRV.addOnItemTouchListener(new RecyclerViewItemClickListener(this, mColorsRV, new RecylerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                mScrollText.setTextColor(mTextColorrArray[position]);
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorrArray[position]);
+                mScrollText.setTextColor(mTextColorArray[position]);
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
                 mSlideShowScroll.setBackgroundColor(mBackGroundColorrArray[position]);
                 SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorrArray[position]);
             }
@@ -766,7 +733,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void onDataPass(String data) {
         if (isTablet()) {
             mScrollString=data;
-            Log.d("LOG","hellooooo " + data);
 
             if(mScrollString!=null){
                 mScrollText.setText(mScrollString);

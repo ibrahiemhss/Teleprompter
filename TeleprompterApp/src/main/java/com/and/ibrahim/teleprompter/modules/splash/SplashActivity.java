@@ -10,23 +10,23 @@ import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsActivity;
 
 public class SplashActivity extends AppCompatActivity {
-   private Intent mIntent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent mIntent;
         if (isTablet()) {
-            mIntent= new Intent(this, DisplayActivity.class);
+            mIntent = new Intent(this, DisplayActivity.class);
            // mIntent= new Intent(this, ListContentsActivity.class);
 
 
         }else {
-            mIntent= new Intent(this, ListContentsActivity.class);
+            mIntent = new Intent(this, ListContentsActivity.class);
 
         }
         startActivity(mIntent);
         finish();
     }
-    public boolean isTablet() {
+    private boolean isTablet() {
         return (SplashActivity.this.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;

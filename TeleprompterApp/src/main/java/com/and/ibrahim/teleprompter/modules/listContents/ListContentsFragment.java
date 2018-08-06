@@ -39,15 +39,14 @@ import android.widget.Toast;
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
-import com.and.ibrahim.teleprompter.callback.OnDataPass;
-import com.and.ibrahim.teleprompter.callback.OnItemViewClickListner;
+import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
+import com.and.ibrahim.teleprompter.callback.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecylerViewClickListener;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
 import com.and.ibrahim.teleprompter.util.GetData;
-import com.and.ibrahim.teleprompter.util.GetScreenOrientation;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -60,17 +59,19 @@ import butterknife.ButterKnife;
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.CENTER;
 
+@SuppressWarnings("ALL")
 public class ListContentsFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "ListContentsFragment";
 
     @BindView(R.id.edit_container)
     protected RelativeLayout mEditContainer;
+    @SuppressWarnings("WeakerAccess")
     @BindView(R.id.delete_all)
-    protected ImageView mDeletImage;
+    protected ImageView mDeleteImage;
     @BindView(R.id.select_all)
     protected CheckBox mCheckBox;
-    @BindView(R.id.text_delet)
-    protected TextView mDeletText;
+    @BindView(R.id.text_delete)
+    protected TextView mDeleteText;
     @BindView(R.id.return_up)
     protected ImageView mReturnUp;
     @BindView(R.id.fab)
@@ -87,13 +88,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private Dialog mDialog;
     private boolean isAdded = false;
     private boolean isOpen = false;
-    private String mData;
-    private OnDataPass dataPasser;
+    private OnDataPassListener dataPasser;
     private ArrayList<DataObj> mArrayList;
     private TeleprompterAdapter teleprompterAdapter;
-    private int mFlag;
     boolean isFirstOpen;
-    private boolean isCheked;
     private FabAnimations mFabAnimations;
     private boolean isDialogShow;
     private String mLastTitleAdding;
@@ -106,8 +104,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private void readBundle(Bundle bundle) {
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
             //mScrollString = bundle.getString(Contract.EXTRA_TEXT);
-            mFlag = bundle.getInt(Contract.EXTRA_FLAG);
-            isCheked = bundle.getBoolean(Contract.EXTRA_SELECTED);
+            int mFlag = bundle.getInt(Contract.EXTRA_FLAG);
+            boolean isChecked = bundle.getBoolean(Contract.EXTRA_SELECTED);
             Log.d(TAG, "myFlag is " + String.valueOf(mFlag));
 
 
@@ -131,7 +129,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
         if(isTablet()){
-            ((DisplayActivity) getActivity()).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
+            ((DisplayActivity) Objects.requireNonNull(getActivity())).setFragmentEditListRefreshListener(new FragmentEditListRefreshListener() {
                 @Override
                 public void onRefresh() {
 
@@ -162,7 +160,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public void onAttach(Context context) {
         super.onAttach(context);
         if (isTablet()) {
-            dataPasser = (OnDataPass) context;
+            dataPasser = (OnDataPassListener) context;
 
         }
     }
@@ -182,9 +180,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             if(isDialogShow){
                 mLastTitleAdding=savedInstanceState.getString(Contract.EXTRA_STRING_CONTENT);
                 mLastTitleAdding=savedInstanceState.getString(Contract.EXTRA_STRING_TITLE);
-                launchAddDailog(mLastTitleAdding,mLastContentAdding);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    launchAddDialog(mLastTitleAdding,mLastContentAdding);
+                }
                 mDialog.show();
-                Log.d("Saved_dialog_text", "Title ="+mLastTitleAdding+"\nConten ="+mLastContentAdding);
 
             }
         }
@@ -193,7 +192,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         mFabAdd.setOnClickListener(this);
         mFabStorage.setOnClickListener(this);
         mFabCloud.setOnClickListener(this);
-        mDeletImage.setOnClickListener(this);
+        mDeleteImage.setOnClickListener(this);
         mReturnUp.setOnClickListener(this);
 
         OnTouchRecyclerView();
@@ -203,13 +202,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 if (b) {
-                    mDeletImage.setVisibility(View.VISIBLE);
-                    mDeletText.setVisibility(View.VISIBLE);
+                    mDeleteImage.setVisibility(View.VISIBLE);
+                    mDeleteText.setVisibility(View.VISIBLE);
                     chekAll();
 
                 } else {
-                    mDeletImage.setVisibility(View.GONE);
-                    mDeletText.setVisibility(View.GONE);
+                    mDeleteImage.setVisibility(View.GONE);
+                    mDeleteText.setVisibility(View.GONE);
                     unCheckAll();
                 }
 
@@ -233,7 +232,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 if (!isOpen) {
                     isOpen = true;
 
-                    launchAddDailog(null,null);
+                    launchAddDialog(null,null);
                     mDialog.show();
 
                 }
@@ -247,11 +246,11 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.fab_cloud:
                 // CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
-                launchAddDailog(null,null);
+                launchAddDialog(null,null);
                 mDialog.show();
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
             case R.id.delete_all:
-                launchSelctedDialog();
+                launchSelectedDialog();
                 break;
             case R.id.return_up:
                 mEditContainer.setVisibility(View.GONE);
@@ -267,15 +266,15 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     public void initializeView() {
         mFabAnimations = new FabAnimations(getActivity(), mFab, mFabAdd, mFabStorage, mFabCloud);
-        teleprompterAdapter = new TeleprompterAdapter(getActivity(), getLayoutInflater(), new OnItemViewClickListner() {
+        teleprompterAdapter = new TeleprompterAdapter(getActivity(), getLayoutInflater(), new OnItemViewClickListener() {
             @Override
-            public void onEditImgClickListner(int position, View v) {
+            public void onEditImgClickListener(int position, View v) {
                 launchPopUpMenu(v, position);
 
             }
 
             @Override
-            public void onTextClickListner(int position, View v) {
+            public void onTextClickListener(int position, View v) {
 
                 if (isTablet()) {
 
@@ -289,7 +288,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onImageClickListner(int position, View v) {
+            public void onImageClickListener(int position, View v) {
 
                 if (isTablet()) {
 
@@ -303,7 +302,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onViewGroupClickListner(int adapterPosition, View view) {
+            public void onViewGroupClickListener(int adapterPosition, View view) {
                 if (isTablet()) {
 
                     passData(getString(R.string.mytest));
@@ -316,7 +315,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onItemCheck(int pos, View item) {
+            public void onItemCheckListener(int pos, View item) {
 
                 ContentValues values = new ContentValues();
                 int id = mArrayList.get(pos).getId();
@@ -333,7 +332,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             }
 
             @Override
-            public void onItemUncheck(int pos, View item) {
+            public void onItemUncheckListener(int pos, View item) {
                 ContentValues values = new ContentValues();
                 int id = mArrayList.get(pos).getId();
 
@@ -362,7 +361,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private void initializeList() {
 
 
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
@@ -375,7 +374,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
         mArrayList = GetData.getTeleprompters(getActivity());
         mRecyclerView.setHasFixedSize(true);
-        int columnCount = getResources().getInteger(R.integer.list_column_count);
         GridLayoutManager gridLayoutManager = null;
 
                 gridLayoutManager = new GridLayoutManager(getActivity(), 1);
@@ -421,13 +419,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     case R.id.edit:
 
                         //Or Some other code you want to put here.. This is just an example.
-                        Toast.makeText(getActivity().getApplicationContext(), " Install Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
+                        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), " Install Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
 
                         break;
                     case R.id.delete:
 
-                        Toast.makeText(getActivity().getApplicationContext(), "Add to Wish List Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
-                        launchDeletDialog(position);
+                        Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), "Add to Wish List Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
+                        launchDeleteDialog(position);
                         break;
 
 
@@ -443,7 +441,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void launchAddDailog(String title,String content) {
+    private void launchAddDialog(String title,String content) {
         isAdded = false;
 
         mDialog = new Dialog(Objects.requireNonNull(getActivity()));
@@ -529,14 +527,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     }
 
-    private void launchSelctedDialog() {
+    private void launchSelectedDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getActivity());
+                Objects.requireNonNull(getActivity()));
         alertDialogBuilder.setTitle("Delete");
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Click yes to delete selcted files!")
+                .setMessage("Click yes to delete selected files!")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -556,8 +554,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                                     null,
                                     null);
 
-                            Objects.requireNonNull(countCursor).moveToFirst();
-                            int count = countCursor.getInt(0);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                Objects.requireNonNull(countCursor).moveToFirst();
+                            }
                             for (int i = 0; i < mArrayList.size(); i++) {
                                 DataObj item = mArrayList.get(i);
 
@@ -610,14 +609,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     public boolean isTablet() {
-        return (getActivity().getResources().getConfiguration().screenLayout
+        return (Objects.requireNonNull(getActivity()).getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    public void launchDeletDialog(final int position) {
+    public void launchDeleteDialog(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                getActivity());
+                Objects.requireNonNull(getActivity()));
         alertDialogBuilder.setTitle("Delete");
 
         // set dialog message
@@ -668,12 +667,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             uri = uri.buildUpon().appendPath(stringId).build();
 
             // COMPLETED (2) Delete a single row of data using a ContentResolver
-            getActivity().getContentResolver().delete(uri, null, null);
+            Objects.requireNonNull(getActivity()).getContentResolver().delete(uri, null, null);
             Log.d("contentResolver delete", "delete success");
             // teleprompterAdapter.removeContent(mArrayList);
             refreshList();
             if (mArrayList.size() > 4) {
-                mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
+                }
 
             }
 
@@ -723,7 +724,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private void chekAll() {
         ContentValues values = new ContentValues();
         values.put(Contract.BakeEntry.COL_SELECT, 1);
-        getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
+        Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
 
         refreshList();
         values.clear();
@@ -734,7 +735,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private void unCheckAll() {
         ContentValues values = new ContentValues();
         values.put(Contract.BakeEntry.COL_SELECT, 0);
-        getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
+        Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
 
         refreshList();
         values.clear();

@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:actionBarStyle">@style/NavigationViewStyle</item>
         <item name="android:windowFullscreen">true</item>
 
@@ -33,7 +32,7 @@
 
     </style>
 
-    <style name="ToUptAnimation">
+    <style name="ToUptAnimation" tools:keep="@style/ToUptAnimation">
         <item name="android:windowEnterAnimation">@anim/push_up_in</item>
         <item name="android:windowExitAnimation">@anim/push_up_out</item>
     </style>
@@ -44,27 +43,9 @@
         <item name="android:windowExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="ToLiftAnimation">
+    <style name="ToLiftAnimation" tools:keep="@style/ToLiftAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_left</item>
         <item name="android:windowExitAnimation">@anim/slide_out_left</item>
     </style>
-    <style name="SearchViewTheme" >
-        <item name="colorControlActivated">@color/color_graylt</item>
-        <item name="colorControlNormal">@color/lime_green</item>
-    </style>
 
-    <style name="DialogStyleLight">
-        <!-- anything can be left out: -->
-        <!--
-                <item name="titleTextColor">@color/dialog_title_text</item>
-
-                <item name="titleSeparatorColor">@color/dialog_title_separator</item>
-                <item name="messageTextColor">@color/dialog_message_text</item>
-                <item name="buttonTextColor">@color/dialog_button_text</item>
-                <item name="buttonSeparatorColor">@color/dialog_button_separator</item>
-                <item name="buttonBackgroundColorNormal">@color/dialog_button_normal</item>
-                <item name="buttonBackgroundColorPressed">@color/dialog_button_pressed</item>
-                <item name="buttonBackgroundColorFocused">@color/dialog_button_focused</item>
-                <item name="dialogBackground">@drawable/dialog_background</item> -->
-    </style>
 </resources>

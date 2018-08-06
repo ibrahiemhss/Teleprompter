@@ -25,8 +25,6 @@ Do am he horrible distance marriage so although. Afraid assure square so happen 
     <string name="add_your_text">add your text</string>
     <string name="add_dialog">Save</string>
     <string name="cancel_dialog">@android:string/cancel</string>
-    <string name="text_color">Text Color</string>
-    <string name="background_color">Background Color</string>
 
 
     <!-- - - - - - - - - - - - - - - -
@@ -90,5 +88,14 @@ Do am he horrible distance marriage so although. Afraid assure square so happen 
     <string name="setting">Setting</string>
     <string name="edit">edit</string>
     <string name="delete">delete</string>
+    <string name="select">select</string>
+    <string name="descriptive_text">Select your text from the menu to start viewing</string>
+    <string name="delete_all">Delete All</string>
+    <string name="slow">slow</string>
+    <string name="fast">fast</string>
+    <string name="set_colors">set colors</string>
+    <string name="toggle_marker">Toggle marker</string>
+    <string name="defaults">default</string>
+    <string name="undo">undo</string>
 
 </resources>

@@ -3,7 +3,7 @@
     android:layout_width="@dimen/add_dialog_width"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center|bottom"
-    android:layout_marginBottom="@dimen/add_dailog_margin_bottom"
+    android:layout_marginBottom="@dimen/add_dialog_margin_bottom"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_bg"
     android:orientation="vertical">
@@ -39,7 +39,6 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/linededit_text_content"
         android:layout_height="match_parent">
         <TextView
             android:id="@+id/txt_cancel"
@@ -68,7 +67,8 @@
             android:text="@string/add_dialog"
             android:textColor="@color/color_white"
             android:textStyle="bold"
-            android:focusable="true" />
+            android:focusable="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 </LinearLayout>

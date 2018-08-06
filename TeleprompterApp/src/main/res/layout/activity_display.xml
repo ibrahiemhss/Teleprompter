@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:orientation="vertical"
-tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
 
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
@@ -25,11 +24,11 @@ tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
             android:id="@+id/text_empty_show"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="45dp"
+            android:textSize="45sp"
             android:visibility="gone"
-            android:text="select your text from list to began show"/>
+            android:text="@string/descriptive_text"/>
         <include
-            android:id="@+id/includ_list"
+            android:id="@+id/include_list"
             layout="@layout/app_bar_display"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

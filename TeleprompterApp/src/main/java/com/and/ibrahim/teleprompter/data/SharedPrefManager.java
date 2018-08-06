@@ -67,7 +67,7 @@ public class SharedPrefManager {
         editor.commit();
     }
 
-    public int getPrefBackgroundColr() {
+    public int getPrefBackgroundColor() {
         return pref.getInt(PREF_BACKGROUND_COLOR, 0);
     }
 
@@ -89,14 +89,4 @@ public class SharedPrefManager {
         editor.commit();
     }
 
-    public boolean isAdded() {
-        return pref.getBoolean(PREF_IS_ِِADDED, false);
-    }
-
-    public void setPrefIsِِadded(boolean is) {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(PREF_IS_ِِADDED, is);
-        editor.apply();
-        editor.commit();
-    }
 }

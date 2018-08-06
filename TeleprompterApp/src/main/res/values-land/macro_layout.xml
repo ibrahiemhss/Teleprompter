@@ -12,6 +12,8 @@
     <dimen name="scroll_view_margin_top">64dp</dimen>
     <dimen name="up_view_height">124dp</dimen>
     <dimen name="down_view_height">190dp</dimen>
+    <dimen name="container_margin_top">64dp</dimen>
+    <dimen name="container_width">@dimen/match_parent</dimen>
     <!--navigation contents-->
     <dimen name="nav_width">408dp</dimen>
     <dimen name="nav_height">144dp</dimen>
@@ -37,8 +39,7 @@
     <dimen name="colors_dialog_height">244dp</dimen>
 
     <!-- ////////////////fragment //////////////////////////-->
-    <dimen name="container_margin_top">64dp</dimen>
-    <dimen name="container_width">@dimen/match_parent</dimen>
+
     <!-- recyclerVeiw -->
     <!-- list item -->
     <dimen name="list_margin_top">96dp</dimen>
@@ -61,6 +62,6 @@
     <dimen name="add_dialog_etext_margin">8dp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_text_height">32dp</dimen>
-    <dimen name="add_dailog_margin_bottom">8dp</dimen>
+    <dimen name="add_dialog_margin_bottom">8dp</dimen>
     <!-- /////////////////////// //////////////////////////-->
 </resources>

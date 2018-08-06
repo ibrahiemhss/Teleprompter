@@ -1,5 +1,4 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,7 +27,6 @@
             <ImageView
                 android:id="@+id/img_note"
                 android:layout_width="@dimen/item_image_height"
-                android:layout_alignParentLeft="true"
                 android:layout_height="@dimen/item_image_width"
                 android:src="@drawable/note_2_256"
                 android:contentDescription="@string/app_name" />
@@ -36,14 +34,11 @@
             <TextView
                 android:id="@+id/text_title"
                 style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
                 android:ellipsize="end"
-                android:layout_toLeftOf="@+id/edit_item"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/note"
                 android:layout_marginLeft="@dimen/item_text_side_margin"
                 android:layout_marginRight="@dimen/item_text_side_margin"
                 android:textColor="@color/color_graydr" />
@@ -57,8 +52,6 @@
             <ImageView
                 android:id="@+id/edit_item"
                 android:layout_width="@dimen/item_image_edit_height"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
                 android:padding="2dp"
                 android:layout_gravity="center"
                 android:layout_height="@dimen/item_image_edit_width"

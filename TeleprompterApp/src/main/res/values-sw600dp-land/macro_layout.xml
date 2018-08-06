@@ -12,6 +12,8 @@
     <dimen name="scroll_view_margin_top">88dp</dimen>
     <dimen name="up_view_height">361dp</dimen>
     <dimen name="down_view_height">329dp</dimen>
+    <dimen name="container_margin_top">88dp</dimen>
+    <dimen name="container_width">282dp</dimen>
 
     <!--navigation-->
     <dimen name="nav_width">282dp</dimen>
@@ -36,8 +38,7 @@
     <!--////////////////////////////////////////////////////-->
 
     <!-- ////////////////fragment //////////////////////////-->
-    <dimen name="container_margin_top">88dp</dimen>
-    <dimen name="container_width">282dp</dimen>
+
     <!-- recyclerVeiw -->
     <dimen name="list_width">300dp</dimen>
     <dimen name="list_side_padding">5dp</dimen>

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.callback.OnItemClickListener;
 import com.and.ibrahim.teleprompter.callback.OnItemLongClickListener;
-import com.and.ibrahim.teleprompter.callback.OnItemViewClickListner;
+import com.and.ibrahim.teleprompter.callback.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
@@ -29,15 +29,13 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
 
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<DataObj> dataObjArrayList = new ArrayList<>();
-    private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
-    private OnItemViewClickListner mOnItemViewClickListner;
+    private OnItemViewClickListener mOnItemViewClickListener;
 
 
-    private Context mC;
-    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListner listner) {
+    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListener listner) {
         mLayoutInflater = inflater;
-        mOnItemViewClickListner=listner;
+        mOnItemViewClickListener =listner;
         mC=mC;
     }
 
@@ -75,11 +73,8 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     //create interface to goo another activity
     @SuppressWarnings("unused")
     public void setItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
     }
-    public void setItemViewClickListener(OnItemViewClickListner listener) {
-        mOnItemViewClickListner = listener;
-    }
+
 
     @SuppressWarnings("unused")
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
@@ -141,30 +136,30 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             int id=view.getId();
             switch (id){
                 case R.id.text_title:
-                    mOnItemViewClickListner.onTextClickListner(getAdapterPosition(),view);
+                    mOnItemViewClickListener.onTextClickListener(getAdapterPosition(),view);
                     break;
 
                 case R.id.edit_item:
-                    mOnItemViewClickListner.onEditImgClickListner(getAdapterPosition(),view);
+                    mOnItemViewClickListener.onEditImgClickListener(getAdapterPosition(),view);
 
                     break;
                 case R.id.img_note:
-                    mOnItemViewClickListner.onImageClickListner(getAdapterPosition(),view);
+                    mOnItemViewClickListener.onImageClickListener(getAdapterPosition(),view);
                     break;
                 case R.id.lin_view:
-                    mOnItemViewClickListner.onViewGroupClickListner(getAdapterPosition(),view);
+                    mOnItemViewClickListener.onViewGroupClickListener(getAdapterPosition(),view);
                     break;
 
                 case R.id.check_item:
 
                     if (mCheckBox.isChecked()) {
-                        mOnItemViewClickListner.onItemUncheck(getAdapterPosition(),view);
-                        Log.d("adapter", "cheked_item = unchecked");
+                        mOnItemViewClickListener.onItemUncheckListener(getAdapterPosition(),view);
+                        Log.d("adapter", "checked_item = unchecked");
                     } else {
 
 
-                        mOnItemViewClickListner.onItemCheck(getAdapterPosition(),view);
-                        Log.d("adapter", "cheked_item = checked" );
+                        mOnItemViewClickListener.onItemCheckListener(getAdapterPosition(),view);
+                        Log.d("adapter", "checked_item = checked" );
 
                     }
                     default:

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:orientation="vertical"
-tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
 
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
@@ -24,20 +23,20 @@ tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
         <FrameLayout
             android:id="@+id/frame_show_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
             <TextView
                 android:id="@+id/text_empty_show"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="45dp"
+                android:textSize="45sp"
                 android:visibility="gone"
-                android:text="select your text from list to began show"/>
+                android:text="@string/descriptive_text"/>
             <include
-                android:id="@+id/includ_list"
+                android:id="@+id/include_list"
                 layout="@layout/app_bar_display"
                 android:layout_width="match_parent"
-                android:layout_toRightOf="@+id/contents_container"
                 android:layout_gravity="end"
                 android:layout_height="match_parent" />
         </FrameLayout>
@@ -49,7 +48,6 @@ tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
         android:layout_width="@dimen/nav_width"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
         android:background="@drawable/white_back"
         android:layout_marginTop ="@dimen/nav_margin_top"
         android:labelFor="@+id/app_bar_main"

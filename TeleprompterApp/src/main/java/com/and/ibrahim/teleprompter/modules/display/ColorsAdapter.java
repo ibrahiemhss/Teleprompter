@@ -1,13 +1,12 @@
 package com.and.ibrahim.teleprompter.modules.display;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.callback.OnItemClickListener;
@@ -20,10 +19,8 @@ import butterknife.ButterKnife;
 
 public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
-    Context mContext;
-    int[] colorBackgroundArray;
-    int[] colorTextArray;
-    private int lastPosition = -1;
+    private final int[] colorBackgroundArray;
+    private final int[] colorTextArray;
     private OnItemClickListener mOnItemClickListener;
 
 
@@ -32,10 +29,9 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
     public ColorsAdapter(Context context, LayoutInflater inflater) {
         mLayoutInflater = inflater;
-        mContext = context;
 
-        colorBackgroundArray = mContext.getResources().getIntArray(R.array.background_colors);
-        colorTextArray = mContext.getResources().getIntArray(R.array.text_colors);
+        colorBackgroundArray = context.getResources().getIntArray(R.array.background_colors);
+        colorTextArray = context.getResources().getIntArray(R.array.text_colors);
         for (int i : colorTextArray) {
             dataObjArrayList.add(i);
             // colorBackgroundArray.add(i);
@@ -52,14 +48,14 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         return new ColorsAdapter.Holder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ColorsAdapter.Holder holder, int position) {
 
         holder.bind(position);
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
 
 
-        lastPosition = position;
+        int lastPosition = position;
         lastPosition = position;
 
         //viewHolder.mTxtColorName.setText(colorNameArray[position]);
@@ -81,7 +77,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         // @BindView(R.id.text_content)
         //TextView mTextContent;
 
-        public Holder(View itemView) {
+        Holder(View itemView) {
             super(itemView);
             mContext = itemView.getContext();
             ButterKnife.bind(this, itemView);
@@ -89,7 +85,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
         }
 
-        public void bind(int position) {
+        void bind(int position) {
             mBackgroundColor.setBackgroundColor(colorBackgroundArray[position]);
             mTextColor.setBackgroundColor(colorTextArray[position]);
 
@@ -98,9 +94,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
         @Override
         public void onClick(View view) {
-            if (mOnItemClickListener != null) {
-               // mOnItemClickListener.onClick(getAdapterPosition());
-            }
         }
     }
 }

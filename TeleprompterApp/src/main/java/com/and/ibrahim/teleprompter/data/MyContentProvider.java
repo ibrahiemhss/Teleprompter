@@ -223,7 +223,6 @@ public class MyContentProvider extends ContentProvider {
         switch (match) {
             case TELEPROMPTER_CODE:
                 count = db.update(Contract.BakeEntry.TABLE_TELEPROMPTER, values, selection, selectionArgs);
-                Log.d("contentResolver ", "insid content Provider withValue success");
 
                 break;
 
