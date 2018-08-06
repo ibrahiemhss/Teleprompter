@@ -6,9 +6,9 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
-        android:icon="@drawable/teleprompter_icon"
+        android:icon="@mipmap/teleprompter_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/teleprompter_icon"
+        android:roundIcon="@mipmap/teleprompter_icon"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar"
         tools:ignore="GoogleAppIndexingWarning">

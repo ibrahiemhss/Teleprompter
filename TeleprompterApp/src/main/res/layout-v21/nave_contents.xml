@@ -23,7 +23,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/img1"
                 android:layout_width="@dimen/nav_small_image_font_width"
                 android:layout_height="@dimen/nav_small_image_font_height"
                 android:layout_gravity="center"
@@ -42,7 +41,6 @@
                 android:layout_gravity="start"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginRight="16dp"
                 android:elevation="6dp"
                 android:src="@drawable/font_size"
                 android:layout_marginEnd="16dp" />
@@ -97,7 +95,8 @@
                 android:textSize="@dimen/nav_text_size"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/nav_text_side_margin"
-                android:textColor="@color/orange_light" />
+                android:textColor="@color/orange_light"
+                tools:ignore="RelativeOverlap" />
         </RelativeLayout>
 
         <SeekBar
@@ -117,7 +116,6 @@
 
         <LinearLayout
             android:layout_below="@+id/rv55"
-            android:id="@+id/lin33"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -126,12 +124,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
                 <LinearLayout
                     android:id="@+id/ln_launch_text_color"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/font_color"
@@ -140,6 +140,7 @@
                         android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
                         android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
                         android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
+                        android:drawableEnd="@drawable/circle_shape"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/circle_shape" />
 

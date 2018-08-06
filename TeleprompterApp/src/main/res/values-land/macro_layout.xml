@@ -16,25 +16,20 @@
     <dimen name="container_width">@dimen/match_parent</dimen>
     <!--navigation contents-->
     <dimen name="nav_width">408dp</dimen>
-    <dimen name="nav_height">144dp</dimen>
     <dimen name="nav_veiw_group_width">192dp</dimen>
     <dimen name="nav_veiw_group_height">48dp</dimen>
     <dimen name="nav_veiw_group_side_margin">8dp</dimen>
     <dimen name="nav_veiw_group_top_margin">8dp</dimen>
-    <dimen name="nav_veiw_group_bottom_margin">8dp</dimen>
     <dimen name="nav_small_image_font_width">12dp</dimen>
     <dimen name="nav_small_image_font_height">12dp</dimen>
     <dimen name="nav_big_image_font_width">18dp</dimen>
     <dimen name="nav_big_image_font_height">18dp</dimen>
-    <dimen name="nav_veiw_group2_width">144dp</dimen>
-    <dimen name="nav_veiw_group2_height">48dp</dimen>
     <dimen name="nav_image_color_width">32dp</dimen>
     <dimen name="nav_image_color_height">32dp</dimen>
     <dimen name="nav_text_side_margin">16dp</dimen>
     <dimen name="nav_text_top_margin">8dp</dimen>
-    <dimen name="nav_text_bottom_margin">8dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>
-    <!--dailog colors-->
+    <!--dialog colors-->
     <dimen name="colors_dialog_width">384dp</dimen>
     <dimen name="colors_dialog_height">244dp</dimen>
 
@@ -42,26 +37,16 @@
 
     <!-- recyclerVeiw -->
     <!-- list item -->
-    <dimen name="list_margin_top">96dp</dimen>
-    <integer name="list_column_count">4</integer>
-    <dimen name="item_width">164dp</dimen>
-    <dimen name="item_height">108dp</dimen>
-    <dimen name="item_layout_margin">1dp</dimen>
     <dimen name="item_side_margin">20dp</dimen>
-    <dimen name="item_top_margin">4dp</dimen>
     <dimen name="item_bottom_margin">4dp</dimen>
     <dimen name="text_side_margin">8dp</dimen>
-    <dimen name="text_top_margin">8dp</dimen>
-    <dimen name="text_bottom_margin">4dp</dimen>
     <dimen name="item_image_width">48dp</dimen>
     <dimen name="item_image_height">48dp</dimen>
     <!--add content dialog-->
     <dimen name="add_dialog_width">264dp</dimen>
     <dimen name="add_dialog_etext_height">336dp</dimen>
     <dimen name="add_dialog_etext_size">16sp</dimen>
-    <dimen name="add_dialog_etext_margin">8dp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
-    <dimen name="add_dialog_text_height">32dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>
     <!-- /////////////////////// //////////////////////////-->
 </resources>

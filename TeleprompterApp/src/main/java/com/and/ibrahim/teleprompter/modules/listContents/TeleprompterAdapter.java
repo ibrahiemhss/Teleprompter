@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
-import com.and.ibrahim.teleprompter.callback.OnItemClickListener;
 import com.and.ibrahim.teleprompter.callback.OnItemLongClickListener;
 import com.and.ibrahim.teleprompter.callback.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
@@ -30,13 +29,12 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<DataObj> dataObjArrayList = new ArrayList<>();
     private OnItemLongClickListener mOnItemLongClickListener;
-    private OnItemViewClickListener mOnItemViewClickListener;
+    private final OnItemViewClickListener mOnItemViewClickListener;
 
 
-    public TeleprompterAdapter(Context mC,LayoutInflater inflater,OnItemViewClickListener listner) {
+    public TeleprompterAdapter(LayoutInflater inflater, OnItemViewClickListener listener) {
         mLayoutInflater = inflater;
-        mOnItemViewClickListener =listner;
-        mC=mC;
+        mOnItemViewClickListener =listener;
     }
 
 
@@ -68,11 +66,6 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     public void removeContent() {
         dataObjArrayList.clear();
         notifyDataSetChanged();
-    }
-
-    //create interface to goo another activity
-    @SuppressWarnings("unused")
-    public void setItemClickListener(OnItemClickListener listener) {
     }
 
 

@@ -23,7 +23,6 @@
             android:layout_marginStart="@dimen/nav_veiw_group_side_margin">
 
             <ImageView
-                android:id="@+id/img1"
                 android:layout_width="@dimen/nav_small_image_font_width"
                 android:layout_height="@dimen/nav_small_image_font_height"
                 android:layout_gravity="center"
@@ -122,7 +121,6 @@
 
         <LinearLayout
             android:layout_below="@+id/rv55"
-            android:id="@+id/lin33"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -137,7 +135,8 @@
                 <LinearLayout
                     android:id="@+id/ln_launch_text_color"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/font_color"
@@ -147,8 +146,10 @@
                         android:layout_marginLeft="@dimen/nav_img_veiw_side_margin"
                         android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
                         android:contentDescription="@string/app_name"
+                        android:drawableRight="@drawable/circle_shape"
                         android:src="@drawable/circle_shape"
-                        android:layout_marginStart="@dimen/nav_img_veiw_side_margin" />
+                        android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
+                        android:drawableEnd="@drawable/circle_shape" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,8 +160,7 @@
                         android:layout_marginLeft="@dimen/nav_text_side_margin"
                         android:textSize="@dimen/nav_text_size"
                         android:textColor="@color/orange_light"
-                        android:layout_marginStart="@dimen/nav_text_side_margin"
-                        android:layout_toRightOf="@+id/font_color" />
+                        android:layout_marginStart="@dimen/nav_text_side_margin" />
 
                 </LinearLayout>
 

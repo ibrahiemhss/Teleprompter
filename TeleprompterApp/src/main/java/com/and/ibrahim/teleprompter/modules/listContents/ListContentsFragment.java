@@ -251,7 +251,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     public void initializeView() {
         mFabAnimations = new FabAnimations(getActivity(), mFab, mFabAdd, mFabStorage, mFabCloud);
-        teleprompterAdapter = new TeleprompterAdapter(getActivity(), getLayoutInflater(), new OnItemViewClickListener() {
+        teleprompterAdapter = new TeleprompterAdapter(getLayoutInflater(), new OnItemViewClickListener() {
             @Override
             public void onEditImgClickListener(int position, View v) {
                 launchPopUpMenu(v, position);
@@ -358,17 +358,12 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     private void OnTouchRecyclerView() {
-        mRecyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(getActivity(), mRecyclerView, new RecylerViewClickListener() {
+        mRecyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(getActivity(), new RecylerViewClickListener() {
             @Override
             public void onClick(View view, final int position) {
 
             }
 
-            @Override
-            public void onLongClick(View view, final int position) {
-
-
-            }
         }));
 
     }

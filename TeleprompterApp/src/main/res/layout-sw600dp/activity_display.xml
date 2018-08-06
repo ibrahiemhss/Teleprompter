@@ -34,7 +34,6 @@
                 android:visibility="gone"
                 android:text="@string/descriptive_text"/>
             <include
-                android:id="@+id/include_list"
                 layout="@layout/app_bar_display"
                 android:layout_width="match_parent"
                 android:layout_gravity="end"

@@ -82,8 +82,6 @@ Do am he horrible distance marriage so although. Afraid assure square so happen 
 
     <!-- Value in SharedPreferences for green color option -->
     <string name="pref_color_green_value" translatable="false">green</string>
-    <string name="Open">open</string>
-    <string name="Close">close</string>
     <string name="search">search</string>
     <string name="setting">Setting</string>
     <string name="edit">edit</string>

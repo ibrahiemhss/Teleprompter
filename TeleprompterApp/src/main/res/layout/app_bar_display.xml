@@ -27,7 +27,6 @@
             android:fitsSystemWindows="true">
 
             <RelativeLayout
-                android:id="@+id/toolbar_container"
                 android:layout_width="match_parent"
                 android:layout_gravity="bottom"
                 android:background="@color/colorPrimary"
@@ -136,7 +135,6 @@
             android:layout_gravity="center" />
 
         <View
-            android:id="@+id/down_veiw"
             android:layout_width="match_parent"
             android:layout_below="@+id/show_play"
             android:layout_height="@dimen/down_view_height"

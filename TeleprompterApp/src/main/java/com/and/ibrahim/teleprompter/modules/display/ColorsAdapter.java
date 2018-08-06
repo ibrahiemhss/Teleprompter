@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.and.ibrahim.teleprompter.R;
-import com.and.ibrahim.teleprompter.callback.OnItemClickListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -56,6 +55,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
 
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @SuppressWarnings("unused")
         final Context mContext;
         @BindView(R.id.img_background_color)
         RoundedImageView mBackgroundColor;

@@ -96,7 +96,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private TextView mTextSpeed;
     private Dialog mDialogTextColors;
     private int[] mTextColorArray;
-    private int[] mBackGroundColorrArray;
+    private int[] mBackGroundColorArray;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private Timer scrollTimer = null;
@@ -107,7 +107,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private int textSpeedValue;
     private boolean isUp;
     private boolean mOpenDrawer;
-    private AppBarLayout.LayoutParams params;
     private String mScrollString;
     private boolean paused = true;
     private int timeSpeed = 30;
@@ -140,7 +139,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mImgSetting = findViewById(R.id.show_setting);
             mBackImg = findViewById(R.id.back_id);
         }
-        params = (AppBarLayout.LayoutParams) mCollapsingToolbarLayout.getLayoutParams();
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mCollapsingToolbarLayout.getLayoutParams();
         params.setScrollFlags(0);  // clear all scroll flags
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -168,7 +167,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         isUp = true;
         textSpeedValue = 1;//default value generator of speed text in first open
         mTextColorArray = getResources().getIntArray(R.array.text_colors);//initialize text colors
-        mBackGroundColorrArray = getResources().getIntArray(R.array.background_colors);//initialize background colors
+        mBackGroundColorArray = getResources().getIntArray(R.array.background_colors);//initialize background colors
         boolean isFirstOpen =//first open is false after open will be record to true
                 SharedPrefManager.getInstance(this).isFirstOpen();
 
@@ -199,7 +198,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         setSpeed(seekProgress);//get suitable value of speed by bas seekbar progress
 
-        if (mScrollText.equals("")) {//in tablet DisplayActivity is first activity and text will be empty
+        if (mScrollText==null) {//in tablet DisplayActivity is first activity and text will be empty
             if (isTablet()) {//so scroll view will hide if mScrollText have null value
                 TextView emptytxt = findViewById(R.id.text_empty_show);
                 emptytxt.setVisibility(View.VISIBLE);
@@ -284,7 +283,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 // Not implemented here
                 break;
             case R.id.action_select:
-                boolean ischecked = true;
                 if (getFragmentEditListRefreshListener() != null) {
                     getFragmentEditListRefreshListener().onRefresh();
                 }
@@ -314,16 +312,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     private void initFragment() {
         Bundle bundle = new Bundle();
-        if (bundle != null) {
-            mContentListFragment.setArguments(bundle);
-        }
+        mContentListFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.contents_container, mContentListFragment)
                 .commit();
     }
 
-    //////////all methods responsible for for auto scrolling for scrolling textt//////////////////////////////////////////////
+    //////////all methods responsible for for auto scrolling for scrolling text//////////////////////////////////////////////
     public void startAutoScrolling(int time) {
         if (scrollTimer == null) {
             scrollTimer = new Timer();
@@ -437,8 +433,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void onSlideView(View view) {
-        if (isUp) {
-        } else {
+        if (!isUp) {
             slideDown(view);
             slideUp(view);
         }
@@ -579,7 +574,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         FloatingActionButton fab = mDialogTextColors.findViewById(R.id.cancel_text_color_dialog);
         RecyclerView mColorsRV = mDialogTextColors.findViewById(R.id.rv_colors);
         mColorsRV.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = null;
+        GridLayoutManager gridLayoutManager;
         gridLayoutManager = new GridLayoutManager(this, 3);
         mColorsRV.setLayoutManager(gridLayoutManager);
 
@@ -587,19 +582,15 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         mColorsRV.setAdapter(mColorAdapter);
 
-        mColorsRV.addOnItemTouchListener(new RecyclerViewItemClickListener(this, mColorsRV, new RecylerViewClickListener() {
+        mColorsRV.addOnItemTouchListener(new RecyclerViewItemClickListener(this, new RecylerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
                 mScrollText.setTextColor(mTextColorArray[position]);
                 SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
-                mSlideShowScroll.setBackgroundColor(mBackGroundColorrArray[position]);
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorrArray[position]);
+                mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
             }
 
-            @Override
-            public void onLongClick(View view, final int position) {
-
-            }
         }));
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -645,9 +636,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
-        int getView = view.getId();
-
-
     }
 
     @Override
