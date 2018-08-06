@@ -37,7 +37,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
@@ -50,13 +50,18 @@
         android:layout_height="match_parent"
         tools:ignore="InconsistentLayout" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/color_graydr"
+        android:layout_toRightOf="@+id/contents_container"
         android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="@dimen/scroll_width"
+            android:layout_centerInParent="true"
+            android:layout_height="match_parent">
         <ScrollView
             android:id="@+id/slide_show_scroll"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/scroll_view_margin_top"
             android:background="@color/Black"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -107,7 +112,9 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorTransparentWhite" />
         </RelativeLayout>
-    </FrameLayout>
-</LinearLayout>
+        </FrameLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

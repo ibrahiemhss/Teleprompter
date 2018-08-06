@@ -13,7 +13,9 @@
     <dimen name="up_view_height">361dp</dimen>
     <dimen name="down_view_height">329dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
-    <dimen name="container_width">282dp</dimen>
+    <dimen name="container_width">340dp</dimen>
+    <dimen name="scroll_width">560dp</dimen>
+
 
     <!--navigation-->
     <dimen name="nav_width">282dp</dimen>

@@ -283,6 +283,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 // Not implemented here
                 break;
             case R.id.action_select:
+                boolean ischecked = true;
                 if (getFragmentEditListRefreshListener() != null) {
                     getFragmentEditListRefreshListener().onRefresh();
                 }
@@ -433,8 +434,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void onSlideView(View view) {
-        if (!isUp) {
+        if (isUp) {
             slideDown(view);
+
+        }else {
             slideUp(view);
         }
         isUp = !isUp;
@@ -636,6 +639,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
+        int getView = view.getId();
+
+
     }
 
     @Override
