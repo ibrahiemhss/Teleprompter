@@ -17,10 +17,7 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_STRING_TITLE = "extra_string_title";
     public static final String EXTRA_STRING_CONTENT = "extra_string_content";
     public static final String EXTRA_SHOW_DIALOG = "extra_show_dialog";
-
-
-
-
+    public static final String EXTRA_SCROLL_STRING = "extra_scroll_string";
 
 
     //content provider
@@ -30,7 +27,7 @@ public class Contract implements BaseColumns {
     private static final String SCHEMA = "content://";
     private static final Uri BASE_CONTENT_URI = Uri.parse(SCHEMA + AUTHORITY);
 
-    public static final class BakeEntry implements BaseColumns {
+    public static final class Entry implements BaseColumns {
         public static final Uri PATH_TELEPROMPTER_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH).build();
         //for table of teleprompter
         public static final String TABLE_TELEPROMPTER = "teleprompter_bake";

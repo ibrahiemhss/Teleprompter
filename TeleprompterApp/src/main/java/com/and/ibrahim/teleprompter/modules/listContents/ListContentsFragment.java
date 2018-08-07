@@ -84,7 +84,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     protected FloatingActionButton mFabCloud;
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
-    boolean isFirstOpen;
     private Dialog mDialog;
     private boolean isAdded = false;
     private boolean isOpen = false;
@@ -97,6 +96,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private String mLastContentAdding;
     private LinedEditText mEditContent;
     private MaterialEditText mEditTitle;
+    private String mScrollString;
     private void readBundle(Bundle bundle) {//get Value from activity///
 
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
@@ -112,7 +112,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_content_fragment, container, false);
         ButterKnife.bind(this, view);
-        isFirstOpen = true;
         Bundle extras = this.getArguments();
         if (extras != null) {
             readBundle(extras);
@@ -233,7 +232,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
                 break;
             case R.id.fab_cloud:
-                // CustomDialogClass cdd=new CustomDialogClass(this, R.style.PauseDialog);
                 launchAddDialog(null, null);
                 mDialog.show();
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
@@ -258,13 +256,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             }
             @Override
             public void onTextClickListener(int position, View v) {
+                mScrollString=mArrayList.get(position).getTextContent();
 
                 if (isTablet()) {
-
-                    passData(getString(R.string.mytest));
+                    passData(mScrollString);
                 } else {
                     Intent intent = new Intent(getActivity(), DisplayActivity.class);
-                    intent.putExtra(Contract.EXTRA_TEXT, getString(R.string.mytest));
+                    intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
                     startActivity(intent);
                 }
 
@@ -272,26 +270,29 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onImageClickListener(int position, View v) {
-
+                mScrollString=mArrayList.get(position).getTextContent();
                 if (isTablet()) {
 
-                    passData(getString(R.string.mytest));
+                    passData(mScrollString);
                 } else {
                     Intent intent = new Intent(getActivity(), DisplayActivity.class);
-                    intent.putExtra(Contract.EXTRA_TEXT, getString(R.string.mytest));
+                    intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
+                    Log.d("textscrova",mScrollString);
                     startActivity(intent);
                 }
 
             }
 
             @Override
-            public void onViewGroupClickListener(int adapterPosition, View view) {
+            public void onViewGroupClickListener(int position, View view) {
+                mScrollString=mArrayList.get(position).getTextContent();
+
                 if (isTablet()) {
 
-                    passData(getString(R.string.mytest));
+                    passData(mScrollString);
                 } else {
                     Intent intent = new Intent(getActivity(), DisplayActivity.class);
-                    intent.putExtra(Contract.EXTRA_TEXT, getString(R.string.mytest));
+                    intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
                     startActivity(intent);
                 }
 
@@ -303,9 +304,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 ContentValues values = new ContentValues();
                 int id = mArrayList.get(pos).getId();
 
-                values.put(Contract.BakeEntry.COL_SELECT, 1);
-                getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,
-                        Contract.BakeEntry._ID + "=?",
+                values.put(Contract.Entry.COL_SELECT, 1);
+                getActivity().getContentResolver().update(Contract.Entry.PATH_TELEPROMPTER_URI, values,
+                        Contract.Entry._ID + "=?",
                         new String[]{String.valueOf(id)});
                 values.clear();
                 Log.d(TAG, "cheked_ite = checked" + String.valueOf(id));
@@ -317,9 +318,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 ContentValues values = new ContentValues();
                 int id = mArrayList.get(pos).getId();
 
-                values.put(Contract.BakeEntry.COL_SELECT, 0);
-                getActivity().getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values,
-                        Contract.BakeEntry._ID + "=?",
+                values.put(Contract.Entry.COL_SELECT, 0);
+                getActivity().getContentResolver().update(Contract.Entry.PATH_TELEPROMPTER_URI, values,
+                        Contract.Entry._ID + "=?",
                         new String[]{String.valueOf(id)});
                 values.clear();
                 Log.d(TAG, "cheked_item = unchecked" + String.valueOf(id));
@@ -448,7 +449,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 isDialogShow = false;
 
                 if (!isAdded) {
-                    Cursor countCursor = getActivity().getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                    Cursor countCursor = getActivity().getContentResolver().query(Contract.Entry.PATH_TELEPROMPTER_URI,
                             new String[]{"count(*) AS count"},
                             null,
                             null,
@@ -458,11 +459,11 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     int count = countCursor.getInt(0);
 
                     ContentValues values = new ContentValues();
-                    values.put(Contract.BakeEntry.COL_TITLE, mEditTitle.getText().toString());
-                    values.put(Contract.BakeEntry.COL_CONTENTS, Objects.requireNonNull(mEditContent.getText()).toString());
-                    values.put(Contract.BakeEntry.COL_UNIQUE_ID, count + 1);
+                    values.put(Contract.Entry.COL_TITLE, mEditTitle.getText().toString());
+                    values.put(Contract.Entry.COL_CONTENTS, Objects.requireNonNull(mEditContent.getText()).toString());
+                    values.put(Contract.Entry.COL_UNIQUE_ID, count + 1);
 
-                    final Uri uriInsert = getActivity().getContentResolver().insert(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values);
+                    final Uri uriInsert = getActivity().getContentResolver().insert(Contract.Entry.PATH_TELEPROMPTER_URI, values);
                     if (uriInsert != null) {
                         Log.d("contentResolver insert", "first added success");
 
@@ -493,7 +494,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     public void onClick(DialogInterface dialog, int id) {
                         if (GetData.getTeleprompters(getActivity()).size() > 0) {
 
-                            Cursor countCursor = getActivity().getContentResolver().query(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
+                            Cursor countCursor = getActivity().getContentResolver().query(Contract.Entry.PATH_TELEPROMPTER_URI,
                                     new String[]{"count(*) AS count"},
                                     null,
                                     null,
@@ -572,7 +573,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
             String stringId = String.valueOf(mArrayList.get(position).getId());
 
-            Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
+            Uri uri = Contract.Entry.PATH_TELEPROMPTER_URI;
 
             uri = uri.buildUpon().appendPath(stringId).build();
 
@@ -610,11 +611,19 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         outState.putBoolean(Contract.EXTRA_SHOW_DIALOG, isDialogShow);
     }
 
+
+
     @Override
     public void onPause() {
         super.onPause();
         unCheckAll();
         mEditContainer.setVisibility(View.GONE);
+        if(mDialog!=null){
+            if(!mDialog.isShowing()){
+                isDialogShow=false;
+            }
+        }
+
     }
 
     @Override
@@ -632,8 +641,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     private void chekAll() {
         ContentValues values = new ContentValues();
-        values.put(Contract.BakeEntry.COL_SELECT, 1);
-        Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
+        values.put(Contract.Entry.COL_SELECT, 1);
+        Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.Entry.PATH_TELEPROMPTER_URI, values, null, null);
 
         refreshList();
         values.clear();
@@ -643,8 +652,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     private void unCheckAll() {
         ContentValues values = new ContentValues();
-        values.put(Contract.BakeEntry.COL_SELECT, 0);
-        Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.BakeEntry.PATH_TELEPROMPTER_URI, values, null, null);
+        values.put(Contract.Entry.COL_SELECT, 0);
+        Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.Entry.PATH_TELEPROMPTER_URI, values, null, null);
 
         refreshList();
         values.clear();

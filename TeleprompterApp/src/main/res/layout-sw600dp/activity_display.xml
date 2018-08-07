@@ -26,13 +26,6 @@
             android:layout_height="match_parent"
             tools:ignore="UselessParent">
 
-            <TextView
-                android:id="@+id/text_empty_show"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="45sp"
-                android:visibility="gone"
-                android:text="@string/descriptive_text"/>
             <include
                 layout="@layout/app_bar_display"
                 android:layout_width="match_parent"

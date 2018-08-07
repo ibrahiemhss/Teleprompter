@@ -14,7 +14,11 @@ public class SharedPrefManager {
     private static final String PREF_TEXT_SIZE = "pref_text_size";
     private static final String PREF_TEXT_COLOR = "pref_text_color";
     private static final String PREF_BACKGROUND_COLOR = "pref_background_color";
-    private static final String PREF_FIRST_OPEN = "first_open";
+    private static final String PREF_UNDO_TEXT_COLOR = "pref_undo_text_color";
+    private static final String PREF_UNDO_BACKGROUND_COLOR = "pref_uno_background_color";
+    private static final String PREF_COLOR_PREF= "color_pref";
+    private static final String PREF_FIRST_ENTRY= "pref_first_entry";
+
 
 
 
@@ -44,6 +48,7 @@ public class SharedPrefManager {
         editor.commit();
     }
 
+
     public int getPrefSpeed() {
         return pref.getInt(PREF_SCROLL_SPEED, 0);
     }
@@ -66,6 +71,27 @@ public class SharedPrefManager {
         editor.commit();
     }
 
+    public int getPrefUndoTextSize() {
+        return pref.getInt(PREF_UNDO_TEXT_COLOR, 0);
+    }
+
+    public void setPrefUndoTextSize(int size) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(PREF_UNDO_TEXT_COLOR, size);
+        editor.apply();
+        editor.commit();
+    }
+    public int getPrefUndoBackgroundColor() {
+        return pref.getInt(PREF_UNDO_BACKGROUND_COLOR, 0);
+    }
+
+    public void setPrefUndoBackgroundColor(int color) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(PREF_UNDO_BACKGROUND_COLOR, color);
+        editor.apply();
+        editor.commit();
+    }
+
     public int getPrefBackgroundColor() {
         return pref.getInt(PREF_BACKGROUND_COLOR, 0);
     }
@@ -76,14 +102,23 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
-
-    public boolean isFirstOpen() {
-        return pref.getBoolean(PREF_FIRST_OPEN, false);
+    public boolean isColorPref() {
+        return pref.getBoolean(PREF_COLOR_PREF, false);
     }
 
-    public void setPrefFirstOpen(boolean is) {
+    public void setColorPref(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(PREF_FIRST_OPEN, is);
+        editor.putBoolean(PREF_COLOR_PREF, is);
+        editor.apply();
+        editor.commit();
+    }
+    public boolean isFirstEntry() {
+        return pref.getBoolean(PREF_FIRST_ENTRY, false);
+    }
+
+    public void setFirstEntry(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_FIRST_ENTRY, is);
         editor.apply();
         editor.commit();
     }

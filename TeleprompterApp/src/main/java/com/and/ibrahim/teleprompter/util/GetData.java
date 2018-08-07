@@ -20,7 +20,7 @@ public class GetData {
         DataObj dataObj;
         ArrayList<DataObj> dataObjArrayList = new ArrayList<>();
         /* get the ContentProvider URI */
-        Uri uri = Contract.BakeEntry.PATH_TELEPROMPTER_URI;
+        Uri uri = Contract.Entry.PATH_TELEPROMPTER_URI;
         /* Perform the ContentProvider query */
         if (uri != null) {
             c = context.getContentResolver().query(uri,
@@ -42,11 +42,11 @@ public class GetData {
                 dataObj = new DataObj();
                 /*get all value by cursor while moving by get its column name and get value inside it*/
 
-                String id = c.getString(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_UNIQUE_ID));
+                String id = c.getString(c.getColumnIndexOrThrow(Contract.Entry.COL_UNIQUE_ID));
 
-                String title = c.getString(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_TITLE));
-                String content = c.getString(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_CONTENTS));
-                int isSelected=c.getInt(c.getColumnIndexOrThrow(Contract.BakeEntry.COL_SELECT));
+                String title = c.getString(c.getColumnIndexOrThrow(Contract.Entry.COL_TITLE));
+                String content = c.getString(c.getColumnIndexOrThrow(Contract.Entry.COL_CONTENTS));
+                int isSelected=c.getInt(c.getColumnIndexOrThrow(Contract.Entry.COL_SELECT));
 
                 /*while cursor movement will get value of every column this value will save inside all movie object from Movies Class*/
 

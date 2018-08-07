@@ -105,8 +105,10 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
         }
 
         public void bind( DataObj dataObj, int position) {
-            mTextTitle.setText(dataObj.getTextTitle());
 
+
+
+            mTextTitle.setText(dataObj.getTextTitle());
               mTextContent.setText(dataObj.getTextContent());
             if (dataObj.getIsChecked()==0){
                 mCheckBox.setChecked(false);

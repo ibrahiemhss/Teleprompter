@@ -1,9 +1,12 @@
 package com.and.ibrahim.teleprompter.modules.listContents;
 
 import android.app.SearchManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -22,6 +25,7 @@ import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
+import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 
 import java.util.Objects;
@@ -43,6 +47,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
     private boolean ischecked;
     private Fragment mContentListFragment;
+    private boolean isFirstEntry;
 
     private FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
         return fragmentEditListRefreshListener;
@@ -55,7 +60,13 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+        isFirstEntry= SharedPrefManager.getInstance(this).isFirstEntry();
 
+        if(!isFirstEntry){
+            addDemo();
+            SharedPrefManager.getInstance(this).setFirstEntry(true);
+
+        }
         mContentListFragment = new ListContentsFragment();
         if (savedInstanceState != null) {
             mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
@@ -166,9 +177,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
     private void initFragment() {
         Bundle bundle = new Bundle();
-
-        bundle.putString(Contract.EXTRA_TEXT, getResources().getString(R.string.mytest));
-
         bundle.putBoolean(Contract.EXTRA_SELECTED, false);
 
         mContentListFragment.setArguments(bundle);
@@ -187,5 +195,20 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         return (ListContentsActivity.this.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public void addDemo(){
+
+        ContentValues values = new ContentValues();
+        values.put(Contract.Entry.COL_TITLE, getResources().getString(R.string.demo_title));
+        values.put(Contract.Entry.COL_CONTENTS, getResources().getString(R.string.demo_text));
+        values.put(Contract.Entry.COL_UNIQUE_ID,  1);
+
+        final Uri uriInsert = getContentResolver().insert(Contract.Entry.PATH_TELEPROMPTER_URI, values);
+        if (uriInsert != null) {
+            Log.d("contentResolver insert", "first added success");
+
+            values.clear();
+        }
     }
 }

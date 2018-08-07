@@ -66,17 +66,30 @@
     <!-- list item -->
     <dimen name="item_image_edit_height">24dp</dimen>
     <dimen name="item_image_edit_width">24dp</dimen>
-    <dimen name="item_text_side_margin">8dp</dimen>
-    <dimen name="item_padding">8dp</dimen>
+
+    <dimen name="item_margin">8dp</dimen>
     <dimen name="item_side_margin">12dp</dimen>
     <dimen name="item_bottom_margin">4dp</dimen>
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="item_image_width">48dp</dimen>
     <dimen name="item_image_height">48dp</dimen>
+    <dimen name="item_image_padding">2dp</dimen>
+    <dimen name="item_text_title_size">16sp</dimen>
+    <dimen name="item_text_content_size">14sp</dimen>
+    <dimen name="item_text_content_height">16dp</dimen>
+
+    <dimen name="item_text_side_margin">8dp</dimen>
+
+
     <!--add content dialog-->
     <dimen name="add_dialog_width">264dp</dimen>
     <dimen name="add_dialog_etext_height">336dp</dimen>
-    <dimen name="add_dialog_etext_size">16sp</dimen>
+    <dimen name="add_dialog_etext_content_size">16sp</dimen>
+    <dimen name="add_dialog_etext_title_size">20sp</dimen>
+    <dimen name="add_dialog_text_padding">8dp</dimen>
+    <dimen name="add_dialog_text_size">12dp</dimen>
+
+
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>
     <!--////////////////////////////////////////////////////-->

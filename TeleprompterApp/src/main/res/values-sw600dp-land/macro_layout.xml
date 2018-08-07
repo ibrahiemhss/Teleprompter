@@ -10,15 +10,14 @@
 
     <!--//////////////displayActivity////////////////////////-->
     <dimen name="scroll_view_margin_top">88dp</dimen>
-    <dimen name="up_view_height">361dp</dimen>
-    <dimen name="down_view_height">329dp</dimen>
+    <dimen name="up_view_height">232dp</dimen>
+    <dimen name="down_view_height">232dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
-    <dimen name="container_width">340dp</dimen>
-    <dimen name="scroll_width">560dp</dimen>
-
+    <dimen name="container_width">320dp</dimen>
+    <dimen name="scroll_container_side_margin">96dp</dimen>
 
     <!--navigation-->
-    <dimen name="nav_width">282dp</dimen>
+  <!--  <dimen name="nav_width">282dp</dimen>
     <dimen name="nav_veiw_group_width">@dimen/match_parent</dimen>
     <dimen name="nav_veiw_group_height">56dp</dimen>
     <dimen name="nav_veiw_group_side_margin">8dp</dimen>
@@ -29,7 +28,7 @@
     <dimen name="nav_big_image_font_height">48dp</dimen>
     <dimen name="nav_image_color_width">56dp</dimen>
     <dimen name="nav_image_color_height">56dp</dimen>
-    <dimen name="nav_text_size">18sp</dimen>
+    <dimen name="nav_text_size">18sp</dimen>-->
     <!--dialog colors-->
     <dimen name="colors_dialog_width">384dp</dimen>
     <dimen name="colors_dialog_height">244dp</dimen>
@@ -37,13 +36,9 @@
 
     <!-- ////////////////fragment //////////////////////////-->
 
-    <!-- recyclerVeiw -->
-    <dimen name="list_width">300dp</dimen>
-    <dimen name="list_side_padding">5dp</dimen>
-    <dimen name="list_bottom_padding">24dp</dimen>
     <!-- layoutsw600 -->
     <!--add content dialog-->
-    <dimen name="add_dialog_width">264dp</dimen>
+    <dimen name="add_dialog_width">512dp</dimen>
     <dimen name="add_dialog_etext_height">336dp</dimen>
     <dimen name="add_dialog_etext_size">16sp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>

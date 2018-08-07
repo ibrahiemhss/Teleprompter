@@ -46,17 +46,33 @@
         android:id="@+id/contents_container"
         android:layout_width="@dimen/container_width"
         android:layout_marginTop="@dimen/container_margin_top"
-
         android:layout_height="match_parent"
         tools:ignore="InconsistentLayout" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@color/color_graydr"
         android:layout_toRightOf="@+id/contents_container"
         android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/text_empty_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryText"
+            android:textAppearance="@style/Theme.Design"
+            android:textStyle="bold"
+            android:text="@string/empty_text"/>
         <FrameLayout
-            android:layout_width="@dimen/scroll_width"
+            android:id="@+id/scroll_container"
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/scroll_container_side_margin"
+            android:paddingRight="@dimen/scroll_container_side_margin"
+            android:visibility="gone"
             android:layout_centerInParent="true"
             android:layout_height="match_parent">
         <ScrollView
@@ -78,7 +94,6 @@
                     android:layout_margin="@dimen/scroll_text_margin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/mytest"
                     android:textColor="@color/color_white"
                     android:textSize="24sp" />
             </LinearLayout>

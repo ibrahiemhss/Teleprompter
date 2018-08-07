@@ -15,14 +15,14 @@ class DbHelper extends SQLiteOpenHelper {
     private static final String TAG = DbHelper.class.getSimpleName();
 
     public DbHelper(Context context) {
-        super(context, Contract.BakeEntry.DB_NAME, null, 1);
+        super(context, Contract.Entry.DB_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL(Contract.BakeEntry.CREATE_TABLE_TELEPROMPTER);
-            db.execSQL("CREATE UNIQUE INDEX event_idx ON " + Contract.BakeEntry.TABLE_TELEPROMPTER + " ( " + Contract.BakeEntry._ID + " )");
+            db.execSQL(Contract.Entry.CREATE_TABLE_TELEPROMPTER);
+            db.execSQL("CREATE UNIQUE INDEX event_idx ON " + Contract.Entry.TABLE_TELEPROMPTER + " ( " + Contract.Entry._ID + " )");
 
         } catch (SQLException e) {
             Log.d(TAG, e.getMessage());
@@ -31,7 +31,7 @@ class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(Contract.BakeEntry.DROP_TELEPROMPTER_TELEPROMPTER);
+        db.execSQL(Contract.Entry.DROP_TELEPROMPTER_TELEPROMPTER);
 
 
         onCreate(db);

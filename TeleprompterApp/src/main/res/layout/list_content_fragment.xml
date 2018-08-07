@@ -46,7 +46,7 @@
                 android:layout_width="96dp"
                 android:layout_height="48dp"
                 android:src="@drawable/move_up"
-                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
                 android:contentDescription="@string/app_name"/>
         </RelativeLayout>
 

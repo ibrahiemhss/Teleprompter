@@ -29,9 +29,11 @@
 
         <activity android:name=".modules.display.DisplayActivity"
             android:theme="@style/AppThemeNoActionBar"
+            android:parentActivityName=".modules.listContents.ListContentsActivity"
 
             />
-        <activity android:name=".modules.listContents.ListContentsActivity"/>
+        <activity android:name=".modules.listContents.ListContentsActivity"
+            />
         <activity android:name=".modules.setting.SettingsActivity"/>
 
     </application>

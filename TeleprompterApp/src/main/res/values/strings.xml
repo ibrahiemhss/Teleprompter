@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Teleprompter‏</string>
-    <string name="mytest">Real sold my in call. Invitation on an advantages collecting. But event old above shy bed noisy. Had sister see wooded favour income has. Stuff rapid since do as hence. Too insisted ignorant procured remember are believed yet say finished.
+    <string name="demo_title">Demo Show</string>
+
+    <string name="demo_text">Real sold my in call. Invitation on an advantages collecting. But event old above shy bed noisy. Had sister see wooded favour income has. Stuff rapid since do as hence. Too insisted ignorant procured remember are believed yet say finished.
 
 Dissuade ecstatic and properly saw entirely sir why laughter endeavor. In on my jointure horrible margaret suitable he followed speedily. Indeed vanity excuse or mr lovers of on. By offer scale an stuff. Blush be sorry no sight. Sang lose of hour then he left find.
 
@@ -95,5 +97,7 @@ Do am he horrible distance marriage so although. Afraid assure square so happen 
     <string name="toggle_marker">Toggle marker</string>
     <string name="defaults">default</string>
     <string name="undo">undo</string>
+    <string name="empty_text">Please click on one of the items to start viewing</string>
+    <string name="etc">etc ...............................................................................................................</string>
 
 </resources>

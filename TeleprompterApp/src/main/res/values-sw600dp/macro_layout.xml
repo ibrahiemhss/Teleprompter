@@ -9,11 +9,13 @@
 
     <!--//////////////displayActivity////////////////////////-->
     <dimen name="scroll_view_margin_top">88dp</dimen>
-    <dimen name="up_view_height">554dp</dimen>
-    <dimen name="down_view_height">390dp</dimen>
+    <dimen name="up_view_height">404dp</dimen>
+    <dimen name="down_view_height">404dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
-    <dimen name="container_width">256dp</dimen>
-    <dimen name="scroll_width">428dp</dimen>
+    <dimen name="image_play_width">136dp</dimen>
+    <dimen name="image_play_height">136dp</dimen>
+    <dimen name="container_width">236dp</dimen>
+    <dimen name="scroll_container_side_margin">0dp</dimen>
 
     <!--navigation-->
     <dimen name="nav_width">282dp</dimen>
@@ -38,7 +40,7 @@
 
 
     <!-- recyclerVeiw -->
-    <dimen name="list_width">300dp</dimen>
+    <dimen name="list_width">@dimen/match_parent</dimen>
     <dimen name="list_side_padding">5dp</dimen>
     <dimen name="list_bottom_padding">24dp</dimen>
     <!-- layoutsw600 -->
@@ -49,10 +51,15 @@
     <dimen name="item_image_width">48dp</dimen>
     <dimen name="item_image_height">48dp</dimen>
     <!--add content dialog-->
-    <dimen name="add_dialog_width">360dp</dimen>
-    <dimen name="add_dialog_etext_height">456dp</dimen>
+    <dimen name="add_dialog_width">456dp</dimen>
+    <dimen name="add_dialog_etext_height">584dp</dimen>
     <dimen name="add_dialog_etext_size">16sp</dimen>
-    <dimen name="add_dialog_text_width">96dp</dimen>
+    <dimen name="add_dialog_etext_content_size">20sp</dimen>
+    <dimen name="add_dialog_etext_title_size">24sp</dimen>
+    <dimen name="add_dialog_text_padding">8dp</dimen>
+    <dimen name="add_dialog_text_size">12sp</dimen>
+
+    <dimen name="add_dialog_text_width">120dp</dimen>
     <dimen name="add_dialog_margin_bottom">16dp</dimen>
     <!-- /////////////////////// //////////////////////////-->
 </resources>

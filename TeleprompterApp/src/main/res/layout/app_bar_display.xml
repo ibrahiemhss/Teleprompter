@@ -9,8 +9,8 @@
     tools:ignore="Overdraw">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/display_app_bar_layout"
         android:layout_width="match_parent"
+        android:id="@+id/display_app_bar_layout"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/toolbar_container_margin"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -26,7 +26,7 @@
             app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
             android:fitsSystemWindows="true">
 
-            <RelativeLayout
+          <!--  <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_gravity="bottom"
                 android:background="@color/colorPrimary"
@@ -72,7 +72,7 @@
                     android:text="@string/app_name"
                     android:layout_toEndOf="@+id/back_id" />
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/display_toolbar"
@@ -89,7 +89,6 @@
         android:id="@+id/slide_show_scroll"
         android:layout_width="match_parent"
         android:background="@color/Black"
-        android:layout_marginTop="@dimen/scroll_view_margin_top"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
@@ -105,7 +104,6 @@
                 android:layout_margin="@dimen/scroll_text_margin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/mytest"
                 android:textColor="@color/color_white"
                 android:textSize="24sp" />
         </LinearLayout>

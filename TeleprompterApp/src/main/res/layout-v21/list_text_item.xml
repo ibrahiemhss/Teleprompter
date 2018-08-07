@@ -21,7 +21,7 @@
         android:id="@+id/lin_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/item_padding"
+        android:layout_margin="@dimen/item_margin"
 
         android:orientation="horizontal">
         <ImageView
@@ -37,11 +37,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_gravity="bottom"
             android:ellipsize="end"
             android:layout_marginLeft="@dimen/item_text_side_margin"
             android:layout_marginRight="@dimen/item_text_side_margin"
-            android:textColor="@color/color_graydr" />
+            android:textSize="@dimen/item_text_title_size"
+            android:textColor="@color/colorPrimaryText" />
 
 
         <CheckBox
@@ -52,7 +52,7 @@
         <ImageView
             android:id="@+id/edit_item"
             android:layout_width="@dimen/item_image_edit_height"
-            android:padding="2dp"
+            android:padding="@dimen/item_image_padding"
             android:layout_gravity="center"
             android:layout_height="@dimen/item_image_edit_width"
             android:src="@drawable/edit_item"
@@ -63,8 +63,26 @@
         <TextView
             android:id="@+id/text_content"
             android:layout_width="match_parent"
-            android:textColor="@color/color_graylt"
-            android:layout_height="wrap_content" />
+            android:textAlignment="center"
+            android:textColor="@color/coorSecondaryText"
+            android:textSize="@dimen/item_text_content_size"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/item_text_content_height" />
+        <TextView
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textColor="@color/coorSecondaryText"
+            android:textSize="@dimen/item_text_content_size"
+            android:layout_margin="@dimen/item_margin"
+            android:text="@string/etc"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/item_text_content_height"            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/item_margin"
+            android:background="@color/coorSecondaryText"/>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

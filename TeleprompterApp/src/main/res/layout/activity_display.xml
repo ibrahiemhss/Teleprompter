@@ -17,16 +17,9 @@
     <FrameLayout
         android:id="@+id/frame_show_container"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_weight="1"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/text_empty_show"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="45sp"
-            android:visibility="gone"
-            android:text="@string/descriptive_text"/>
+
         <include
             layout="@layout/app_bar_display"
             android:layout_width="match_parent"
@@ -38,6 +31,7 @@
         android:layout_width="@dimen/nav_width"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:background="@drawable/white_back"
         android:layout_marginTop ="@dimen/nav_margin_top"
         android:labelFor="@+id/app_bar_main"
         >

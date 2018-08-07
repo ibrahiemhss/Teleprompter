@@ -15,7 +15,7 @@
     <dimen name="container_margin_top">64dp</dimen>
     <dimen name="container_width">@dimen/match_parent</dimen>
     <!--navigation contents-->
-    <dimen name="nav_width">408dp</dimen>
+   <!-- <dimen name="nav_width">408dp</dimen>
     <dimen name="nav_veiw_group_width">192dp</dimen>
     <dimen name="nav_veiw_group_height">48dp</dimen>
     <dimen name="nav_veiw_group_side_margin">8dp</dimen>
@@ -25,10 +25,10 @@
     <dimen name="nav_big_image_font_width">18dp</dimen>
     <dimen name="nav_big_image_font_height">18dp</dimen>
     <dimen name="nav_image_color_width">32dp</dimen>
-    <dimen name="nav_image_color_height">32dp</dimen>
     <dimen name="nav_text_side_margin">16dp</dimen>
+    <dimen name="nav_image_color_height">32dp</dimen>
     <dimen name="nav_text_top_margin">8dp</dimen>
-    <dimen name="nav_text_size">18sp</dimen>
+    <dimen name="nav_text_size">18sp</dimen>-->
     <!--dialog colors-->
     <dimen name="colors_dialog_width">384dp</dimen>
     <dimen name="colors_dialog_height">244dp</dimen>
@@ -43,8 +43,8 @@
     <dimen name="item_image_width">48dp</dimen>
     <dimen name="item_image_height">48dp</dimen>
     <!--add content dialog-->
-    <dimen name="add_dialog_width">264dp</dimen>
-    <dimen name="add_dialog_etext_height">336dp</dimen>
+    <dimen name="add_dialog_width">336dp</dimen>
+    <dimen name="add_dialog_etext_height">264dp</dimen>
     <dimen name="add_dialog_etext_size">16sp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>

@@ -60,7 +60,7 @@ public class MyContentProvider extends ContentProvider {
                     try {
                         sqlDB.beginTransaction();
                         for (ContentValues value : values) {
-                            if (sqlDB.insertOrThrow(Contract.BakeEntry.TABLE_TELEPROMPTER, null, value) == -1) {
+                            if (sqlDB.insertOrThrow(Contract.Entry.TABLE_TELEPROMPTER, null, value) == -1) {
                                 throw new Exception("Unknown error while inserting entry in database.");
                             }
                             insertCount++;
@@ -97,7 +97,7 @@ public class MyContentProvider extends ContentProvider {
 
             case TELEPROMPTER_CODE:
 
-                retCursor = db.query(Contract.BakeEntry.TABLE_TELEPROMPTER,
+                retCursor = db.query(Contract.Entry.TABLE_TELEPROMPTER,
                         projection,
                         selection,
                         selectionArgs,
@@ -108,7 +108,7 @@ public class MyContentProvider extends ContentProvider {
                 break;
             case TELEPROMPTER_WITH_ID:
 
-                retCursor = db.query(Contract.BakeEntry.TABLE_TELEPROMPTER,
+                retCursor = db.query(Contract.Entry.TABLE_TELEPROMPTER,
                         projection,
                         selection,
                         selectionArgs,
@@ -148,10 +148,10 @@ public class MyContentProvider extends ContentProvider {
 
             case TELEPROMPTER_CODE:
 
-                long id = db.insertWithOnConflict(Contract.BakeEntry.TABLE_TELEPROMPTER, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+                long id = db.insertWithOnConflict(Contract.Entry.TABLE_TELEPROMPTER, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
                 if (id > 0) {
-                    returnUri = ContentUris.withAppendedId(Contract.BakeEntry.PATH_TELEPROMPTER_URI, id);
+                    returnUri = ContentUris.withAppendedId(Contract.Entry.PATH_TELEPROMPTER_URI, id);
                 } else {
                     throw new SQLException("Failed to insert row into " + uri);
                 }
@@ -184,12 +184,12 @@ public class MyContentProvider extends ContentProvider {
                 String id = uri.getPathSegments().get(1);
                 if (id != null) {
                     // Use selections/selectionArgs to filter for this ID
-                    idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER,
-                            Contract.BakeEntry.COL_UNIQUE_ID + " =?",
+                    idDeleted = db.delete(Contract.Entry.TABLE_TELEPROMPTER,
+                            Contract.Entry.COL_UNIQUE_ID + " =?",
                             new String[]{id});
                     Log.d(TAG, "idDeleted =is " + id);
                 } else {
-                    idDeleted = db.delete(Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                    idDeleted = db.delete(Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
 
                 }
                 // Use selections/selectionArgs to filter for this ID
@@ -197,7 +197,7 @@ public class MyContentProvider extends ContentProvider {
 
             case TELEPROMPTER_WITH_ID:
                 idDeleted = db.delete(
-                        Contract.BakeEntry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                        Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -222,7 +222,7 @@ public class MyContentProvider extends ContentProvider {
 
         switch (match) {
             case TELEPROMPTER_CODE:
-                count = db.update(Contract.BakeEntry.TABLE_TELEPROMPTER, values, selection, selectionArgs);
+                count = db.update(Contract.Entry.TABLE_TELEPROMPTER, values, selection, selectionArgs);
 
                 break;
 
