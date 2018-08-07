@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/nav_width"
     android:background="@drawable/white_back"
-    android:elevation="@dimen/dialog_elevation"
     android:layout_marginTop="96dp"
     android:layout_marginBottom="?attr/actionBarSize"
     tools:context=".modules.display.DisplayActivity"
@@ -20,7 +19,8 @@
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/nav_veiw_group_side_margin"
             android:layout_marginTop="@dimen/nav_veiw_group_top_margin"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/nav_veiw_group_side_margin">
 
             <ImageView
                 android:layout_width="@dimen/nav_small_image_font_width"
@@ -29,9 +29,10 @@
                 android:contentDescription="@string/app_name"
                 android:layout_centerInParent="true"
                 android:layout_alignParentStart="true"
-                android:elevation="6dp"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/font_size" />
+                android:src="@drawable/font_size"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="16dp" />
 
 
             <ImageView
@@ -41,9 +42,10 @@
                 android:layout_gravity="start"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:elevation="6dp"
                 android:src="@drawable/font_size"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp" />
 
         </RelativeLayout>
 
@@ -74,7 +76,8 @@
                 android:textSize="@dimen/nav_text_size"
                 android:textColor="@color/orange_light"
                 android:layout_marginStart="@dimen/nav_text_side_margin"
-                android:text="@string/slow" />
+                android:text="@string/slow"
+                android:layout_marginLeft="@dimen/nav_text_side_margin" />
 
             <TextView
                 android:id="@+id/text_font"
@@ -96,7 +99,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/nav_text_side_margin"
                 android:textColor="@color/orange_light"
-                tools:ignore="RelativeOverlap" />
+                tools:ignore="RelativeOverlap"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/nav_text_side_margin" />
         </RelativeLayout>
 
         <SeekBar
@@ -134,7 +139,6 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:id="@+id/font_color"
                         android:layout_width="@dimen/nav_image_color_width"
                         android:layout_height="@dimen/nav_image_color_height"
                         android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
@@ -142,7 +146,9 @@
                         android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
                         android:drawableEnd="@drawable/circle_shape"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/circle_shape" />
+                        android:src="@drawable/circle_shape"
+                        android:layout_marginLeft="@dimen/nav_img_veiw_side_margin"
+                        android:drawableRight="@drawable/circle_shape" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -152,7 +158,8 @@
                         android:layout_marginTop="@dimen/nav_text_top_margin"
                         android:layout_marginStart="@dimen/nav_text_side_margin"
                         android:textSize="@dimen/nav_text_size"
-                        android:textColor="@color/orange_light" />
+                        android:textColor="@color/orange_light"
+                        android:layout_marginLeft="@dimen/nav_text_side_margin" />
 
                 </LinearLayout>
 
@@ -173,7 +180,9 @@
                         android:layout_marginStart="@dimen/nav_text_side_margin"
                         android:scaleX="1"
                         android:scaleY="1"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="@dimen/nav_text_side_margin"
+                        android:layout_alignParentLeft="true" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -183,7 +192,9 @@
                         android:layout_marginTop="@dimen/nav_text_top_margin"
                         android:layout_marginStart="@dimen/nav_text_side_margin"
                         android:layout_toEndOf="@+id/check_toggle"
-                        android:textColor="@color/orange_light" />
+                        android:textColor="@color/orange_light"
+                        android:layout_marginLeft="@dimen/nav_text_side_margin"
+                        android:layout_toRightOf="@+id/check_toggle" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

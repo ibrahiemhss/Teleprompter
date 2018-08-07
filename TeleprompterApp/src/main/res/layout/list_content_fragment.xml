@@ -47,7 +47,8 @@
                 android:layout_height="48dp"
                 android:src="@drawable/move_up"
                 android:layout_alignParentRight="true"
-                android:contentDescription="@string/app_name"/>
+                android:contentDescription="@string/app_name"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

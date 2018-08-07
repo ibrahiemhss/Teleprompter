@@ -7,9 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -40,7 +38,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -51,7 +48,6 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
-import com.and.ibrahim.teleprompter.modules.listContents.ListContentsActivity;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
@@ -91,7 +87,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawerLayout;
 
-    private boolean isColorSet;
     private TextView mEmptyTextShow;
     private FrameLayout mScrollContainer;
     private Fragment mContentListFragment;
@@ -112,8 +107,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private String mScrollString;
     private boolean paused = true;
     private int timeSpeed = 30;
-    private boolean isDailogShow;
-    private boolean isFirstEntry;
+    private boolean isDialogShow;
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
     @Override
@@ -126,7 +120,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
-        isFirstEntry=SharedPrefManager.getInstance(this).isFirstEntry();
+        boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
 
         if(!isFirstEntry){
             addDemo();
@@ -147,14 +141,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
             }
             mScrollString=savedInstanceState.getString(Contract.EXTRA_SCROLL_STRING);
-            isDailogShow=savedInstanceState.getBoolean(Contract.EXTRA_SHOW_DIALOG);
-            if(isDailogShow){
+            isDialogShow=savedInstanceState.getBoolean(Contract.EXTRA_SHOW_DIALOG);
+            if(isDialogShow){
                 launchDlgTextColors();
             }
 
         }
         setupToolbar();//in tablet screen size make main toolbar to one screen for all views
-        // in phone screen toolbar will be with deferent menu
+        // in phone screen toolbar will be with different menu
 
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mCollapsingToolbarLayout.getLayoutParams();
         params.setScrollFlags(0);  // clear all scroll flags
@@ -191,8 +185,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         textSpeedValue = 1;//default value generator of speed text in first open
         mTextColorArray = getResources().getIntArray(R.array.text_colors);//initialize text colors
         mBackGroundColorArray = getResources().getIntArray(R.array.background_colors);//initialize background colors
-        isColorSet =//first open is false after open will be record to true
-                SharedPrefManager.getInstance(this).isColorPref();
+        boolean isColorSet = SharedPrefManager.getInstance(this).isColorPref();
 
         final int seekProgress = //get recorded seekbar value
                 SharedPrefManager.getInstance(this).getPrefSpeed();
@@ -226,9 +219,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setListener() {
-        if (!isTablet()) {//to get clicked view in phone toolbar
 
-        }
       //  mImgSetting.setOnClickListener(this);
        // mBackImg.setOnClickListener(this);
         mPlayStatus.setOnClickListener(this);
@@ -287,7 +278,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                     // Not implemented here
                     break;
                 case R.id.action_select:
-                    boolean ischecked = true;
+                    @SuppressWarnings("unused") boolean ischecked = true;
                     if (getFragmentEditListRefreshListener() != null) {
                         getFragmentEditListRefreshListener().onRefresh();
                     }
@@ -321,7 +312,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(Contract.EXTRA_SCROLL_STRING,mScrollString);
-        outState.putBoolean(Contract.EXTRA_SHOW_DIALOG,isDailogShow);
+        outState.putBoolean(Contract.EXTRA_SHOW_DIALOG,isDialogShow);
         outState.putIntArray(Contract.EXTRA_SCROLL_POSITION,//save last place of text i in screen of scrolling View
                 new int[]{mSlideShowScroll.getScrollX(), mSlideShowScroll.getScrollY()});
         if (isTablet()) {//save fragment
@@ -512,7 +503,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
-        final TextView dfaultText=mNavView.findViewById(R.id.default_text);
+        final TextView defaultText=mNavView.findViewById(R.id.default_text);
         final TextView undoText=mNavView.findViewById(R.id.undo_text);
 
         mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(this).getPrefSpeed());
@@ -575,7 +566,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 }
             }
         });
-        dfaultText.setOnClickListener(new View.OnClickListener() {
+        defaultText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mScrollText.setTextColor(getResources().getColor(R.color.White));
@@ -600,7 +591,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchDlgTextColors() {
-        isDailogShow=true;
+        isDialogShow=true;
         mDialogTextColors = new Dialog(Objects.requireNonNull(this));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(Objects.requireNonNull(mDialogTextColors.getWindow()).getAttributes());
@@ -647,7 +638,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 mDialogTextColors.dismiss();
-                isDailogShow=false;
+                isDialogShow=false;
             }
         });
         mDialogTextColors.show();
@@ -660,7 +651,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         super.onPause();
         if(mDialogTextColors!=null){
             if(!mDialogTextColors.isShowing()){
-                isDailogShow=false;
+                isDialogShow=false;
             }
 
         }

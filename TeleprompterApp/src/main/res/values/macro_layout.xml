@@ -2,28 +2,21 @@
 
     <!--////////////////////general///////////////////////////-->
     <dimen name="fab_margin">8dp</dimen>
-    <dimen name="toolbar_text_size">20sp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
-    <dimen name="toolbar_text_side_margin">16dp</dimen>
     <!--//////////////////////////////////////////////////////-->
 
 
     <!--//////////////displayActivity/////////////////////////-->
-    <dimen name="scroll_view_margin_top">64dp</dimen>
     <dimen name="container_margin_top">64dp</dimen>
     <dimen name="container_width">@dimen/match_parent</dimen>
-    <dimen name="scroll_width">@dimen/match_parent</dimen>
 
     <dimen name="up_view_height">214dp</dimen>
     <dimen name="down_view_height">250dp</dimen>
     <dimen name="image_play_width">96dp</dimen>
     <dimen name="image_play_height">96dp</dimen>
-    <dimen name="image_toolbar_height">24dp</dimen>
-    <dimen name="image_toolbar_width">24dp</dimen>
     <dimen name="toolbar_container_margin">8dp</dimen>
     <dimen name="scroll_text_margin">8dp</dimen>
-    <dimen name="photo_toolbar_side_margin">16dp</dimen>
     <!--navigation contents-->
     <dimen name="nav_width">216dp</dimen>
     <dimen name="nav_margin_top">96dp</dimen>
@@ -46,8 +39,6 @@
     <dimen name="nav_text_top_margin">8dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>
     <!--dialog colors-->
-    <dimen name="colors_dialog_width">384dp</dimen>
-    <dimen name="colors_dialog_height">244dp</dimen>
     <dimen name="colors_dialog_margin">16dp</dimen>
     <!--item colors-->
     <dimen name="colors_item_width">96dp</dimen>
@@ -87,7 +78,7 @@
     <dimen name="add_dialog_etext_content_size">16sp</dimen>
     <dimen name="add_dialog_etext_title_size">20sp</dimen>
     <dimen name="add_dialog_text_padding">8dp</dimen>
-    <dimen name="add_dialog_text_size">12dp</dimen>
+    <dimen name="add_dialog_text_size">12sp</dimen>
 
 
     <dimen name="add_dialog_text_width">96dp</dimen>

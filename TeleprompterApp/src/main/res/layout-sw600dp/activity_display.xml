@@ -21,7 +21,6 @@
         tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity"
         xmlns:tools="http://schemas.android.com/tools">
         <FrameLayout
-            android:id="@+id/frame_show_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="UselessParent">

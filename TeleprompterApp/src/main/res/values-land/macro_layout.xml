@@ -2,14 +2,11 @@
 
     <!--//////////////general///////////////////////////////-->
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="toolbar_text_size">20sp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
-    <dimen name="toolbar_text_side_margin">16dp</dimen>
     <!--/////////////////////////////////////////////////////-->
 
     <!--//////////////displayActivity////////////////////////-->
-    <dimen name="scroll_view_margin_top">64dp</dimen>
     <dimen name="up_view_height">124dp</dimen>
     <dimen name="down_view_height">190dp</dimen>
     <dimen name="container_margin_top">64dp</dimen>
@@ -30,8 +27,6 @@
     <dimen name="nav_text_top_margin">8dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>-->
     <!--dialog colors-->
-    <dimen name="colors_dialog_width">384dp</dimen>
-    <dimen name="colors_dialog_height">244dp</dimen>
 
     <!-- ////////////////fragment //////////////////////////-->
 
@@ -45,7 +40,6 @@
     <!--add content dialog-->
     <dimen name="add_dialog_width">336dp</dimen>
     <dimen name="add_dialog_etext_height">264dp</dimen>
-    <dimen name="add_dialog_etext_size">16sp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>
     <!-- /////////////////////// //////////////////////////-->

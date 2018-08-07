@@ -134,7 +134,6 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:id="@+id/font_color"
                         android:layout_width="@dimen/nav_image_color_width"
                         android:layout_height="@dimen/nav_image_color_height"
                         android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
@@ -214,7 +213,8 @@
                 android:textColor="@color/colorPrimaryText"
                 android:layout_weight="1"
                 android:text="@string/defaults"
-                android:layout_margin="@dimen/text_side_margin" />
+                android:layout_margin="@dimen/text_side_margin"
+                tools:ignore="InconsistentLayout" />
 
 
             <TextView
@@ -226,7 +226,8 @@
                 android:textColor="@color/colorPrimaryText"
                 android:layout_weight="1"
                 android:text="@string/undo"
-                android:layout_margin="@dimen/text_side_margin" />
+                android:layout_margin="@dimen/text_side_margin"
+                tools:ignore="InconsistentLayout" />
         </LinearLayout>
     </RelativeLayout>
 

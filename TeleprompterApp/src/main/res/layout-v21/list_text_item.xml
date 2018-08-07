@@ -64,14 +64,14 @@
             android:id="@+id/text_content"
             android:layout_width="match_parent"
             android:textAlignment="center"
-            android:textColor="@color/coorSecondaryText"
+            android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/item_text_content_size"
             android:layout_gravity="center"
             android:layout_height="@dimen/item_text_content_height" />
         <TextView
             android:layout_width="match_parent"
             android:textAlignment="center"
-            android:textColor="@color/coorSecondaryText"
+            android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/item_text_content_size"
             android:layout_margin="@dimen/item_margin"
             android:text="@string/etc"
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="@dimen/item_margin"
-            android:background="@color/coorSecondaryText"/>
+            android:background="@color/colorSecondaryText"/>
 
     </LinearLayout>
 
