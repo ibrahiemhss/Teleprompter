@@ -1,0 +1,10 @@
+<resources>
+
+    <!--//////////////displayActivity////////////////////////-->
+    <dimen name="up_view_height">232dp</dimen>
+    <dimen name="down_view_height">232dp</dimen>
+    <dimen name="container_margin_top">88dp</dimen>
+    <dimen name="container_width">320dp</dimen>
+    <dimen name="scroll_container_side_margin">96dp</dimen>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconLauncherShape">
+        <ignore path="src/main/res/mipmap-hdpi/teleprompter_icon.png" />
+        <ignore path="src/main/res/mipmap-ldpi/teleprompter_icon.png" />
+        <ignore path="src/main/res/mipmap-mdpi/teleprompter_icon.png" />
+        <ignore path="src/main/res/mipmap-xhdpi/teleprompter_icon.png" />
+        <ignore path="src/main/res/mipmap-xxhdpi/teleprompter_icon.png" />
+        <ignore path="src/main/res/mipmap-xxxhdpi/teleprompter_icon.png" />
+    </issue>
+</lint>
