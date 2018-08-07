@@ -1,17 +1,22 @@
 <resources>
-    <!--//////////////general///////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+            - general  -
+            - - - - - - - - - - - - - - - -->
     <dimen name="fab_margin">8dp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
-    <!--///////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
-    <!--//////////////displayActivity////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+           - displayActivity  -
+           - - - - - - - - - - - - - - - -->
     <dimen name="up_view_height">232dp</dimen>
     <dimen name="down_view_height">232dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
     <dimen name="container_width">320dp</dimen>
     <dimen name="scroll_container_side_margin">96dp</dimen>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <!--navigation-->
   <!--  <dimen name="nav_width">282dp</dimen>
@@ -26,11 +31,11 @@
     <dimen name="nav_image_color_width">56dp</dimen>
     <dimen name="nav_image_color_height">56dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>-->
-    <!--dialog colors-->
-    <!--////////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!-- ////////////////fragment //////////////////////////-->
-
+    <!-- - - - - - - - - - - - - - - -
+            - fragment  -
+            - - - - - - - - - - - - - - - -->
     <!-- layoutsw600 -->
     <!--add content dialog-->
     <dimen name="add_dialog_width">512dp</dimen>
@@ -43,5 +48,5 @@
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="item_image_width">48dp</dimen>
     <dimen name="item_image_height">48dp</dimen>
-    <!-- ///////////////////// //////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 </resources>

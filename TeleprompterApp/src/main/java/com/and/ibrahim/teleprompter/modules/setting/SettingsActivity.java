@@ -1,45 +1,31 @@
 package com.and.ibrahim.teleprompter.modules.setting;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
+import com.and.ibrahim.teleprompter.R;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+ public class SettingsActivity extends AppCompatActivity {
 
-import com.and.ibrahim.teleprompter.R;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_settings);
+           ActionBar actionBar = this.getSupportActionBar();
 
-public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+            if (actionBar != null) {
+               actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        ActionBar actionBar = this.getSupportActionBar();
+        @SuppressWarnings("unused")
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();if (id == android.R.id.home) {
 
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-   //     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        super.onCreate(savedInstanceState);
-
-        // Set the action bar back button to look like an up button
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+                NavUtils.navigateUpFromSameTask(this);
+            }
+            return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        // When the home button is pressed, take the user back to the VisualizerActivity
-        if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
-}

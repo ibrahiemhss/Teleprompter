@@ -488,13 +488,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             timeSpeed = 8;
 
         } else if (progress > 84 && progress < 87) {
-            timeSpeed = 5;
+            timeSpeed = -1;
 
         } else if (progress > 90 && progress < 93) {
-            timeSpeed = 3;
+            timeSpeed = -3;
 
         } else if (progress >= 96 && progress < 99) {
-            timeSpeed = 1;
+            timeSpeed = -5;
 
         }
     }

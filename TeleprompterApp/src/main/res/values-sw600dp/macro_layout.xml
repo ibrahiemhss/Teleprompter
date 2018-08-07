@@ -1,11 +1,15 @@
 <resources>
-    <!--//////////////general///////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+            - general  -
+            - - - - - - - - - - - - - - - -->
     <dimen name="fab_margin">8dp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
 
 
-    <!--//////////////displayActivity////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+           - displayActivity  -
+           - - - - - - - - - - - - - - - -->
     <dimen name="up_view_height">404dp</dimen>
     <dimen name="down_view_height">404dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
@@ -28,11 +32,12 @@
     <dimen name="nav_image_color_height">56dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>
     <!--dialog colors-->
-    <!--////////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
-    <!-- ////////////////fragment //////////////////////////-->
-
+    <!-- - - - - - - - - - - - - - - -
+            - fragment  -
+            - - - - - - - - - - - - - - - -->
 
     <!-- recyclerVeiw -->
     <dimen name="list_width">@dimen/match_parent</dimen>
@@ -55,5 +60,5 @@
 
     <dimen name="add_dialog_text_width">120dp</dimen>
     <dimen name="add_dialog_margin_bottom">16dp</dimen>
-    <!-- /////////////////////// //////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 </resources>

@@ -15,7 +15,6 @@
         <activity android:name=".modules.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,16 +25,12 @@
             android:authorities="com.and.ibrahim.teleprompter"
             android:exported="false"
             tools:ignore="ExportedContentProvider" />
-
         <activity android:name=".modules.display.DisplayActivity"
             android:theme="@style/AppThemeNoActionBar"
+            android:parentActivityName=".modules.listContents.ListContentsActivity"/>
+        <activity android:name=".modules.listContents.ListContentsActivity" />
+        <activity android:name=".modules.setting.SettingsActivity"
             android:parentActivityName=".modules.listContents.ListContentsActivity"
-
-            />
-        <activity android:name=".modules.listContents.ListContentsActivity"
-            />
-        <activity android:name=".modules.setting.SettingsActivity"/>
-
+            android:theme="@style/AppTheme" />
     </application>
-
 </manifest>

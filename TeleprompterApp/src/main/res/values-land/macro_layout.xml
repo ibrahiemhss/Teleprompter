@@ -1,35 +1,26 @@
 <resources>
 
-    <!--//////////////general///////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+            - general  -
+            - - - - - - - - - - - - - - - -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
-    <!--/////////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!--//////////////displayActivity////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+           - displayActivity  -
+           - - - - - - - - - - - - - - - -->
     <dimen name="up_view_height">124dp</dimen>
     <dimen name="down_view_height">190dp</dimen>
     <dimen name="container_margin_top">64dp</dimen>
     <dimen name="container_width">@dimen/match_parent</dimen>
-    <!--navigation contents-->
-   <!-- <dimen name="nav_width">408dp</dimen>
-    <dimen name="nav_veiw_group_width">192dp</dimen>
-    <dimen name="nav_veiw_group_height">48dp</dimen>
-    <dimen name="nav_veiw_group_side_margin">8dp</dimen>
-    <dimen name="nav_veiw_group_top_margin">8dp</dimen>
-    <dimen name="nav_small_image_font_width">12dp</dimen>
-    <dimen name="nav_small_image_font_height">12dp</dimen>
-    <dimen name="nav_big_image_font_width">18dp</dimen>
-    <dimen name="nav_big_image_font_height">18dp</dimen>
-    <dimen name="nav_image_color_width">32dp</dimen>
-    <dimen name="nav_text_side_margin">16dp</dimen>
-    <dimen name="nav_image_color_height">32dp</dimen>
-    <dimen name="nav_text_top_margin">8dp</dimen>
-    <dimen name="nav_text_size">18sp</dimen>-->
-    <!--dialog colors-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!-- ////////////////fragment //////////////////////////-->
 
+    <!-- - - - - - - - - - - - - - - -
+            - fragment  -
+            - - - - - - - - - - - - - - - -->
     <!-- recyclerVeiw -->
     <!-- list item -->
     <dimen name="item_side_margin">20dp</dimen>
@@ -42,5 +33,5 @@
     <dimen name="add_dialog_etext_height">264dp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>
-    <!-- /////////////////////// //////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 </resources>

@@ -1,5 +1,7 @@
 <resources>
-    <!--//////////////displayActivity////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+           - displayActivity  -
+           - - - - - - - - - - - - - - - -->
     <dimen name="up_view_height">652dp</dimen>
     <dimen name="down_view_height">508dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>

@@ -1,13 +1,15 @@
 <resources>
-
-    <!--////////////////////general///////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+           - general  -
+           - - - - - - - - - - - - - - - -->
     <dimen name="fab_margin">8dp</dimen>
     <dimen name="toolbar_text_start_margin">48dp</dimen>
     <dimen name="toolbar_text_end_margin">64dp</dimen>
-    <!--//////////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-
-    <!--//////////////displayActivity/////////////////////////-->
+    <!-- - - - - - - - - - - - - - - -
+         - displayActivity  -
+         - - - - - - - - - - - - - - - -->
     <dimen name="container_margin_top">64dp</dimen>
     <dimen name="container_width">@dimen/match_parent</dimen>
 
@@ -47,9 +49,12 @@
     <dimen name="colors_item_image_width">48dp</dimen>
     <dimen name="colors_item_image_height">48dp</dimen>
     <dimen name="colors_item_margin">4dp</dimen>
-    <!--////////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!-- ////////////////fragment //////////////////////////-->
+
+    <!-- - - - - - - - - - - - - - - -
+        - fragment  -
+        - - - - - - - - - - - - - - - -->
     <!-- recyclerVeiw -->
     <dimen name="list_width">@dimen/match_parent</dimen>
     <dimen name="list_side_padding">5dp</dimen>
@@ -58,12 +63,12 @@
     <dimen name="item_image_edit_height">24dp</dimen>
     <dimen name="item_image_edit_width">24dp</dimen>
 
-    <dimen name="item_margin">8dp</dimen>
     <dimen name="item_side_margin">12dp</dimen>
     <dimen name="item_bottom_margin">4dp</dimen>
     <dimen name="text_side_margin">8dp</dimen>
     <dimen name="item_image_width">48dp</dimen>
     <dimen name="item_image_height">48dp</dimen>
+    <dimen name="item_margin">8dp</dimen>
     <dimen name="item_image_padding">2dp</dimen>
     <dimen name="item_text_title_size">16sp</dimen>
     <dimen name="item_text_content_size">14sp</dimen>
@@ -83,5 +88,5 @@
 
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>
-    <!--////////////////////////////////////////////////////-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 </resources>
