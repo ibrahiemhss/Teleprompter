@@ -133,11 +133,24 @@
             android:layout_gravity="center" />
 
         <View
+            android:id="@+id/down_view"
             android:layout_width="match_parent"
             android:layout_below="@+id/show_play"
             android:layout_height="@dimen/down_view_height"
             android:layout_alignParentBottom="true"
             android:background="@color/colorTransparentWhite" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange_light"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/white_back"
+            android:layout_marginBottom="4dp"
+            android:padding="4dp"/>
+
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

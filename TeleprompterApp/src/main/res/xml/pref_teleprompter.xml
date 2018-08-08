@@ -1,38 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+xmlns:android="http://schemas.android.com/apk/res/android">
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceCategory
+    android:title="Scroll Text Setting">
 
-    <CheckBoxPreference
+
+    <android.support.v7.preference.SwitchPreferenceCompat
+
         android:defaultValue="@bool/pref_horizontal_mode_default"
         android:key="@string/pref_horizontal_mode_key"
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
         android:title="@string/pref_horizontal_mode_label" />
 
-    <CheckBoxPreference
+    <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="@bool/pref_timer_default"
         android:key="@string/pref_timer_key"
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
         android:title="@string/pref_timer_key_label" />
 
-    <CheckBoxPreference
-        android:defaultValue="@bool/pref_show_treble_default"
-        android:key="@string/pref_show_treble_key"
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_toggle_marker_default"
+        android:key="@string/pref_toggle_marker_key"
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
-        android:title="@string/pref_show_treble_label" />
+        android:title="@string/pref_toggle_marker_label" />
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_size_default"
-        android:key="@string/pref_size_key"
-        android:title="@string/pref_size_label" />
+</android.support.v7.preference.PreferenceCategory>
 
-    <ListPreference
-        android:defaultValue="@string/pref_color_red_value"
-        android:entries="@array/pref_color_option_labels"
-        android:entryValues="@array/pref_color_option_values"
-        android:key="@string/pref_color_key"
-        android:title="@string/pref_color_label" />
-
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

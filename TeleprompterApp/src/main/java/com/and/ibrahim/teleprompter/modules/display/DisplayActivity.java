@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -35,6 +37,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,7 +67,7 @@ import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.START;
 
 @SuppressWarnings("WeakerAccess")
-public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener {
+public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener,SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.display_toolbar)
     protected Toolbar mToolbar;
@@ -78,14 +81,18 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected ScrollView mSlideShowScroll;
     @BindView(R.id.vertical_outer_id)
     protected LinearLayout verticalOuterLayout;
-
-    @SuppressWarnings("WeakerAccess")
     @BindView(R.id.show_play)
     protected ImageView mPlayStatus;
     @BindView(R.id.nav_view)
     protected NavigationView mNavView;
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawerLayout;
+    @BindView(R.id.up_veiw)
+    protected View mUpVeiw;
+    @BindView(R.id.down_view)
+    protected View mDownVeiw;
+    @BindView(R.id.chronometer)
+    protected Chronometer mChronometer;
 
     private TextView mEmptyTextShow;
     private FrameLayout mScrollContainer;
@@ -96,7 +103,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private int[] mBackGroundColorArray;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    private Timer scrollTimer = null;
+   private Timer scrollTimer = null;
     private int verticalScrollMax = 0;
     private TimerTask clickSchedule;
     private TimerTask scrollerSchedule;
@@ -108,6 +115,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean paused = true;
     private int timeSpeed = 30;
     private boolean isDialogShow;
+    int melliSeconds;
+
+
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
     @Override
@@ -215,6 +225,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         clickToScrolling();//perform scrolling
         initNavigationDrawer();//initialize navigation drawer
+        setupSharedPreferences();
     }
 
     @Override
@@ -223,6 +234,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
       //  mImgSetting.setOnClickListener(this);
        // mBackImg.setOnClickListener(this);
         mPlayStatus.setOnClickListener(this);
+
 
         getScrollMaxAmount();//get all scrollView amount after text length inside
 
@@ -337,6 +349,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             final Runnable Timer_Tick = new Runnable() {
                 public void run() {
                     moveScrollView();
+                    melliSeconds += 1;
+                    mChronometer.start();
                 }
             };
             if (scrollerSchedule != null) {
@@ -372,6 +386,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         if (scrollTimer != null) {
             scrollTimer.cancel();
             scrollTimer = null;
+            mChronometer.stop();
         }
     }
 
@@ -488,7 +503,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             timeSpeed = 8;
 
         } else if (progress > 84 && progress < 87) {
-            timeSpeed = -1;
+            timeSpeed = (int) 0.5;
 
         } else if (progress > 90 && progress < 93) {
             timeSpeed = -3;
@@ -658,13 +673,18 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void onDestroy() {
+        super.onDestroy();
+
         clearTimerTaks(clickSchedule);
         clearTimerTaks(scrollerSchedule);
         clearTimers(scrollTimer);
         clickSchedule = null;
         scrollerSchedule = null;
         scrollTimer = null;
-        super.onDestroy();
+        mChronometer=null;
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @SuppressWarnings("UnusedAssignment")
@@ -750,5 +770,59 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             values.clear();
         }
     }
+    private void setupSharedPreferences() {
+        // Get all of the values from shared preferences to set it up
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        seHorizontalMode(sharedPreferences.getBoolean(getString(R.string.pref_horizontal_mode_key),
+                getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
+        seTimerShow(sharedPreferences.getBoolean(getString(R.string.pref_timer_key),
+                getResources().getBoolean(R.bool.pref_timer_default)));
+        setToggleMarker(sharedPreferences.getBoolean(getString(R.string.pref_toggle_marker_key),
+                getResources().getBoolean(R.bool.pref_toggle_marker_default)));
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_horizontal_mode_key))) {
+            seHorizontalMode(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
+        } else if (key.equals(getString(R.string.pref_timer_key))) {
+            seTimerShow(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_timer_default)));
+        } else if (key.equals(getString(R.string.pref_toggle_marker_key))) {
+            setToggleMarker(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_toggle_marker_default)));
+        }
+    }
+
+    private void seHorizontalMode(boolean is){
+        if (is) {
+            Log.d("SharedPreferenceValue"," pref_horizontal_mode_key ="+String.valueOf(true));
+        }else {
+            Log.d("SharedPreferenceValue"," pref_horizontal_mode_key ="+String.valueOf(false));
+
+        }
+
+
+    }
+    public void seTimerShow(boolean is){
+        if (is) {
+            mChronometer.setVisibility(View.VISIBLE);
+        }else {
+            mChronometer.setVisibility(View.GONE);
+
+        }
+
+    }
+    private void setToggleMarker(boolean is){
+
+        if (is) {
+            mDownVeiw.setVisibility(View.VISIBLE);
+            mUpVeiw.setVisibility(View.VISIBLE);
+        }else {
+            mDownVeiw.setVisibility(View.GONE);
+            mUpVeiw.setVisibility(View.GONE);
+        }
+
+      }
 
 }
