@@ -18,18 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="android.app.searchable"
-            android:resource="@xml/searchable"/>
         <provider
             android:name=".data.MyContentProvider"
             android:authorities="com.and.ibrahim.teleprompter"
             android:exported="false"
             tools:ignore="ExportedContentProvider" />
-        <activity android:name=".modules.display.DisplayActivity"
-            android:theme="@style/AppThemeNoActionBar"
-            android:parentActivityName=".modules.listContents.ListContentsActivity"/>
+
+        <activity
+            android:name=".modules.display.DisplayActivity"
+            android:parentActivityName=".modules.listContents.ListContentsActivity"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".modules.listContents.ListContentsActivity" />
-        <activity android:name=".modules.setting.SettingsActivity"
+        <activity
+            android:name=".modules.setting.SettingsActivity"
             android:parentActivityName=".modules.listContents.ListContentsActivity"
             android:theme="@style/AppTheme" />
     </application>

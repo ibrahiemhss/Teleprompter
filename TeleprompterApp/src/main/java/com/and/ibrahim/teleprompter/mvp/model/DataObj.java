@@ -9,6 +9,10 @@ public class DataObj {
         return textContent;
     }
 
+    public void setTextContent(String textContent) {
+        this.textContent = textContent;
+    }
+
     public int getIsChecked() {
         return isChecked;
     }
@@ -31,10 +35,6 @@ public class DataObj {
 
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
-    }
-
-    public void setTextContent(String textContent) {
-        this.textContent = textContent;
     }
 
 }

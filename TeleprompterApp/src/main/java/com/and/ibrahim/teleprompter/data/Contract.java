@@ -18,6 +18,7 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_STRING_CONTENT = "extra_string_content";
     public static final String EXTRA_SHOW_DIALOG = "extra_show_dialog";
     public static final String EXTRA_SCROLL_STRING = "extra_scroll_string";
+    public static final String EXTRA_SCROLL_POS = "extra_scroll_to";
 
 
     //content provider
@@ -35,15 +36,15 @@ public class Contract implements BaseColumns {
 
         public static final String COL_CONTENTS = "contents";
         public static final String COL_TITLE = "title";
-        public static final String COL_SELECT="flag";
+        public static final String COL_SELECT = "flag";
 
         public static final String DROP_TELEPROMPTER_TELEPROMPTER = "DROP TABLE IF EXISTS " + TABLE_TELEPROMPTER;
         public static final String CREATE_TABLE_TELEPROMPTER = "create table " + TABLE_TELEPROMPTER + "(" +
                 _ID + " INTEGER primary key autoincrement not null," +
                 COL_UNIQUE_ID + " INTEGER  ," +
                 COL_TITLE + " text  null," +
-                COL_CONTENTS + " text not null ,"+
-                COL_SELECT+" INTEGER )";
+                COL_CONTENTS + " text not null ," +
+                COL_SELECT + " INTEGER )";
 
         //database name
         static final String DB_NAME = "teleprompter_app.db";

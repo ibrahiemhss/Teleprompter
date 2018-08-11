@@ -6,42 +6,42 @@
     android:orientation="vertical"
     tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
 
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
-
-    <FrameLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <include
-            layout="@layout/app_bar_display"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="@dimen/nav_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:background="@drawable/white_back"
-        android:layout_marginTop ="@dimen/nav_margin_top"
-        android:labelFor="@+id/app_bar_main"
-        >
-        <include
-            layout="@layout/nave_contents"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <include
+                layout="@layout/app_bar_display"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
 
-    </android.support.design.widget.NavigationView>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="@dimen/nav_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/nav_margin_top"
+            android:background="@drawable/white_back"
+            android:labelFor="@+id/app_bar_main">
+
+            <include
+                layout="@layout/nave_contents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.design.widget.NavigationView>
 
 
-</android.support.v4.widget.DrawerLayout>
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
 

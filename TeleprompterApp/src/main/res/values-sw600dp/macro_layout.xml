@@ -10,6 +10,8 @@
     <!-- - - - - - - - - - - - - - - -
            - displayActivity  -
            - - - - - - - - - - - - - - - -->
+    <dimen name="marker_height">28dp</dimen>
+    <dimen name="marker_width">32dp</dimen>
     <dimen name="up_view_height">404dp</dimen>
     <dimen name="down_view_height">404dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
@@ -27,6 +29,7 @@
     <dimen name="nav_small_image_font_width">24dp</dimen>
     <dimen name="nav_small_image_font_height">24dp</dimen>
     <dimen name="nav_big_image_font_width">24dp</dimen>
+    ؤ
     <dimen name="nav_big_image_font_height">24dp</dimen>
     <dimen name="nav_image_color_width">56dp</dimen>
     <dimen name="nav_image_color_height">56dp</dimen>

@@ -3,6 +3,6 @@
     android:id="@+id/activity_settings"
     android:name="com.and.ibrahim.teleprompter.modules.setting.SettingsFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent" />
 
 

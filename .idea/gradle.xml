@@ -9,7 +9,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/TeleprompterApp" />
-            <option value="$PROJECT_DIR$/javaSample" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

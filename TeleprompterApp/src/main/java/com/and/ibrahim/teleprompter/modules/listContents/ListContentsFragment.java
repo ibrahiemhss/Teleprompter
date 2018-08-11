@@ -29,8 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,8 +66,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.delete_all)
     protected ImageView mDeleteImage;
-    @BindView(R.id.select_all)
-    protected CheckBox mCheckBox;
     @BindView(R.id.text_delete)
     protected TextView mDeleteText;
     @BindView(R.id.return_up)
@@ -97,6 +93,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private LinedEditText mEditContent;
     private MaterialEditText mEditTitle;
     private String mScrollString;
+
     private void readBundle(Bundle bundle) {//get Value from activity///
 
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
@@ -135,6 +132,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 public void onRefresh() {
 
                     mEditContainer.setVisibility(View.VISIBLE);
+                    mDeleteImage.setVisibility(View.VISIBLE);
+                    mDeleteText.setVisibility(View.VISIBLE);
+                    chekAll();
+
                 }
             });
         }
@@ -170,7 +171,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     launchAddDialog(mLastTitleAdding, mLastContentAdding);
                 }
-                mDialog.show();
+                if (!mDialog.isShowing()) {
+                    mDialog.show();
+                }
 
             }
         }
@@ -183,25 +186,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         mReturnUp.setOnClickListener(this);
 
         OnTouchRecyclerView();
-
-        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if (b) {
-                    mDeleteImage.setVisibility(View.VISIBLE);
-                    mDeleteText.setVisibility(View.VISIBLE);
-                    chekAll();
-
-                } else {
-                    mDeleteImage.setVisibility(View.GONE);
-                    mDeleteText.setVisibility(View.GONE);
-                    unCheckAll();
-                }
-
-
-            }
-        });
 
     }
 
@@ -220,8 +204,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     isOpen = true;
 
                     launchAddDialog(null, null);
-                    mDialog.show();
-
+                    if (!mDialog.isShowing()) {
+                        mDialog.show();
+                    }
                 }
                 Log.d(TAG, "FabAction is " + "Fab Add");
 
@@ -232,9 +217,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
                 break;
             case R.id.fab_cloud:
-                launchAddDialog(null, null);
-                mDialog.show();
+
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
+                break;
             case R.id.delete_all:
                 launchSelectedDialog();
                 break;
@@ -254,9 +239,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             public void onEditImgClickListener(int position, View v) {
                 launchPopUpMenu(v, position);
             }
+
             @Override
             public void onTextClickListener(int position, View v) {
-                mScrollString=mArrayList.get(position).getTextContent();
+                mScrollString = mArrayList.get(position).getTextContent();
 
                 if (isTablet()) {
                     passData(mScrollString);
@@ -270,14 +256,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onImageClickListener(int position, View v) {
-                mScrollString=mArrayList.get(position).getTextContent();
+                mScrollString = mArrayList.get(position).getTextContent();
                 if (isTablet()) {
 
                     passData(mScrollString);
                 } else {
                     Intent intent = new Intent(getActivity(), DisplayActivity.class);
                     intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
-                    Log.d("textscrova",mScrollString);
+                    Log.d("textscrova", mScrollString);
                     startActivity(intent);
                 }
 
@@ -285,7 +271,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onViewGroupClickListener(int position, View view) {
-                mScrollString=mArrayList.get(position).getTextContent();
+                mScrollString = mArrayList.get(position).getTextContent();
 
                 if (isTablet()) {
 
@@ -474,10 +460,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     isAdded = true;
                 }
 
+                mDialog.dismiss();
             }
         });
 
-        mDialog.show();
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
         isOpen = false;
 
     }
@@ -564,11 +553,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     private void deletSelectedItem(int position) {
 
-             /* ContentValues songValues = new ContentValues();
-                            getContentResolver().delete(Contract.BakeEntry.PATH_TELEPROMPTER_URI,
-                                    Contract.BakeEntry._ID + " = ?",
-                                    new String[]{songValues.getAsString(String.valueOf(position))});*/
-
         if (GetData.getTeleprompters(getActivity()).size() > 0) {
 
             String stringId = String.valueOf(mArrayList.get(position).getId());
@@ -612,15 +596,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
 
-
     @Override
     public void onPause() {
         super.onPause();
         unCheckAll();
         mEditContainer.setVisibility(View.GONE);
-        if(mDialog!=null){
-            if(!mDialog.isShowing()){
-                isDialogShow=false;
+        if (mDialog != null) {
+            if (!mDialog.isShowing()) {
+                isDialogShow = false;
             }
         }
 

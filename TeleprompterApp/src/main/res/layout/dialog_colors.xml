@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_margin="@dimen/colors_dialog_margin"
     android:layout_height="wrap_content"
     android:layout_gravity="start"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/colors_dialog_margin"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
 
         android:id="@+id/rv_colors"
         android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:padding="16dp"
-        android:layout_height="match_parent">
+        android:padding="16dp">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -21,10 +21,10 @@
         android:id="@+id/cancel_text_color_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_close"
         app:backgroundTint="@color/colorAccent"
         app:elevation="@dimen/fab_elevation"
-        android:layout_gravity="center"
-        app:pressedTranslationZ="@dimen/fab_press_translation_z"
-        android:src="@drawable/ic_close" />
+        app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
 </LinearLayout>

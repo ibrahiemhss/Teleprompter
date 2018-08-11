@@ -1,20 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/add_dialog_width"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/add_dialog_width"
+    android:layout_height="wrap_content"
     android:layout_gravity="center|bottom"
     android:layout_marginBottom="@dimen/add_dialog_margin_bottom"
-    android:layout_height="wrap_content"
     android:background="@drawable/dialog_bg"
     android:orientation="vertical">
 
-  <!--  <android.support.v7.widget.AppCompatEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_title"
-        android:textColorHint="@color/orange_light"
-        android:backgroundTint="@color/color_graylt"
-        />-->
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edit_title"
         android:layout_width="match_parent"
@@ -40,35 +33,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/txt_cancel"
             android:layout_width="@dimen/add_dialog_text_width"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:padding="@dimen/add_dialog_text_padding"
-            android:textSize="@dimen/add_dialog_text_size"           android:background="@drawable/oranglt_back"
+            android:background="@drawable/oranglt_back"
             android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/add_dialog_text_padding"
             android:text="@string/cancel_dialog"
+            android:textAlignment="center"
             android:textColor="@color/color_white"
-            android:textStyle="bold"
-            android:focusable="true" />
+            android:textSize="@dimen/add_dialog_text_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_add"
             android:layout_width="@dimen/add_dialog_text_width"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:padding="@dimen/add_dialog_text_padding"
-            android:textSize="@dimen/add_dialog_text_size"
             android:layout_gravity="end"
             android:background="@drawable/oranglt_back"
             android:clickable="true"
-            android:text="@string/add_dialog"
-            android:textColor="@color/color_white"
-            android:textStyle="bold"
             android:focusable="true"
-            android:layout_alignParentEnd="true" />
+            android:padding="@dimen/add_dialog_text_padding"
+            android:text="@string/add_dialog"
+            android:textAlignment="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/add_dialog_text_size"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </LinearLayout>

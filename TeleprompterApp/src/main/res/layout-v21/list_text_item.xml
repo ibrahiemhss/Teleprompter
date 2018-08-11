@@ -1,21 +1,19 @@
+<!--suppress ALL -->
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
-    android:layout_marginRight="@dimen/item_side_margin"
     android:layout_marginLeft="@dimen/item_side_margin"
+    android:layout_marginRight="@dimen/item_side_margin"
     android:layout_marginTop="@dimen/item_bottom_margin"
     android:clickable="true"
     android:clipToPadding="false"
     android:focusable="true"
+    android:foreground="?selectableItemBackground"
     android:orientation="vertical"
-    app:cardElevation="@dimen/card_elevation"
-    android:foreground="?selectableItemBackground">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    app:cardElevation="@dimen/card_elevation">
+
 
     <LinearLayout
         android:id="@+id/lin_view"
@@ -24,24 +22,25 @@
         android:layout_margin="@dimen/item_margin"
 
         android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/img_note"
             android:layout_width="@dimen/item_image_height"
             android:layout_height="@dimen/item_image_width"
-            android:src="@drawable/note_2_256"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/note_2_256" />
 
         <TextView
             android:id="@+id/text_title"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
             android:layout_marginLeft="@dimen/item_text_side_margin"
             android:layout_marginRight="@dimen/item_text_side_margin"
-            android:textSize="@dimen/item_text_title_size"
-            android:textColor="@color/colorPrimaryText" />
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/item_text_title_size" />
 
 
         <CheckBox
@@ -52,37 +51,13 @@
         <ImageView
             android:id="@+id/edit_item"
             android:layout_width="@dimen/item_image_edit_height"
-            android:padding="@dimen/item_image_padding"
-            android:layout_gravity="center"
             android:layout_height="@dimen/item_image_edit_width"
-            android:src="@drawable/edit_item"
-            android:contentDescription="@string/app_name" />
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/item_image_padding"
+            android:src="@drawable/edit_item" />
 
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_content"
-            android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/item_text_content_size"
-            android:layout_gravity="center"
-            android:layout_height="@dimen/item_text_content_height" />
-        <TextView
-            android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/item_text_content_size"
-            android:layout_margin="@dimen/item_margin"
-            android:text="@string/etc"
-            android:layout_gravity="center"
-            android:layout_height="@dimen/item_text_content_height"            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="@dimen/item_margin"
-            android:background="@color/colorSecondaryText"/>
-
-    </LinearLayout>
 
 </android.support.v7.widget.CardView>

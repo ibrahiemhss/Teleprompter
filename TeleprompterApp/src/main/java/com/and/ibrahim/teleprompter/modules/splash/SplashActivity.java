@@ -16,16 +16,14 @@ public class SplashActivity extends AppCompatActivity {
         Intent mIntent;
         if (isTablet()) {
             mIntent = new Intent(this, DisplayActivity.class);
-           // mIntent= new Intent(this, ListContentsActivity.class);
-
-
-        }else {
+        } else {
             mIntent = new Intent(this, ListContentsActivity.class);
 
         }
         startActivity(mIntent);
         finish();
     }
+
     private boolean isTablet() {
         return (SplashActivity.this.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)

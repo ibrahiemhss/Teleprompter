@@ -1,64 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/color_graylt"
-    android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/edit_container"
-            android:layout_width="match_parent"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            android:paddingTop="?attr/actionBarSize"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/text_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryText"
-                android:layout_centerInParent="true"
+    android:layout_height="match_parent"
+    android:background="@color/color_graylt">
 
-                android:visibility="gone"
-                android:layout_toRightOf="@+id/select_all"
-                android:text="@string/delete_all"
-                android:layout_toEndOf="@+id/select_all" />
-            <ImageView
-                android:id="@+id/delete_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/text_delete"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_delete"
-                android:contentDescription="@string/app_name"
-                android:layout_toEndOf="@+id/text_delete" />
-            <CheckBox
-                android:id="@+id/select_all"
-                android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/select_all"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true" />
-            <ImageView
-                android:id="@+id/return_up"
-                android:layout_width="96dp"
-                android:layout_height="48dp"
-                android:src="@drawable/move_up"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/app_name"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/edit_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:paddingTop="?attr/actionBarSize"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/delete_all"
+
+            android:textColor="@color/colorPrimaryText"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/delete_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/text_delete"
+            android:layout_toRightOf="@+id/text_delete"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/return_up"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/move_up" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="@dimen/list_width"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/list_bottom_padding"
         android:layout_below="@+id/edit_container"
         android:layout_gravity="center"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/list_bottom_padding"
         android:paddingLeft="@dimen/list_side_padding"
         android:paddingRight="@dimen/list_side_padding"
         android:scrollbarStyle="outsideOverlay" />
@@ -67,65 +61,65 @@
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="230dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
+        android:layout_marginBottom="230dp"
+        android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:src="@drawable/ic_add_white"
         android:visibility="invisible"
         app:backgroundTint="@color/color_fab_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         app:elevation="@dimen/fab_elevation"
-        app:pressedTranslationZ="@dimen/fab_press_translation_z"
-        android:src="@drawable/ic_add_white"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_alignParentEnd="true" />
+        app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_storage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="160dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:visibility="invisible"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="160dp"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:src="@drawable/ic_sd_storage"
+        android:visibility="invisible"
         app:backgroundTint="@color/color_fab_storage"
         app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        android:src="@drawable/ic_sd_storage"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_alignParentEnd="true" />
+        app:pressedTranslationZ="12dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:visibility="invisible"
-        app:elevation="@dimen/fab_elevation"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        app:backgroundTint="@color/color_fab_cloud"
-        app:pressedTranslationZ="@dimen/fab_press_translation_z"
-        android:src="@drawable/ic_cloud_download"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="90dp"
         android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginRight="@dimen/fab_margin"
+        android:src="@drawable/ic_cloud_download"
+        android:visibility="invisible"
+        app:backgroundTint="@color/color_fab_cloud"
+        app:elevation="@dimen/fab_elevation"
+        app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:elevation="@dimen/fab_elevation"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        app:backgroundTint="@color/colorAccent"
-        app:pressedTranslationZ="@dimen/fab_press_translation_z"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white"
-        android:layout_alignParentEnd="true" />
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="@dimen/fab_elevation"
+        app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
 </RelativeLayout>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:keep="@anim/fadeut">
     <alpha xmlns:android="http://schemas.android.com/apk/res/android"
-        android:interpolator="@android:anim/anticipate_interpolator"
+        android:duration="500"
         android:fromAlpha="1.0"
-        android:toAlpha="0.0"
-        android:duration="500" />
+        android:interpolator="@android:anim/anticipate_interpolator"
+        android:toAlpha="0.0" />
 </set>

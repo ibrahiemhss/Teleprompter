@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,138 +13,166 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/toolbar_container_margin"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <!--suppress AndroidDomInspection -->
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/display_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="@dimen/toolbar_text_start_margin"
             app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
-            android:fitsSystemWindows="true">
+            app:expandedTitleMarginStart="@dimen/toolbar_text_start_margin"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/display_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-
-    <FrameLayout
-        android:id="@+id/contents_container"
-        android:layout_width="@dimen/container_width"
-        android:layout_marginTop="@dimen/container_margin_top"
-        android:layout_height="match_parent"
-        tools:ignore="InconsistentLayout" />
-
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/color_graydr"
-        android:layout_toRightOf="@+id/contents_container"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/contents_container">
-        <TextView
-            android:id="@+id/text_empty_show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="8dp"
-            android:visibility="gone"
-            android:textSize="24sp"
-            android:textColor="@color/colorPrimaryText"
-            android:textAppearance="@style/Theme.Design"
-            android:textStyle="bold"
-            android:text="@string/empty_text"
-            tools:ignore="InconsistentLayout" />
+        android:orientation="horizontal">
+
         <FrameLayout
-            android:id="@+id/scroll_container"
-            android:layout_width="match_parent"
-            android:paddingLeft="@dimen/scroll_container_side_margin"
-            android:paddingRight="@dimen/scroll_container_side_margin"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
+            android:id="@+id/contents_container"
+            android:layout_width="@dimen/container_width"
             android:layout_height="match_parent"
-            tools:ignore="InconsistentLayout">
-        <ScrollView
-            android:id="@+id/slide_show_scroll"
-            android:layout_width="match_parent"
-            android:background="@color/Black"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_marginTop="@dimen/container_margin_top"
+            tools:ignore="InconsistentLayout" />
 
-            <LinearLayout
-                android:id="@+id/vertical_outer_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
 
-                <com.and.ibrahim.teleprompter.util.ScrollingTextView
-                    android:id="@+id/text_scrolling"
-                    android:layout_margin="@dimen/scroll_text_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/color_white"
-                    android:textSize="24sp" />
-            </LinearLayout>
-
-        </ScrollView>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/contents_container"
+            android:layout_toRightOf="@+id/contents_container"
+            android:background="@color/color_graydr">
 
-            <View
-                android:id="@+id/up_veiw"
-                android:layout_width="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_height="@dimen/up_view_height"
-                android:background="@color/colorTransparentWhite" />
-
-            <ImageView
-                android:id="@+id/show_play"
-                android:layout_width="@dimen/image_play_height"
-                android:layout_height="@dimen/image_play_width"
-                android:visibility="invisible"
-                android:contentDescription="@string/app_name"
-                android:layout_below="@+id/up_veiw"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center" />
-
-            <View
-                android:id="@+id/down_view"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/show_play"
-                android:layout_height="@dimen/down_view_height"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorTransparentWhite" />
-
-            <Chronometer
-                android:id="@+id/chronometer"
+            <TextView
+                android:id="@+id/text_empty_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/orange_light"
-                android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:background="@drawable/white_back"
-                android:layout_marginBottom="4dp"
-                android:padding="4dp"/>
-          </RelativeLayout>
-        </FrameLayout>
+                android:padding="8dp"
+                android:text="@string/empty_text"
+                android:textAppearance="@style/Theme.Design"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:ignore="InconsistentLayout" />
 
+            <FrameLayout
+                android:id="@+id/scroll_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/scroll_container_side_margin"
+                android:paddingRight="@dimen/scroll_container_side_margin"
+                android:visibility="gone"
+                tools:ignore="InconsistentLayout">
+
+                <ScrollView
+                    android:id="@+id/slide_show_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Black"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/vertical_outer_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <com.and.ibrahim.teleprompter.util.ScrollingTextView
+                            android:id="@+id/text_scrolling"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/scroll_text_margin"
+                            android:layout_marginLeft="@dimen/scroll_text_side_margin"
+                            android:layout_marginRight="@dimen/scroll_text_side_margin"
+                            android:paddingTop="?attr/actionBarSize"
+                            android:textColor="@color/color_white"
+                            android:textSize="24sp" />
+                    </LinearLayout>
+
+                </ScrollView>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+
+                    <View
+                        android:id="@+id/up_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/up_view_height"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/colorTransparentBlack" />
+
+                    <RelativeLayout
+                        android:id="@+id/container_toggle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/image_play_width"
+                        android:layout_below="@+id/up_view"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/toggle_marker"
+                            android:layout_width="@dimen/marker_width"
+                            android:layout_height="@dimen/marker_height"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/arrow_marker"
+                            android:contentDescription="@string/app_name" />
+
+                        <ImageView
+                            android:id="@+id/show_play"
+                            android:layout_width="@dimen/image_play_height"
+                            android:layout_height="@dimen/image_play_width"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@string/app_name" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/down_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/down_view_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/container_toggle"
+                        android:background="@color/colorTransparentBlack" />
+
+                    <Chronometer
+                        android:id="@+id/chronometer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/white_back"
+                        android:padding="4dp"
+                        android:textColor="@color/orange_light" />
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

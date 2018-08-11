@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/white_back"
-    android:padding="@dimen/colors_item_padding"
     android:layout_width="@dimen/colors_item_width"
     android:layout_height="@dimen/colors_item_height"
-    android:layout_margin="@dimen/colors_item_margin">
+    android:layout_margin="@dimen/colors_item_margin"
+    android:background="@drawable/white_back"
+    android:padding="@dimen/colors_item_padding">
 
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/img_background_color"
         android:layout_width="@dimen/colors_item_image_width"
         android:layout_height="@dimen/colors_item_image_height"
-        android:id="@+id/img_background_color"
         android:scaleType="fitCenter"
-        app:riv_corner_radius="30dip"
         app:riv_border_color="@color/orange_light"
         app:riv_border_width="1dip"
+        app:riv_corner_radius="30dip"
         app:riv_mutate_background="true"
-        app:riv_tile_mode="repeat"
-        app:riv_oval="true" />
+        app:riv_oval="true"
+        app:riv_tile_mode="repeat" />
 
 
     <View
@@ -25,16 +25,16 @@
         android:layout_height="wrap_content" />
 
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/img_text_color"
         android:layout_width="@dimen/colors_item_image_width"
         android:layout_height="@dimen/colors_item_image_height"
+        android:layout_toEndOf="@+id/img_background_color"
         android:layout_toRightOf="@+id/img_background_color"
-        android:id="@+id/img_text_color"
         android:scaleType="fitCenter"
-        app:riv_corner_radius="30dip"
         app:riv_border_color="@color/orange_light"
         app:riv_border_width="1dip"
+        app:riv_corner_radius="30dip"
         app:riv_mutate_background="true"
-        app:riv_tile_mode="repeat"
         app:riv_oval="true"
-        android:layout_toEndOf="@+id/img_background_color" />
+        app:riv_tile_mode="repeat" />
 </RelativeLayout>

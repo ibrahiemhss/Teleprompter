@@ -1,85 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection, AndroidDomInspection -->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_graylt"
     android:fitsSystemWindows="true"
     tools:ignore="Overdraw">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
         android:id="@+id/display_app_bar_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/toolbar_container_margin"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/display_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="@dimen/toolbar_text_start_margin"
             app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
-            android:fitsSystemWindows="true">
+            app:expandedTitleMarginStart="@dimen/toolbar_text_start_margin"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-          <!--  <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_gravity="bottom"
-                android:background="@color/colorPrimary"
-                android:layout_height="?attr/actionBarSize">
-
-                <ImageView
-                    android:id="@+id/back_id"
-                    android:layout_width="@dimen/image_toolbar_width"
-                    android:layout_height="@dimen/image_toolbar_height"
-                    android:contentDescription="@string/app_name"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/ic_arrow_back"
-                    android:layout_marginLeft="@dimen/photo_toolbar_side_margin"
-                    android:layout_alignParentStart="true"
-                    tools:ignore="InconsistentLayout"
-                    android:layout_marginStart="@dimen/photo_toolbar_side_margin" />
-
-
-                <ImageView
-                    android:id="@+id/show_setting"
-                    android:layout_width="@dimen/image_toolbar_width"
-                    android:layout_height="@dimen/image_toolbar_height"
-                    android:layout_centerInParent="true"
-                    android:contentDescription="@string/app_name"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="@dimen/photo_toolbar_side_margin"
-                    android:src="@drawable/ic_settings_white"
-                    android:layout_alignParentRight="true"
-                    tools:ignore="InconsistentLayout"
-                    android:layout_marginEnd="@dimen/photo_toolbar_side_margin" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_white"
-                    android:layout_gravity="end|center"
-                    android:layout_toRightOf="@+id/back_id"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/toolbar_text_side_margin"
-                    android:layout_marginStart="@dimen/toolbar_text_side_margin"
-                    android:textSize="@dimen/toolbar_text_size"
-                    android:contentDescription="@string/app_name"
-                    android:text="@string/app_name"
-                    android:layout_toEndOf="@+id/back_id" />
-
-            </RelativeLayout>-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/display_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -88,7 +40,6 @@
     <ScrollView
         android:id="@+id/slide_show_scroll"
         android:layout_width="match_parent"
-        android:background="@color/Black"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
@@ -101,9 +52,12 @@
 
             <com.and.ibrahim.teleprompter.util.ScrollingTextView
                 android:id="@+id/text_scrolling"
-                android:layout_margin="@dimen/scroll_text_margin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/scroll_text_margin"
+                android:layout_marginLeft="@dimen/scroll_text_side_margin"
+                android:layout_marginRight="@dimen/scroll_text_side_margin"
+                android:paddingTop="?attr/actionBarSize"
                 android:textColor="@color/color_white"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -112,44 +66,61 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <View
-            android:id="@+id/up_veiw"
+            android:id="@+id/up_view"
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_height="@dimen/up_view_height"
-            android:background="@color/colorTransparentWhite" />
+            android:layout_alignParentTop="true"
+            android:background="@color/colorTransparentBlack" />
 
-        <ImageView
-            android:id="@+id/show_play"
-            android:layout_width="@dimen/image_play_height"
+        <RelativeLayout
+            android:id="@+id/container_toggle"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/image_play_width"
-            android:visibility="invisible"
-            android:contentDescription="@string/app_name"
-            android:layout_below="@+id/up_veiw"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center" />
+            android:layout_below="@+id/up_view"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/toggle_marker"
+                android:layout_width="@dimen/marker_width"
+                android:layout_height="@dimen/marker_height"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/arrow_marker"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/show_play"
+                android:layout_width="@dimen/image_play_height"
+                android:layout_height="@dimen/image_play_width"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/app_name" />
+
+        </RelativeLayout>
 
         <View
             android:id="@+id/down_view"
             android:layout_width="match_parent"
-            android:layout_below="@+id/show_play"
             android:layout_height="@dimen/down_view_height"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorTransparentWhite" />
+            android:layout_below="@+id/container_toggle"
+            android:background="@color/colorTransparentBlack" />
+
 
         <Chronometer
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange_light"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/white_back"
             android:layout_marginBottom="4dp"
-            android:padding="4dp"/>
+            android:background="@drawable/white_back"
+            android:padding="4dp"
+            android:textColor="@color/orange_light" />
 
     </RelativeLayout>
 

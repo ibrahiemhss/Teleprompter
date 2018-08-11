@@ -19,18 +19,18 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <!--navigation-->
-  <!--  <dimen name="nav_width">282dp</dimen>
-    <dimen name="nav_veiw_group_width">@dimen/match_parent</dimen>
-    <dimen name="nav_veiw_group_height">56dp</dimen>
-    <dimen name="nav_veiw_group_side_margin">8dp</dimen>
-    <dimen name="nav_veiw_group_top_margin">8dp</dimen>
-    <dimen name="nav_small_image_font_width">24dp</dimen>
-    <dimen name="nav_small_image_font_height">24dp</dimen>
-    <dimen name="nav_big_image_font_width">48dp</dimen>
-    <dimen name="nav_big_image_font_height">48dp</dimen>
-    <dimen name="nav_image_color_width">56dp</dimen>
-    <dimen name="nav_image_color_height">56dp</dimen>
-    <dimen name="nav_text_size">18sp</dimen>-->
+    <!--  <dimen name="nav_width">282dp</dimen>
+      <dimen name="nav_veiw_group_width">@dimen/match_parent</dimen>
+      <dimen name="nav_veiw_group_height">56dp</dimen>
+      <dimen name="nav_veiw_group_side_margin">8dp</dimen>
+      <dimen name="nav_veiw_group_top_margin">8dp</dimen>
+      <dimen name="nav_small_image_font_width">24dp</dimen>
+      <dimen name="nav_small_image_font_height">24dp</dimen>
+      <dimen name="nav_big_image_font_width">48dp</dimen>
+      <dimen name="nav_big_image_font_height">48dp</dimen>
+      <dimen name="nav_image_color_width">56dp</dimen>
+      <dimen name="nav_image_color_height">56dp</dimen>
+      <dimen name="nav_text_size">18sp</dimen>-->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <!-- - - - - - - - - - - - - - - -

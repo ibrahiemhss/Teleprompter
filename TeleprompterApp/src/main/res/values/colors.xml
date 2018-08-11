@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#075e54</color>
     <color name="colorPrimaryLight">#7fccbb</color>
     <color name="colorAccent">#FF5722</color>
-    <color name="colorTransparentWhite">#42ffffff</color>
+    <color name="colorTransparentBlack">#73000000</color>
+
     <color name="colorTransparent">#00ffffff</color>
     <color name="lime_green">#25d366</color>
     <color name="orange_light">#f7a101</color>
@@ -15,7 +16,6 @@
 
 
     <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
 
     <color name="color_graydr">#78909C</color>
     <color name="color_graylt">#CFD8DC</color>

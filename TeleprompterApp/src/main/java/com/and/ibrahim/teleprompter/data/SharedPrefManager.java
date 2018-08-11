@@ -16,10 +16,8 @@ public class SharedPrefManager {
     private static final String PREF_BACKGROUND_COLOR = "pref_background_color";
     private static final String PREF_UNDO_TEXT_COLOR = "pref_undo_text_color";
     private static final String PREF_UNDO_BACKGROUND_COLOR = "pref_uno_background_color";
-    private static final String PREF_COLOR_PREF= "color_pref";
-    private static final String PREF_FIRST_ENTRY= "pref_first_entry";
-
-
+    private static final String PREF_COLOR_PREF = "color_pref";
+    private static final String PREF_FIRST_ENTRY = "pref_first_entry";
 
 
     private static final String SHARED_PREF_NAME = "save_contents";
@@ -81,6 +79,7 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
+
     public int getPrefUndoBackgroundColor() {
         return pref.getInt(PREF_UNDO_BACKGROUND_COLOR, 0);
     }
@@ -102,6 +101,7 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
+
     public boolean isColorPref() {
         return pref.getBoolean(PREF_COLOR_PREF, false);
     }
@@ -112,6 +112,7 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
+
     public boolean isFirstEntry() {
         return pref.getBoolean(PREF_FIRST_ENTRY, false);
     }

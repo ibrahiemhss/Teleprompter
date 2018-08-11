@@ -1,8 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.listContents;
 
-import android.app.SearchManager;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -26,8 +24,6 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -59,9 +55,9 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
-        isFirstEntry= SharedPrefManager.getInstance(this).isFirstEntry();
+        isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
 
-        if(!isFirstEntry){
+        if (!isFirstEntry) {
             addDemo();
             SharedPrefManager.getInstance(this).setFirstEntry(true);
 
@@ -89,35 +85,12 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         initFragment();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.content_list_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(Objects.requireNonNull(searchManager).getSearchableInfo(getComponentName()));
-
-            queryTextListener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    Log.i("onQueryTextChange", newText);
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Log.i("onQueryTextSubmit", query);
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
-        }
         super.onCreateOptionsMenu(menu);
         return super.onCreateOptionsMenu(menu);
 
@@ -136,10 +109,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-
-                // Not implemented here
-                break;
             case R.id.action_select:
                 ischecked = true;
                 if (getFragmentEditListRefreshListener() != null) {
@@ -154,7 +123,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
             default:
                 break;
         }
-        searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
 
@@ -196,12 +164,12 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    public void addDemo(){
+    public void addDemo() {
 
         ContentValues values = new ContentValues();
         values.put(Contract.Entry.COL_TITLE, getResources().getString(R.string.demo_title));
         values.put(Contract.Entry.COL_CONTENTS, getResources().getString(R.string.demo_text));
-        values.put(Contract.Entry.COL_UNIQUE_ID,  1);
+        values.put(Contract.Entry.COL_UNIQUE_ID, 1);
 
         final Uri uriInsert = getContentResolver().insert(Contract.Entry.PATH_TELEPROMPTER_URI, values);
         if (uriInsert != null) {
