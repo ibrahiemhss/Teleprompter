@@ -30,6 +30,10 @@ public class Contract implements BaseColumns {
 
     public static final class Entry implements BaseColumns {
         public static final Uri PATH_TELEPROMPTER_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH).build();
+
+        //database name
+        static final String DB_NAME = "teleprompter_app.db";
+
         //for table of teleprompter
         public static final String TABLE_TELEPROMPTER = "teleprompter_bake";
         public static final String COL_UNIQUE_ID = "unique_id";
@@ -46,8 +50,7 @@ public class Contract implements BaseColumns {
                 COL_CONTENTS + " text not null ," +
                 COL_SELECT + " INTEGER )";
 
-        //database name
-        static final String DB_NAME = "teleprompter_app.db";
+
 
     }
 

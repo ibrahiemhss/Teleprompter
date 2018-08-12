@@ -64,7 +64,6 @@ import butterknife.BindView;
 
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.END;
-import static android.view.Gravity.START;
 
 @SuppressWarnings("WeakerAccess")
 public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener {

@@ -76,9 +76,7 @@ public class MyContentProvider extends ContentProvider {
                 default:
                     throw new IllegalArgumentException("Unknown URI: " + uri);
             }
-            // getContext().getContentResolver().notifyChange(uri, null);
         } catch (Exception e) {
-            // Your error handling
         }
 
         return insertCount;

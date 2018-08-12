@@ -19,6 +19,7 @@
         android:id="@+id/lin_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:attr/selectableItemBackground"
         android:layout_margin="@dimen/item_margin"
 
         android:orientation="horizontal">
@@ -28,6 +29,7 @@
             android:layout_width="@dimen/item_image_height"
             android:layout_height="@dimen/item_image_width"
             android:contentDescription="@string/app_name"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/note_2_256" />
 
         <TextView
