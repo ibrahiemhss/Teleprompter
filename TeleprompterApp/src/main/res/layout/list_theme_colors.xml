@@ -4,7 +4,7 @@
     android:layout_width="@dimen/colors_item_width"
     android:layout_height="@dimen/colors_item_height"
     android:layout_margin="@dimen/colors_item_margin"
-    android:background="@drawable/white_back"
+    android:background="@drawable/green_transparent_back"
     android:padding="@dimen/colors_item_padding">
 
     <com.makeramen.roundedimageview.RoundedImageView

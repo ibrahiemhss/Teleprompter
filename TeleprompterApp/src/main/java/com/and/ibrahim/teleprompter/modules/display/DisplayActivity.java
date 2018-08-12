@@ -63,6 +63,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 
 import static android.view.Gravity.BOTTOM;
+import static android.view.Gravity.END;
 import static android.view.Gravity.START;
 
 @SuppressWarnings("WeakerAccess")
@@ -242,8 +243,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void setListener() {
 
-        //  mImgSetting.setOnClickListener(this);
-        // mBackImg.setOnClickListener(this);
         mPlayStatus.setOnClickListener(this);
 
 
@@ -436,7 +435,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                     mPlayStatus.setVisibility(View.VISIBLE);
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
 
-                    //  mPlay.setBackground(Objects.requireNonNull(getActivity()).getDrawable(R.drawable.ic_arrow));
                     mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
                     paused = true;
                     stopAutoScrolling();
@@ -644,7 +642,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         lp.copyFrom(Objects.requireNonNull(mDialogTextColors.getWindow()).getAttributes());
         lp.width = 48;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = BOTTOM | START;
+        lp.gravity = BOTTOM | END;
         lp.windowAnimations = R.style.ToUptAnimation;
         mDialogTextColors.getWindow().setAttributes(lp);
 
@@ -774,6 +772,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
 
+        if(view.getId()==R.id.show_play){
+            getScrollMaxAmount();
+            startPlayStatus();
+            startAutoScrolling(timeSpeed);
+        }
 
     }
 
