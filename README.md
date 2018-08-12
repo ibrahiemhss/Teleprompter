@@ -1,7 +1,8 @@
 # Teleprompter
 
-Simple teleprompter for Android based on the sample code from the Android SDK following Android fundamentals and project specifications.
-
+Teleprompter, as in classic teleprompter, allows the users to easily read any text file by displaying it as a scrolling script, in front of a camera or a group of people...etc.
+In order to help the user achieve a good presentation, this app ensures the flexibility of saving any file the user wants from and to the device or the cloud. 
+There are many options the user can freely choose from like resizing fonts ,changing colors, using the app in landscape mode and adjusting the script scrolling speed the way it suits them.
 
 this project in Udacity course in the Android Developer Nanodegree.
 
@@ -12,40 +13,26 @@ Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification
 - Android SDK v28
 - Android Build Tools v28.0.1
 - Android Support Repository 
-   * appcompat-v7:28.0.0-alpha3
-   * support-media-compat:28.0.0-alpha3
-   * support-v4:28.0.0-alpha3
+   * appcompat-v7:28.0.0-rc01
+   * support-media-compat:28.0.0-rc01
+   * support-v4:28.0.0-rc01
    * espresso-core:3.0.2
 - Other Support Repository 
    * butterknife:8.8.1
-   * lottie:2.5.5
+
 
 # Getting started
 This sample uses the Gradle build system. To build this project, use the "gradlew build" command or use "Import Project" in Android Studio.
 You can simply 
 - "Import Project" in Android Studio 
-- add this project to your firbase acount and download  google-services.json and add this to TeleprompterApp file inside teleprompter project files
+- add this project to your firbase acount and download  google-services.json and add this to TeleprompterApp file inside teleprompter project files.
 # Features
 - App theme extends AppCompat.
-- Use an app bar and associated toolbars, standard and simple transitions between activities.
+- Use an CoordinatorLayout with AppBarLayout , CollapsingToolbarLayout and Toolbar standard and simple transitions between activities.
 - Leverage third-party libraries such as ButterKnife, CircleImageView, Gson, etc
 - Google service integrations such as Admob, Interstital Ads, Analytics.
-- Home screen widget listing file details.
+- Google Drive API Key To connect app with Google Drive APIs.
 - Build and deploy using the installRelease Gradle task.
-- Signing configuration, and the keystore and passwords are included in the repository. Keystore is referred to by a relative path.
 - Implement a ContentProvider to access locally stored data.
-- Async Task implementation to perform on-demand requests (download file).
-- Use a Loader to move data to its views.
-- Support for accessibility - Navigation using DPad, necessary content descriptions, etc.
-- Support  RTL layout switching on all layouts.
 
 
-# License
-
-Copyright 2016 The Android Open Source Project, Inc.
-
-Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
