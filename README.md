@@ -4,7 +4,9 @@ Teleprompter, as in classic teleprompter, allows the users to easily read any te
 In order to help the user achieve a good presentation, this app ensures the flexibility of saving any file the user wants from and to the device or the cloud. 
 There are many options the user can freely choose from like resizing fonts ,changing colors, using the app in landscape mode and adjusting the script scrolling speed the way it suits them.
 
-this project in Udacity course in the Android Developer Nanodegree.
+
+
+This project is Udacity's in the Android Developer Nanodegree course capstone project.
 
 # Documentation
 Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification document that outlines a technical design and implementation plan for the app.
@@ -25,14 +27,14 @@ Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification
 This sample uses the Gradle build system. To build this project, use the "gradlew build" command or use "Import Project" in Android Studio.
 You can simply 
 - "Import Project" in Android Studio 
-- add this project to your firbase acount and download  google-services.json and add this to TeleprompterApp file inside teleprompter project files.
+- add this project to your firebase account and download  google-services.json and add it to TeleprompterApp file inside teleprompter project files
 # Features
 - App theme extends AppCompat.
 - Use an CoordinatorLayout with AppBarLayout , CollapsingToolbarLayout and Toolbar standard and simple transitions between activities.
-- Leverage third-party libraries such as ButterKnife, CircleImageView, Gson, etc
+- Leverages third-party libraries such as ButterKnife, CircleImageView, Gson, etc
 - Google service integrations such as Admob, Interstital Ads, Analytics.
-- Google Drive API Key To connect app with Google Drive APIs.
+- Google Drive API Key to connect the app with Google Drive APIs.
 - Build and deploy using the installRelease Gradle task.
-- Implement a ContentProvider to access locally stored data.
+- Implements a ContentProvider to access locally stored data.
 
 
