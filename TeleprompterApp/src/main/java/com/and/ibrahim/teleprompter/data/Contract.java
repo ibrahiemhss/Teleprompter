@@ -7,6 +7,10 @@ import android.provider.BaseColumns;
  */
 public class Contract implements BaseColumns {
 
+    public static final String DOWNLOAD_FILE = "Download file";
+
+
+
 
     //extra strings saved in bundle
     public static final String EXTRA_TEXT = "extra_text_show";
@@ -14,9 +18,13 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_SCROLL_POSITION = "extra_scroll_position";
     public static final String EXTRA_SELECTED = "extra_selected";
     public static final String EXTRA_FLAG = "extra_flag";
-    public static final String EXTRA_STRING_TITLE = "extra_string_title";
-    public static final String EXTRA_STRING_CONTENT = "extra_string_content";
-    public static final String EXTRA_SHOW_DIALOG = "extra_show_dialog";
+    public static final String EXTRA_STRING_TITLE_ADD = "extra_string_title_add";
+    public static final String EXTRA_STRING_CONTENT_ADD = "extra_string_content_add";
+    public static final String EXTRA_SHOW_ADD_DIALOG = "extra_show_dialog_add";
+    public static final String EXTRA_SHOW_UPDATE_DIALOG = "extra_show_dialog_update";
+    public static final String EXTRA_SHOW_COLOR_DIALOG = "extra_show_dialog_color";
+    public static final String EXTRA_STRING_TITLE_UPDATE = "extra_string_title_update";
+    public static final String EXTRA_STRING_CONTENT_UPDATE = "extra_string_content_update";
     public static final String EXTRA_SCROLL_STRING = "extra_scroll_string";
     public static final String EXTRA_SCROLL_POS = "extra_scroll_to";
 

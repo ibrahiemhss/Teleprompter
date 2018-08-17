@@ -53,7 +53,6 @@ import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
-import com.and.ibrahim.teleprompter.mvp.view.RecylerViewClickListener;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 
 import java.util.Objects;
@@ -139,7 +138,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
             }
             mScrollString = savedInstanceState.getString(Contract.EXTRA_SCROLL_STRING);
-            isDialogShow = savedInstanceState.getBoolean(Contract.EXTRA_SHOW_DIALOG);
+            isDialogShow = savedInstanceState.getBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG);
             mScrollPos = savedInstanceState.getInt(Contract.EXTRA_SCROLL_POS);
             if (isDialogShow) {
                 launchDlgTextColors();
@@ -305,7 +304,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(Contract.EXTRA_SCROLL_STRING, mScrollString);
-        outState.putBoolean(Contract.EXTRA_SHOW_DIALOG, isDialogShow);
+        outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
 
         if (isTablet()) {//save fragment
@@ -319,11 +318,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         super.onRestoreInstanceState(savedInstanceState);
         final int[] position = savedInstanceState.getIntArray(Contract.EXTRA_SCROLL_POSITION);
         if (position != null)
-            mSlideShowScroll.post(new Runnable() {
-                public void run() {
-                    mSlideShowScroll.scrollTo(position[0], position[1]);
-                }
-            });
+            mSlideShowScroll.post(() -> mSlideShowScroll.scrollTo(position[0], position[1]));
     }
 
     private void initFragment() {
@@ -342,14 +337,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         if (mSlideShowScroll != null) {
             if (scrollTimer == null) {
                 scrollTimer = new Timer();
-                final Runnable Timer_Tick = new Runnable() {
-                    public void run() {
-                        Log.d("lifCycle", "startAutoScrolling2");
+                final Runnable Timer_Tick = () -> {
+                    Log.d("lifCycle", "startAutoScrolling2");
 
 
-                        moveScrollView();
-                        melliSeconds += 1;
-                    }
+                    moveScrollView();
+                    melliSeconds += 1;
                 };
                 if (scrollerSchedule != null) {
                     scrollerSchedule.cancel();
@@ -417,35 +410,31 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void clickToScrolling() {
-        mSlideShowScroll.getChildAt(0).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mSlideShowScroll.getChildAt(0).setOnClickListener(v -> {
 
 
-                if (paused) {
+            if (paused) {
 
-                    startPlayStatus();
-                    paused = false;
-                    mChronometer.start();
-                    startAutoScrolling(timeSpeed);
-
-
-                } else {
-                    mPlayStatus.setVisibility(View.VISIBLE);
-                    mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
-
-                    mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
-                    paused = true;
-                    stopAutoScrolling();
+                startPlayStatus();
+                paused = false;
+                mChronometer.start();
+                startAutoScrolling(timeSpeed);
 
 
-                }
+            } else {
+                mPlayStatus.setVisibility(View.VISIBLE);
+                mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
 
-
-                onSlideUbDowView(mAppBarLayout);
+                mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
+                paused = true;
+                stopAutoScrolling();
 
 
             }
+
+
+            onSlideUbDowView(mAppBarLayout);
+
 
         });
     }
@@ -455,11 +444,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
         }
-        mPlayStatus.postDelayed(new Runnable() {
-            public void run() {
-                mPlayStatus.setVisibility(View.INVISIBLE);
-            }
-        }, 800);
+        mPlayStatus.postDelayed(() -> mPlayStatus.setVisibility(View.INVISIBLE), 800);
 
     }
 
@@ -587,47 +572,38 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mTextSpeed.setText("");
         }
 
-        onClickDialogTextColor.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View view) {
+        onClickDialogTextColor.setOnClickListener(view -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 launchDlgTextColors();
+            }
 
-                if (!isOpen) {
-                    isOpen = true;
+            if (!isOpen) {
+                isOpen = true;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     launchDlgTextColors();
-                    if (!mDialogTextColors.isShowing()) {
-                        mDialogTextColors.show();
-                    }
-
                 }
-            }
-        });
-        defaultText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mScrollText.setTextColor(getResources().getColor(R.color.White));
-                mSlideShowScroll.setBackgroundColor(getResources().getColor(R.color.Black));
-                SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(false);
+                if (!mDialogTextColors.isShowing()) {
+                    mDialogTextColors.show();
+                }
 
             }
         });
-        undoText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mScrollText.setTextColor(SharedPrefManager.getInstance(DisplayActivity.this)
-                        .getPrefUndoTextSize());
-                mSlideShowScroll.setBackgroundColor(SharedPrefManager.getInstance(DisplayActivity.this)
-                        .getPrefUndoBackgroundColor());
+        defaultText.setOnClickListener(view -> {
+            mScrollText.setTextColor(getResources().getColor(R.color.White));
+            mSlideShowScroll.setBackgroundColor(getResources().getColor(R.color.Black));
+            SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(false);
 
-            }
         });
-        OtherSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DisplayActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
+        undoText.setOnClickListener(view -> {
+            mScrollText.setTextColor(SharedPrefManager.getInstance(DisplayActivity.this)
+                    .getPrefUndoTextSize());
+            mSlideShowScroll.setBackgroundColor(SharedPrefManager.getInstance(DisplayActivity.this)
+                    .getPrefUndoBackgroundColor());
+
+        });
+        OtherSetting.setOnClickListener(view -> {
+            Intent intent = new Intent(DisplayActivity.this, SettingsActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -660,36 +636,29 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         mColorsRV.setAdapter(mColorAdapter);
 
-        mColorsRV.addOnItemTouchListener(new RecyclerViewItemClickListener(this, new RecylerViewClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefUndoTextSize(
-                        SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextColor());
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefUndoBackgroundColor(
-                        SharedPrefManager.getInstance(DisplayActivity.this).getPrefBackgroundColor());
+        mColorsRV.addOnItemTouchListener(new RecyclerViewItemClickListener(this, (view, position) -> {
+            SharedPrefManager.getInstance(DisplayActivity.this).setPrefUndoTextSize(
+                    SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextColor());
+            SharedPrefManager.getInstance(DisplayActivity.this).setPrefUndoBackgroundColor(
+                    SharedPrefManager.getInstance(DisplayActivity.this).getPrefBackgroundColor());
 
-                mScrollText.setTextColor(mTextColorArray[position]);
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
-                mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
-                SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(true);
+            mScrollText.setTextColor(mTextColorArray[position]);
+            SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
+            mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
+            SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
+            SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(true);
 
-                if (mOpenDrawer) {
-                    mDrawerLayout.closeDrawer(Gravity.START);
-                    mOpenDrawer = false;
-                }
-                mDialogTextColors.dismiss();
-
+            if (mOpenDrawer) {
+                mDrawerLayout.closeDrawer(Gravity.START);
+                mOpenDrawer = false;
             }
+            mDialogTextColors.dismiss();
 
         }));
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDialogTextColors.dismiss();
-                isDialogShow = false;
-            }
+        fab.setOnClickListener(view -> {
+            mDialogTextColors.dismiss();
+            isDialogShow = false;
         });
 
 

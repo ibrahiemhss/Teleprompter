@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/add_dialog_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center|top"
+    android:layout_marginBottom="@dimen/add_dialog_margin_bottom"
+    android:background="@drawable/dialog_bg">
+
+    <TextView
+        android:id="@+id/txt_select_cloud"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_side_margin"
+        android:text="@string/select"/>
+        <TextView
+            android:layout_below="@+id/txt_select_cloud"
+            android:id="@+id/txt_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/oranglt_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/add_dialog_text_padding"
+            android:text="Download Script from Drive"
+            android:textAlignment="center"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/add_dialog_text_size"
+            android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_below="@+id/txt_select_cloud"
+        android:id="@+id/txt_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/oranglt_back"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/add_dialog_text_padding"
+        android:text="login"
+        android:textAlignment="center"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/add_dialog_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_below="@+id/txt_text"
+        android:id="@+id/txt_cancel"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/text_side_margin"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:background="@drawable/oranglt_back"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/add_dialog_text_padding"
+        android:text="@string/cancel_dialog"
+        android:textAlignment="center"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/add_dialog_text_size"
+        android:textStyle="bold" />
+
+    </RelativeLayout>

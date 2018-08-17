@@ -76,7 +76,7 @@ public class MyContentProvider extends ContentProvider {
                 default:
                     throw new IllegalArgumentException("Unknown URI: " + uri);
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         return insertCount;
@@ -175,7 +175,7 @@ public class MyContentProvider extends ContentProvider {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         int match = sUriMatcher.match(uri);
-        int idDeleted; // starts as 0
+        int idDeleted = 0; // starts as 0
 
         switch (match) {
             case TELEPROMPTER_WITH_NO_ID:
@@ -188,17 +188,20 @@ public class MyContentProvider extends ContentProvider {
                     Log.d(TAG, "idDeleted =is " + id);
                 } else {
                     idDeleted = db.delete(Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                    Log.d(TAG, "idDeleted = all ");
 
                 }
                 // Use selections/selectionArgs to filter for this ID
                 break;
 
-            case TELEPROMPTER_WITH_ID:
+            case TELEPROMPTER_CODE:
                 idDeleted = db.delete(
                         Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
+
                 break;
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+           /* default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);*/
         }
 
         if (idDeleted != 0) {

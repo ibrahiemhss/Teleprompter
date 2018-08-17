@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.android.gms.drive.DriveResourceClient;
+
 import butterknife.ButterKnife;
 
 
@@ -15,6 +17,7 @@ import butterknife.ButterKnife;
  */
 @SuppressWarnings("ALL")
 public abstract class BaseActivity extends AppCompatActivity {
+    private DriveResourceClient mDriveResourceClient;
 
     //ProgressDialog to view any message wanted in the child activity
     private ProgressDialog mProgressDialog;
@@ -73,6 +76,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /*
-     * this method is mandatory to force every activity to implement it */
+
 }
