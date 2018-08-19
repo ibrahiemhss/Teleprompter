@@ -39,7 +39,7 @@
     <dimen name="nav_img_veiw_side_margin">16dp</dimen>
     <dimen name="nav_img_veiw_top_margin">8dp</dimen>
     <dimen name="nav_img_veiw_bottom_margin">8dp</dimen>
-    <dimen name="nav_text_width">48dp</dimen>
+    <dimen name="nav_text_width">62dp</dimen>
     <dimen name="nav_text_height">24dp</dimen>
     <dimen name="nav_text_side_margin">16dp</dimen>
     <dimen name="nav_text_top_margin">8dp</dimen>
@@ -96,6 +96,9 @@
     <!-- - - - - - - - - - - - - - - -
            - widget  -
            - - - - - - - - - - - - - - - -->
+    <dimen name="widget_min_height">120dp</dimen>
+    <dimen name="widget_min_width">192dp</dimen>
+
     <dimen name="widget_title_min_height">50dp</dimen>
     <dimen name="widget_listview_padding_x">16dp</dimen>
     <dimen name="widget_listview_item_height">45dp</dimen>

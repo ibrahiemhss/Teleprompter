@@ -146,7 +146,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
 
-    private void readBundle(Bundle bundle) {//get Value from activity///
+    private void readBundle(Bundle bundle) {
 
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
             int mFlag = bundle.getInt(Contract.EXTRA_FLAG);
@@ -447,13 +447,11 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             switch (item.getItemId()) {
                 case R.id.edit:
 
-                    Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), " Install Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
 
                     launchUpdateDialog(mArrayList.get(position).getTextTitle(),mArrayList.get(position).getTextContent(),position);
                     break;
                 case R.id.delete:
 
-                    Toast.makeText(Objects.requireNonNull(getActivity()).getApplicationContext(), "Add to Wish List Clicked at position " + " : " + position, Toast.LENGTH_LONG).show();
                     launchDeleteDialog(position);
                     break;
 
@@ -513,9 +511,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
           if(mLastTitleAdding != null){
 
              if( mEditTextAddTitle.length()<5){
-                 mEditTextAddTitle.setError("Title is very short Make it 6 characters at least");
+                 mEditTextAddTitle.setError(getResources().getString(R.string.short_title));
              }else if( mEditTextAddContent.length()<5){
-                 mEditTextAddContent.setError("Script is very short Make it 100 words at least");
+                 mEditTextAddContent.setError(getResources().getString(R.string.short_script));
              }else {
 
 
@@ -531,10 +529,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
               if (Objects.requireNonNull(cursorTitle).getCount() !=0) {
-                  Toast.makeText(getActivity(), "this Title is already added", Toast.LENGTH_LONG).show();
+                  Toast.makeText(getActivity(), getResources().getString(R.string.already_title), Toast.LENGTH_LONG).show();
 
               }else if(Objects.requireNonNull(cursorContent).getCount()!=0){
-                  Toast.makeText(getActivity(), "this Text is already added", Toast.LENGTH_LONG).show();
+                  Toast.makeText(getActivity(), getResources().getString(R.string.already_text), Toast.LENGTH_LONG).show();
 
               } else {
                   Cursor countCursor = getActivity().getContentResolver().query(Contract.Entry.PATH_TELEPROMPTER_URI,
@@ -635,17 +633,17 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private void launchDeleteAllDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 Objects.requireNonNull(getActivity()));
-        alertDialogBuilder.setTitle("Delete");
+        alertDialogBuilder.setTitle(getResources().getString(R.string.Delete));
 
         alertDialogBuilder
-                .setMessage("Click yes to delete selected files!")
+                .setMessage(getResources().getString(R.string.click_delete))
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
+                .setPositiveButton(getResources().getString(R.string.yes), (dialog, id) -> {
                         deleteAll();
                     getActivity(). getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
 
                 })
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -659,14 +657,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 Objects.requireNonNull(getActivity()));
-        alertDialogBuilder.setTitle("Delete");
+        alertDialogBuilder.setTitle(getResources().getString(R.string.Delete));
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Click yes to delete this file!")
+                .setMessage(getResources().getString(R.string.click_delete))
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> deleteSelectedItem(position))
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+                .setPositiveButton(getResources().getString(R.string.yes), (dialog, id) -> deleteSelectedItem(position))
+                .setNegativeButton(getResources().getString(R.string.no), (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
 

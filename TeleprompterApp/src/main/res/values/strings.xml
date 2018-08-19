@@ -30,6 +30,11 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="add_dialog">Save</string>
     <string name="cancel_dialog">@android:string/cancel</string>
 
+    <string name="first_set_color">There is no color has set</string>
+
+    <string name="already_title">this Title is already added</string>
+    <string name="already_text">this Text is already added</string>
+
     <!-- - - - - - - - - - - - - - - -
          - Used by Preferences  -
          - - - - - - - - - - - - - - - -->
@@ -60,5 +65,15 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="file_not_selected">No file selected, can not continue.</string>
     <string name="content_loaded">File contents successfully read.</string>
     <string name="select_file">Select file</string>
+
+
+
+    <string name="Delete">Delete</string>
+    <string name="click_delete">Click yes to delete selected files!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="short_title">Title is very short Make it 6 characters at least</string>
+    <string name="short_script">Script is very short Make it 100 words at least</string>
+
 
 </resources>

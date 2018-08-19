@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="background_colors">
+        <item name="Black">@color/Black</item>
+        <item name="green">@color/Green</item>
+        <item name="Snow">@color/Snow</item>
+        <item name="Maroon">@color/Maroon</item>
+        <item name="LightBlue">@color/LightBlue</item>
+        <item name="Blue">@color/Blue</item>
+        <item name="Snow">@color/Snow</item>
+        <item name="LightBlue">@color/LightBlue</item>
+    </array>
+
+    <array name="text_colors">
+        <item name="White">@color/White</item>
+        <item name="White">@color/White</item>
+        <item name="Maroon">@color/Maroon</item>
+        <item name="Snow">@color/Snow</item>
+        <item name="Blue">@color/Blue</item>
+        <item name="LightBlue">@color/LightBlue</item>
+        <item name="Black">@color/Black</item>
+        <item name="Blue">@color/Blue</item>
+    </array>
+</resources>

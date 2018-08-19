@@ -23,6 +23,8 @@ public class Contract implements BaseColumns {
     public static final String EXTRA_STRING_CONTENT_UPDATE = "extra_string_content_update";
     public static final String EXTRA_SCROLL_STRING = "extra_scroll_string";
     public static final String EXTRA_SCROLL_POS = "extra_scroll_to";
+    public static final String EXTRA_CHRONOTIME = "extra_chrono_time";
+
 
 
     //content provider

@@ -44,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
@@ -94,6 +95,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected View mDownView;
     @BindView(R.id.toggle_marker)
     protected ImageView mToggleMarker;
+
     int melliSeconds;
     private TextView mEmptyTextShow;
     private FrameLayout mScrollContainer;
@@ -116,6 +118,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean isDialogShow;
     private int mScrollPos;
     private boolean isTablet;
+    private long mChronometerTime;
 
 
 
@@ -133,7 +136,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         super.onViewReady(savedInstanceState, intent);
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
         isTablet=getResources().getBoolean(R.bool.isTablet);
-
+        mChronometerTime=0;
         if (savedInstanceState != null) {//save state case
 
             stopAutoScrolling();
@@ -144,6 +147,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mScrollString = savedInstanceState.getString(Contract.EXTRA_SCROLL_STRING);
             isDialogShow = savedInstanceState.getBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG);
             mScrollPos = savedInstanceState.getInt(Contract.EXTRA_SCROLL_POS);
+            mChronometer.setBase(savedInstanceState.getLong(Contract.EXTRA_CHRONOTIME));
             if (isDialogShow) {
                 launchDlgTextColors();
             }
@@ -151,7 +155,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         if (!isFirstEntry) {
             addDemo();
-            SharedPrefManager.getInstance(this).setFirstEntry(true);
 
         }
         mContentListFragment = new ListContentsFragment();
@@ -310,6 +313,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         outState.putString(Contract.EXTRA_SCROLL_STRING, mScrollString);
         outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
+        outState.putLong(Contract.EXTRA_CHRONOTIME,mChronometer.getBase());
 
         if (isTablet) {//save fragment
             getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
@@ -392,7 +396,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         if (scrollTimer != null) {
             scrollTimer.cancel();
             scrollTimer = null;
-            mChronometer.stop();
         }
     }
 
@@ -421,6 +424,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 startPlayStatus();
                 paused = false;
+                mChronometer.setBase(mChronometer.getBase());
                 mChronometer.start();
                 startAutoScrolling(timeSpeed);
 
@@ -431,6 +435,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
                 paused = true;
+                mChronometer.stop();
+                mChronometer.setActivated(false);
+
                 stopAutoScrolling();
 
 
@@ -522,6 +529,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         TextView OtherSetting = mNavView.findViewById(R.id.other_setting);
+
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
         final TextView defaultText = mNavView.findViewById(R.id.default_text);
         final TextView undoText = mNavView.findViewById(R.id.undo_text);
@@ -529,11 +537,26 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(this).getPrefSpeed());
         mSeekTextSize.setProgress(SharedPrefManager.getInstance(this).getPrefTextSize());
         mTextSpeed = mNavView.findViewById(R.id.text_font);
+
+
+        if(!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()){
+            mSeekTextSize.setProgress(20);
+            mTextSpeed.setText(String.valueOf(20));
+
+        }
+
+        if(!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetSpeed()){
+            setSpeed(40);
+            mSeekScrollSpeed.setProgress(40);
+
+        }
+
         mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 startPlayStatus();
                 startAutoScrolling(timeSpeed);
+                SharedPrefManager.getInstance(DisplayActivity.this).setFirstSetSpeed(true);
             }
 
             @Override
@@ -553,6 +576,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mSeekTextSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                SharedPrefManager.getInstance(DisplayActivity.this).setFirstSetText(true);
             }
 
             @Override
@@ -599,10 +623,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         });
         undoText.setOnClickListener(view -> {
-            mScrollText.setTextColor(SharedPrefManager.getInstance(DisplayActivity.this)
-                    .getPrefUndoTextSize());
-            mSlideShowScroll.setBackgroundColor(SharedPrefManager.getInstance(DisplayActivity.this)
-                    .getPrefUndoBackgroundColor());
+            if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetColor()) {
+                Toast.makeText(DisplayActivity.this,getResources().getString(R.string.first_set_color),Toast.LENGTH_LONG).show();
+
+            }else {
+                mScrollText.setTextColor(SharedPrefManager.getInstance(DisplayActivity.this)
+                        .getPrefUndoTextSize());
+                mSlideShowScroll.setBackgroundColor(SharedPrefManager.getInstance(DisplayActivity.this)
+                        .getPrefUndoBackgroundColor());
+
+            }
 
         });
         OtherSetting.setOnClickListener(view -> {
@@ -651,6 +681,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
             SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
             SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(true);
+            SharedPrefManager.getInstance(DisplayActivity.this).setFirstSetColor(true);
 
             if (mOpenDrawer) {
                 mDrawerLayout.closeDrawer(Gravity.START);
@@ -801,6 +832,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         values.put(Contract.Entry.COL_UNIQUE_ID, 1);
 
         final Uri uriInsert = getContentResolver().insert(Contract.Entry.PATH_TELEPROMPTER_URI, values);
+        SharedPrefManager.getInstance(this).setFirstEntry(true);
+
         if (uriInsert != null) {
             Log.d("contentResolver insert", "first added success");
 

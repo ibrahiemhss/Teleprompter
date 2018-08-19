@@ -9,61 +9,26 @@
     <color name="lime_green">#25d366</color>
     <color name="orange_light">#f7a101</color>
     <color name="color_white">#ffffff</color>
-    <color name="color_black">#ba000000</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="color_graydr">#78909C</color>
     <color name="color_graylt">#CFD8DC</color>
     <color name="color_fab_cloud">#78909C</color>
     <color name="color_fab_add">#78909C</color>
     <color name="color_fab_storage">#78909C</color>
-    <color name="White1">#FFFFFF</color>
     <color name="colorTransparentDarkGreen">#b9075e54</color>
 
 
-
-    <array name="background_colors">
-        <item name="color_black">@color/color_black</item>
-        <item name="White">@color/White1</item>
-        <item name="Red">@color/Red</item>
-        <item name="White">@color/White1</item>
-        <item name="Maroon">@color/Maroon</item>
-        <item name="LightGoldenrodYellow">@color/LightGoldenrodYellow</item>
-        <item name="Teal">@color/Teal</item>
-        <item name="Snow">@color/Snow</item>
-        <item name="SteelBlue">@color/SteelBlue</item>
-        <item name="Snow">@color/Snow</item>
-        <item name="DarkCyan">@color/DarkCyan</item>
-        <item name="White">@color/White</item>
-        <item name="Brown">@color/Brown</item>
-        <item name="Snow">@color/Snow</item>
-    </array>
-
-    <array name="text_colors">
-        <item name="White">@color/White1</item>
-        <item name="color_black">@color/color_black</item>
-        <item name="White">@color/White1</item>
-        <item name="Red">@color/Red</item>
-        <item name="LightGoldenrodYellow">@color/LightGoldenrodYellow</item>
-        <item name="Maroon">@color/Maroon</item>
-        <item name="Snow">@color/Snow</item>
-        <item name="Teal">@color/Teal</item>
-        <item name="Snow">@color/Snow</item>
-        <item name="SteelBlue">@color/SteelBlue</item>
-        <item name="White">@color/White</item>
-        <item name="DarkCyan">@color/DarkCyan</item>
-        <item name="Snow">@color/Snow</item>
-        <item name="Brown">@color/Brown</item>
-    </array>
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
-    <color name="Snow">#FFFAFA</color>
-    <color name="Red">#FF0000</color>
-    <color name="LightGoldenrodYellow">#FAFAD2</color>
-    <color name="Brown">#A52A2A</color>
     <color name="Maroon">#800000</color>
-    <color name="SteelBlue">#4682B4</color>
-    <color name="DarkCyan">#008B8B</color>
-    <color name="Teal">#008080</color>
     <color name="Black">#000000</color>
+
+    <color name="Snow">#FFFAFA</color>
+
+    <color name="Green">#075e54</color>
+    <color name="Blue">#1438b7</color>
+    <color name="LightBlue">#cdd8ff</color>
+
+
 
 </resources>

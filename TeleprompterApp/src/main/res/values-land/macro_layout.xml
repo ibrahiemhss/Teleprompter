@@ -15,6 +15,11 @@
     <dimen name="down_view_height">190dp</dimen>
     <dimen name="container_margin_top">64dp</dimen>
     <dimen name="container_width">@dimen/match_parent</dimen>
+
+    <!--navigation contents-->
+    <dimen name="nav_margin_top">56dp</dimen>
+    <dimen name="nav_veiw_group_height">48dp</dimen>
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 

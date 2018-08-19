@@ -56,11 +56,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         super.onViewReady(savedInstanceState, intent);
         isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
 
-        if (!isFirstEntry) {
-            addDemo();
-            SharedPrefManager.getInstance(this).setFirstEntry(true);
 
-        }
         mContentListFragment = new ListContentsFragment();
         if (savedInstanceState != null) {
             mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
@@ -71,6 +67,10 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         setupSearchToolbar();
         boolean isVisible = false;
         ischecked = false;
+        if (!isFirstEntry) {
+            addDemo();
+
+        }
     }
 
     @Override
@@ -166,6 +166,8 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         values.put(Contract.Entry.COL_UNIQUE_ID, 1);
 
         final Uri uriInsert = getContentResolver().insert(Contract.Entry.PATH_TELEPROMPTER_URI, values);
+        SharedPrefManager.getInstance(this).setFirstEntry(true);
+
         if (uriInsert != null) {
             Log.d("contentResolver insert", "first added success");
 

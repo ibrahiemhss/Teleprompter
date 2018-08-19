@@ -68,6 +68,8 @@
     <!-- - - - - - - - - - - - - - - -
          - widget  -
          - - - - - - - - - - - - - - - -->
+    <dimen name="widget_min_height">192dp</dimen>
+    <dimen name="widget_min_width">312dp</dimen>
     <dimen name="widget_title_min_height">50dp</dimen>
     <dimen name="widget_listview_padding_x">16dp</dimen>
     <dimen name="widget_listview_item_height">45dp</dimen>

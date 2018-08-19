@@ -18,6 +18,9 @@ public class SharedPrefManager {
     private static final String PREF_UNDO_BACKGROUND_COLOR = "pref_uno_background_color";
     private static final String PREF_COLOR_PREF = "color_pref";
     private static final String PREF_FIRST_ENTRY = "pref_first_entry";
+    private static final String PREF_FIRST_COLOR_SET = "pref_first_color";
+    private static final String PREF_FIRST_TEXT_SET = "pref_first_text";
+    private static final String PREF_FIRST_SPEED_SET = "pref_first_speed";
 
 
     private static final String SHARED_PREF_NAME = "save_contents";
@@ -120,6 +123,40 @@ public class SharedPrefManager {
     public void setFirstEntry(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(PREF_FIRST_ENTRY, is);
+        editor.apply();
+        editor.commit();
+    }
+    public boolean isFirstSetColor() {
+        return pref.getBoolean(PREF_FIRST_COLOR_SET, false);
+    }
+
+    public void setFirstSetColor(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_FIRST_COLOR_SET, is);
+        editor.apply();
+        editor.commit();
+    }
+
+
+
+    public boolean isFirstSetText() {
+        return pref.getBoolean(PREF_FIRST_TEXT_SET, false);
+    }
+
+    public void setFirstSetText(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_FIRST_TEXT_SET, is);
+        editor.apply();
+        editor.commit();
+    }
+
+    public boolean isFirstSetSpeed() {
+        return pref.getBoolean(PREF_FIRST_SPEED_SET, false);
+    }
+
+    public void setFirstSetSpeed(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_FIRST_SPEED_SET, is);
         editor.apply();
         editor.commit();
     }
