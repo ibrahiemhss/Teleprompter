@@ -1,0 +1,74 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Teleprompter‏</string>
+    <string name="demo_title">Demo Show</string>
+
+
+    <string name="demo_text" tools:ignore="Typos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia interdum neque et condimentum. Aliquam in ultricies enim. Mauris vel venenatis nisi. Fusce in tempus elit. In commodo, risus et condimentum vestibulum, ligula diam interdum magna, accumsan consequat sem orci at quam. Nam facilisis velit eu ligula posuere ultricies. Aliquam erat volutpat. Nulla rutrum, justo in eleifend scelerisque, felis tortor lobortis metus, eu consectetur tortor tortor eget massa. Nulla facilisi. Morbi mi leo, scelerisque maximus risus at, lacinia egestas ligula. Integer pulvinar, metus at gravida pretium, erat orci congue sapien, in suscipit ipsum ipsum consectetur diam. Suspendisse nunc nibh, volutpat ut venenatis non, ultricies non lacus. Cras dapibus dignissim leo at malesuada. Suspendisse pulvinar quam ut commodo semper.
+
+Quisque ut porta sem, eget cursus dui. Nam turpis ligula, sagittis non aliquet vitae, vestibulum ac nulla. Pellentesque facilisis fermentum consectetur. Aliquam non nulla tincidunt, euismod ex nec, rhoncus ex. Nunc a vulputate nulla. Fusce ultricies libero suscipit pulvinar condimentum. Fusce varius condimentum semper. Suspendisse mi lacus, tempus a dignissim id, elementum at metus.
+
+Aliquam elit velit, iaculis quis dapibus vitae, pretium porttitor quam. Sed lorem diam, faucibus ac justo ut, ullamcorper vestibulum justo. Nunc volutpat urna nunc, id commodo eros hendrerit et. Nam pellentesque laoreet dolor, at pellentesque lorem viverra sit amet. Phasellus fringilla ex et massa consequat tempor. Phasellus dolor sapien, rhoncus sit amet risus et, tempor maximus ipsum. Mauris blandit tempor maximus. Etiam euismod eros nunc, sit amet pretium tortor maximus sed. Nulla at porttitor tellus.
+
+Vestibulum et tempus tellus. Sed sit amet dui et est varius interdum. In viverra eros vitae elit tempus, eget rhoncus ante interdum. Suspendisse ultrices pretium urna in pulvinar. Praesent non tincidunt massa. Donec orci augue, luctus vitae porttitor vitae, iaculis cursus ante. Proin porttitor tincidunt nibh, sed dictum felis sodales sit amet.
+
+Nulla in ultricies libero. Nam ullamcorper orci nec purus sollicitudin, eu consectetur lacus lacinia. Aenean cursus diam lorem, a posuere diam volutpat sit amet. In at ante elementum, pulvinar neque in, malesuada massa. Fusce sapien justo, varius vulputate purus a, finibus gravida neque. Nunc sodales odio arcu, ac varius augue bibendum sed. Curabitur rutrum sed ligula lobortis gravida. Curabitur massa neque, semper a mi sed, porta ullamcorper nisl.
+
+Phasellus ut luctus purus, et malesuada ex. Nulla eu dapibus ante. Quisque aliquet nunc nec fringilla ultricies. Suspendisse aliquet lorem consequat magna condimentum consequat eu sit amet metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem metus, porttitor eget blandit vitae, ornare vel elit. Aenean posuere ut lectus ut tempus. Praesent venenatis tellus metus. Suspendisse vestibulum ante a pretium aliquam. Integer vitae felis ac justo luctus consectetur.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum finibus nisi id lacinia. Ut eu dui et diam ornare molestie ut at nunc. Donec non porttitor turpis. Donec et venenatis neque. Donec sapien ex, scelerisque eget luctus non, lacinia id quam. Aliquam enim tortor, euismod sed pharetra tincidunt, efficitur et leo. Duis et urna ut ipsum tincidunt lacinia eget vitae enim. Duis vestibulum sagittis arcu, vel vulputate sem aliquam non. Etiam volutpat ultrices tempor. Pellentesque eu diam justo. Etiam euismod suscipit libero sit amet ullamcorper. Donec condimentum tellus elit, non semper elit faucibus sed.
+
+Donec venenatis ultricies dignissim. Nunc rhoncus metus id accumsan consequat. Aliquam sollicitudin justo et accumsan ultricies. Vivamus consequat diam nec dui tincidunt tempor. Etiam posuere accumsan risus pharetra convallis. In sit amet turpis posuere, sagittis sem a, eleifend leo. Integer sit amet nulla dapibus, fringilla nisl eu, mattis ex.
+
+Vestibulum interdum commodo enim, nec dignissim quam euismod sed. Vestibulum dui erat, dictum in vehicula ac, ultricies tristique dolor. Etiam commodo in dolor nec suscipit. Fusce ut iaculis velit, nec pellentesque magna. Integer enim purus, vulputate commodo gravida rhoncus, varius nec turpis. Pellentesque hendrerit in tortor sagittis porttitor. Curabitur ac pellentesque tellus, sed pellentesque magna. Fusce dictum laoreet libero id varius. Nullam faucibus semper ipsum at tincidunt.
+
+In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus sit amet venenatis aliquam. Suspendisse auctor lectus vel dolor dignissim blandit vel a nibh. Duis commodo mi in ligula congue, eu pharetra felis faucibus. Etiam euismod ultricies nibh, eget pretium lorem lacinia vel. Duis pellentesque, turpis sed dignissim convallis, tortor urna elementum felis, et pharetra dolor augue vel est. Vivamus tempus ultrices suscipit. Donec fermentum elementum sodales. Nulla facilisi. Pellentesque tincidunt arcu risus, ut viverra mi blandit at. Maecenas vel erat sit amet dui commodo molestie sodales nec neque.
+
+
+</string>
+    <string name="enter_title">Agrega un título</string>
+    <string name="add_your_text">Agregar texto</string>
+    <string name="add_dialog">Guardar</string>
+    <string name="cancel_dialog">@android:string/cancel</string>
+
+    <string name="first_set_color">No se eligió color</string>
+
+    <string name="already_title">¡Este título ya existe!</string>
+    <string name="already_text">¡Este texto ya existe!</string>
+
+    <!-- - - - - - - - - - - - - - - -
+         - Used by Preferences  -
+         - - - - - - - - - - - - - - - -->
+    <string name="pref_horizontal_mode_label">Modo horizontal</string>
+    <string name="pref_horizontal_mode_key" translatable="false">horizontal_mode</string>
+    <string name="pref_true">on</string>
+    <string name="pref_false">off</string>
+
+    <string name="pref_timer_key_label">Mostrar contador</string>
+    <string name="pref_timer_key" translatable="false">show_timer</string>
+
+    <string name="pref_toggle_marker_label">Alternar marcador</string>
+    <string name="pref_toggle_marker_key" translatable="false">toggle_marker</string>
+
+    <string name="setting">Configuraciones</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="delete_all">Eliminar todo</string>
+    <string name="slow">Lento</string>
+    <string name="fast">Rápido</string>
+    <string name="set_colors">Colores</string>
+    <string name="defaults">Por defecto</string>
+    <string name="undo">Anular</string>
+    <string name="empty_text">Elige un artículo para mostrar por favor</string>
+    <string name="other_setting">Otros parámetros</string>
+    <string name="save_changes">Guardar cambios</string>
+    <string name="read_failed">Error al cargar el archivo de texto</string>
+    <string name="file_not_selected">No se eligieron archivos</string>
+    <string name="content_loaded">El contenido del archivo se ha cargado con éxito</string>
+    <string name="select_file">Elige un archivo</string>
+    <string name="Delete">Eliminar</string>
+    <string name="click_delete">Elija "sí" para eliminar los elementos seleccionados</string>
+    <string name="yes">sí</string>
+    <string name="no">no</string>
+    <string name="short_title">El título es corto. Por favor ingrese un título con al menos 6 caracteres.</string>
+    <string name="short_script">El texto es corto. Por favor agregue texto con al menos 100 palabras de largo.</string>
+</resources>
