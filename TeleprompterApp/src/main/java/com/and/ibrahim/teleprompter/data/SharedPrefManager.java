@@ -18,8 +18,6 @@ public class SharedPrefManager {
     private static final String PREF_UNDO_BACKGROUND_COLOR = "pref_uno_background_color";
     private static final String PREF_COLOR_PREF = "color_pref";
     private static final String PREF_FIRST_ENTRY = "pref_first_entry";
-    private static final String PREF_SIGN_IN = "pref_sign_in";
-
 
 
     private static final String SHARED_PREF_NAME = "save_contents";

@@ -13,7 +13,4 @@ public interface OnItemViewClickListener {
 
     void onViewGroupClickListener(int adapterPosition, View view);
 
-    void onItemCheckListener(int pos, View item);
-
-    void onItemUncheckListener(int pos, View item);
 }

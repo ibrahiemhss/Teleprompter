@@ -2,7 +2,6 @@ package com.and.ibrahim.teleprompter.modules.listContents;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -109,8 +108,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_select:
-                ischecked = true;
+            case R.id.action_delete:
                 if (getFragmentEditListRefreshListener() != null) {
                     getFragmentEditListRefreshListener().onRefresh();
                 }
@@ -158,11 +156,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    public boolean isTablet() {
-        return (ListContentsActivity.this.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
+
 
     public void addDemo() {
 

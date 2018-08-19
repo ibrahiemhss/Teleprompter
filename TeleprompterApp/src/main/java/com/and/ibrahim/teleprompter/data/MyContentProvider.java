@@ -28,6 +28,7 @@ public class MyContentProvider extends ContentProvider {
 
     private DbHelper mDbHelper;
 
+
     private static UriMatcher buildUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -195,6 +196,12 @@ public class MyContentProvider extends ContentProvider {
                 break;
 
             case TELEPROMPTER_CODE:
+                idDeleted = db.delete(
+                        Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
+
+                break;
+            case TELEPROMPTER_WITH_ID:
                 idDeleted = db.delete(
                         Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
                 Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");

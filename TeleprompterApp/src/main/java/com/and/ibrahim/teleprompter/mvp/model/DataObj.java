@@ -2,25 +2,13 @@ package com.and.ibrahim.teleprompter.mvp.model;
 
 public class DataObj {
     private int id;
-    private int isChecked;
     private String textTitle, textContent;
-
     public String getTextContent() {
         return textContent;
     }
-
     public void setTextContent(String textContent) {
         this.textContent = textContent;
     }
-
-    public int getIsChecked() {
-        return isChecked;
-    }
-
-    public void setIsChecked(int isChecked) {
-        this.isChecked = isChecked;
-    }
-
     public int getId() {
         return id;
     }

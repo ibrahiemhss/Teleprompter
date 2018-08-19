@@ -47,7 +47,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="setting">Setting</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="select">Select</string>
     <string name="delete_all">Delete All</string>
     <string name="slow">Slow</string>
     <string name="fast">Fast</string>

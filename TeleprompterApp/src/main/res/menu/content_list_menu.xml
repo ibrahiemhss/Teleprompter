@@ -7,9 +7,9 @@
         android:title="@string/setting"
         app:showAsAction="collapseActionView" />
     <item
-        android:id="@+id/action_select"
+        android:id="@+id/action_delete"
         android:icon="@drawable/ic_settings_white"
-        android:title="@string/select"
+        android:title="@string/delete_all"
         app:showAsAction="collapseActionView" />
 
 

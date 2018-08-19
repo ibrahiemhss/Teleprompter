@@ -21,10 +21,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".modules.Widget.WidgetProvider"
+            tools:ignore="InnerclassSeparator">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.ibrahim.udacity_and_baking_app.app.ACTION_DATA_UPDATED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/main_widget_info" />
+        </receiver>
+        <service
+            android:name=".modules.Widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            tools:ignore="InnerclassSeparator" />
+
         <provider
             android:name=".data.MyContentProvider"
             android:authorities="com.and.ibrahim.teleprompter"
-            android:exported="false"
+            android:exported="true"
             tools:ignore="ExportedContentProvider" />
 
         <meta-data
@@ -54,5 +72,7 @@
             android:name=".modules.setting.SettingsActivity"
             android:parentActivityName=".modules.listContents.ListContentsActivity"
             android:theme="@style/AppTheme" />
+
+
     </application>
 </manifest>

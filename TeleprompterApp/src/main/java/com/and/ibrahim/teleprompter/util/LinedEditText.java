@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.and.ibrahim.teleprompter.R;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
-public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
+public class LinedEditText extends MaterialEditText {
     private final Rect mRect;
     private final Paint mPaint;
 
@@ -23,7 +25,7 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         //int count = getLineCount();
 
         int height = getHeight();

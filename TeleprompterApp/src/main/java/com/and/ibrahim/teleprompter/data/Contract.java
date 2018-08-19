@@ -7,10 +7,6 @@ import android.provider.BaseColumns;
  */
 public class Contract implements BaseColumns {
 
-    public static final String DOWNLOAD_FILE = "Download file";
-
-
-
 
     //extra strings saved in bundle
     public static final String EXTRA_TEXT = "extra_text_show";

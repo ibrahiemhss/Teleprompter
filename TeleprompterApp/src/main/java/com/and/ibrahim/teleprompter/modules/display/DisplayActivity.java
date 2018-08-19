@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -114,6 +115,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private int timeSpeed = 30;
     private boolean isDialogShow;
     private int mScrollPos;
+    private boolean isTablet;
+
 
 
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
@@ -129,11 +132,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
+        isTablet=getResources().getBoolean(R.bool.isTablet);
 
         if (savedInstanceState != null) {//save state case
 
             stopAutoScrolling();
-            if (isTablet()) {
+            if (isTablet) {
                 mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
 
             }
@@ -177,13 +181,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mScrollString = extras.getString(Contract.EXTRA_TEXT);
         }
 
-        if (isTablet()) {//so scroll view will hide if mScrollText have null value
+        if (isTablet) {//so scroll view will hide if mScrollText have null value
             mEmptyTextShow = findViewById(R.id.text_empty_show);
 
             mScrollContainer = findViewById(R.id.scroll_container);
 
         }
-        if (isTablet()) {//custom view in tablet devices
+        if (isTablet) {//custom view in tablet devices
             if (mScrollString == null) { //in tablet DisplayActivity is first activity and text will be empty
                 mEmptyTextShow.setVisibility(View.VISIBLE);
                 mScrollContainer.setVisibility(View.GONE);
@@ -213,7 +217,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mPlayStatus.//set play status of image that show playing playing status
                 setBackground(Objects.requireNonNull(this).getDrawable(R.drawable.ic_play_circle_filled));
 
-        if (isTablet()) {//listContentFragment with displayActivity in tablet will be in one screen :)
+        if (isTablet) {//listContentFragment with displayActivity in tablet will be in one screen :)
             initFragment();
         }
 
@@ -252,11 +256,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {//this menu will appear just in tablets
         MenuInflater inflater = getMenuInflater();
-        if (isTablet()) {//inflate main menu toolbar in tablet
+        if (isTablet) {//inflate main menu toolbar in tablet
             inflater.inflate(R.menu.content_list_menu, menu);
 
         }
-        if (!isTablet()) {//inflate phone menu toolbar
+        if (!isTablet) {//inflate phone menu toolbar
             inflater.inflate(R.menu.phone_menu, menu);
         }
 
@@ -267,10 +271,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (isTablet()) {
+        if (isTablet) {
             switch (item.getItemId()) {
 
-                case R.id.action_select:
+                case R.id.action_delete:
                     @SuppressWarnings("unused") boolean ischecked = true;
                     if (getFragmentEditListRefreshListener() != null) {
                         getFragmentEditListRefreshListener().onRefresh();
@@ -307,7 +311,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
 
-        if (isTablet()) {//save fragment
+        if (isTablet) {//save fragment
             getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
         }
         super.onSaveInstanceState(outState);
@@ -750,7 +754,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onDataPass(String data) {
-        if (isTablet()) {
+        if (isTablet) {
             mScrollString = data;
 
             if (mScrollString != null) {
@@ -771,18 +775,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             mToolbar.setTitle(getResources().getString(R.string.app_name));
-            if (!isTablet()) {
+            if (!isTablet) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
         }
     }
 
-    public boolean isTablet() {
-        return (DisplayActivity.this.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
-    }
+
 
     public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
         return fragmentEditListRefreshListener;
@@ -811,12 +811,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private void setupSharedPreferences() {
         // Get all of the values from shared preferences to set it up
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        seHorizontalMode(sharedPreferences.getBoolean(getString(R.string.pref_horizontal_mode_key),
+        setHorizontalMode(sharedPreferences.getBoolean(getString(R.string.pref_horizontal_mode_key),
                 getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
         seTimerShow(sharedPreferences.getBoolean(getString(R.string.pref_timer_key),
                 getResources().getBoolean(R.bool.pref_timer_default)));
         setToggleMarker(sharedPreferences.getBoolean(getString(R.string.pref_toggle_marker_key),
                 getResources().getBoolean(R.bool.pref_toggle_marker_default)));
+
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
@@ -824,7 +825,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_horizontal_mode_key))) {
-            seHorizontalMode(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
+            setHorizontalMode(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
         } else if (key.equals(getString(R.string.pref_timer_key))) {
             seTimerShow(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_timer_default)));
         } else if (key.equals(getString(R.string.pref_toggle_marker_key))) {
@@ -832,16 +833,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void seHorizontalMode(boolean is) {
-        if (is) {
-            Log.d("SharedPreferenceValue", " pref_horizontal_mode_key =" + String.valueOf(true));
-        } else {
-            Log.d("SharedPreferenceValue", " pref_horizontal_mode_key =" + String.valueOf(false));
 
-        }
-
-
-    }
 
     public void seTimerShow(boolean is) {
         if (is) {
@@ -865,6 +857,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mDownView.setVisibility(View.INVISIBLE);
         }
 
+    }
+    private void setHorizontalMode(boolean is){
+        if (is) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        }
     }
 
 }
