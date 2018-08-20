@@ -42,7 +42,6 @@
     <dimen name="nav_text_width">62dp</dimen>
     <dimen name="nav_text_height">24dp</dimen>
     <dimen name="nav_text_side_margin">16dp</dimen>
-    <dimen name="nav_text_top_margin">8dp</dimen>
     <dimen name="nav_text_size">18sp</dimen>
     <!--dialog colors-->
     <dimen name="colors_dialog_margin">16dp</dimen>

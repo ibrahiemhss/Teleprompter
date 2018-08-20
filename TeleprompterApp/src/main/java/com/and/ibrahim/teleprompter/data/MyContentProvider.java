@@ -176,7 +176,7 @@ public class MyContentProvider extends ContentProvider {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         int match = sUriMatcher.match(uri);
-        int idDeleted = 0; // starts as 0
+        int idDeleted; // starts as 0
 
         switch (match) {
             case TELEPROMPTER_WITH_NO_ID:

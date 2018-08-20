@@ -1,4 +1,4 @@
-<!--suppress AndroidDomInspection -->
+<!--suppress ALL -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/nav_width"
@@ -6,6 +6,7 @@
     android:layout_marginBottom="?attr/actionBarSize"
     android:layout_marginTop="96dp"
     android:background="@drawable/white_back"
+    android:elevation="@dimen/dialog_elevation"
     tools:context=".modules.display.DisplayActivity">
 
     <RelativeLayout
@@ -18,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/nav_veiw_group_height"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="@dimen/nav_veiw_group_side_margin"
             android:layout_marginStart="@dimen/nav_veiw_group_side_margin"
             android:layout_marginTop="@dimen/nav_veiw_group_top_margin"
             android:orientation="horizontal">
@@ -26,13 +26,12 @@
             <ImageView
                 android:layout_width="@dimen/nav_small_image_font_width"
                 android:layout_height="@dimen/nav_small_image_font_height"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/app_name"
+                android:elevation="6dp"
                 android:src="@drawable/font_size" />
 
 
@@ -40,12 +39,11 @@
                 android:layout_width="@dimen/nav_big_image_font_width"
                 android:layout_height="@dimen/nav_big_image_font_height"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_gravity="start"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:contentDescription="@string/app_name"
+                android:elevation="6dp"
                 android:src="@drawable/font_size" />
 
         </RelativeLayout>
@@ -74,7 +72,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/nav_text_side_margin"
                 android:layout_marginStart="@dimen/nav_text_side_margin"
                 android:text="@string/slow"
                 android:textColor="@color/orange_light"
@@ -95,10 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="@dimen/nav_text_side_margin"
-                android:layout_marginRight="@dimen/nav_text_side_margin"
                 android:text="@string/fast"
                 android:textColor="@color/orange_light"
                 android:textSize="@dimen/nav_text_size"
@@ -121,51 +116,76 @@
             android:background="@color/lime_green" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rv55"
             android:orientation="vertical">
 
+
             <LinearLayout
+                android:id="@+id/ln_launch_text_color"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                tools:ignore="UselessParent">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/nav_image_color_width"
+                    android:layout_height="@dimen/nav_image_color_height"
+                    android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
+                    android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
+                    android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
+                    android:contentDescription="@string/app_name"
+                    android:drawableEnd="@drawable/colors_shape"
+                    android:src="@drawable/colors_shape" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/nav_text_side_margin"
+                    android:gravity="center"
+                    android:text="@string/set_colors"
+                    android:textColor="@color/orange_light"
+                    android:textSize="@dimen/nav_text_size" />
 
                 <LinearLayout
-                    android:id="@+id/ln_launch_text_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:ignore="UseCompoundDrawables">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="@dimen/nav_image_color_width"
-                        android:layout_height="@dimen/nav_image_color_height"
-                        android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
-                        android:layout_marginLeft="@dimen/nav_img_veiw_side_margin"
-                        android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
-                        android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
-                        android:contentDescription="@string/app_name"
-                        android:drawableEnd="@drawable/colors_shape"
-                        android:drawableRight="@drawable/circle_shape"
-                        android:src="@drawable/colors_shape" />
+                    <TextView
+                        android:id="@+id/default_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/text_side_margin"
+                        android:layout_marginTop="@dimen/text_side_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/accent_border_back"
+                        android:padding="8dp"
+                        android:text="@string/defaults"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:ignore="InconsistentLayout" />
 
 
                     <TextView
+                        android:id="@+id/undo_text"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/nav_text_side_margin"
-                        android:layout_marginStart="@dimen/nav_text_side_margin"
-                        android:layout_marginTop="@dimen/nav_text_top_margin"
-                        android:gravity="center"
-                        android:text="@string/set_colors"
-                        android:textColor="@color/orange_light"
-                        android:textSize="@dimen/nav_text_size" />
-
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/text_side_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/accent_border_back"
+                        android:padding="8dp"
+                        android:text="@string/undo"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:ignore="InconsistentLayout" />
                 </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 
@@ -181,63 +201,27 @@
             android:layout_marginBottom="8dp"
             android:background="@color/lime_green" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/default_text"
-                android:layout_width="@dimen/nav_text_width"
-                android:layout_height="@dimen/nav_text_height"
-                android:layout_margin="@dimen/text_side_margin"
-                android:layout_weight="1"
-                android:background="@drawable/accent_border_back"
-                android:text="@string/defaults"
-                android:textAlignment="center"
-                android:textColor="@color/orange_light"
-                tools:ignore="InconsistentLayout" />
-
-
-            <TextView
-                android:id="@+id/undo_text"
-                android:layout_width="@dimen/nav_text_width"
-                android:layout_height="@dimen/nav_text_height"
-                android:layout_margin="@dimen/text_side_margin"
-                android:layout_weight="1"
-                android:background="@drawable/accent_border_back"
-                android:text="@string/undo"
-                android:textAlignment="center"
-                android:textColor="@color/orange_light"
-                tools:ignore="InconsistentLayout" />
-        </LinearLayout>
 
     </RelativeLayout>
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/rv66"
-        android:layout_marginBottom="8dp"
-        android:background="@color/lime_green" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view2"
-        android:layout_margin="8dp">
+        android:layout_below="@+id/rv66"
+        android:layout_margin="8dp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/other_setting"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/accent_border_back"
+            android:padding="8dp"
             android:text="@string/other_setting"
             android:textAlignment="center"
-            android:textColor="@color/orange_light"
-            android:textSize="18sp" />
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </RelativeLayout>
