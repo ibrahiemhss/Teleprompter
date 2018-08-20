@@ -23,6 +23,7 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
+import com.google.firebase.crash.FirebaseCrash;
 
 import butterknife.BindView;
 
@@ -56,7 +57,8 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         super.onViewReady(savedInstanceState, intent);
         isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
 
-
+        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
+        FirebaseCrash.log("ListContentsActivity started");
         mContentListFragment = new ListContentsFragment();
         if (savedInstanceState != null) {
             mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);

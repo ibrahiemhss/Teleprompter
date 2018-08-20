@@ -21,7 +21,6 @@ android {
         debug {
             buildConfigField("String", "API_KEY", API_KEY)
             buildConfigField("String", "ID_ClIENT", ID_ClIENT)
-
             buildConfigField("String", "app_ads_id", APP_ADS_ID)
             buildConfigField("String", "banner_pup", BANNAR_ADS)
             buildConfigField("String", "Interstitial_pub", INTERSTITIAL_ADS)
@@ -38,7 +37,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "API_KEY", API_KEY)
             buildConfigField("String", "ID_ClIENT", ID_ClIENT)
+            buildConfigField("String", "app_ads_id", APP_ADS_ID)
+            buildConfigField("String", "banner_pup", BANNAR_ADS)
+            buildConfigField("String", "Interstitial_pub", INTERSTITIAL_ADS)
 
+
+            resValue 'string', "app_ads_id", APP_ADS_ID
+            resValue 'string', "banner_pup", BANNAR_ADS
+            resValue 'string', "interstitial_pub", BANNAR_ADS
             resValue 'string', "api_key", API_KEY
         }
     }
@@ -75,6 +81,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //firebase services
     implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-crash:16.0.1'
+
     //roundedimageview library
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'

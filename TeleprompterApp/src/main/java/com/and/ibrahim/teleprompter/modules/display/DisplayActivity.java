@@ -57,6 +57,7 @@ import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -152,6 +153,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             }
 
         }
+        //noinspection deprecation
+        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
+        //noinspection deprecation
+        FirebaseCrash.log("DisplayActivity started");
         if (!isFirstEntry) {
             addDemo();
 
