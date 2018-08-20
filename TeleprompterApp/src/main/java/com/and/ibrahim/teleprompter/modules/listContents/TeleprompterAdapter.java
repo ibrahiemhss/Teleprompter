@@ -79,8 +79,7 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
         protected ImageView mImgEdit;
         @BindView(R.id.lin_view)
         protected LinearLayout mLinearLayout;
-        /* @BindView(R.id.check_item)
-         protected CheckBox mCheckBox;*/
+
         @BindView(R.id.img_note)
         ImageView mIconImg;
 
@@ -94,7 +93,6 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
             mIconImg.setOnClickListener(this);
             mTextTitle.setOnClickListener(this);
             mLinearLayout.setOnClickListener(this);
-            //  mCheckBox.setOnClickListener(this);
 
         }
 
