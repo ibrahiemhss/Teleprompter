@@ -39,15 +39,12 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
          - Used by Preferences  -
          - - - - - - - - - - - - - - - -->
     <string name="pref_horizontal_mode_label">Modo horizontal</string>
-    <string name="pref_horizontal_mode_key" translatable="false">horizontal_mode</string>
     <string name="pref_true">on</string>
     <string name="pref_false">off</string>
 
     <string name="pref_timer_key_label">Mostrar contador</string>
-    <string name="pref_timer_key" translatable="false">show_timer</string>
 
     <string name="pref_toggle_marker_label">Alternar marcador</string>
-    <string name="pref_toggle_marker_key" translatable="false">toggle_marker</string>
 
     <string name="setting">Configuraciones</string>
     <string name="edit">Editar</string>

@@ -41,6 +41,7 @@ import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -118,7 +120,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean isDialogShow;
     private int mScrollPos;
     private boolean isTablet;
-    private long mChronometerTime;
 
 
 
@@ -136,7 +137,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         super.onViewReady(savedInstanceState, intent);
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
         isTablet=getResources().getBoolean(R.bool.isTablet);
-        mChronometerTime=0;
         if (savedInstanceState != null) {//save state case
 
             stopAutoScrolling();
@@ -155,6 +155,18 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         if (!isFirstEntry) {
             addDemo();
+
+        }
+        if (Locale.getDefault().getLanguage().equals("ar")) {
+
+            RelativeLayout.LayoutParams myImageLayout =  (RelativeLayout.LayoutParams)mToggleMarker.getLayoutParams();
+            myImageLayout.addRule(RelativeLayout.ALIGN_PARENT_END);
+            mToggleMarker.setLayoutParams(myImageLayout);
+
+        }else {
+            RelativeLayout.LayoutParams myImageLayout =  (RelativeLayout.LayoutParams)mToggleMarker.getLayoutParams();
+            myImageLayout.addRule(RelativeLayout.ALIGN_PARENT_START);
+            mToggleMarker.setLayoutParams(myImageLayout);
 
         }
         mContentListFragment = new ListContentsFragment();

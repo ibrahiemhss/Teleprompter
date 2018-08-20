@@ -87,8 +87,6 @@
                 android:id="@+id/toggle_marker"
                 android:layout_width="@dimen/marker_width"
                 android:layout_height="@dimen/marker_height"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:background="@drawable/arrow_marker"
                 android:contentDescription="@string/app_name" />

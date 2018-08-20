@@ -156,9 +156,11 @@
 
                         <TextView
                             android:id="@+id/default_text"
-                            android:layout_width="@dimen/nav_text_width"
-                            android:layout_height="@dimen/nav_text_height"
-                            android:layout_margin="@dimen/text_side_margin"
+                            android:layout_width="wrap_content"
+                            android:padding="8dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/text_side_margin"
+                            android:layout_marginBottom="@dimen/text_side_margin"
                             android:layout_weight="1"
                             android:background="@drawable/accent_border_back"
                             android:text="@string/defaults"
@@ -169,12 +171,13 @@
 
                         <TextView
                             android:id="@+id/undo_text"
-                            android:layout_width="@dimen/nav_text_width"
-                            android:layout_height="@dimen/nav_text_height"
-                            android:layout_margin="@dimen/text_side_margin"
+                            android:layout_width="wrap_content"
+                            android:padding="8dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@drawable/accent_border_back"
                             android:text="@string/undo"
+                            android:layout_marginBottom="@dimen/text_side_margin"
                             android:textAlignment="center"
                             android:textColor="@color/colorPrimaryText"
                             tools:ignore="InconsistentLayout" />

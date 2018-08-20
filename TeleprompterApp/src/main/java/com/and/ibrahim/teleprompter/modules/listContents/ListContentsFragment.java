@@ -209,13 +209,18 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     private void passData(String data) {
-        dataPasser.onDataPass(data);
+        if(data!=null){
+            dataPasser.onDataPass(data);
+        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (isTablet) {
+            dataPasser = (OnDataPassListener) getActivity();
 
+        }
 
         if (savedInstanceState != null) {
 
@@ -251,6 +256,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         mDeleteImage.setOnClickListener(this);
         mReturnUp.setOnClickListener(this);
         updateWidget();
+        if (isTablet) {
+            dataPasser = (OnDataPassListener) getActivity();
+
+        }
 
         OnTouchRecyclerView();
 
@@ -282,6 +291,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                         if (isTablet) {
 
                             passData(mScrollString);
+
                         } else {
                             Intent intent = new Intent(getActivity(), DisplayActivity.class);
                             intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
@@ -512,7 +522,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
              if( mEditTextAddTitle.length()<5){
                  mEditTextAddTitle.setError(getResources().getString(R.string.short_title));
-             }else if( mEditTextAddContent.length()<5){
+             }else if( mEditTextAddContent.length()<99){
                  mEditTextAddContent.setError(getResources().getString(R.string.short_script));
              }else {
 

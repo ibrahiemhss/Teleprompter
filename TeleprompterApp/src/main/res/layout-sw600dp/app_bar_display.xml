@@ -61,13 +61,13 @@
 
             <TextView
                 android:id="@+id/text_empty_show"
-                android:layout_width="wrap_content"
+                android:layout_width="192dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:padding="8dp"
                 android:text="@string/empty_text"
                 android:textAppearance="@style/Theme.Design"
-                android:textColor="@color/colorPrimaryText"
+                android:textColor="@color/orange_light"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:visibility="gone"
@@ -134,8 +134,6 @@
                             android:id="@+id/toggle_marker"
                             android:layout_width="@dimen/marker_width"
                             android:layout_height="@dimen/marker_height"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
                             android:layout_centerInParent="true"
                             android:background="@drawable/arrow_marker"
                             android:contentDescription="@string/app_name" />

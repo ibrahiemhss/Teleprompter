@@ -39,15 +39,12 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
          - Used by Preferences  -
          - - - - - - - - - - - - - - - -->
     <string name="pref_horizontal_mode_label">क्षैतिज मोड</string>
-    <string name="pref_horizontal_mode_key" translatable="false">horizontal_mode</string>
     <string name="pref_true">on</string>
     <string name="pref_false">off</string>
 
     <string name="pref_timer_key_label">टाइमर दिखाओ</string>
-    <string name="pref_timer_key" translatable="false">show_timer</string>
 
     <string name="pref_toggle_marker_label">टॉगल मार्कर</string>
-    <string name="pref_toggle_marker_key" translatable="false">toggle_marker</string>
 
     <string name="setting">सेटिंग्स</string>
     <string name="edit">संपादित करें</string>
