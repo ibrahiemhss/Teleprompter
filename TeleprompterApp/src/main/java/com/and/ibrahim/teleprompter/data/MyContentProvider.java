@@ -207,7 +207,7 @@ public class MyContentProvider extends ContentProvider {
                 Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
 
                 break;
-           default:
+            default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 

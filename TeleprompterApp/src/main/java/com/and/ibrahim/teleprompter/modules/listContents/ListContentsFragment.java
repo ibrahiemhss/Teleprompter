@@ -37,12 +37,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
-import com.and.ibrahim.teleprompter.mvp.view.OnDataPassListener;
-import com.and.ibrahim.teleprompter.mvp.view.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
 import com.and.ibrahim.teleprompter.modules.widget.WidgetProvider;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
+import com.and.ibrahim.teleprompter.mvp.view.OnDataPassListener;
+import com.and.ibrahim.teleprompter.mvp.view.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
 import com.and.ibrahim.teleprompter.util.FetchData;

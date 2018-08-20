@@ -2,26 +2,26 @@
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <android.support.v7.preference.SwitchPreferenceCompat
+    <android.support.v7.preference.SwitchPreferenceCompat
 
-            android:defaultValue="@bool/pref_horizontal_mode_default"
-            android:key="@string/pref_horizontal_mode_key"
-            android:summaryOff="@string/pref_false"
-            android:summaryOn="@string/pref_true"
-            android:title="@string/pref_horizontal_mode_label" />
+        android:defaultValue="@bool/pref_horizontal_mode_default"
+        android:key="@string/pref_horizontal_mode_key"
+        android:summaryOff="@string/pref_false"
+        android:summaryOn="@string/pref_true"
+        android:title="@string/pref_horizontal_mode_label" />
 
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_timer_default"
-            android:key="@string/pref_timer_key"
-            android:summaryOff="@string/pref_false"
-            android:summaryOn="@string/pref_true"
-            android:title="@string/pref_timer_key_label" />
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_timer_default"
+        android:key="@string/pref_timer_key"
+        android:summaryOff="@string/pref_false"
+        android:summaryOn="@string/pref_true"
+        android:title="@string/pref_timer_key_label" />
 
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_toggle_marker_default"
-            android:key="@string/pref_toggle_marker_key"
-            android:summaryOff="@string/pref_false"
-            android:summaryOn="@string/pref_true"
-            android:title="@string/pref_toggle_marker_label" />
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_toggle_marker_default"
+        android:key="@string/pref_toggle_marker_key"
+        android:summaryOff="@string/pref_false"
+        android:summaryOn="@string/pref_true"
+        android:title="@string/pref_toggle_marker_label" />
 
 </android.support.v7.preference.PreferenceScreen>

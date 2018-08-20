@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
+import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import com.and.ibrahim.teleprompter.mvp.view.OnItemLongClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.OnItemViewClickListener;
-import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -49,12 +49,12 @@ import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
-import com.and.ibrahim.teleprompter.mvp.view.FragmentEditListRefreshListener;
-import com.and.ibrahim.teleprompter.mvp.view.OnDataPassListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
+import com.and.ibrahim.teleprompter.mvp.view.FragmentEditListRefreshListener;
+import com.and.ibrahim.teleprompter.mvp.view.OnDataPassListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 import com.google.firebase.crash.FirebaseCrash;
