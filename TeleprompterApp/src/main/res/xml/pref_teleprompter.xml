@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.preference.PreferenceCategory android:title="Scroll Text Setting">
-
 
         <android.support.v7.preference.SwitchPreferenceCompat
 
@@ -25,7 +23,5 @@
             android:summaryOff="@string/pref_false"
             android:summaryOn="@string/pref_true"
             android:title="@string/pref_toggle_marker_label" />
-
-    </android.support.v7.preference.PreferenceCategory>
 
 </android.support.v7.preference.PreferenceScreen>

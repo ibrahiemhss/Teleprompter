@@ -802,7 +802,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     // required and is fatal. For apps where sign-in is optional, handle
                     // appropriately
                     Log.e(TAG, "Sign-in failed.");
-                    // finish();
                     return;
                 }
 
@@ -812,7 +811,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                     initializeDriveClient(getAccountTask.getResult());
                 } else {
                     Log.e(TAG, "Sign-in failed.");
-                    // finish();
                 }
                 break;
             case REQUEST_CODE_OPEN_ITEM:
