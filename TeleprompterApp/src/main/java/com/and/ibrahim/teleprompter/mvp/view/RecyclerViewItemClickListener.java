@@ -7,6 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 public class RecyclerViewItemClickListener implements RecyclerView.OnItemTouchListener {
 
     //GestureDetector to detect touch event.

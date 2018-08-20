@@ -2,6 +2,7 @@ package com.and.ibrahim.teleprompter.mvp.view;
 
 import android.view.View;
 
+
 @SuppressWarnings("unused")
 public interface OnItemViewClickListener {
 
