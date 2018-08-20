@@ -1,4 +1,4 @@
-package com.and.ibrahim.teleprompter.modules.Widget;
+package com.and.ibrahim.teleprompter.modules.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -22,9 +22,9 @@ import java.util.Objects;
 public class WidgetProvider extends AppWidgetProvider {
 
 
-    private boolean isTablet;
     @SuppressWarnings("unused")
     private static final String TAG = "WidgetProvider";
+    private boolean isTablet;
 
     public static void sendRefreshBroadcast(Context context) {
         Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
@@ -41,7 +41,7 @@ public class WidgetProvider extends AppWidgetProvider {
             ComponentName cn = new ComponentName(context, WidgetProvider.class);
             mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widgetListView);
         }
-        isTablet=context.getResources().getBoolean(R.bool.isTablet);
+        isTablet = context.getResources().getBoolean(R.bool.isTablet);
         super.onReceive(context, intent);
     }
 
@@ -61,7 +61,7 @@ public class WidgetProvider extends AppWidgetProvider {
             if (isTablet) {
                 titleIntent = new Intent(context, DisplayActivity.class);
 
-            }else {
+            } else {
                 titleIntent = new Intent(context, ListContentsActivity.class);
 
             }

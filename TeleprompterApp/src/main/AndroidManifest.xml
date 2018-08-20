@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.and.ibrahim.teleprompter">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +23,7 @@
         </activity>
 
         <receiver
-            android:name=".modules.Widget.WidgetProvider"
+            android:name=".modules.widget.WidgetProvider"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -35,7 +35,7 @@
                 android:resource="@xml/main_widget_info" />
         </receiver>
         <service
-            android:name=".modules.Widget.WidgetService"
+            android:name=".modules.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             tools:ignore="InnerclassSeparator" />
 

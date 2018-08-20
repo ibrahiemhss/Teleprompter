@@ -11,33 +11,34 @@
     android:paddingRight="@dimen/widget_listview_padding_x"
     android:paddingStart="@dimen/widget_listview_padding_x"
     android:weightSum="2">
-        <LinearLayout
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/white_back"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        tools:ignore="UselessParent">
+
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/note_2_256" />
+
+        <TextView
+            android:id="@+id/text_title_widget"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/white_back"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            tools:ignore="UselessParent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
 
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/note_2_256"
-                android:contentDescription="@string/app_name" />
-                        <TextView
-                            android:id="@+id/text_title_widget"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:padding="5dp"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="18sp"
-                            android:textStyle="normal" />
-
-                </LinearLayout>
-
-
-
-        </LinearLayout>
+</LinearLayout>

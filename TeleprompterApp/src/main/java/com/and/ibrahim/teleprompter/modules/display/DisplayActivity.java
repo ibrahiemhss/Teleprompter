@@ -122,7 +122,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean isTablet;
 
 
-
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
 
     @Override
@@ -136,7 +135,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
-        isTablet=getResources().getBoolean(R.bool.isTablet);
+        isTablet = getResources().getBoolean(R.bool.isTablet);
         if (savedInstanceState != null) {//save state case
 
             stopAutoScrolling();
@@ -159,12 +158,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         if (Locale.getDefault().getLanguage().equals("ar")) {
 
-            RelativeLayout.LayoutParams myImageLayout =  (RelativeLayout.LayoutParams)mToggleMarker.getLayoutParams();
+            RelativeLayout.LayoutParams myImageLayout = (RelativeLayout.LayoutParams) mToggleMarker.getLayoutParams();
             myImageLayout.addRule(RelativeLayout.ALIGN_PARENT_END);
             mToggleMarker.setLayoutParams(myImageLayout);
 
-        }else {
-            RelativeLayout.LayoutParams myImageLayout =  (RelativeLayout.LayoutParams)mToggleMarker.getLayoutParams();
+        } else {
+            RelativeLayout.LayoutParams myImageLayout = (RelativeLayout.LayoutParams) mToggleMarker.getLayoutParams();
             myImageLayout.addRule(RelativeLayout.ALIGN_PARENT_START);
             mToggleMarker.setLayoutParams(myImageLayout);
 
@@ -325,7 +324,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         outState.putString(Contract.EXTRA_SCROLL_STRING, mScrollString);
         outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
-        outState.putLong(Contract.EXTRA_CHRONOTIME,mChronometer.getBase());
+        outState.putLong(Contract.EXTRA_CHRONOTIME, mChronometer.getBase());
 
         if (isTablet) {//save fragment
             getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
@@ -551,13 +550,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mTextSpeed = mNavView.findViewById(R.id.text_font);
 
 
-        if(!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()){
+        if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()) {
             mSeekTextSize.setProgress(20);
             mTextSpeed.setText(String.valueOf(20));
 
         }
 
-        if(!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetSpeed()){
+        if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetSpeed()) {
             setSpeed(40);
             mSeekScrollSpeed.setProgress(40);
 
@@ -636,9 +635,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         });
         undoText.setOnClickListener(view -> {
             if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetColor()) {
-                Toast.makeText(DisplayActivity.this,getResources().getString(R.string.first_set_color),Toast.LENGTH_LONG).show();
+                Toast.makeText(DisplayActivity.this, getResources().getString(R.string.first_set_color), Toast.LENGTH_LONG).show();
 
-            }else {
+            } else {
                 mScrollText.setTextColor(SharedPrefManager.getInstance(DisplayActivity.this)
                         .getPrefUndoTextSize());
                 mSlideShowScroll.setBackgroundColor(SharedPrefManager.getInstance(DisplayActivity.this)
@@ -787,7 +786,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
 
-        if(view.getId()==R.id.show_play){
+        if (view.getId() == R.id.show_play) {
             getScrollMaxAmount();
             startPlayStatus();
             startAutoScrolling(timeSpeed);
@@ -824,7 +823,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         }
     }
-
 
 
     public FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
@@ -879,7 +877,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
     public void seTimerShow(boolean is) {
         if (is) {
             mChronometer.setVisibility(View.VISIBLE);
@@ -903,7 +900,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
 
     }
-    private void setHorizontalMode(boolean is){
+
+    private void setHorizontalMode(boolean is) {
         if (is) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 

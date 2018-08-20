@@ -4,5 +4,5 @@
     <bool name="pref_timer_default">false</bool>
     <bool name="pref_toggle_marker_default">false</bool>
 
-        <bool name="isTablet">false</bool>
+    <bool name="isTablet">false</bool>
 </resources>

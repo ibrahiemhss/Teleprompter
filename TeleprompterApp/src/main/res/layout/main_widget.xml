@@ -10,12 +10,11 @@
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         android:layout_height="@dimen/widget_title_min_height"
         android:layout_gravity="center"
         android:background="@drawable/white_back"
-        >
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <TextView
             android:id="@+id/widgetTitle"

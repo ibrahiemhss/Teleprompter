@@ -157,7 +157,6 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-
     public void addDemo() {
 
         ContentValues values = new ContentValues();

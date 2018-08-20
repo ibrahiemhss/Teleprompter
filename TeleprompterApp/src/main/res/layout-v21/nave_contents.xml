@@ -122,70 +122,71 @@
             android:orientation="vertical">
 
 
+            <LinearLayout
+                android:id="@+id/ln_launch_text_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/nav_image_color_width"
+                    android:layout_height="@dimen/nav_image_color_height"
+                    android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
+                    android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
+                    android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
+                    android:contentDescription="@string/app_name"
+                    android:drawableEnd="@drawable/colors_shape"
+                    android:src="@drawable/colors_shape" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/nav_text_side_margin"
+                    android:gravity="center"
+                    android:text="@string/set_colors"
+                    android:textColor="@color/orange_light"
+                    android:textSize="@dimen/nav_text_size" />
+
                 <LinearLayout
-                    android:id="@+id/ln_launch_text_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    tools:ignore="UseCompoundDrawables">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="@dimen/nav_image_color_width"
-                        android:layout_height="@dimen/nav_image_color_height"
-                        android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
-                        android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
-                        android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
-                        android:contentDescription="@string/app_name"
-                        android:drawableEnd="@drawable/colors_shape"
-                        android:src="@drawable/colors_shape" />
+                    <TextView
+                        android:id="@+id/default_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/text_side_margin"
+                        android:layout_marginTop="@dimen/text_side_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/accent_border_back"
+                        android:padding="8dp"
+                        android:text="@string/defaults"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:ignore="InconsistentLayout" />
 
 
                     <TextView
+                        android:id="@+id/undo_text"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/nav_text_side_margin"
-                        android:gravity="center"
-                        android:text="@string/set_colors"
-                        android:textColor="@color/orange_light"
-                        android:textSize="@dimen/nav_text_size" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/default_text"
-                            android:layout_width="wrap_content"
-                            android:padding="8dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/text_side_margin"
-                            android:layout_marginBottom="@dimen/text_side_margin"
-                            android:layout_weight="1"
-                            android:background="@drawable/accent_border_back"
-                            android:text="@string/defaults"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorPrimaryText"
-                            tools:ignore="InconsistentLayout" />
-
-
-                        <TextView
-                            android:id="@+id/undo_text"
-                            android:layout_width="wrap_content"
-                            android:padding="8dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/accent_border_back"
-                            android:text="@string/undo"
-                            android:layout_marginBottom="@dimen/text_side_margin"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorPrimaryText"
-                            tools:ignore="InconsistentLayout" />
-                    </LinearLayout>
-
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/text_side_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/accent_border_back"
+                        android:padding="8dp"
+                        android:text="@string/undo"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryText"
+                        tools:ignore="InconsistentLayout" />
                 </LinearLayout>
 
             </LinearLayout>
+
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -208,15 +209,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv66"
-        android:gravity="center"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/other_setting"
             android:layout_width="wrap_content"
-            android:padding="8dp"
             android:layout_height="wrap_content"
             android:background="@drawable/accent_border_back"
+            android:padding="8dp"
             android:text="@string/other_setting"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryText"

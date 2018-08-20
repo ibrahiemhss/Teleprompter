@@ -10,7 +10,7 @@ import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
 
-public class FetchData  extends AsyncTaskLoader<ArrayList<DataObj>> {
+public class FetchData extends AsyncTaskLoader<ArrayList<DataObj>> {
     private final AsyncTaskCompleteListener<ArrayList<DataObj>> listener;
     private ArrayList<DataObj> dataObjArrayList;
 

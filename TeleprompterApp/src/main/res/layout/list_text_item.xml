@@ -43,10 +43,10 @@
             android:textColor="@color/color_graydr" />
 
 
-       <!-- <CheckBox
-            android:id="@+id/check_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
+        <!-- <CheckBox
+             android:id="@+id/check_item"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />-->
 
         <ImageView
             android:id="@+id/edit_item"

@@ -1,4 +1,4 @@
-package com.and.ibrahim.teleprompter.modules.Widget;
+package com.and.ibrahim.teleprompter.modules.widget;
 
 import android.content.Intent;
 import android.util.Log;

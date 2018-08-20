@@ -1,4 +1,4 @@
-package com.and.ibrahim.teleprompter.modules.Widget;
+package com.and.ibrahim.teleprompter.modules.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
@@ -60,7 +59,7 @@ class WidgetRemoteViewsFactorys implements RemoteViewsService.RemoteViewsFactory
         remoteView.setTextViewText(R.id.text_title_widget, widgetList.get(position).getTextTitle());
         Intent fillInIntent = new Intent();
 
-        String mScrollString=widgetList.get(position).getTextContent();
+        String mScrollString = widgetList.get(position).getTextContent();
         fillInIntent.putExtra(Contract.EXTRA_TEXT, mScrollString);
         Log.d(TAG, "ItemWidget_TextContent_send = " +
                 mScrollString);

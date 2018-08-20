@@ -126,6 +126,7 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
+
     public boolean isFirstSetColor() {
         return pref.getBoolean(PREF_FIRST_COLOR_SET, false);
     }
@@ -136,7 +137,6 @@ public class SharedPrefManager {
         editor.apply();
         editor.commit();
     }
-
 
 
     public boolean isFirstSetText() {

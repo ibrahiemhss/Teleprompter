@@ -1,9 +1,9 @@
-<resources >
+<resources>
     <string name="app_name">Teleprompter‏</string>
     <string name="demo_title">Demo Show</string>
 
 
-    <string name="demo_text" >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia interdum neque et condimentum. Aliquam in ultricies enim. Mauris vel venenatis nisi. Fusce in tempus elit. In commodo, risus et condimentum vestibulum, ligula diam interdum magna, accumsan consequat sem orci at quam. Nam facilisis velit eu ligula posuere ultricies. Aliquam erat volutpat. Nulla rutrum, justo in eleifend scelerisque, felis tortor lobortis metus, eu consectetur tortor tortor eget massa. Nulla facilisi. Morbi mi leo, scelerisque maximus risus at, lacinia egestas ligula. Integer pulvinar, metus at gravida pretium, erat orci congue sapien, in suscipit ipsum ipsum consectetur diam. Suspendisse nunc nibh, volutpat ut venenatis non, ultricies non lacus. Cras dapibus dignissim leo at malesuada. Suspendisse pulvinar quam ut commodo semper.
+    <string name="demo_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia interdum neque et condimentum. Aliquam in ultricies enim. Mauris vel venenatis nisi. Fusce in tempus elit. In commodo, risus et condimentum vestibulum, ligula diam interdum magna, accumsan consequat sem orci at quam. Nam facilisis velit eu ligula posuere ultricies. Aliquam erat volutpat. Nulla rutrum, justo in eleifend scelerisque, felis tortor lobortis metus, eu consectetur tortor tortor eget massa. Nulla facilisi. Morbi mi leo, scelerisque maximus risus at, lacinia egestas ligula. Integer pulvinar, metus at gravida pretium, erat orci congue sapien, in suscipit ipsum ipsum consectetur diam. Suspendisse nunc nibh, volutpat ut venenatis non, ultricies non lacus. Cras dapibus dignissim leo at malesuada. Suspendisse pulvinar quam ut commodo semper.
 
 Quisque ut porta sem, eget cursus dui. Nam turpis ligula, sagittis non aliquet vitae, vestibulum ac nulla. Pellentesque facilisis fermentum consectetur. Aliquam non nulla tincidunt, euismod ex nec, rhoncus ex. Nunc a vulputate nulla. Fusce ultricies libero suscipit pulvinar condimentum. Fusce varius condimentum semper. Suspendisse mi lacus, tempus a dignissim id, elementum at metus.
 

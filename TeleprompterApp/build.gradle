@@ -31,7 +31,7 @@ android {
             resValue 'string', "interstitial_pub", BANNAR_ADS
             resValue 'string', "api_key", API_KEY
 
-            
+
         }
         release {
             minifyEnabled false
