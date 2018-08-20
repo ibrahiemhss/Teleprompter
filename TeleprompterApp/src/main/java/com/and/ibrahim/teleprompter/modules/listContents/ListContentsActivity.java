@@ -23,6 +23,7 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 
 import butterknife.BindView;
@@ -43,6 +44,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     private boolean ischecked;
     private Fragment mContentListFragment;
     private boolean isFirstEntry;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private FragmentEditListRefreshListener getFragmentEditListRefreshListener() {
         return fragmentEditListRefreshListener;
@@ -59,6 +61,8 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         FirebaseCrash.report(new Exception("My first Android non-fatal error"));
         FirebaseCrash.log("ListContentsActivity started");
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         mContentListFragment = new ListContentsFragment();
         if (savedInstanceState != null) {
             mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);

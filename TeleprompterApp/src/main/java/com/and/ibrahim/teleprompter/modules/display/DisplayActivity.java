@@ -157,6 +157,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         FirebaseCrash.report(new Exception("My first Android non-fatal error"));
         //noinspection deprecation
         FirebaseCrash.log("DisplayActivity started");
+
         if (!isFirstEntry) {
             addDemo();
 
