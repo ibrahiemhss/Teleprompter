@@ -6,5 +6,4 @@ import java.util.ArrayList;
 
 public interface AsyncTaskCompleteListener {
         void onExampleAsyncTaskFinished(ArrayList<DataObj> dataObjs);
-
 }
