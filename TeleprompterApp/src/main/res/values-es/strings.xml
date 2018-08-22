@@ -68,4 +68,13 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="no">no</string>
     <string name="short_title">El título es corto. Por favor ingrese un título con al menos 6 caracteres.</string>
     <string name="short_script">El texto es corto. Por favor agregue texto con al menos 100 palabras de largo.</string>
+
+    <string name="marker_description">Marque la facilidad de leer la selección de línea</string>
+    <string name="play_description">Haga clic aquí para activar o desactivar el desplazamiento de texto</string>
+    <string name="f_add_description">Para agregar manualmente nuevo texto</string>
+    <string name="f_storage_description">Para agregar texto desde el dispositivo de memoria interna</string>
+    <string name="f_drive_description">Agregue texto de sus archivos de Google Drive desde su propia cuenta de Google Drive</string>
+    <string name="f_parent_description">Haga clic aquí para mostrar las diferentes opciones de entrada</string>
+
+
 </resources>

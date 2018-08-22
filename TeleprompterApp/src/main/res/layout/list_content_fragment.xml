@@ -6,51 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/color_graylt">
 
-    <RelativeLayout
-        android:id="@+id/edit_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:paddingTop="?attr/actionBarSize"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/text_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/delete_all"
-
-            android:textColor="@color/colorPrimaryText"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/delete_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toEndOf="@+id/text_delete"
-            android:layout_toRightOf="@+id/text_delete"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_delete"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/return_up"
-            android:layout_width="96dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/move_up" />
-    </RelativeLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="@dimen/list_width"
         android:layout_height="match_parent"
-        android:layout_below="@+id/edit_container"
         android:layout_gravity="center"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/list_bottom_padding"
@@ -69,6 +28,7 @@
         android:layout_marginBottom="230dp"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:contentDescription="@string/f_add_description"
         android:src="@drawable/ic_add_white"
         android:visibility="invisible"
         app:backgroundTint="@color/color_fab_add"
@@ -86,6 +46,7 @@
         android:layout_marginBottom="160dp"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:contentDescription="@string/f_storage_description"
         android:src="@drawable/ic_folder_open"
         android:visibility="invisible"
         app:backgroundTint="@color/color_fab_storage"
@@ -103,6 +64,7 @@
         android:layout_marginBottom="90dp"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:contentDescription="@string/f_drive_description"
         android:src="@drawable/ic_cloud_download"
         android:visibility="invisible"
         app:backgroundTint="@color/color_fab_cloud"
@@ -118,6 +80,7 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/f_parent_description"
         android:src="@drawable/ic_add_white"
         ads:ignore="RelativeOverlap"
         app:backgroundTint="@color/colorAccent"

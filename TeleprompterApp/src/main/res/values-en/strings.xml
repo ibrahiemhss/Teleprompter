@@ -71,5 +71,11 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="short_title">Title is very short Make it 6 characters at least</string>
     <string name="short_script">Script is very short Make it 100 words at least</string>
 
+    <string name="marker_description">Mark the ease of reading line selection</string>
+    <string name="play_description">Click here to turn text scrolling on or off</string>
+    <string name="f_add_description">To manually add new text</string>
+    <string name="f_storage_description">To add text from the internal memory device</string>
+    <string name="f_drive_description">Add text from your Google Drive files from your own Google Drive account</string>
+    <string name="f_parent_description">Click here to show different input options</string>
 
 </resources>

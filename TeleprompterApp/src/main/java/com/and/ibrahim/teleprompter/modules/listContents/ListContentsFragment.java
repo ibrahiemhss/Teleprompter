@@ -28,21 +28,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
+import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
 import com.and.ibrahim.teleprompter.modules.widget.WidgetProvider;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
-import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.mvp.view.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
-import com.and.ibrahim.teleprompter.util.FetchDataAsyncTask;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
+import com.and.ibrahim.teleprompter.util.FetchDataAsyncTask;
 import com.and.ibrahim.teleprompter.util.GetData;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
 import com.google.android.gms.ads.AdListener;
@@ -92,15 +90,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private static final int REQUEST_CODE_SIGN_IN = 0;
     private static final int REQUEST_CODE_OPEN_ITEM = 1;
     private static final int REQUEST_READ_STORAGE_CODE = 2;
-
-    @BindView(R.id.edit_container)
-    protected RelativeLayout mEditContainer;
-    @BindView(R.id.delete_all)
-    protected ImageView mDeleteImage;
-    @BindView(R.id.text_delete)
-    protected TextView mDeleteText;
-    @BindView(R.id.return_up)
-    protected ImageView mReturnUp;
+    public ArrayList<DataObj> mArrayList;
     @BindView(R.id.fab)
     protected FloatingActionButton mFab;
     @BindView(R.id.fab_add)
@@ -113,12 +103,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     protected RecyclerView mRecyclerView;
     @BindView(R.id.adView)
     protected AdView mAdView;
-
     private Dialog mAddDialog;
     private Dialog mUpdateDialog;
     private boolean isOpen = false;
     private OnDataPassListener dataPasser;
-    public ArrayList<DataObj> mArrayList;
     private TeleprompterAdapter teleprompterAdapter;
     private FabAnimations mFabAnimations;
     private boolean isAddDialogShow;
@@ -158,7 +146,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         MobileAds.initialize(getActivity(),
                 getResources().getString(R.string.app_ads_id));
         initializeAdd();
-      //  LoaderCallbacks<ArrayList<DataObj>> callback = ListContentsFragment.this;
+        //  LoaderCallbacks<ArrayList<DataObj>> callback = ListContentsFragment.this;
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
 
@@ -225,7 +213,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     launchAddDialog(mLastTitleAdding, mLastContentAdding);
-                    Log.d(TAG,"valueRotation after\n title= "+mLastTitleAdding+"\ncontent ="+mLastContentAdding);
+                    Log.d(TAG, "valueRotation after\n title= " + mLastTitleAdding + "\ncontent =" + mLastContentAdding);
 
                 }
                 if (!mAddDialog.isShowing()) {
@@ -250,8 +238,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         mFabAdd.setOnClickListener(this);
         mFabStorage.setOnClickListener(this);
         mFabCloud.setOnClickListener(this);
-        mDeleteImage.setOnClickListener(this);
-        mReturnUp.setOnClickListener(this);
         updateWidget();
         if (isTablet) {
             dataPasser = (OnDataPassListener) getActivity();
@@ -366,9 +352,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 }
                 Log.d(TAG, "FabAction is " + "Fab Cloud");
                 break;
-            case R.id.return_up:
-                mEditContainer.setVisibility(View.GONE);
-                unCheckAll();
             default:
                 break;
         }
@@ -499,7 +482,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         if (title != null || content != null) {
             mEditTextAddTitle.setText(title);
             mEditTextAddContent.setText(content);
-            Log.d(TAG,"valueRotation last value\n title= "+title+"\ncontent ="+content);
+            Log.d(TAG, "valueRotation last value\n title= " + title + "\ncontent =" + content);
 
         }
         mLastTitleAdding = Objects.requireNonNull(mEditTextAddTitle.getText()).toString();
@@ -726,7 +709,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         mFetchDataAsyncTask = new FetchDataAsyncTask(getActivity());
         mFetchDataAsyncTask.setListener(dataObjs -> {
             if (dataObjs != null) {
-                mArrayList=dataObjs;
+                mArrayList = dataObjs;
                 teleprompterAdapter.removeContent();
                 teleprompterAdapter.addNewContent(dataObjs);
                 mRecyclerView.setAdapter(teleprompterAdapter);
@@ -753,7 +736,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                             mEditTextAddContent.getText())
                             .toString());
 
-            Log.d(TAG,"valueRotation on save\n title= "+mEditTextAddTitle.getText()+"\ncontent ="+mEditTextAddContent.getText());
+            Log.d(TAG, "valueRotation on save\n title= " + mEditTextAddTitle.getText() + "\ncontent =" + mEditTextAddContent.getText());
 
         }
         if (mEditTextUpdateTitle != null && mEditTextUpdateContent != null) {
@@ -771,7 +754,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public void onPause() {
         super.onPause();
         unCheckAll();
-        mEditContainer.setVisibility(View.GONE);
         if (mAddDialog != null) {
             if (!mAddDialog.isShowing()) {
                 isAddDialogShow = false;
@@ -932,7 +914,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 .addOnFailureListener(getActivity(), e -> {
                     Log.e(TAG, "No file selected", e);
                     showMessage(getString(R.string.file_not_selected));
-                    //finish();
                 });
 
     }
@@ -1032,7 +1013,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
 
-    }
+}
 
 
 

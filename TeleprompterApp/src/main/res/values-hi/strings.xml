@@ -68,4 +68,14 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="no">नहीं</string>
     <string name="short_title">शीर्षक छोटा है। कृपया कम से कम 6 वर्णों वाला शीर्षक दर्ज करें।</string>
     <string name="short_script">पाठ छोटा है। कृपया कम से कम 100 शब्दों के साथ टेक्स्ट जोड़ें।</string>
+
+
+    <string name="marker_description">लाइन चयन पढ़ने की आसानी को चिह्नित करें</string>
+    <string name="play_description">टेक्स्ट स्क्रॉलिंग को चालू या बंद करने के लिए यहां क्लिक करें</string>
+    <string name="f_add_description">मैन्युअल रूप से नया टेक्स्ट जोड़ने के लिए</string>
+    <string name="f_storage_description">आंतरिक मेमोरी डिवाइस से टेक्स्ट जोड़ने के लिए</string>
+    <string name="f_drive_description">अपनी Google ड्राइव फ़ाइलों से अपने Google ड्राइव खाते में टेक्स्ट जोड़ें</string>
+    <string name="f_parent_description">विभिन्न इनपुट विकल्प दिखाने के लिए यहां क्लिक करें</string>
+
+
 </resources>

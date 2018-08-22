@@ -5,5 +5,5 @@ import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import java.util.ArrayList;
 
 public interface AsyncTaskCompleteListener {
-        void onExampleAsyncTaskFinished(ArrayList<DataObj> dataObjs);
+    void onExampleAsyncTaskFinished(ArrayList<DataObj> dataObjs);
 }

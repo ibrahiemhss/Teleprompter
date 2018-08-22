@@ -136,14 +136,14 @@
                             android:layout_height="@dimen/marker_height"
                             android:layout_centerInParent="true"
                             android:background="@drawable/arrow_marker"
-                            android:contentDescription="@string/app_name" />
+                            android:contentDescription="@string/marker_description" />
 
                         <ImageView
                             android:id="@+id/show_play"
                             android:layout_width="@dimen/image_play_height"
                             android:layout_height="@dimen/image_play_width"
                             android:layout_centerInParent="true"
-                            android:contentDescription="@string/app_name" />
+                            android:contentDescription="@string/play_description" />
 
                     </RelativeLayout>
 

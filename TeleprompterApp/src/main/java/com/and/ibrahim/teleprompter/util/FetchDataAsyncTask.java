@@ -9,26 +9,26 @@ import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 
 import java.util.ArrayList;
 
- @SuppressLint("StaticFieldLeak")
- public class FetchDataAsyncTask extends AsyncTask<String, Void, ArrayList<DataObj>> {
-    private AsyncTaskCompleteListener listener;
+@SuppressLint("StaticFieldLeak")
+public class FetchDataAsyncTask extends AsyncTask<String, Void, ArrayList<DataObj>> {
     private final Context context;
+    private AsyncTaskCompleteListener listener;
 
-      public FetchDataAsyncTask(Context context) {
-          this.context = context;
-      }
+    public FetchDataAsyncTask(Context context) {
+        this.context = context;
+    }
 
-      @Override
+    @Override
     protected ArrayList<DataObj> doInBackground(String... params) {
 
-          try {
+        try {
             return GetData.getTeleprompters(context);
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-      }
+    }
 
     @Override
     protected void onPostExecute(ArrayList<DataObj> MoviesData) {
