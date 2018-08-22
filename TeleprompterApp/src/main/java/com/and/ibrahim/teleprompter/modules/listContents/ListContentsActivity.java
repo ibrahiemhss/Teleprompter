@@ -22,7 +22,7 @@ import com.and.ibrahim.teleprompter.base.BaseActivity;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
-import com.and.ibrahim.teleprompter.mvp.view.FragmentEditListRefreshListener;
+import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 

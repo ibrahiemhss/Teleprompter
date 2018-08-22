@@ -1,0 +1,47 @@
+package com.and.ibrahim.teleprompter.util;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.AsyncTask;
+
+import com.and.ibrahim.teleprompter.callback.AsyncTaskCompleteListener;
+import com.and.ibrahim.teleprompter.mvp.model.DataObj;
+
+import java.util.ArrayList;
+
+ @SuppressLint("StaticFieldLeak")
+ public class FetchDataAsyncTask extends AsyncTask<String, Void, ArrayList<DataObj>> {
+    private AsyncTaskCompleteListener listener;
+    private final Context context;
+
+      public FetchDataAsyncTask(Context context) {
+          this.context = context;
+      }
+
+      @Override
+    protected ArrayList<DataObj> doInBackground(String... params) {
+
+          try {
+            return GetData.getTeleprompters(context);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+      }
+
+    @Override
+    protected void onPostExecute(ArrayList<DataObj> MoviesData) {
+
+        super.onPostExecute(MoviesData);
+        if (listener != null) {
+            listener.onExampleAsyncTaskFinished(MoviesData);
+        }
+    }
+
+    public void setListener(AsyncTaskCompleteListener listener) {
+        this.listener = listener;
+    }
+
+
+}

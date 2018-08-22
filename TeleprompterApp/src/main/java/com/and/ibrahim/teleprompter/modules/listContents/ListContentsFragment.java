@@ -15,9 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.GridLayoutManager;
@@ -41,11 +38,11 @@ import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
 import com.and.ibrahim.teleprompter.modules.widget.WidgetProvider;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
-import com.and.ibrahim.teleprompter.mvp.view.OnDataPassListener;
+import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.mvp.view.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
+import com.and.ibrahim.teleprompter.util.FetchDataAsyncTask;
 import com.and.ibrahim.teleprompter.util.FabAnimations;
-import com.and.ibrahim.teleprompter.util.FetchData;
 import com.and.ibrahim.teleprompter.util.GetData;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
 import com.google.android.gms.ads.AdListener;
@@ -89,13 +86,12 @@ import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.CENTER;
 
 @SuppressWarnings({"deprecation", "WeakerAccess"})
-public class ListContentsFragment extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<ArrayList<DataObj>> {
+public class ListContentsFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "ListContentsFragment";
     private static final int REQUEST_CODE_SIGN_IN = 0;
     private static final int REQUEST_CODE_OPEN_ITEM = 1;
     private static final int REQUEST_READ_STORAGE_CODE = 2;
-    private static final int DATA_LOADER_ID = 3;
 
     @BindView(R.id.edit_container)
     protected RelativeLayout mEditContainer;
@@ -122,7 +118,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private Dialog mUpdateDialog;
     private boolean isOpen = false;
     private OnDataPassListener dataPasser;
-    private ArrayList<DataObj> mArrayList;
+    public ArrayList<DataObj> mArrayList;
     private TeleprompterAdapter teleprompterAdapter;
     private FabAnimations mFabAnimations;
     private boolean isAddDialogShow;
@@ -142,6 +138,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private TaskCompletionSource<DriveId> mOpenItemTaskSource;
     private boolean isTablet;
     private InterstitialAd mInterstitialAd;
+    private FetchDataAsyncTask mFetchDataAsyncTask;
 
 
     private void readBundle(Bundle bundle) {
@@ -161,7 +158,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         MobileAds.initialize(getActivity(),
                 getResources().getString(R.string.app_ads_id));
         initializeAdd();
-        LoaderCallbacks<ArrayList<DataObj>> callback = ListContentsFragment.this;
+      //  LoaderCallbacks<ArrayList<DataObj>> callback = ListContentsFragment.this;
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
 
@@ -191,7 +188,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             });
         }
 
-        getActivity().getSupportLoaderManager().initLoader(DATA_LOADER_ID, null, callback);
         return view;
 
     }
@@ -224,10 +220,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
             isAddDialogShow = savedInstanceState.getBoolean(Contract.EXTRA_SHOW_ADD_DIALOG);
             if (isAddDialogShow) {
-                mLastTitleAdding = savedInstanceState.getString(Contract.EXTRA_STRING_CONTENT_ADD);
+                mLastContentAdding = savedInstanceState.getString(Contract.EXTRA_STRING_CONTENT_ADD);
                 mLastTitleAdding = savedInstanceState.getString(Contract.EXTRA_STRING_TITLE_ADD);
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     launchAddDialog(mLastTitleAdding, mLastContentAdding);
+                    Log.d(TAG,"valueRotation after\n title= "+mLastTitleAdding+"\ncontent ="+mLastContentAdding);
+
                 }
                 if (!mAddDialog.isShowing()) {
                     mAddDialog.show();
@@ -419,8 +418,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initializeList() {
-        Objects.requireNonNull(getActivity()).getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
 
+
+        refreshList();
         Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
@@ -497,11 +497,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
         if (title != null || content != null) {
-            mEditTextAddContent.setText(title);
-
+            mEditTextAddTitle.setText(title);
             mEditTextAddContent.setText(content);
+            Log.d(TAG,"valueRotation last value\n title= "+title+"\ncontent ="+content);
 
         }
+        mLastTitleAdding = Objects.requireNonNull(mEditTextAddTitle.getText()).toString();
+        mLastContentAdding = Objects.requireNonNull(mEditTextAddContent.getText()).toString();
 
         isAddDialogShow = true;
         mCancel.setOnClickListener(v -> {
@@ -564,7 +566,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
                             values.clear();
                         }
-                        getActivity().getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
+                        refreshList();
                         values.clear();
                         mAddDialog.dismiss();
                     }
@@ -626,7 +628,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             values.put(Contract.Entry.COL_CONTENTS, Objects.requireNonNull(mEditTextUpdateContent.getText()).toString());
             getActivity().getContentResolver().update(Contract.Entry.PATH_TELEPROMPTER_URI, values, Contract._ID + "=?", new String[]{String.valueOf(id)}); //id is the id of the row you wan to update
 
-            getActivity().getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
+            refreshList();
             values.clear();
 
             mUpdateDialog.dismiss();
@@ -649,7 +651,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 .setCancelable(false)
                 .setPositiveButton(getResources().getString(R.string.yes), (dialog, id) -> {
                     deleteAll();
-                    getActivity().getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
+                    refreshList();
 
                 })
                 .setNegativeButton(getResources().getString(R.string.no), (dialog, id) -> dialog.cancel());
@@ -692,7 +694,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             Objects.requireNonNull(getActivity()).getContentResolver().delete(uri, Contract._ID + "=?", selectionArgs);
             Log.d("contentResolver delete", "delete success");
 
-            getActivity().getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
+            refreshList();
             if (mArrayList.size() > 4) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     mRecyclerView.smoothScrollToPosition(Objects.requireNonNull(mRecyclerView.getAdapter()).getItemCount() - 1);
@@ -711,18 +713,27 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         Objects.requireNonNull(getActivity()).getContentResolver().delete(uri, null, null);
         Log.d("contentResolver delete", "delete success");
 
-        getActivity().getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
+        refreshList();
         unCheckAll();
 
 
     }
 
-    private void refreshList() {
+    public void refreshList() {
+
         mArrayList.clear();
-        teleprompterAdapter.removeContent();
-        mArrayList = GetData.getTeleprompters(getActivity());
-        teleprompterAdapter.addNewContent(mArrayList);
-        mRecyclerView.setAdapter(teleprompterAdapter);
+
+        mFetchDataAsyncTask = new FetchDataAsyncTask(getActivity());
+        mFetchDataAsyncTask.setListener(dataObjs -> {
+            if (dataObjs != null) {
+                mArrayList=dataObjs;
+                teleprompterAdapter.removeContent();
+                teleprompterAdapter.addNewContent(dataObjs);
+                mRecyclerView.setAdapter(teleprompterAdapter);
+            }
+        });
+        mFetchDataAsyncTask.execute();
+
         updateWidget();
 
 
@@ -732,8 +743,17 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mEditTextAddTitle != null && mEditTextAddContent != null) {
-            outState.putString(Contract.EXTRA_STRING_TITLE_ADD, Objects.requireNonNull(mEditTextAddTitle.getText()).toString());
-            outState.putString(Contract.EXTRA_STRING_CONTENT_ADD, Objects.requireNonNull(mEditTextAddContent.getText()).toString());
+            outState.putString(Contract.EXTRA_STRING_TITLE_ADD,
+                    Objects.requireNonNull(
+                            mEditTextAddTitle.getText())
+                            .toString());
+            outState.putString(
+                    Contract.EXTRA_STRING_CONTENT_ADD,
+                    Objects.requireNonNull(
+                            mEditTextAddContent.getText())
+                            .toString());
+
+            Log.d(TAG,"valueRotation on save\n title= "+mEditTextAddTitle.getText()+"\ncontent ="+mEditTextAddContent.getText());
 
         }
         if (mEditTextUpdateTitle != null && mEditTextUpdateContent != null) {
@@ -769,6 +789,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public void onDestroy() {
         super.onDestroy();
         unCheckAll();
+        mFetchDataAsyncTask.setListener(null); // PREVENT LEAK AFTER ACTIVITY DESTROYED
+
     }
 
     @Override
@@ -784,7 +806,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         values.put(Contract.Entry.COL_SELECT, 0);
         Objects.requireNonNull(getActivity()).getContentResolver().update(Contract.Entry.PATH_TELEPROMPTER_URI, values, null, null);
 
-        getActivity().getSupportLoaderManager().restartLoader(DATA_LOADER_ID, null, this);
+        refreshList();
+
+
         values.clear();
 
     }
@@ -990,45 +1014,12 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     /**
      * Called after the user has signed in and the Drive client has been initialized.
      */
-
     private DriveClient getDriveClient() {
         return mDriveClient;
     }
 
     private DriveResourceClient getDriveResourceClient() {
         return mDriveResourceClient;
-    }
-
-    @NonNull
-    @Override
-    public Loader<ArrayList<DataObj>> onCreateLoader(int loaderId, @Nullable Bundle bundle) {
-
-        switch (loaderId) {
-
-            case DATA_LOADER_ID:
-                /*return data from FetchData class*/
-                return new FetchData(Objects.requireNonNull(getActivity()), result -> {
-
-                });
-
-
-            default:
-                throw new RuntimeException("Loader Not Implemented: " + loaderId);
-        }
-
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<DataObj>> loader, ArrayList<DataObj> result) {
-        if (result != null) {
-
-            mArrayList = result;
-            refreshList();
-        }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<ArrayList<DataObj>> loader) {
 
     }
 
@@ -1038,10 +1029,11 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             // this will send the broadcast to update the appwidget
             WidgetProvider.sendRefreshBroadcast(getActivity());
         });
+    }
 
 
     }
 
-}
+
 
 

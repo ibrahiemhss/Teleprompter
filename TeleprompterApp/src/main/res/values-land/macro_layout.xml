@@ -26,6 +26,7 @@
     <!-- - - - - - - - - - - - - - - -
             - fragment  -
             - - - - - - - - - - - - - - - -->
+
     <!-- recyclerVeiw -->
     <!-- list item -->
     <dimen name="item_side_margin">20dp</dimen>
@@ -35,7 +36,7 @@
     <dimen name="item_image_height">48dp</dimen>
     <!--add content dialog-->
     <dimen name="add_dialog_width">336dp</dimen>
-    <dimen name="add_dialog_etext_height">264dp</dimen>
+    <dimen name="add_dialog_etext_height">184dp</dimen>
     <dimen name="add_dialog_text_width">96dp</dimen>
     <dimen name="add_dialog_margin_bottom">8dp</dimen>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
