@@ -64,7 +64,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="content_loaded">File contents successfully read.</string>
     <string name="select_file">Select file</string>
     <string name="Delete">Delete</string>
-
     <string name="click_delete">Click yes to delete selected files!</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

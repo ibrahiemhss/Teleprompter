@@ -62,7 +62,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="file_not_selected">لم يتم اختيار أي ملف، لا يمكن المواصلة</string>
     <string name="content_loaded">تمت قراءة محتويات الملف بنجاح</string>
     <string name="select_file">اختر ملفا</string>
-
     <string name="Delete"> حذف</string>
     <string name="click_delete">اضغط نعم لحذف الملفات المختاره</string>
     <string name="yes">نعم</string>
@@ -73,9 +72,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="marker_description">علامه تسهيل تحديد سطر القرائه</string>
     <string name="play_description">انقر هنا لتشغيل تمرير النص او ايقافه</string>
     <string name="f_add_description">لأضافة نص جديد يدويا</string>
-
     <string name="f_storage_description">لأضافة نص من ذاكره الجهاز الداخليه</string>
     <string name="f_drive_description">لإضافة نص من ملفات Google Drive من حسابك الخاص في Google Drive</string>
     <string name="f_parent_description">انقر هنا اظهار خيارات الادخال المختلفه</string>
-
 </resources>

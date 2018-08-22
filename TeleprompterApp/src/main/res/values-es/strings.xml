@@ -75,6 +75,4 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="f_storage_description">Para agregar texto desde el dispositivo de memoria interna</string>
     <string name="f_drive_description">Agregue texto de sus archivos de Google Drive desde su propia cuenta de Google Drive</string>
     <string name="f_parent_description">Haga clic aquí para mostrar las diferentes opciones de entrada</string>
-
-
 </resources>

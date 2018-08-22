@@ -71,11 +71,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
 
     <string name="marker_description">Marquer la facilité de la sélection des lignes de lecture</string>
     <string name="play_description">Cliquez ici pour activer ou désactiver le défilement du texte</string>
-
     <string name="f_add_description">Pour ajouter manuellement un nouveau texte</string>
     <string name="f_storage_description">Pour ajouter du texte à partir du périphérique de mémoire interne</string>
-
     <string name="f_drive_description">Ajoutez du texte à partir de vos fichiers Google Drive à partir de votre propre compte Google Drive</string>
     <string name="f_parent_description">Cliquez ici pour afficher différentes options de saisie</string>
-
 </resources>
