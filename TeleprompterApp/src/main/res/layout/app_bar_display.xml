@@ -57,7 +57,8 @@
                 android:layout_margin="@dimen/scroll_text_margin"
                 android:layout_marginLeft="@dimen/scroll_text_side_margin"
                 android:layout_marginRight="@dimen/scroll_text_side_margin"
-                android:paddingTop="?attr/actionBarSize"
+                android:paddingTop="@dimen/scroll_text_margin_top"
+                android:paddingBottom="@dimen/scroll_text_margin_bottom"
                 android:textColor="@color/color_white"
                 android:textSize="24sp" />
         </LinearLayout>

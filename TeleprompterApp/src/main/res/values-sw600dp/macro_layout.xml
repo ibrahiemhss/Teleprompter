@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- - - - - - - - - - - - - - - -
             - general  -
             - - - - - - - - - - - - - - - -->
@@ -12,6 +12,8 @@
            - - - - - - - - - - - - - - - -->
     <dimen name="marker_height">28dp</dimen>
     <dimen name="marker_width">32dp</dimen>
+    <dimen name="scroll_text_margin_top">472dp</dimen>
+    <dimen name="scroll_text_margin_bottom">472dp</dimen>
     <dimen name="up_view_height">404dp</dimen>
     <dimen name="down_view_height">404dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>
@@ -29,7 +31,6 @@
     <dimen name="nav_small_image_font_width">24dp</dimen>
     <dimen name="nav_small_image_font_height">24dp</dimen>
     <dimen name="nav_big_image_font_width">24dp</dimen>
-    ؤ
     <dimen name="nav_big_image_font_height">24dp</dimen>
     <dimen name="nav_image_color_width">56dp</dimen>
     <dimen name="nav_image_color_height">56dp</dimen>
@@ -68,8 +69,8 @@
     <!-- - - - - - - - - - - - - - - -
          - widget  -
          - - - - - - - - - - - - - - - -->
-    <dimen name="widget_min_height">192dp</dimen>
-    <dimen name="widget_min_width">312dp</dimen>
+    <dimen name="widget_min_height" tools:keep="@dimen/widget_min_height">192dp</dimen>
+    <dimen name="widget_min_width" tools:keep="@dimen/widget_min_width">312dp</dimen>
     <dimen name="widget_title_min_height">50dp</dimen>
     <dimen name="widget_listview_padding_x">16dp</dimen>
     <dimen name="widget_listview_item_height">45dp</dimen>

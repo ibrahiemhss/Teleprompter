@@ -69,7 +69,9 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="no">No</string>
     <string name="short_title">Title is very short Make it 6 characters at least</string>
     <string name="short_script">Script is very short Make it 100 words at least</string>
+    <string name="privacy">Privacy Policy</string>
 
+    <string name="list_description">To view the full text content and run the presentation click here</string>
     <string name="marker_description">Mark the ease of reading line selection</string>
     <string name="play_description">Click here to turn text scrolling on or off</string>
     <string name="f_add_description">To manually add new text</string>

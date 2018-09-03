@@ -1,12 +1,23 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
+
+
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+        }
+
+
     signingConfigs {
         config {
-            keyAlias 'Teleprompter_key'
-            keyPassword 'capstone'
-            storeFile file('/home/ibrahim/key_store/key_tele.jks')
-            storePassword 'capstone'
+            keyAlias 'key_tele'
+            keyPassword 'free1985'
+            storeFile file('/home/ibrahim/key_store/tele.jks')
+            storePassword 'free1985'
         }
     }
     compileOptions {
@@ -18,8 +29,8 @@ android {
         applicationId "com.and.ibrahim.teleprompter"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 9
+        versionName "1.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 
@@ -27,6 +38,11 @@ android {
     buildTypes {
 
         debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    'proguard-rules-debug.pro'
+
             buildConfigField("String", "API_KEY", API_KEY)
             buildConfigField("String", "ID_ClIENT", ID_ClIENT)
             buildConfigField("String", "app_ads_id", APP_ADS_ID)
@@ -41,8 +57,11 @@ android {
 
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+
+            signingConfig signingConfigs.config
             buildConfigField("String", "API_KEY", API_KEY)
             buildConfigField("String", "ID_ClIENT", ID_ClIENT)
             buildConfigField("String", "app_ads_id", APP_ADS_ID)
@@ -76,8 +95,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-drive:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     //setting
-    implementation 'com.android.support:preference-v7:28.0.0-rc01'
-    implementation 'com.android.support:preference-v14:28.0.0-rc01'
+    implementation 'com.android.support:preference-v7:28.0.0-rc02'
+    implementation 'com.android.support:preference-v14:28.0.0-rc02'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -85,8 +104,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //firebase services
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-crash:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
     //roundedimageview library
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'

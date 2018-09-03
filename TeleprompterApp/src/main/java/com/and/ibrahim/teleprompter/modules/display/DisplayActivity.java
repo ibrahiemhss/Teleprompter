@@ -13,6 +13,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -57,14 +58,20 @@ import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import io.fabric.sdk.android.Fabric;
 
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.END;
@@ -121,6 +128,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean isDialogShow;
     private int mScrollPos;
     private boolean isTablet;
+    private InterstitialAd mInterstitialAd;
+
+    private long lastPause=0;
 
 
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
@@ -136,6 +146,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
+
+        MobileAds.initialize(this,
+                getResources().getString(R.string.app_ads_id));
+
+        initializeInterstitialAds();
         isTablet = getResources().getBoolean(R.bool.isTablet);
         if (savedInstanceState != null) {//save state case
 
@@ -151,12 +166,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             if (isDialogShow) {
                 launchDlgTextColors();
             }
-
         }
-        //noinspection deprecation
-        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
-        //noinspection deprecation
-        FirebaseCrash.log("DisplayActivity started");
+        Fabric.with(this, new Crashlytics());
 
         if (!isFirstEntry) {
             addDemo();
@@ -185,7 +196,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         display.getSize(size);
         int width = size.x;
         int height = size.y;
+        mSlideShowScroll.getViewTreeObserver()
+                .addOnScrollChangedListener(() -> {
+                    if (mSlideShowScroll.getChildAt(0).getBottom()
+                            <= (mSlideShowScroll.getHeight() + mSlideShowScroll.getScrollY())) {
 
+                        stopAutoScrolling();
+                    }
+                });
         Log.d("screenSize", "\nWidthDp=" + String.valueOf(screenWidthDp)
                 + "\nHeightDp=" + String.valueOf(screenHeightDp)
                 + "\nwidthPx=" + String.valueOf(width)
@@ -220,6 +238,54 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         mPlayStatus.setVisibility(View.VISIBLE);
     }
+
+    private void initializeInterstitialAds() {
+
+        mInterstitialAd=new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_pub));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                if (mOpenDrawer) {
+                    mDrawerLayout.closeDrawer(Gravity.START);
+                    mOpenDrawer = false;
+                } else {
+                    mDrawerLayout.openDrawer(Gravity.START);
+                    mOpenDrawer = true;
+                }
+            }});
+        requestNewInterstitial();
+
+
+
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+    private void showIntAdd() {
+
+// Show the ad if it's ready. Otherwise, toast and reload the ad.
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+            Log.d("mInterstitialAd", "show");
+
+        }
+        else {
+            Log.d("mInterstitialAd", "not show");
+
+            if (mOpenDrawer) {
+                mDrawerLayout.closeDrawer(Gravity.START);
+                mOpenDrawer = false;
+            } else {
+                mDrawerLayout.openDrawer(Gravity.START);
+                mOpenDrawer = true;
+            }
+        }
+    }
+
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -260,6 +326,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         clickToScrolling();//perform scrolling
         initNavigationDrawer();//initialize navigation drawer
         setupSharedPreferences();
+
+
     }
 
     @Override
@@ -302,8 +370,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                     break;
 
                 case R.id.action_setting:
-                    Intent intent = (new Intent(DisplayActivity.this, SettingsActivity.class));
-                    startActivity(intent);
+
+
+                    showIntAdd();
 
                 default:
                     break;
@@ -312,18 +381,36 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         } else {
             if (item.getItemId() == R.id.action_setting) {
 
-                if (mOpenDrawer) {
-                    mDrawerLayout.closeDrawer(Gravity.START);
-                    mOpenDrawer = false;
-                } else {
-                    mDrawerLayout.openDrawer(Gravity.START);
-                    mOpenDrawer = true;
-                }
+                showIntAdd();
             }
         }
         return super.onOptionsItemSelected(item);
     }
+    public void walkdir(File dir) {
+        String txtPattern = ".txt";
+        String jpgPattern = ".jpg";
+        String mp3Pattern = ".mp3";
 
+        File listFile[] = dir.listFiles();
+
+        if (listFile != null) {
+            for (int i = 0; i < listFile.length; i++) {
+
+                if (listFile[i].isDirectory()) {
+                    walkdir(listFile[i]);
+                } else {
+                    if (listFile[i].getName().endsWith(txtPattern)){
+                        //put in txt folder
+                    }else if (listFile[i].getName().endsWith(jpgPattern.toLowerCase())){
+                        // put in jpg folder
+                    }else if (listFile[i].getName().endsWith(mp3Pattern.toLowerCase())) {
+                        // put in  mp3 folder
+                    }
+                }
+            }
+        }
+
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -357,14 +444,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     //////////all methods responsible for for auto scrolling for scrolling text//////////////////////////////////////////////
     public void startAutoScrolling(int time) {
-        Log.d("lifCycle", "startAutoScrolling1");
 
         if (mSlideShowScroll != null) {
             if (scrollTimer == null) {
                 scrollTimer = new Timer();
                 final Runnable Timer_Tick = () -> {
-                    Log.d("lifCycle", "startAutoScrolling2");
-
 
                     moveScrollView();
                     melliSeconds += 1;
@@ -391,19 +475,18 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void moveScrollView() {
-        Log.d("lifCycle", "moveScrollView1");
 
         if (mSlideShowScroll == null) {
             stopAutoScrolling();
+
         } else {
             mScrollPos = (int) (mSlideShowScroll.getScrollY() + 1.0);
             if (mScrollPos >= verticalScrollMax) {
                 mScrollPos = 0;
+
             }
             mSlideShowScroll.scrollTo(0, mScrollPos);
 
-            Log.e("moveScrollView", "moveScrollView");
-            Log.d("lifCycle", "moveScrollView2");
 
         }
 
@@ -413,7 +496,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         if (scrollTimer != null) {
             scrollTimer.cancel();
             scrollTimer = null;
+
         }
+        lastPause = SystemClock.elapsedRealtime();
+if(mChronometer!=null){
+    mChronometer.stop();
+}
+
+
     }
 
     private void getScrollMaxAmount() {
@@ -432,6 +522,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void clickToScrolling() {
         mSlideShowScroll.getChildAt(0).setOnClickListener(v -> {
@@ -441,8 +532,18 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 startPlayStatus();
                 paused = false;
-                mChronometer.setBase(mChronometer.getBase());
-                mChronometer.start();
+                if(lastPause>0){
+                        mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
+
+                        mChronometer.start();
+
+
+
+                }else {
+                    mChronometer.setBase(SystemClock.elapsedRealtime());
+                    mChronometer.start();
+                }
+
                 startAutoScrolling(timeSpeed);
 
 
@@ -452,8 +553,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
                 paused = true;
-                mChronometer.stop();
-                mChronometer.setActivated(false);
 
                 stopAutoScrolling();
 
@@ -550,29 +649,31 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
         final TextView defaultText = mNavView.findViewById(R.id.default_text);
         final TextView undoText = mNavView.findViewById(R.id.undo_text);
-
-        mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(this).getPrefSpeed());
-        mSeekTextSize.setProgress(SharedPrefManager.getInstance(this).getPrefTextSize());
         mTextSpeed = mNavView.findViewById(R.id.text_font);
-
 
         if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()) {
             mSeekTextSize.setProgress(20);
-            mTextSpeed.setText(String.valueOf(20));
+            mScrollText.setTextSize(20);
 
+        }else {
+            mSeekTextSize.setProgress(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextSize());
+            mScrollText.setTextSize(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextSize());
         }
 
         if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetSpeed()) {
             setSpeed(40);
             mSeekScrollSpeed.setProgress(40);
 
+        }else {
+            setSpeed(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
+            mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
+
         }
 
         mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                startPlayStatus();
-                startAutoScrolling(timeSpeed);
+                stopAutoScrolling();
                 SharedPrefManager.getInstance(DisplayActivity.this).setFirstSetSpeed(true);
             }
 
@@ -584,6 +685,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
                 setSpeed(progress);
+                startPlayStatus();
+                startAutoScrolling(timeSpeed);
                 mTextSpeed.setText(String.valueOf(progress));
                 SharedPrefManager.getInstance(DisplayActivity.this).setPrefSpeed(progress);
             }
@@ -602,8 +705,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-                mScrollText.setTextSize(progress);
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextSize(progress);
+                if (progress>10){
+                    mScrollText.setTextSize(progress);
+                    SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextSize(progress);
+
+                }
 
             }
         });
@@ -727,7 +833,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             }
 
         }
-        Log.d("lifCycle", "onPause");
     }
 
 
@@ -740,7 +845,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         clickSchedule = null;
         scrollerSchedule = null;
         scrollTimer = null;
-        mChronometer = null;
 
         Log.d("lifCycle", "onDestroy");
 
@@ -752,7 +856,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         Log.d("lifCycle", "onResume");
-
+        initializeInterstitialAds();
     }
 
     @Override
@@ -767,6 +871,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onStart() {
         super.onStart();
         Log.d("lifCycle", "onStart");
+        initializeInterstitialAds();
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
 
     }
 
@@ -913,5 +1021,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         }
     }
+
 
 }

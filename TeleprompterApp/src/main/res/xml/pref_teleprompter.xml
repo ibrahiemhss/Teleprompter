@@ -23,5 +23,9 @@
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
         android:title="@string/pref_toggle_marker_label" />
+    <Preference android:title="@string/privacy" >
+        <intent android:action="android.intent.action.VIEW"
+            android:data="https://sites.google.com/view/teleprompter-app/home/teleprompter" />
+    </Preference>
 
 </android.support.v7.preference.PreferenceScreen>

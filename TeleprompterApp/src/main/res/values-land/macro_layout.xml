@@ -11,6 +11,8 @@
     <!-- - - - - - - - - - - - - - - -
            - displayActivity  -
            - - - - - - - - - - - - - - - -->
+    <dimen name="scroll_text_margin_top">172dp</dimen>
+    <dimen name="scroll_text_margin_bottom">214dp</dimen>
     <dimen name="up_view_height">124dp</dimen>
     <dimen name="down_view_height">190dp</dimen>
     <dimen name="container_margin_top">64dp</dimen>

@@ -68,11 +68,15 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="no">لا</string>
     <string name="short_title">العنوان قصير جدا من فضلك اجعله 6 حروف علي الاقل</string>
     <string name="short_script">محتوي النص قصير جدا من فضلك اجعله 100 كلمه علي الاقل</string>
+    <string name="privacy">سياسة الخصوصية</string>
 
+
+    <string name="list_description">لعرض محتوى النص كاملا وتشغيل العرض اضغط هنا</string>
     <string name="marker_description">علامه تسهيل تحديد سطر القرائه</string>
     <string name="play_description">انقر هنا لتشغيل تمرير النص او ايقافه</string>
     <string name="f_add_description">لأضافة نص جديد يدويا</string>
     <string name="f_storage_description">لأضافة نص من ذاكره الجهاز الداخليه</string>
     <string name="f_drive_description">لإضافة نص من ملفات Google Drive من حسابك الخاص في Google Drive</string>
     <string name="f_parent_description">انقر هنا اظهار خيارات الادخال المختلفه</string>
+
 </resources>

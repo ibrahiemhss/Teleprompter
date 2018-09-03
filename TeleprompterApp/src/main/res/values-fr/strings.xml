@@ -57,7 +57,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="undo">Annuler</string>
     <string name="empty_text">Choisir un élément à afficher SVP</string>
     <string name="other_setting">Autres paramètres</string>
-    <string name="save_changes">Sauvegarder les modifications</string>
+    <string name="save_changes">Sauvegarder</string>
     <string name="read_failed">Erreur de chargement du fichier texte</string>
     <string name="file_not_selected" tools:ignore="StringEscaping">Aucun fichier n' a été choisi</string>
     <string name="content_loaded">Le contenu du fichier a été chargé avec succès</string>
@@ -68,7 +68,9 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="no">Non</string>
     <string name="short_title">Le titre est court. Veuiller entrer un titre avec 6 caractères au moins.</string>
     <string name="short_script">Le texte est court. Veuiller ajouter du texte avec 100 mots de long au moins.</string>
+    <string name="privacy">Politique de confidentialité</string>
 
+    <string name="list_description">Pour afficher le contenu en texte intégral et lancer la présentation, cliquez ici</string>
     <string name="marker_description">Marquer la facilité de la sélection des lignes de lecture</string>
     <string name="play_description">Cliquez ici pour activer ou désactiver le défilement du texte</string>
     <string name="f_add_description">Pour ajouter manuellement un nouveau texte</string>

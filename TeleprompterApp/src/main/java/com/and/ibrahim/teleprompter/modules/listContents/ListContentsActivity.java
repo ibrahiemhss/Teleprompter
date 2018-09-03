@@ -23,10 +23,14 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
 
 import butterknife.BindView;
+import io.fabric.sdk.android.Fabric;
 
 @SuppressWarnings("ALL")
 public class ListContentsActivity extends BaseActivity implements View.OnClickListener {
@@ -59,8 +63,8 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         super.onViewReady(savedInstanceState, intent);
         isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
 
-        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
-        FirebaseCrash.log("ListContentsActivity started");
+        Fabric.with(this, new Crashlytics());
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mContentListFragment = new ListContentsFragment();
@@ -78,7 +82,46 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         }
     }
+    @Override
+    public void onResume() {
+        // Start or resume the game.
+        super.onResume();
+       // showInterstitial();
+    }
 
+    private void showInterstitial() {
+
+         InterstitialAd mInterstitialAd;
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_pub));
+        AdRequest adRequestInterstitial = new AdRequest.Builder().addTestDevice("deviceid").build();
+        mInterstitialAd.loadAd(adRequestInterstitial);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+
+            }
+
+            @Override
+            public void onAdLoaded() {
+             //   mAdIsLoading = false;
+                showInterstitial();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+               // mAdIsLoading = false;
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showInterstitial();
+    }
     @Override
     public int getResourceLayout() {
         return R.layout.activity_list_ccontents;

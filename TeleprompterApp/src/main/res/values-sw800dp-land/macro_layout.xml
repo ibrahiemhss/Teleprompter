@@ -3,6 +3,8 @@
     <!-- - - - - - - - - - - - - - - -
            - displayActivity  -
            - - - - - - - - - - - - - - - -->
+    <dimen name="scroll_text_margin_top">458dp</dimen>
+    <dimen name="scroll_text_margin_bottom">434dp</dimen>
     <dimen name="up_view_height">390dp</dimen>
     <dimen name="down_view_height">366dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>

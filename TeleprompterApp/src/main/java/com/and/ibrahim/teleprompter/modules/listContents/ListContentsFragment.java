@@ -43,6 +43,7 @@ import com.and.ibrahim.teleprompter.util.FabAnimations;
 import com.and.ibrahim.teleprompter.util.FetchDataAsyncTask;
 import com.and.ibrahim.teleprompter.util.GetData;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -78,6 +79,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.Fabric;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.Gravity.BOTTOM;
@@ -146,9 +148,10 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         MobileAds.initialize(getActivity(),
                 getResources().getString(R.string.app_ads_id));
         initializeAdd();
-        //  LoaderCallbacks<ArrayList<DataObj>> callback = ListContentsFragment.this;
+        Fabric.with(getActivity(), new Crashlytics());
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
+
 
         Bundle extras = this.getArguments();
         if (extras != null) {
@@ -256,8 +259,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 .addTestDevice(
                         getString(R.string.banner_pup))
                 .build();
-        initializeInterstitialAds();
         mAdView.loadAd(adRequest);
+
+        initializeInterstitialAds();
 
 
     }
