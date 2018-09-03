@@ -37,6 +37,14 @@ Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification
 - Implements a ContentProvider to access locally stored data.
 - Implements Async Loader to get Data from ContentProvider to Display
 
+# Images
+![selection_008](https://user-images.githubusercontent.com/28923748/44999314-98f97d80-afbc-11e8-9899-86b78af342a9.png)
+![selection_011](https://user-images.githubusercontent.com/28923748/44999321-a0208b80-afbc-11e8-8b0a-b75acb3274ef.png)
+![selection_019](https://user-images.githubusercontent.com/28923748/44999326-a7479980-afbc-11e8-945d-c0b60f95714a.png)
+![selection_014](https://user-images.githubusercontent.com/28923748/44999332-ae6ea780-afbc-11e8-9eb0-ce194475f2e5.png)
+![selection_016](https://user-images.githubusercontent.com/28923748/44999335-b29ac500-afbc-11e8-8335-edfafee795f4.png)
+![selection_018](https://user-images.githubusercontent.com/28923748/44999341-b890a600-afbc-11e8-8ede-8ee6047e1ac6.png)
+
 
 # Getting started
 This sample uses the Gradle build system. To build this project, use the "gradlew build" command or use "Import Project" in Android Studio.
