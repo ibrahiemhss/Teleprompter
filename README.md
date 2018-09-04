@@ -4,6 +4,9 @@ Teleprompter, as in classic teleprompter, allows the users to easily read any te
 In order to help the user achieve a good presentation, this app ensures the flexibility of saving any file the user wants from and to the device or the cloud. 
 There are many options the user can freely choose from like resizing fonts ,changing colors, using the app in landscape mode and adjusting the script scrolling speed the way it suits them.
 
+# Images
+![selection_008](https://user-images.githubusercontent.com/28923748/44999314-98f97d80-afbc-11e8-9899-86b78af342a9.png)
+![selection_011](https://user-images.githubusercontent.com/28923748/44999321-a0208b80-afbc-11e8-8b0a-b75acb3274ef.png)
 
 
 # Documentation
@@ -37,13 +40,6 @@ Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification
 - Implements a ContentProvider to access locally stored data.
 - Implements Async Loader to get Data from ContentProvider to Display
 
-# Images
-![selection_008](https://user-images.githubusercontent.com/28923748/44999314-98f97d80-afbc-11e8-9899-86b78af342a9.png)
-![selection_011](https://user-images.githubusercontent.com/28923748/44999321-a0208b80-afbc-11e8-8b0a-b75acb3274ef.png)
-![selection_019](https://user-images.githubusercontent.com/28923748/44999326-a7479980-afbc-11e8-945d-c0b60f95714a.png)
-![selection_014](https://user-images.githubusercontent.com/28923748/44999332-ae6ea780-afbc-11e8-9eb0-ce194475f2e5.png)
-![selection_016](https://user-images.githubusercontent.com/28923748/44999335-b29ac500-afbc-11e8-8335-edfafee795f4.png)
-![selection_018](https://user-images.githubusercontent.com/28923748/44999341-b890a600-afbc-11e8-8ede-8ee6047e1ac6.png)
 
 
 # Getting started
