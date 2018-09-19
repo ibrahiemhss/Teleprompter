@@ -61,6 +61,7 @@ import com.and.ibrahim.teleprompter.util.ScrollingTextView;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
@@ -105,6 +106,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected View mDownView;
     @BindView(R.id.toggle_marker)
     protected ImageView mToggleMarker;
+    @BindView(R.id.adView2)
+    protected AdView mAdView;
 
     int melliSeconds;
     private TextView mEmptyTextShow;
@@ -151,6 +154,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 getResources().getString(R.string.app_ads_id));
 
         initializeInterstitialAds();
+        initializeAdd();
+
         isTablet = getResources().getBoolean(R.bool.isTablet);
         if (savedInstanceState != null) {//save state case
 
@@ -260,7 +265,19 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
 
     }
+    private void initializeAdd() {
 
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(
+                        getString(R.string.banner_pup))
+                .build();
+        mAdView.loadAd(adRequest);
+
+        initializeInterstitialAds();
+
+
+    }
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
@@ -645,11 +662,18 @@ if(mChronometer!=null){
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         TextView OtherSetting = mNavView.findViewById(R.id.other_setting);
+        AdView adView3=mNavView.findViewById(R.id.adView3);
+
 
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
         final TextView defaultText = mNavView.findViewById(R.id.default_text);
         final TextView undoText = mNavView.findViewById(R.id.undo_text);
         mTextSpeed = mNavView.findViewById(R.id.text_font);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(
+                        getString(R.string.banner_pup))
+                .build();
+        adView3.loadAd(adRequest);
 
         if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()) {
             mSeekTextSize.setProgress(20);

@@ -19,7 +19,7 @@
     <dimen name="container_width">@dimen/match_parent</dimen>
 
     <!--navigation contents-->
-    <dimen name="nav_margin_top">48dp</dimen>
+    <dimen name="nav_margin_top">8dp</dimen>
     <dimen name="nav_veiw_group_height">32dp</dimen>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

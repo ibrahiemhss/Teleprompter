@@ -205,6 +205,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/lin44"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rv66"
@@ -222,5 +223,11 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="16sp" />
     </LinearLayout>
-
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lin44"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_pup" />
 </RelativeLayout>
