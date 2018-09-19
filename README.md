@@ -4,6 +4,9 @@ Teleprompter, as in classic teleprompter, allows the users to easily read any te
 In order to help the user achieve a good presentation, this app ensures the flexibility of saving any file the user wants from and to the device or the cloud. 
 There are many options the user can freely choose from like resizing fonts ,changing colors, using the app in landscape mode and adjusting the script scrolling speed the way it suits them.
 
+# Images
+![selection_008](https://user-images.githubusercontent.com/28923748/44999314-98f97d80-afbc-11e8-9899-86b78af342a9.png)
+![selection_011](https://user-images.githubusercontent.com/28923748/44999321-a0208b80-afbc-11e8-8b0a-b75acb3274ef.png)
 
 
 # Documentation
@@ -36,6 +39,7 @@ Check out _Capstone_Stage1.pdf_ for Project Requirement Document / specification
 - Build and deploy using the installRelease Gradle task.
 - Implements a ContentProvider to access locally stored data.
 - Implements Async Loader to get Data from ContentProvider to Display
+
 
 
 # Getting started
