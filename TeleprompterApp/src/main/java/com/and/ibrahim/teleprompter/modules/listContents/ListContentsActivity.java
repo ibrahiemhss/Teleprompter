@@ -82,16 +82,17 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
         }
     }
+
     @Override
     public void onResume() {
         // Start or resume the game.
         super.onResume();
-       // showInterstitial();
+        // showInterstitial();
     }
 
     private void showInterstitial() {
 
-         InterstitialAd mInterstitialAd;
+        InterstitialAd mInterstitialAd;
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_pub));
         AdRequest adRequestInterstitial = new AdRequest.Builder().addTestDevice("deviceid").build();
@@ -105,13 +106,13 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onAdLoaded() {
-             //   mAdIsLoading = false;
+                //   mAdIsLoading = false;
                 showInterstitial();
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-               // mAdIsLoading = false;
+                // mAdIsLoading = false;
             }
         });
 
@@ -122,6 +123,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         super.onStart();
         showInterstitial();
     }
+
     @Override
     public int getResourceLayout() {
         return R.layout.activity_list_ccontents;
