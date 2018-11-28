@@ -33,8 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         ConsentSDK consentSDK = new ConsentSDK.Builder(this)
                 .addTestDeviceId("your device id from logcat") // Add your test device id "Remove addTestDeviceId on production!"
                 .addCustomLogTag("CUSTOM_TAG") // Add custom tag default: ID_LOG
-                .addPrivacyPolicy("https:/teleprompter/teleprompter") // Add your privacy policy url
-                .addPublisherId("pub-77777777") // Add your admob publisher id
+                .addPrivacyPolicy("https://???????") // Add your privacy policy url
+                .addPublisherId("pub-??????6") // Add your admob publisher id
                 .build();
 
         // To check the consent and to move to MainActivity after everything is fine :).
