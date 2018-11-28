@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_graylt"
+    tools:context="com.and.ibrahim.teleprompter.modules.splash.SplashActivity">
+
+    <ImageView
+        android:id="@+id/img_s"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_centerInParent="true"
+        android:elevation="16dp"
+        android:src="@mipmap/teleprompter_icon"
+        />
+    <TextView
+        android:id="@+id/loadingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:elevation="16dp"
+        android:layout_below="@+id/img_s"
+        android:text="@string/loading"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

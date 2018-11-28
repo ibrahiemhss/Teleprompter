@@ -83,4 +83,5 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="f_storage_description">To add text from the internal memory device</string>
     <string name="f_drive_description">Add text from your Google Drive files from your own Google Drive account</string>
     <string name="f_parent_description">Click here to show different input options</string>
+    <string name="loading">Loading ...</string>
 </resources>

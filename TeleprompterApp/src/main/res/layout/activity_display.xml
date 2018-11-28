@@ -30,7 +30,6 @@
             android:layout_width="@dimen/nav_width"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="@dimen/nav_margin_top"
             android:background="@drawable/white_back"
             android:labelFor="@+id/app_bar_main">
 

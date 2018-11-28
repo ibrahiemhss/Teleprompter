@@ -266,14 +266,20 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     }
 
+
+
     private void initializeInterstitialAds() {
         if (getActivity() != null) {
             mInterstitialAd = new InterstitialAd(getActivity());
             mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_pub));
+            AdRequest request = new AdRequest.Builder().build();
+            mInterstitialAd.loadAd(request);
             mInterstitialAd.setAdListener(new AdListener() {
+
                 @Override
                 public void onAdClosed() {
-                    requestNewInterstitial();
+                    super.onAdClosed();
+
                     if (mScrollString != null) {
                         if (isTablet) {
 
@@ -288,10 +294,18 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
                     }
                 }
-            });
-            requestNewInterstitial();
-        }
 
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    mInterstitialAd.show();
+
+                }
+            });
+
+
+
+        }
     }
 
     private void requestNewInterstitial() {

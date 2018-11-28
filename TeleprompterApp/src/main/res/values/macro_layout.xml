@@ -30,30 +30,30 @@
     <dimen name="nav_width">216dp</dimen>
     <dimen name="nav_margin_top">96dp</dimen>
     <dimen name="nav_veiw_group_width">@dimen/match_parent</dimen>
-    <dimen name="nav_veiw_group_height">56dp</dimen>
-    <dimen name="nav_veiw_group_side_margin">8dp</dimen>
-    <dimen name="nav_veiw_group_top_margin">8dp</dimen>
+    <dimen name="nav_veiw_group_height">48dp</dimen>
+    <dimen name="nav_veiw_group_side_margin">4dp</dimen>
+    <dimen name="nav_veiw_group_top_margin">4dp</dimen>
     <dimen name="nav_small_image_font_width">12dp</dimen>
     <dimen name="nav_small_image_font_height">12dp</dimen>
-    <dimen name="nav_big_image_font_width">24dp</dimen>
-    <dimen name="nav_big_image_font_height">24dp</dimen>
-    <dimen name="nav_image_color_width">32dp</dimen>
-    <dimen name="nav_image_color_height">32dp</dimen>
+    <dimen name="nav_big_image_font_width">18dp</dimen>
+    <dimen name="nav_big_image_font_height">18dp</dimen>
+    <dimen name="nav_image_color_width">24dp</dimen>
+    <dimen name="nav_image_color_height">24dp</dimen>
     <dimen name="nav_img_veiw_side_margin">16dp</dimen>
-    <dimen name="nav_img_veiw_top_margin">8dp</dimen>
-    <dimen name="nav_img_veiw_bottom_margin">8dp</dimen>
+    <dimen name="nav_img_veiw_top_margin">4dp</dimen>
+    <dimen name="nav_img_veiw_bottom_margin">4dp</dimen>
     <dimen name="nav_text_width">62dp</dimen>
     <dimen name="nav_text_height">24dp</dimen>
     <dimen name="nav_text_side_margin">16dp</dimen>
-    <dimen name="nav_text_size">18sp</dimen>
+    <dimen name="nav_text_size">16sp</dimen>
     <!--dialog colors-->
     <dimen name="colors_dialog_margin">16dp</dimen>
     <!--item colors-->
-    <dimen name="colors_item_width">96dp</dimen>
-    <dimen name="colors_item_height">48dp</dimen>
+    <dimen name="colors_item_width">40dp</dimen>
+    <dimen name="colors_item_height">40dp</dimen>
     <dimen name="colors_item_padding">2dp</dimen>
-    <dimen name="colors_item_image_width">48dp</dimen>
-    <dimen name="colors_item_image_height">48dp</dimen>
+    <dimen name="colors_item_image_width">40dp</dimen>
+    <dimen name="colors_item_image_height">40dp</dimen>
     <dimen name="colors_item_margin">4dp</dimen>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -104,6 +104,7 @@
     <dimen name="widget_title_min_height">50dp</dimen>
     <dimen name="widget_listview_padding_x">16dp</dimen>
     <dimen name="widget_listview_item_height">45dp</dimen>
+    <dimen name="text_color_side_margin">70dp</dimen>
 
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
