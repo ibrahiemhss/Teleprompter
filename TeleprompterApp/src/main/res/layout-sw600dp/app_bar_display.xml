@@ -166,6 +166,7 @@
                         android:background="@drawable/white_back"
                         android:padding="4dp"
                         android:textColor="@color/orange_light" />
+
                     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/adView2"
                         android:layout_width="wrap_content"

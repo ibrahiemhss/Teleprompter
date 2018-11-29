@@ -22,20 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
 
-       <!-- <receiver
-            android:name=".modules.widget.WidgetProvider"
-            tools:ignore="InnerclassSeparator">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.ibrahim.udacity_and_baking_app.app.ACTION_DATA_UPDATED" />
-            </intent-filter>
+        <!-- <receiver
+             android:name=".modules.widget.WidgetProvider"
+             tools:ignore="InnerclassSeparator">
+             <intent-filter>
+                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                 <action android:name="com.example.ibrahim.udacity_and_baking_app.app.ACTION_DATA_UPDATED" />
+             </intent-filter>
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/main_widget_info" />
-        </receiver>-->
+             <meta-data
+                 android:name="android.appwidget.provider"
+                 android:resource="@xml/main_widget_info" />
+         </receiver>-->
         <service
             android:name=".modules.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"

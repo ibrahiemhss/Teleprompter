@@ -133,7 +133,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private boolean isTablet;
     private InterstitialAd mInterstitialAd;
 
-    private long lastPause=0;
+    private long lastPause = 0;
 
 
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
@@ -246,7 +246,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     private void initializeInterstitialAds() {
 
-        mInterstitialAd=new InterstitialAd(this);
+        mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_pub));
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -259,12 +259,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                     mDrawerLayout.openDrawer(Gravity.START);
                     mOpenDrawer = true;
                 }
-            }});
+            }
+        });
         requestNewInterstitial();
 
 
-
     }
+
     private void initializeAdd() {
 
 
@@ -278,10 +279,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
 
     }
+
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
     }
+
     private void showIntAdd() {
 
 // Show the ad if it's ready. Otherwise, toast and reload the ad.
@@ -289,8 +292,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mInterstitialAd.show();
             Log.d("mInterstitialAd", "show");
 
-        }
-        else {
+        } else {
             Log.d("mInterstitialAd", "not show");
 
             if (mOpenDrawer) {
@@ -403,6 +405,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void walkdir(File dir) {
         String txtPattern = ".txt";
         String jpgPattern = ".jpg";
@@ -416,11 +419,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 if (listFile[i].isDirectory()) {
                     walkdir(listFile[i]);
                 } else {
-                    if (listFile[i].getName().endsWith(txtPattern)){
+                    if (listFile[i].getName().endsWith(txtPattern)) {
                         //put in txt folder
-                    }else if (listFile[i].getName().endsWith(jpgPattern.toLowerCase())){
+                    } else if (listFile[i].getName().endsWith(jpgPattern.toLowerCase())) {
                         // put in jpg folder
-                    }else if (listFile[i].getName().endsWith(mp3Pattern.toLowerCase())) {
+                    } else if (listFile[i].getName().endsWith(mp3Pattern.toLowerCase())) {
                         // put in  mp3 folder
                     }
                 }
@@ -516,9 +519,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         }
         lastPause = SystemClock.elapsedRealtime();
-if(mChronometer!=null){
-    mChronometer.stop();
-}
+        if (mChronometer != null) {
+            mChronometer.stop();
+        }
 
 
     }
@@ -549,14 +552,13 @@ if(mChronometer!=null){
 
                 startPlayStatus();
                 paused = false;
-                if(lastPause>0){
-                        mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
+                if (lastPause > 0) {
+                    mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
 
-                        mChronometer.start();
+                    mChronometer.start();
 
 
-
-                }else {
+                } else {
                     mChronometer.setBase(SystemClock.elapsedRealtime());
                     mChronometer.start();
                 }
@@ -662,7 +664,7 @@ if(mChronometer!=null){
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         TextView OtherSetting = mNavView.findViewById(R.id.other_setting);
-        AdView adView3=mNavView.findViewById(R.id.adView3);
+        AdView adView3 = mNavView.findViewById(R.id.adView3);
 
 
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
@@ -679,7 +681,7 @@ if(mChronometer!=null){
             mSeekTextSize.setProgress(20);
             mScrollText.setTextSize(20);
 
-        }else {
+        } else {
             mSeekTextSize.setProgress(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextSize());
             mScrollText.setTextSize(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextSize());
         }
@@ -688,7 +690,7 @@ if(mChronometer!=null){
             setSpeed(40);
             mSeekScrollSpeed.setProgress(40);
 
-        }else {
+        } else {
             setSpeed(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
             mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
 
@@ -729,7 +731,7 @@ if(mChronometer!=null){
 
             @Override
             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-                if (progress>10){
+                if (progress > 10) {
                     mScrollText.setTextSize(progress);
                     SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextSize(progress);
 

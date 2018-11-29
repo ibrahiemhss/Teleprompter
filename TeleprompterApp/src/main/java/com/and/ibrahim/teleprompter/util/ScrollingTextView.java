@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+
 public class ScrollingTextView extends AppCompatTextView {
     @SuppressWarnings("unused")
     private static boolean mirror;
