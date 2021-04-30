@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#075e54</color>
     <color name="colorPrimaryLight">#7fccbb</color>
     <color name="colorAccent">#FF5722</color>
+    <color name="colorAccentLight">#F67D57</color>
+    <color name="colorAccentDark">#F44710</color>
     <color name="colorTransparentBlack">#73000000</color>
     <color name="colorTransparent">#00ffffff</color>
     <color name="lime_green">#25d366</color>
@@ -29,5 +31,15 @@
     <color name="Blue">#1438b7</color>
     <color name="LightBlue">#cdd8ff</color>
 
+    <color name="saveText">#ffffff</color>
+    <color name="settingsBarColor">#000000</color>
+    <color name="transparentBar">#00000000</color>
+    <color name="timeElapsed">#ff0000</color>
+    <color name="memoryConsumed">#ff0000</color>
+    <color name="uploadError">#ff0000</color>
+    <color name="uploadColor">#5c5454</color>
+    <color name="backColorDialog">#000000</color>
+    <color name="savedMsg">#7F000000</color>
+    <color name="backColorSettingPopup">#FFFFF0</color>
 
 </resources>

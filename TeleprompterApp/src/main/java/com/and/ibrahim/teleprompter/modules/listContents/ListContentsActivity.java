@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.RequiresApi;
+
+import com.and.ibrahim.teleprompter.callback.OnActionAd;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,17 +25,12 @@ import com.and.ibrahim.teleprompter.callback.FragmentEditListRefreshListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
-import io.fabric.sdk.android.Fabric;
 
 @SuppressWarnings("ALL")
-public class ListContentsActivity extends BaseActivity implements View.OnClickListener {
+public class ListContentsActivity extends BaseActivity implements View.OnClickListener, OnActionAd {
 
     private static final String TAG = "ListContentsActivity";
     @BindView(R.id.list_contents_collapsing_toolbar)
@@ -63,7 +60,7 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
         super.onViewReady(savedInstanceState, intent);
         isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
 
-        Fabric.with(this, new Crashlytics());
+        //Fabric.with(this, new Crashlytics());
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -87,41 +84,13 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
     public void onResume() {
         // Start or resume the game.
         super.onResume();
-        // showInterstitial();
-    }
-
-    private void showInterstitial() {
-
-        InterstitialAd mInterstitialAd;
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_pub));
-        AdRequest adRequestInterstitial = new AdRequest.Builder().addTestDevice("deviceid").build();
-        mInterstitialAd.loadAd(adRequestInterstitial);
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-
-            }
-
-            @Override
-            public void onAdLoaded() {
-                //   mAdIsLoading = false;
-                showInterstitial();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // mAdIsLoading = false;
-            }
-        });
 
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        showInterstitial();
     }
 
     @Override
@@ -223,5 +192,10 @@ public class ListContentsActivity extends BaseActivity implements View.OnClickLi
 
             values.clear();
         }
+    }
+
+    @Override
+    public void onClose(int type) {
+
     }
 }

@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "1031119630339-5thvopo64k0khf35sunsa9t8j5gsi2pm.apps.googleusercontent.com",
+          "client_id": "1031119630339-v07gc29602p1g0adell41mnitq0ok273.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.and.ibrahim.teleprompter",
@@ -23,32 +23,25 @@
           }
         },
         {
-          "client_id": "1031119630339-n0sbp38j5mjurmi1tn2i57bg5fri1ngo.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "1031119630339-vanq80mtnuvhvsjd63le0ftlvkon951o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.and.ibrahim.teleprompter",
+            "certificate_hash": "6eea27a942ccace521be7d96da965ef443c973bf"
+          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDH7fac0fB87GpC8YzkTIJBfQUI--Xg-ms"
+          "current_key": "AIzaSyCPP7R_KgxB__wyGVzuC3BS0dwDvzCQi5s"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1031119630339-n0sbp38j5mjurmi1tn2i57bg5fri1ngo.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": []
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-2142834117997426~1818242037"
     }
   ],
   "configuration_version": "1"

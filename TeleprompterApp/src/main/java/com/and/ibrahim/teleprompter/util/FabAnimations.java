@@ -1,7 +1,7 @@
 package com.and.ibrahim.teleprompter.util;
 
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,7 +10,7 @@ import com.and.ibrahim.teleprompter.R;
 
 public class FabAnimations {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "FabAnimations";
     private final Context mContext;
     private final FloatingActionButton mFab;
     private final FloatingActionButton mFabAdd;

@@ -6,19 +6,39 @@
     android:layout_height="match_parent"
     android:background="@color/color_graylt">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="@dimen/list_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/list_bottom_padding"
-        android:paddingLeft="@dimen/list_side_padding"
-        android:paddingRight="@dimen/list_side_padding"
-        android:contentDescription="@string/list_description"
-        android:scrollbarStyle="outsideOverlay" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="@dimen/list_width"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:layout_gravity="center"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/list_bottom_padding"
+            android:paddingLeft="@dimen/list_side_padding"
+            android:paddingRight="@dimen/list_side_padding"
+            android:contentDescription="@string/list_description"
+            android:scrollbarStyle="outsideOverlay" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="start"
+            android:background="@color/color_graylt"
+            android:layout_marginEnd="@dimen/banner_start_margin"
+            android:layout_height="wrap_content">
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:background="@color/color_graylt"
+                android:layout_height="wrap_content"
+                ads:adSize="FLUID"
+                ads:adUnitId="@string/banner_pup" />
+        </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +56,7 @@
         app:elevation="@dimen/fab_elevation"
         app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_storage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +74,7 @@
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_cloud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +92,7 @@
         app:elevation="@dimen/fab_elevation"
         app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,18 +104,10 @@
         android:contentDescription="@string/f_parent_description"
         android:src="@drawable/ic_add_white"
         ads:ignore="RelativeOverlap"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/orange_light"
         app:elevation="@dimen/fab_elevation"
         app:pressedTranslationZ="@dimen/fab_press_translation_z" />
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_pup" />
 
 
 </RelativeLayout>

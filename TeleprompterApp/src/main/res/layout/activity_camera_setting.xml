@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransparent"
+        >
+    <LinearLayout
+        android:id="@+id/settingsParent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransparent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/saveMedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/headTextLeftMargin"
+                android:layout_marginTop="@dimen/headTextTopMargin"
+                android:text="@string/saveMedia"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/settingsMainText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/accent_border_back"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/phoneMemButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="@dimen/headTextLeftMargin"
+                    android:layout_marginTop="@dimen/headTextTopMargin"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple"
+                    android:buttonTint="@color/orange_light"
+                    android:checked="true"
+                    android:onClick="selectSaveMedia"
+                    android:text="@string/phoneMemory"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/settingsSubText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sdCardParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/accent_border_back"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/sdCardbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/headTextLeftMargin"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple"
+                    android:buttonTint="@color/orange_light"
+                    android:onClick="selectSaveMedia"
+                    android:text="@string/sdCard"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/settingsSubText" />
+
+                <LinearLayout
+                    android:id="@+id/sdcardlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="@dimen/headTextLeftMargin"
+                    android:layout_marginEnd="@dimen/headTextLeftMargin"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/sdcardpathmsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/colorPrimaryText" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/separatorVideo2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separatorHeight"
+            android:background="@color/lime_green"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/videoResolutionParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/accent_border_back"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/videoResolutionHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/headTextLeftMargin"
+                android:paddingBottom="@dimen/photoResTopBottomMargin"
+                android:paddingTop="@dimen/photoResTopBottomMargin"
+                android:text="@string/videoResolutionHeading"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/settingsMainText" />
+
+        </LinearLayout>
+
+   <!--     <LinearLayout
+            android:id="@+id/separator2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separatorHeight"
+            android:background="@color/lime_green"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/photoResolutionParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/medium_container_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/photoResolutionHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/headTextLeftMargin"
+                android:paddingBottom="@dimen/photoResTopBottomMargin"
+                android:paddingTop="@dimen/photoResTopBottomMargin"
+                android:text="@string/photoSettings"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/settingsMainText" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/headTextLeftMargin"
+                android:layout_marginTop="@dimen/headTextTopMargin"
+                android:layout_marginEnd="@dimen/headTextLeftMargin"
+                android:layout_marginBottom="@dimen/headTextTopMargin"
+                android:text="@string/uploadmsg"
+                android:textColor="@color/colorPrimaryText" />
+
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/separator6"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separatorHeight"
+            android:background="@color/lime_green"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phoneMemParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showMemoryConsumed"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:background="@drawable/medium_container_background"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/headTextTopMargin"
+            android:paddingTop="@dimen/headTextTopMargin">
+
+            <LinearLayout
+                android:id="@+id/phoneMemParentVert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/phoneMemText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/headTextLeftMargin"
+                    android:text="@string/phoneMemoryLimit"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/settingsMainText" />
+
+                <TextView
+                    android:id="@+id/phoneMemTextMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/headTextLeftMargin"
+                    android:layout_marginTop="@dimen/headTextTopMargin"
+                    android:text="@string/phoneMemoryLimitMsg"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/settingsSubText" />
+
+                <TextView
+                    android:id="@+id/thresholdText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/headTextLeftMargin"
+                    android:layout_marginTop="@dimen/headTextTopMargin"
+                    android:text="@string/memoryThresholdLimit"
+                    android:textColor="@color/colorPrimaryText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/arrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/greenArrow"
+                    android:layout_width="@dimen/greenArrowWidth"
+                    android:layout_height="@dimen/greenArrowHeight"
+                    android:contentDescription="@string/greenArrow"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_right" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/separator3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separatorHeight"
+            android:background="@color/lime_green"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <!--  <LinearLayout
+             android:id="@+id/saveToCloudParent"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
+
+             <TextView
+                 android:id="@+id/textView12"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="@dimen/headTextTopMargin"
+                 android:layout_marginStart="@dimen/headTextLeftMargin"
+                 android:layout_marginTop="@dimen/headTextTopMargin"
+                 android:layout_weight="1"
+                 android:text="@string/saveToCloud"
+                 android:textColor="@color/colorPrimaryText"
+                 android:textSize="@dimen/settingsMainText" />
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:id="@+id/googleDrive"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:layout_margin="8dp"
+             android:background="@drawable/accent_border_back"
+             android:weightSum="1">
+
+         </LinearLayout>
+
+         <LinearLayout
+             android:id="@+id/dropBox"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_marginTop="@dimen/dropboxCheckboxTopMargin"
+             android:orientation="horizontal"
+             android:layout_margin="8dp"
+             android:background="@drawable/accent_border_back"
+             android:weightSum="1">
+
+             <CheckBox
+                 android:id="@+id/switchOnDropbox"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="@dimen/headTextTopMargin"
+                 android:layout_marginStart="@dimen/headTextLeftMargin"
+                 android:layout_weight=".5"
+                 android:background="@drawable/ripple"
+                 android:buttonTint="@color/orange_light"
+                 android:checked="false"
+                 android:onClick="saveToDropBox"
+                 android:paddingStart="@dimen/headTextLeftMargin"
+                 android:text="@string/dropbox"
+                 android:textColor="@color/colorPrimaryText"
+                 android:thumbTint="@color/orange_light" />
+
+         </LinearLayout>
+         <LinearLayout
+             android:id="@+id/separator4"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/separatorHeight"
+             android:background="@color/lime_green"
+             android:orientation="horizontal">
+
+         </LinearLayout>
+        <LinearLayout
+             android:id="@+id/feedbackParent"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+
+             <TextView
+                 android:id="@+id/feedbackHeading"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="@dimen/headTextLeftMargin"
+                 android:layout_marginLeft="@dimen/headTextLeftMargin"
+                 android:layout_marginTop="@dimen/headTextTopMargin"
+                 android:text="@string/feedback"
+                 android:textColor="@color/colorPrimaryText"
+                 android:textSize="@dimen/settingsMainText" />
+
+             <TextView
+                 android:id="@+id/textViewfeedback"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="@dimen/headTextTopMargin"
+                 android:layout_marginEnd="@dimen/headTextLeftMargin"
+                 android:layout_marginStart="@dimen/headTextLeftMargin"
+                 android:text="@string/feedbackMsg"
+                 android:textColor="@color/colorPrimaryText" />
+
+             <TextView
+                 android:id="@+id/textViewfeedbackThanks"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="@dimen/headTextTopMargin"
+                 android:layout_marginEnd="@dimen/headTextLeftMargin"
+                 android:layout_marginStart="@dimen/headTextLeftMargin"
+                 android:gravity="center"
+                 android:text="Thank you!"
+                 android:textColor="@color/colorPrimaryText" />
+
+             <EditText
+                 android:id="@+id/feedback_information"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/medium_container_background"
+                 android:gravity="top|left"
+                 android:inputType="textMultiLine"
+                 android:lines="5"
+                 android:padding="8dp"
+                 android:layout_margin="8dp"
+                 android:overScrollMode="always"
+                 android:scrollHorizontally="false"
+                 android:scrollbarStyle="insideInset"
+                 android:scrollbars="vertical"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:textColor="@color/colorPrimaryText" />
+
+             <Button
+                 android:id="@+id/feedbackButton"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:onClick="sendFeedback"
+                 android:padding="8dp"
+                 android:background="@drawable/accent_border_back"
+                 android:text="@string/feedbackButton"/>
+
+             <CheckBox
+                 android:id="@+id/switchOnDrive"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="@dimen/headTextLeftMargin"
+                 android:layout_marginTop="10dp"
+                 android:layout_marginBottom="@dimen/headTextTopMargin"
+                 android:layout_weight=".5"
+                 android:autoText="false"
+                 android:layout_margin="8dp"
+                 android:padding="8"
+                 android:background="@drawable/accent_border_back"                android:buttonTint="@color/orange_light"
+                 android:checked="false"
+                 android:onClick="saveToCloudDrive"
+                 android:paddingStart="@dimen/headTextLeftMargin"
+                 android:singleLine="true"
+                 android:text="@string/googleDrive"
+                 android:textColor="@color/colorPrimaryText"
+                 android:textColorLink="@color/orange_light"
+                 android:thumbTint="@color/orange_light" />
+
+         </LinearLayout>-->
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_back"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/timerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryText"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/maxBrightness"
+        android:layout_width="@dimen/brightnessWidth"
+        android:layout_height="@dimen/brightnessHeight"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/minBrightness"
+        android:layout_marginBottom="@dimen/brightnessBottomMargin"
+        android:layout_marginEnd="@dimen/brightnessBottomMargin"
+        app:srcCompat="@drawable/ic_baseline_brightness_high_24" />
+
+    <ImageView
+        android:id="@+id/minBrightness"
+        android:layout_width="@dimen/brightnessWidth"
+        android:layout_height="@dimen/brightnessHeight"
+        android:layout_below="@+id/timerText"
+        android:layout_marginBottom="@dimen/brightnessBottomMargin"
+        android:layout_marginStart="@dimen/brightnessBottomMargin"
+        app:srcCompat="@drawable/ic_baseline_brightness_low_24" />
+
+    <SeekBar
+        android:id="@+id/brightnessBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/maxBrightness"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:indeterminate="false"
+        android:progressBackgroundTint="@color/orange_light"
+        android:progressTint="@color/orange_light"
+        android:thumb="@drawable/orange_circle" />
+
+    <ImageView
+        android:id="@+id/normalBrightness"
+        android:layout_width="@dimen/normalBrightnessWidth"
+        android:layout_height="@dimen/normalBrightnessHeight"
+        android:layout_below="@+id/brightnessBar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/ic_baseline_arrow_drop_up_24" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/normalBrightness"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/setTimer"
+            android:layout_width="@dimen/increaseBrightnessWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/accent_border_back"
+            android:text="-"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/increaseDecreaseTextSize" />
+
+        <Button
+            android:id="@+id/increaseBrightness"
+            android:layout_width="@dimen/increaseBrightnessWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/accent_border_back"
+            android:text="+"
+            android:textSize="@dimen/increaseDecreaseTextSize" />
+
+    </LinearLayout>
+</RelativeLayout>

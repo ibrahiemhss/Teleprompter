@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.listContents;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,16 +11,19 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.view.ContextThemeWrapper;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import com.and.ibrahim.teleprompter.data.SharedPrefManager;
+import com.and.ibrahim.teleprompter.util.AdsUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -35,7 +39,7 @@ import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.callback.OnDataPassListener;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.modules.display.DisplayActivity;
-import com.and.ibrahim.teleprompter.modules.widget.WidgetProvider;
+import com.and.ibrahim.teleprompter.mvp.view.WidgetProvider;
 import com.and.ibrahim.teleprompter.mvp.model.DataObj;
 import com.and.ibrahim.teleprompter.mvp.view.OnItemViewClickListener;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
@@ -43,12 +47,7 @@ import com.and.ibrahim.teleprompter.util.FabAnimations;
 import com.and.ibrahim.teleprompter.util.FetchDataAsyncTask;
 import com.and.ibrahim.teleprompter.util.GetData;
 import com.and.ibrahim.teleprompter.util.LinedEditText;
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -79,7 +78,6 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.Gravity.BOTTOM;
@@ -105,6 +103,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     protected RecyclerView mRecyclerView;
     @BindView(R.id.adView)
     protected AdView mAdView;
+    private AdsUtils mAdUtils;
     private Dialog mAddDialog;
     private Dialog mUpdateDialog;
     private boolean isOpen = false;
@@ -127,7 +126,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private DriveResourceClient mDriveResourceClient;
     private TaskCompletionSource<DriveId> mOpenItemTaskSource;
     private boolean isTablet;
-    private InterstitialAd mInterstitialAd;
     private FetchDataAsyncTask mFetchDataAsyncTask;
 
 
@@ -135,7 +133,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
         if (bundle != null && bundle.containsKey(Contract.EXTRA_TEXT)) {
             int mFlag = bundle.getInt(Contract.EXTRA_FLAG);
-            Log.d(TAG, "myFlag is " + String.valueOf(mFlag));
+            Log.d(TAG, "myFlag is " + mFlag);
         }
     }
 
@@ -145,11 +143,13 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_content_fragment, container, false);
         ButterKnife.bind(this, view);
-        MobileAds.initialize(getActivity(),
-                getResources().getString(R.string.app_ads_id));
-        initializeAdd();
-        Fabric.with(getActivity(), new Crashlytics());
 
+       // Fabric.with(getActivity(), new Crashlytics());
+        mAdUtils =new AdsUtils(getActivity(), data -> {
+            Log.i(TAG, "onCLose Full Screen action = " + data);
+        });
+        mAdUtils.initializeBannerAd(mAdView);
+        mAdUtils.initializeRewardedAd();
         isTablet = getResources().getBoolean(R.bool.isTablet);
 
 
@@ -161,11 +161,11 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         initializeView();
         initializeList();
 
-        signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
+        signInAccount = GoogleSignIn.getLastSignedInAccount(requireActivity());
 
 
         if (isTablet) {
-            ((DisplayActivity) Objects.requireNonNull(getActivity())).setFragmentEditListRefreshListener(() -> {
+            ((DisplayActivity) requireActivity()).setFragmentEditListRefreshListener(() -> {
                 if (mArrayList.size() > 0) {
                     launchDeleteAllDialog();
                 }
@@ -185,7 +185,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (isTablet) {
             dataPasser = (OnDataPassListener) context;
@@ -251,74 +251,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     }
 
-
-    private void initializeAdd() {
-
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(
-                        getString(R.string.banner_pup))
-                .build();
-        mAdView.loadAd(adRequest);
-
-        initializeInterstitialAds();
-
-
-    }
-
-
-
-    private void initializeInterstitialAds() {
-        if (getActivity() != null) {
-            mInterstitialAd = new InterstitialAd(getActivity());
-            mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_pub));
-            AdRequest request = new AdRequest.Builder().build();
-            mInterstitialAd.loadAd(request);
-            mInterstitialAd.setAdListener(new AdListener() {
-
-                @Override
-                public void onAdClosed() {
-                    super.onAdClosed();
-
-                    if (mScrollString != null) {
-                        if (isTablet) {
-
-                            passData(mScrollString);
-
-                        } else {
-                            Intent intent = new Intent(getActivity(), DisplayActivity.class);
-                            intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
-                            startActivity(intent);
-
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onAdLoaded() {
-                    super.onAdLoaded();
-                    mInterstitialAd.show();
-
-                }
-            });
-
-
-
-        }
-    }
-
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mInterstitialAd.loadAd(adRequest);
-    }
-
     private void addScrollString(String mScrollString) {
 
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
             if (mScrollString != null)
                 if (isTablet) {
 
@@ -331,7 +266,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 }
 
 
-        }
 
     }
 
@@ -342,7 +276,14 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         int id = view.getId();
         switch (id) {
             case R.id.fab:
-                mFabAnimations.animateFAB();
+                Log.d(TAG, " isFullScreenAdShown ="+SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown());
+                if(!SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown()){
+                    SharedPrefManager.getInstance(getActivity()).setFullScreenAdShown(true);
+                    mAdUtils.showAdd(Contract.REAWRDED_ADS);
+                }else{
+                    mFabAnimations.animateFAB();
+
+                }
                 break;
             case R.id.fab_add:
                 if (!isOpen) {
@@ -383,7 +324,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         teleprompterAdapter = new TeleprompterAdapter(getLayoutInflater(), new OnItemViewClickListener() {
             @Override
             public void onEditImgClickListener(int position, View v) {
-                launchPopUpMenu(v, position);
+                    launchPopUpMenu(v, position);
+
             }
 
             @Override
@@ -422,15 +364,15 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
         refreshList();
-        Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
+        @SuppressLint("UseRequireInsteadOfGet") Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
         float density = getResources().getDisplayMetrics().density;
         float dpHeight = outMetrics.heightPixels / density;
         float dpWidth = outMetrics.widthPixels / density;
-        Log.d(TAG, "screen width = " + String.valueOf(dpWidth));
-        Log.d(TAG, "screen height = " + String.valueOf(dpHeight));
+        Log.d(TAG, "screen width = " + dpWidth);
+        Log.d(TAG, "screen height = " + dpHeight);
 
         mRecyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager;
@@ -476,6 +418,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchAddDialog(String title, String content) {
 
@@ -516,6 +459,9 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
         mAdd.setOnClickListener(v -> {
+            Log.d(TAG, " isFullScreenAdShown ="+SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown());
+
+
             isAddDialogShow = false;
 
             mLastTitleAdding = Objects.requireNonNull(mEditTextAddTitle.getText()).toString();
@@ -586,7 +532,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     private void launchUpdateDialog(String title, String content, final int position) {
 
-        mUpdateDialog = new Dialog(Objects.requireNonNull(getActivity()));
+        mUpdateDialog = new Dialog(requireActivity());
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(Objects.requireNonNull(mUpdateDialog.getWindow()).getAttributes());
         lp.width = 48;
@@ -643,7 +589,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     private void launchDeleteAllDialog() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+        @SuppressLint("UseRequireInsteadOfGet") AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 Objects.requireNonNull(getActivity()));
         alertDialogBuilder.setTitle(getResources().getString(R.string.Delete));
 
@@ -667,7 +613,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                Objects.requireNonNull(getActivity()));
+                requireActivity());
         alertDialogBuilder.setTitle(getResources().getString(R.string.Delete));
 
         // set dialog message
@@ -683,6 +629,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private void deleteSelectedItem(int position) {
 
         if (GetData.getTeleprompters(getActivity()).size() > 0) {
@@ -706,6 +653,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private void deleteAll() {
 
 
@@ -782,7 +730,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
                 isUpdateDialogShow = false;
             }
         }
-
+        mAdUtils.dispose("onPause");
     }
 
     @Override
@@ -790,6 +738,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         super.onDestroy();
         unCheckAll();
         mFetchDataAsyncTask.setListener(null); // PREVENT LEAK AFTER ACTIVITY DESTROYED
+        mAdUtils.dispose("onDestroy");
 
     }
 
@@ -801,6 +750,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private void unCheckAll() {
         ContentValues values = new ContentValues();
         values.put(Contract.Entry.COL_SELECT, 0);
@@ -849,7 +799,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             case REQUEST_READ_STORAGE_CODE:
                 if (resultCode == RESULT_OK) {
                     try {
-                        InputStream inputStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
+                        @SuppressLint("UseRequireInsteadOfGet") InputStream inputStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
                         java.util.Scanner s = new java.util.Scanner(Objects.requireNonNull(inputStream)).useDelimiter("\\A");
                         mLastContentAdding = s.hasNext() ? s.next() : "";
                         launchAddDialog(null, mLastContentAdding);
@@ -879,6 +829,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     }
 
     //////////////////Working With Google Drive///////////////////////////////
+    @SuppressLint("UseRequireInsteadOfGet")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void retrieveContents(DriveFile file) {
         // [START drive_android_open_file]
@@ -923,6 +874,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     /**
      * Handles resolution callbacks.
      */
+    @SuppressLint("UseRequireInsteadOfGet")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void onDriveClientReady() {
 
@@ -945,7 +897,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         Set<Scope> requiredScopes = new HashSet<>(2);
         requiredScopes.add(Drive.SCOPE_FILE);
         requiredScopes.add(Drive.SCOPE_APPFOLDER);
-        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
+        @SuppressLint("UseRequireInsteadOfGet") GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Objects.requireNonNull(getActivity()));
         if (signInAccount != null && signInAccount.getGrantedScopes().containsAll(requiredScopes)) {
             initializeDriveClient(signInAccount);
         } else {
@@ -963,6 +915,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
      * Continues the sign-in process, initializing the Drive clients with the current
      * user's account.
      */
+    @SuppressLint("UseRequireInsteadOfGet")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initializeDriveClient(GoogleSignInAccount signInAccount) {
         mDriveClient = Drive.getDriveClient(Objects.requireNonNull(getActivity()).getApplicationContext(), signInAccount);
@@ -1022,6 +975,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private void updateWidget() {
 
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
@@ -1029,7 +983,6 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
             WidgetProvider.sendRefreshBroadcast(getActivity());
         });
     }
-
 
 }
 

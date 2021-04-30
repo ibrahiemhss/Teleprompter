@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cameraView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent"
+    android:orientation="vertical"
+    tools:context="com.and.ibrahim.teleprompter.modules.display.VideoFragment">
+
+    <com.and.ibrahim.teleprompter.mvp.view.CameraView
+        android:id="@+id/cameraSurfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/pauseText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/pausedText"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/seekParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:layout_height="@dimen/videosettings"
+            android:background="@drawable/accent_border_back">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/zoomTex"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                />
+            <SeekBar
+                android:id="@+id/zoomBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:progressBackgroundTint="@color/colorAccent"
+                android:thumb="@drawable/orange_circle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/videoFunctions"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/videosettings"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"
+            android:background="@drawable/accent_border_back"
+             android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/substitute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:padding="4dp"
+                android:background="@color/colorTransparent"
+                android:contentDescription="@string/placeholderContentDescription"
+                android:src="@drawable/placeholder" />
+
+            <ImageButton
+                android:id="@+id/switchCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:background="@color/colorTransparent"
+                android:contentDescription="@string/switchCamera"
+                android:src="@drawable/ic_switch_camera" />
+
+            <ImageButton
+                android:id="@+id/cameraRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorTransparent"
+                android:contentDescription="@string/recordVideo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/camera_record_start" />
+
+            <FrameLayout
+                android:id="@+id/thumbnailParent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="4dp"
+                    android:padding="4dp"
+                    android:background="@color/colorTransparent"
+                    android:contentDescription="@string/thumbnail"
+                    android:src="@drawable/placeholder" />
+
+                <ImageView
+                    android:id="@+id/microThumbnail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/playVideoCircle"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/ic_play_circle_thumbnail" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

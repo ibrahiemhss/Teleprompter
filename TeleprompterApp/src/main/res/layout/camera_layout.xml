@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parentCamera">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/cameraPreview"
+        >
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/settingsBar"
+        android:background="@color/colorTransparent"
+        >
+
+        <ImageButton
+            android:id="@+id/flashOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:background="@color/colorTransparent"
+            android:contentDescription="@string/switchCamera"
+            android:src="@drawable/camera_flash_on"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            >
+
+        </View>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/modeLayout"
+            android:layout_weight="2"
+            android:padding="4dp"
+            >
+
+            <TextView
+                android:id="@+id/modeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/modeInfoBottomMargin"
+                android:text="@string/resolution"
+                android:textColor="@color/orange_light" />
+
+            <TextView
+                android:id="@+id/resInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorAccent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imageHighlight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:contentDescription="@string/imagePreview"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/selfieCountdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="120sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -4,19 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorTransparent"
     tools:context="com.and.ibrahim.teleprompter.modules.display.DisplayActivity">
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:background="@color/colorTransparent"
         tools:openDrawer="start">
 
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorTransparent"
             android:layout_weight="1">
 
             <include
@@ -25,7 +28,7 @@
                 android:layout_height="match_parent" />
         </FrameLayout>
 
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="@dimen/nav_width"
             android:layout_height="wrap_content"
@@ -38,9 +41,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </android.support.design.widget.NavigationView>
+        </com.google.android.material.navigation.NavigationView>
 
 
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
 </RelativeLayout>
 

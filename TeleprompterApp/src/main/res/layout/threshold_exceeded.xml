@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".05"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/teleprompterContentDescription"/>
+
+        <TextView
+            android:id="@+id/thresholdExceedHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="10dp"
+            android:text="@string/thresholdLimitExceededTitle"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".05"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/placeholder"
+            android:contentDescription="@string/placeholderContentDescription"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="0.20"
+                app:srcCompat="@drawable/ic_warning"
+                android:contentDescription="@string/warningSymbol"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/memoryLimitMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:paddingBottom="25dp"
+            android:paddingTop="25dp"
+            android:text="@string/thresholdLimitExceededMsg"
+            android:textColor="@color/colorPrimaryText"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/disableThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disableThreshold"
+            android:textColor="@color/colorPrimaryText"
+            app:buttonTint="@color/colorAccent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/okBtnLeftAndRightMargin"
+            android:layout_marginEnd="@dimen/okBtnLeftAndRightMargin"
+            android:layout_weight="0.5"
+            android:background="@drawable/accent_border_back"
+            android:onClick="okToClose"
+            android:text="@string/okToDelete"
+            android:textColor="@color/colorPrimaryText" />
+    </LinearLayout>
+</LinearLayout>

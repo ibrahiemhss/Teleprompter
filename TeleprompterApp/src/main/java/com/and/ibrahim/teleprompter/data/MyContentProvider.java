@@ -8,11 +8,14 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import java.util.Objects;
@@ -20,21 +23,25 @@ import java.util.Objects;
 public class MyContentProvider extends ContentProvider {
     private static final String TAG = "MyContentProvider";
 
-    private static final int TELEPROMPTER_CODE = 200;
-    private static final int TELEPROMPTER_WITH_ID = 250;
-    private static final int TELEPROMPTER_WITH_NO_ID = 300;
-
+    private static final int SCRIPTS_CODE = 200;
+    private static final int SCRIPTS_WITH_ID = 250;
+    private static final int SCRIPTS_WITH_NO_ID = 300;
+    private static final int INSERT_MEDIA = 350;
+    private static final int DELETE_MEDIA = 425;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private DbHelper mDbHelper;
 
 
     private static UriMatcher buildUriMatcher() {
-        UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH, TELEPROMPTER_CODE);
-        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/*", TELEPROMPTER_WITH_NO_ID);
-        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/#", TELEPROMPTER_WITH_ID);
+            UriMatcher  uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH, SCRIPTS_CODE);
+        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/*", SCRIPTS_WITH_ID);
+        uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/#", SCRIPTS_WITH_NO_ID);
+        uriMatcher.addURI(Contract.AUTHORITY,Contract.AUTHORITY+"/addMedia",INSERT_MEDIA);
+
 
         return uriMatcher;
     }
@@ -56,26 +63,24 @@ public class MyContentProvider extends ContentProvider {
             uriType = sUriMatcher.match(uri);
             SQLiteDatabase sqlDB = mDbHelper.getWritableDatabase();
 
-            switch (uriType) {
-                case TELEPROMPTER_CODE:
-                    try {
-                        sqlDB.beginTransaction();
-                        for (ContentValues value : values) {
-                            if (sqlDB.insertOrThrow(Contract.Entry.TABLE_TELEPROMPTER, null, value) == -1) {
-                                throw new Exception("Unknown error while inserting entry in database.");
-                            }
-                            insertCount++;
+            if (uriType == SCRIPTS_CODE) {
+                try {
+                    sqlDB.beginTransaction();
+                    for (ContentValues value : values) {
+                        if (sqlDB.insertOrThrow(Contract.Entry.SCRIPTS_TABLE, null, value) == -1) {
+                            throw new Exception("Unknown error while inserting entry in database.");
                         }
-
-                        sqlDB.setTransactionSuccessful();
-                    } catch (Exception e) {
-                        // Your error handling
-                    } finally {
-                        sqlDB.endTransaction();
+                        insertCount++;
                     }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown URI: " + uri);
+
+                    sqlDB.setTransactionSuccessful();
+                } catch (Exception e) {
+                    // Your error handling
+                } finally {
+                    sqlDB.endTransaction();
+                }
+            } else {
+                throw new IllegalArgumentException("Unknown URI: " + uri);
             }
         } catch (Exception ignored) {
         }
@@ -88,15 +93,39 @@ public class MyContentProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        int match = sUriMatcher.match(uri);
-
-        Cursor retCursor;
+        int match=buildUriMatcher().match(uri);
+        Cursor retCursor=null;
 
         switch (match) {
+            case SCRIPTS_WITH_ID:
 
-            case TELEPROMPTER_CODE:
-
-                retCursor = db.query(Contract.Entry.TABLE_TELEPROMPTER,
+                retCursor = db.query(Contract.Entry.SCRIPTS_TABLE,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                Log.d(TAG, "SCRIPTS_TABLE query = "+db.query(Contract.Entry.SCRIPTS_TABLE,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder).toString());
+                break;
+            case SCRIPTS_CODE:
+                retCursor = db.query(Contract.Entry.SCRIPTS_TABLE,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                Log.d(TAG, "SCRIPTS_CODE query =");
+                break;
+            case INSERT_MEDIA:
+                retCursor = db.query(Contract.Entry.MEDIA_TABLE,
                         projection,
                         selection,
                         selectionArgs,
@@ -104,18 +133,17 @@ public class MyContentProvider extends ContentProvider {
                         null,
                         sortOrder);
 
-                break;
-            case TELEPROMPTER_WITH_ID:
-
-                retCursor = db.query(Contract.Entry.TABLE_TELEPROMPTER,
+                Log.d(TAG, "MEDIA_TABLE query = "+db.query(Contract.Entry.MEDIA_TABLE,
                         projection,
                         selection,
                         selectionArgs,
                         null,
                         null,
-                        sortOrder);
+                        sortOrder).toString());
 
                 break;
+
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -138,27 +166,40 @@ public class MyContentProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, ContentValues values) {
 
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        Log.d(TAG,"inserting uri =" +uri.toString());
 
         int match = sUriMatcher.match(uri);
+        Uri returnUri=null;
 
-        Uri returnUri;
+        if(uri.toString().contains(Contract.ADD_MEDIA)){
+            Log.d(TAG,"inserting Media1");
+            long id = db.insertWithOnConflict(Contract.Entry.MEDIA_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
-        switch (match) {
+            if (id > 0) {
+                returnUri = ContentUris.withAppendedId(Contract.Entry.PATH_ADD_MEDIA_URI, id);
+            } else {
+                throw new SQLException("Failed to insert row into 1" + uri);
+            }
+        }else
+        if (match == SCRIPTS_CODE) {
+            long id = db.insertWithOnConflict(Contract.Entry.SCRIPTS_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
-            case TELEPROMPTER_CODE:
+            if (id > 0) {
+                returnUri = ContentUris.withAppendedId(Contract.Entry.PATH_TELEPROMPTER_URI, id);
+            } else {
+                throw new SQLException("Failed to insert row into " + uri);
+            }
+        } else if(match == INSERT_MEDIA){
+            Log.d(TAG,"inserting Media");
+            long id = db.insertWithOnConflict(Contract.Entry.MEDIA_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
-                long id = db.insertWithOnConflict(Contract.Entry.TABLE_TELEPROMPTER, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-
-                if (id > 0) {
-                    returnUri = ContentUris.withAppendedId(Contract.Entry.PATH_TELEPROMPTER_URI, id);
-                } else {
-                    throw new SQLException("Failed to insert row into " + uri);
-                }
-
-                break;
-
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            if (id > 0) {
+                returnUri = ContentUris.withAppendedId(Contract.Entry.PATH_ADD_MEDIA_URI, id);
+            } else {
+                throw new SQLException("Failed to insert row into " + uri);
+            }
+        }else {
+            throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -179,34 +220,39 @@ public class MyContentProvider extends ContentProvider {
         int idDeleted; // starts as 0
 
         switch (match) {
-            case TELEPROMPTER_WITH_NO_ID:
+            case SCRIPTS_WITH_NO_ID:
                 String id = uri.getPathSegments().get(1);
                 if (id != null) {
                     // Use selections/selectionArgs to filter for this ID
-                    idDeleted = db.delete(Contract.Entry.TABLE_TELEPROMPTER,
+                    idDeleted = db.delete(Contract.Entry.SCRIPTS_TABLE,
                             Contract.Entry.COL_UNIQUE_ID + " =?",
                             new String[]{id});
                     Log.d(TAG, "idDeleted =is " + id);
                 } else {
-                    idDeleted = db.delete(Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                    idDeleted = db.delete(Contract.Entry.SCRIPTS_TABLE, selection, selectionArgs);
                     Log.d(TAG, "idDeleted = all ");
 
                 }
                 // Use selections/selectionArgs to filter for this ID
                 break;
 
-            case TELEPROMPTER_CODE:
+            case SCRIPTS_CODE:
+            case SCRIPTS_WITH_ID:
                 idDeleted = db.delete(
-                        Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                        Contract.Entry.SCRIPTS_TABLE, selection, selectionArgs);
                 Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
 
                 break;
-            case TELEPROMPTER_WITH_ID:
+
+            case DELETE_MEDIA:
+                 Log.d(TAG,"deleting Media = "+selectionArgs[0]);
                 idDeleted = db.delete(
-                        Contract.Entry.TABLE_TELEPROMPTER, selection, selectionArgs);
+                        Contract.Entry.MEDIA_TABLE, selection, selectionArgs);
                 Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
 
+                // Use selections/selectionArgs to filter for this ID
                 break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -228,14 +274,10 @@ public class MyContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
 
-        switch (match) {
-            case TELEPROMPTER_CODE:
-                count = db.update(Contract.Entry.TABLE_TELEPROMPTER, values, selection, selectionArgs);
-
-                break;
-
-            default:
-                throw new IllegalArgumentException("Unknown URI " + uri);
+        if (match == SCRIPTS_CODE) {
+            count = db.update(Contract.Entry.SCRIPTS_TABLE, values, selection, selectionArgs);
+        } else {
+            throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -244,5 +286,27 @@ public class MyContentProvider extends ContentProvider {
         return count;
     }
 
+    public  SQLiteDatabase getWriteMediaDatabase(){
+        final SQLiteDatabase writeMediaDatabase = mDbHelper.getWritableDatabase();
+
+        if(writeMediaDatabase == null){
+            String myPath = Contract.DB_PATH + Contract.Entry.DB_NAME;
+            try {
+                writeMediaDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+                if (writeMediaDatabase != null) {
+                    return writeMediaDatabase;
+                }
+            }
+            catch(SQLiteCantOpenDatabaseException sqlEx)
+            {
+
+                Log.d(TAG,"SQLiteCantOpenDatabaseException Path == "+sqlEx.toString());
+
+                //writeMediaDatabase = mDbHelper.getWritableDatabase();
+            }
+            Log.d(TAG,"DB Path == "+writeMediaDatabase.getPath());
+        }
+        return writeMediaDatabase;
+    }
 
 }

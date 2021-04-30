@@ -31,11 +31,11 @@ public class FetchDataAsyncTask extends AsyncTask<String, Void, ArrayList<DataOb
     }
 
     @Override
-    protected void onPostExecute(ArrayList<DataObj> MoviesData) {
+    protected void onPostExecute(ArrayList<DataObj> ListData) {
 
-        super.onPostExecute(MoviesData);
+        super.onPostExecute(ListData);
         if (listener != null) {
-            listener.onExampleAsyncTaskFinished(MoviesData);
+            listener.onExampleAsyncTaskFinished(ListData);
         }
     }
 

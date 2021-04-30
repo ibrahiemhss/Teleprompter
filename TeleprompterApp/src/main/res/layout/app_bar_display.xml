@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection, AndroidDomInspection -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorTransparent"
     tools:ignore="Overdraw">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/display_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/display_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,17 +27,16 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/display_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    </android.support.design.widget.AppBarLayout>
-
+    </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:id="@+id/slide_show_scroll"
         android:layout_width="match_parent"
@@ -48,18 +48,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:translationZ="90dp"
             android:orientation="vertical">
 
             <com.and.ibrahim.teleprompter.util.ScrollingTextView
                 android:id="@+id/text_scrolling"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/scroll_text_margin"
                 android:layout_marginLeft="@dimen/scroll_text_side_margin"
                 android:layout_marginRight="@dimen/scroll_text_side_margin"
                 android:paddingTop="@dimen/scroll_text_margin_top"
                 android:paddingBottom="@dimen/scroll_text_margin_bottom"
-                android:textColor="@color/color_white"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -76,7 +76,6 @@
             android:layout_height="@dimen/up_view_height"
             android:layout_alignParentTop="true"
             android:background="@color/colorTransparentBlack" />
-
         <RelativeLayout
             android:id="@+id/container_toggle"
             android:layout_width="match_parent"
@@ -109,7 +108,13 @@
             android:layout_below="@+id/container_toggle"
             android:background="@color/colorTransparentBlack" />
 
-
+        <include
+            layout="@layout/camera_layout"
+            android:layout_height="@dimen/camera_view_height"
+            android:layout_below="@+id/container_toggle"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:layout_width="match_parent" />
         <Chronometer
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"
@@ -133,4 +138,4 @@
 
     </RelativeLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -42,7 +42,7 @@ public class GetData {
                 dataObj.setTextContent(content);
                 dataObjArrayList.add(dataObj);
 
-                Log.i(TAG, "FetchTeleprompterTexts \n title =" + title + "\n content =" + content + "\nSelected value =" + String.valueOf(isSelected));
+                Log.i(TAG, "FetchTeleprompterTexts \n title =" + title + "\n content =" + content + "\nSelected value =" + isSelected);
             }
             c.close();
         }

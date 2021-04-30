@@ -124,8 +124,8 @@
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
-                    android:layout_width="@dimen/nav_image_color_width"
-                    android:layout_height="@dimen/nav_image_color_height"
+                    android:layout_width="@dimen/nav_vector_width"
+                    android:layout_height="@dimen/nav_vector_height"
                     android:layout_marginBottom="@dimen/nav_img_veiw_bottom_margin"
                     android:layout_marginStart="@dimen/nav_img_veiw_side_margin"
                     android:layout_marginTop="@dimen/nav_img_veiw_top_margin"
@@ -197,11 +197,134 @@
 
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:id="@+id/rv77"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv66">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lime_green" />
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/lin44"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rv66"
+        android:layout_below="@+id/rv77"
+        android:orientation="vertical"
+        android:layout_margin="4dp"
+        android:gravity="center">
+
+        <CheckBox
+            android:id="@+id/checkboxOpenCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/photoResSummaryTopBottomMargin"
+            android:layout_marginEnd="@dimen/photoResLeftMargin"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="@dimen/photoResSummaryTopBottomMargin"
+            android:buttonTint="@color/orange_light"
+            android:paddingLeft="15dp"
+            android:textSize="16sp"
+            android:text="@string/open_camera"
+            android:textColor="@color/colorPrimaryText" />
+             <LinearLayout
+            android:id="@+id/videoSettingsContainer"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@color/colorTransparent"
+            android:layout_height="wrap_content">
+                 <View
+                     android:layout_width="match_parent"
+                     android:layout_height="0.5dp"
+                     android:background="@color/colorAccentLight" />
+
+                 <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/videoSettingsTitle"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryText"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/videoSettings"
+                android:layout_margin="4dp"
+                android:background="@drawable/accent_border_back"
+                android:gravity="center">
+                <ImageButton
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/settingsTopAndBottomMargin"
+                    android:layout_marginEnd="@dimen/settingRightMargin"
+                    android:layout_marginBottom="@dimen/settingsTopAndBottomMargin"
+                    android:background="@drawable/ripple"
+                    android:contentDescription="@string/settings"
+                    android:padding="4dp"
+                    android:layout_width="@dimen/nav_vector_width"
+                    android:layout_height="@dimen/nav_vector_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_baseline_video_settings_24" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/goAllVideoSettings"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryText"
+                    tools:ignore="InconsistentLayout" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="4dp"
+                android:id="@+id/videoBrightness"
+                android:background="@drawable/accent_border_back"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/brightnessHeight"
+                    android:padding="4dp"
+                    android:contentDescription="@string/brightnessContentDescription"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/ic_baseline_brightness_high_24" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/brightnessHeading"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimaryText"
+                    tools:ignore="InconsistentLayout" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v66"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/lin44"
+        android:background="@color/lime_green" />
+
+    <LinearLayout
+        android:id="@+id/lin45"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v66"
         android:layout_margin="4dp"
         android:gravity="center">
 
@@ -216,12 +339,11 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="16sp" />
     </LinearLayout>
-
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lin44"
-        ads:adSize="BANNER"
+        android:layout_below="@+id/lin45"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/banner_pup" />
 </RelativeLayout>

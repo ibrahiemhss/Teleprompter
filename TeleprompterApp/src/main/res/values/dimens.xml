@@ -6,4 +6,179 @@
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="app_par_elevation">4dp</dimen>
     <dimen name="dialog_elevation">16dp</dimen>
+
+
+    //Settings bar
+    <dimen name="flashOnHeight">33dp</dimen>
+    <dimen name="flashOnWidth">30dp</dimen>
+    <dimen name="flashOnTopMargin">15dp</dimen>
+    <dimen name="flashOnLeftMargin">15dp</dimen>
+    <dimen name="settingRightMargin">15dp</dimen>
+    //Video fragment bar
+    <dimen name="switchBtnLeftMargin">10dp</dimen>
+    //Stop button
+    <dimen name="stopButtonHeight">80dp</dimen>
+    <dimen name="stopButtonWidth">72dp</dimen>
+    //Start button
+    <dimen name="startButtonHeight">48dp</dimen>
+    <dimen name="startButtonWidth">36dp</dimen>
+    //Pause button
+    <dimen name="pauseButtonHeight">50dp</dimen>
+    <dimen name="pauseButtonWidth">50dp</dimen>
+    //Picture button
+    <dimen name="pictureButtonWidth">67dp</dimen>
+    <dimen name="pictureButtonHeight">76dp</dimen>
+    //Picture button margin
+    <dimen name="picBtnLeftMargin">15dp</dimen>
+    <dimen name="picBtnRightMargin">15dp</dimen>
+    //Video Mode button margin
+    <dimen name="videoModeBtnLeftMargin">0dp</dimen>
+    <dimen name="videoModeBtnRightMargin">10dp</dimen>
+    //Stop button margin
+    <dimen name="stopBtnLeftMargin">2dp</dimen>
+    <dimen name="stopBtnRightMargin">2dp</dimen>
+    //Record substitute button margin
+    <dimen name="recordSubsBtnRightMargin">15dp</dimen>
+    //Pause button padding
+    <dimen name="pauseBtnRightPadding">15dp</dimen>
+    //Switch camera button margin
+    <dimen name="switchButtonLeftMargin">25dp</dimen>
+    //Top margin for time elapsed and memory texts
+    <dimen name="timeAndMemTopMargin">15dp</dimen>
+    //Thumbnail dimensions
+    <dimen name="thumbnailWidth">45dp</dimen>
+    <dimen name="thumbnailHeight">45dp</dimen>
+    //Mode top and bottom margin
+    <dimen name="modeTopMargin">2dp</dimen>
+    <dimen name="modeBottomMargin">3dp</dimen>
+    //Mode info margin
+    <dimen name="modeInfoBottomMargin">2dp</dimen>
+    //Mode text size
+    <dimen name="modeTextSize">12sp</dimen>
+    //Settings margin top and bottom
+    <dimen name="settingsTopAndBottomMargin">1dp</dimen>
+    <dimen name="videosettings">50dp</dimen>
+    //Padding around saved message
+    <dimen name="recordSavePadding">30dp</dimen>
+    //Padding around upload message
+    <dimen name="uploadPadding">10dp</dimen>
+    //Padding below tick mark image
+    <dimen name="recordSaveImagePaddingBottom">17dp</dimen>
+    <dimen name="uploadImagePaddingRight">20dp</dimen>
+    <dimen name="uploadMsgBottomMargin">80dp</dimen>
+    <dimen name="uploadIconHeight">50dp</dimen>
+    <dimen name="uploadIconWidth">50dp</dimen>
+    //Height and widht for play circle for video
+    <dimen name="playCircleHeight">64dp</dimen>
+    <dimen name="playCircleWidth">64dp</dimen>
+    //Top margin for share and delete buttons (Portrait)
+    <dimen name="shareDeleteTopMarginPortrait">15dp</dimen>
+    //Top margin for share and delete buttons (Landscape)
+    <dimen name="shareDeleteTopMarginLandscape">10dp</dimen>
+    //Size for no image text
+    <dimen name="noImageTextSize">25sp</dimen>
+    //Size of top bar for media (Portrait)
+    <dimen name="topMediaBarPortrait">40dp</dimen>
+    //Size of top bar for media (Landscape)
+    <dimen name="topMediaBarLandscape">40dp</dimen>
+    <dimen name="playButtonHeight">40dp</dimen>
+    //Text size for settings
+    <dimen name="settingsMainText">17sp</dimen>
+    //Text size for subtext
+    <dimen name="settingsSubText">14sp</dimen>
+    <dimen name="settingsSubTextPhoto">7sp</dimen>
+    <dimen name="headTextLeftMargin">20dp</dimen>
+    <dimen name="phoneMemTextLeftMargin">17dp</dimen>
+    <dimen name="headTextTopMargin">10dp</dimen>
+    <dimen name="greenArrowWidth">40dp</dimen>
+    <dimen name="greenArrowHeight">40dp</dimen>
+    <dimen name="switchRightMargin">60dp</dimen>
+    <dimen name="separatorHeight">1dp</dimen>
+    <dimen name="separatorHeightSmall">0.5dp</dimen>
+    <dimen name="saveMediaSepTopAndBottomMargin">5dp</dimen>
+    <dimen name="checkboxTextMsgHeight">54dp</dimen>
+    <dimen name="checkboxTextMsgRightMargin">20dp</dimen>
+    <dimen name="resetAllTextMsgRightMargin">20dp</dimen>
+    <dimen name="phoneMemRightMargin">100dp</dimen>
+    <dimen name="checkboxMarginTopBottom">5dp</dimen>
+    <dimen name="googleDriveIconHeight">50dp</dimen>
+    <dimen name="googleDriveIconWidth">64dp</dimen>
+    <dimen name="dropBoxIconHeight">50dp</dimen>
+    <dimen name="dropBoxIconWidth">64dp</dimen>
+    <dimen name="totalphoneMemoryTopMargin">10dp</dimen>
+    <dimen name="freeMemoryTopMargin">10dp</dimen>
+    <dimen name="memoryStatusTopMargin">15dp</dimen>
+    <dimen name="phoneMemoryThresholdHeader">16sp</dimen>
+    <dimen name="totalphoneMemoryImageTopMargin">6dp</dimen>
+    //Text size for memory limit message
+    <dimen name="memoryThresholdMsg">14sp</dimen>
+    <dimen name="dropboxCheckboxTopMargin">10dp</dimen>
+    //Left and Right margins for OK button
+    <dimen name="okBtnLeftAndRightMargin">100dp</dimen>
+    //Left and Right margin for no connection msg
+    <dimen name="noConnMsgLeftAndRightMargin">20dp</dimen>
+    //Top and Bottom padding for no connection msg
+    <dimen name="noConnMsgTopAndBottomPadding">25dp</dimen>
+    //Vertical Spacing
+    <dimen name="verticalSpace">3px</dimen>
+    //Margins for Teleprompter‏ gallery
+    <dimen name="fcGalleryTextTopAndBottomMargin">15dp</dimen>
+    <dimen name="fcGalleryTextLeftMargin">15dp</dimen>
+    //Size for brightness icon
+    <dimen name="brightnessWidth">30dp</dimen>
+    <dimen name="brightnessHeight">30dp</dimen>
+    <dimen name="instantSettingWidth">50dp</dimen>
+    <dimen name="instantSettingHeight">150dp</dimen>
+    //Dimensions for brightness popup
+    <dimen name="brightnessBottomMargin">15dp</dimen>
+    <dimen name="normalBrightnessWidth">25dp</dimen>
+    <dimen name="normalBrightnessHeight">25dp</dimen>
+    <dimen name="increaseBrightnessHeight">30dp</dimen>
+    <dimen name="increaseBrightnessWidth">100dp</dimen>
+    <dimen name="increaseDecreaseTextSize">32sp</dimen>
+    //Margin for video res bottom margin
+    <dimen name="videoResBottomMargin">5dp</dimen>
+    //Size for Photo res
+    <dimen name="photoResTitleSize">15sp</dimen>
+    <dimen name="photoResSummarySize">13sp</dimen>
+    <dimen name="photoResSummaryTopBottomMargin">15dp</dimen>
+    <dimen name="photoResLeftMargin">10dp</dimen>
+    <dimen name="photoResTopBottomMargin">15dp</dimen>
+    <dimen name="listPrefSeparatorTopBottomPadding">20dp</dimen>
+    //Photo highlight thickness
+    <dimen name="photoHighlightWidth">4dp</dimen>
+    //Margin for settings message
+    <dimen name="featureLeftAndRightMargin">10dp</dimen>
+    <dimen name="valueLeftAndRightMargin">10dp</dimen>
+    <dimen name="featureAndValueTopAndBottomMargin">10dp</dimen>
+    //Dimension for close button
+    <dimen name="widthAndHeightForClose">12dp</dimen>
+    //Dimension for heading
+    <dimen name="widthAndHeightForHeading">27dp</dimen>
+    //Dimension for instant settings
+    <dimen name="settingWidth">30dp</dimen>
+    <dimen name="settingHeight">30dp</dimen>
+    //Dimension for all folder top margin
+    <dimen name="allTopMargin">20dp</dimen>
+    //Dimension for grid header Text
+    <dimen name="gridHeaderTextHeight">50dp</dimen>
+    <dimen name="gridHeaderTextWidth">50dp</dimen>
+    <dimen name="gridHeaderTextEndMargin">10dp</dimen>
+    //Dimensions for media source image
+    <dimen name="mediaSourceImageWidth">30dp</dimen>
+    <dimen name="mediaSourceImageHeight">30dp</dimen>
+    <dimen name="fabVideoDimension">63dp</dimen>
+    <dimen name="fabCustomDimension">55dp</dimen>
+    <dimen name="fabBottomAndEndMargin">20dp</dimen>
+    <dimen name="fabElevation">20dp</dimen>
+    <dimen name="fcGalleryTextEndMargin">20dp</dimen>
+    //Dimensions for Media Info
+    <dimen name="mediaInfoTopMargin">15dp</dimen>
+    <dimen name="mediaInfoStartMargin">15dp</dimen>
+    <dimen name="okBtnBottomMargin">5dp</dimen>
+    <dimen name="okBtnParentBottomMargin">5dp</dimen>
+    <dimen name="okBtnTopMargin">5dp</dimen>
+    //Dimension for video not supported text
+    <dimen name="videoPlayerNotFoundPaddingAll">12dp</dimen>
+    <dimen name="_4KVideoNotSupportedPaddingAll">12dp</dimen>
 </resources>

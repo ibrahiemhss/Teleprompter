@@ -1,43 +1,63 @@
 package com.and.ibrahim.teleprompter.modules.display;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
+
+import com.and.ibrahim.teleprompter.callback.OnActionAd;
+import com.and.ibrahim.teleprompter.callback.OnStartRecordVideoListener;
+import com.and.ibrahim.teleprompter.modules.adapter.ColorsAdapter;
+import com.and.ibrahim.teleprompter.mvp.view.OnScrollViewActions;
+import com.and.ibrahim.teleprompter.mvp.view.SettingVideoDialogFragment;
+import com.and.ibrahim.teleprompter.util.AdsUtils;
+import com.and.ibrahim.teleprompter.util.DisplayUtils;
+import com.and.ibrahim.teleprompter.util.CameraUtils;
+import com.and.ibrahim.teleprompter.util.GLUtil;
+import com.and.ibrahim.teleprompter.util.PermissionsUtils;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -46,7 +66,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.base.BaseActivity;
@@ -58,58 +77,90 @@ import com.and.ibrahim.teleprompter.modules.listContents.ListContentsFragment;
 import com.and.ibrahim.teleprompter.modules.setting.SettingsActivity;
 import com.and.ibrahim.teleprompter.mvp.view.RecyclerViewItemClickListener;
 import com.and.ibrahim.teleprompter.util.ScrollingTextView;
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
+
 
 import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
-import io.fabric.sdk.android.Fabric;
 
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.END;
 
 @SuppressWarnings("WeakerAccess")
-public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener, OnUserEarnedRewardListener, OnActionAd, VideoFragment.PermissionInterface, VideoFragment.SwitchInterface, VideoFragment.LowestThresholdCheckForVideoInterface, OnScrollViewActions, OnStartRecordVideoListener {
 
+
+    private static final String TAG = "DisplayActivity";
+    boolean VERBOSE = false;
+
+    private PermissionsUtils permissionsUtils;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.parentCamera)
+    protected FrameLayout mCameraContent;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_toolbar)
     protected Toolbar mToolbar;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_collapsing_toolbar)
     protected CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_app_bar_layout)
     protected AppBarLayout mAppBarLayout;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.text_scrolling)
     protected ScrollingTextView mScrollText;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.slide_show_scroll)
     protected ScrollView mSlideShowScroll;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.vertical_outer_id)
     protected LinearLayout verticalOuterLayout;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.show_play)
     protected ImageView mPlayStatus;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.nav_view)
     protected NavigationView mNavView;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawerLayout;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.chronometer)
     protected Chronometer mChronometer;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.up_view)
     protected View mUpView;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.down_view)
     protected View mDownView;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.toggle_marker)
     protected ImageView mToggleMarker;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.adView2)
     protected AdView mAdView;
 
-    int melliSeconds;
+    DisplayUtils displayUtils;
+    LinearLayout mVideoBrightness;
+    //For camera -------------------------------------------
+    VideoFragment mVideoFragment = null;
+    //PhotoFragment photoFragment = null;
+    View warningMsgRoot;
+    Dialog warningMsg;
+    Button okButton;
+    LayoutInflater layoutInflater;
+    SharedPreferences sharedPreferences;
+    View settingsRootView;
+    Dialog settingsDialog;
+
+    boolean fromGallery = false;
+    static boolean isCameraInited = false;
+
+
     private TextView mEmptyTextShow;
     private FrameLayout mScrollContainer;
     private Fragment mContentListFragment;
@@ -117,26 +168,30 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private Dialog mDialogTextColors;
     private int[] mTextColorArray;
     private int[] mBackGroundColorArray;
-    private Timer scrollTimer = null;
-    private int verticalScrollMax = 0;
-    private TimerTask clickSchedule;
-    private TimerTask scrollerSchedule;
     private boolean isOpen = false;
     private int textSpeedValue;
-    private boolean isUp;
     private boolean mOpenDrawer;
     private String mScrollString;
-    private boolean paused = true;
-    private int timeSpeed = 30;
-    private boolean isDialogShow;
     private int mScrollPos;
+    private int mTimeSpeed = 30;
+    private boolean isDialogShow;
     private boolean isTablet;
-    private InterstitialAd mInterstitialAd;
-
-    private long lastPause = 0;
-
-
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
+    private AdsUtils mAdUtils;
+    CameraUtils mCameraUtils;
+    private  boolean isCameraEnable=false;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionsUtils.ALL_PERMISSIONS) {
+            if (permissions != null && permissions.length > 0) {
+                permissionsUtils.getPermissionsStatus();
+              }
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        }
+    }
+
 
     @Override
     public int getResourceLayout() {
@@ -148,31 +203,85 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
+
+
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
-
-        MobileAds.initialize(this,
-                getResources().getString(R.string.app_ads_id));
-
-        initializeInterstitialAds();
-        initializeAdd();
-
+        mAdUtils = new AdsUtils(this, this);
+        mAdUtils.initializeBannerAd(mAdView);
+        mAdUtils.initializeInterstitialAd();
         isTablet = getResources().getBoolean(R.bool.isTablet);
-        if (savedInstanceState != null) {//save state case
 
-            stopAutoScrolling();
-            if (isTablet) {
-                mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
+        verticalOuterLayout.bringToFront();
+        verticalOuterLayout.invalidate();
+        mVideoFragment = VideoFragment.newInstance();
+
+        displayUtils = new DisplayUtils(this, this,
+                mSlideShowScroll, mChronometer, mPlayStatus, mAdUtils, mAppBarLayout, mScrollPos,isCameraEnable);
+        mVideoFragment = VideoFragment.newInstance();
+        mCameraUtils = new CameraUtils(mVideoFragment, this, mVideoBrightness);
+
+        displayUtils.scrollViewConfig();
+
+        Log.d(TAG, "saved instance state == " + savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        warningMsgRoot = layoutInflater.inflate(R.layout.warning_message, null);
+        warningMsg = new Dialog(this);
+        settingsRootView = layoutInflater.inflate(R.layout.brightness_settings, null);
+        settingsDialog = new Dialog(this);
+        sharedPreferences = getSharedPreferences(Contract.FC_SETTINGS, Context.MODE_PRIVATE);
+
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Log.d(TAG, "get extras mScrollString == " + mScrollString);
+            mScrollString = extras.getString(Contract.EXTRA_TEXT);
+            fromGallery = extras.getBoolean(Contract.EXTRA_FROM_GALLERY);
+        }
+        permissionsUtils = new PermissionsUtils(this);
+        mVideoBrightness = mNavView.findViewById(R.id.videoBrightness);
+        mCameraUtils = new CameraUtils(mVideoFragment, this, mVideoBrightness);
+       // if (savedInstanceState == null) {
+            //Start with video fragment
+            if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+                isCameraEnable=true;
+                if(!isCameraInited){
+                    initCame();
+                }
+            } else {
+                isCameraEnable=false;
+                setCameraShow(false);
+                mPlayStatus.setVisibility(View.VISIBLE);
 
             }
+        //}
+
+
+        if (savedInstanceState != null) {//save state case
+            displayUtils.stopAutoScrolling();
+            if (isTablet) {
+                mContentListFragment = getSupportFragmentManager().getFragment(savedInstanceState, Contract.EXTRA_FRAGMENT);
+            }
             mScrollString = savedInstanceState.getString(Contract.EXTRA_SCROLL_STRING);
+            Log.d(TAG, "saved instance state quit mScrollString == " + mScrollString);
             isDialogShow = savedInstanceState.getBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG);
             mScrollPos = savedInstanceState.getInt(Contract.EXTRA_SCROLL_POS);
             mChronometer.setBase(savedInstanceState.getLong(Contract.EXTRA_CHRONOTIME));
+            fromGallery = savedInstanceState.getBoolean(Contract.EXTRA_FROM_GALLERY);
             if (isDialogShow) {
                 launchDlgTextColors();
             }
+            if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+                isCameraEnable=true;
+                if (savedInstanceState.getBoolean(Contract.EXTRA_RESTART)) {
+                    permissionsUtils.setShowMessage(true);
+                    permissionsUtils.quitAppCam();
+
+                }
+            }
         }
-        Fabric.with(this, new Crashlytics());
+        //   Fabric.with(this, new Crashlytics());
 
         if (!isFirstEntry) {
             addDemo();
@@ -192,37 +301,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         mContentListFragment = new ListContentsFragment();
 
-        //print all Screens sizes wanted to set suitable width for scrollView//
-        Configuration configuration = getResources().getConfiguration();
-        int screenWidthDp = configuration.screenWidthDp; //The current width of the available screen space, in dp units, corresponding to screen width resource qualifier.
-        int screenHeightDp = configuration.screenHeightDp; //The smallest screen size an application will see in normal operation, corresponding to smallest screen width resource qualifier.
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        mSlideShowScroll.getViewTreeObserver()
-                .addOnScrollChangedListener(() -> {
-                    if (mSlideShowScroll.getChildAt(0).getBottom()
-                            <= (mSlideShowScroll.getHeight() + mSlideShowScroll.getScrollY())) {
-
-                        stopAutoScrolling();
-                    }
-                });
-        Log.d("screenSize", "\nWidthDp=" + String.valueOf(screenWidthDp)
-                + "\nHeightDp=" + String.valueOf(screenHeightDp)
-                + "\nwidthPx=" + String.valueOf(width)
-                + "\nheightPx=" + String.valueOf(height));
-
-
         setupToolbar();//in tablet screen size make main toolbar to one screen for all views
 
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mCollapsingToolbarLayout.getLayoutParams();
         params.setScrollFlags(0);  // clear all scroll flags
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            mScrollString = extras.getString(Contract.EXTRA_TEXT);
-        }
+
 
         if (isTablet) {//so scroll view will hide if mScrollText have null value
             mEmptyTextShow = findViewById(R.id.text_empty_show);
@@ -241,76 +324,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
             }
         }
-        mPlayStatus.setVisibility(View.VISIBLE);
-    }
-
-    private void initializeInterstitialAds() {
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getResources().getString(R.string.interstitial_pub));
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-                if (mOpenDrawer) {
-                    mDrawerLayout.closeDrawer(Gravity.START);
-                    mOpenDrawer = false;
-                } else {
-                    mDrawerLayout.openDrawer(Gravity.START);
-                    mOpenDrawer = true;
-                }
-            }
-        });
-        requestNewInterstitial();
-
+        //toStartCamera();
 
     }
 
-    private void initializeAdd() {
 
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(
-                        getString(R.string.banner_pup))
-                .build();
-        mAdView.loadAd(adRequest);
-
-        initializeInterstitialAds();
-
-
-    }
-
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mInterstitialAd.loadAd(adRequest);
-    }
-
-    private void showIntAdd() {
-
-// Show the ad if it's ready. Otherwise, toast and reload the ad.
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-            Log.d("mInterstitialAd", "show");
-
-        } else {
-            Log.d("mInterstitialAd", "not show");
-
-            if (mOpenDrawer) {
-                mDrawerLayout.closeDrawer(Gravity.START);
-                mOpenDrawer = false;
-            } else {
-                mDrawerLayout.openDrawer(Gravity.START);
-                mOpenDrawer = true;
-            }
-        }
-    }
-
-
+    @SuppressLint("UseCompatLoadingForDrawables")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void init() {
-        isUp = true;
         textSpeedValue = 1;//default value generator of speed text in first open
         mTextColorArray = getResources().getIntArray(R.array.text_colors);//initialize text colors
         mBackGroundColorArray = getResources().getIntArray(R.array.background_colors);//initialize background colors
@@ -320,10 +343,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 SharedPrefManager.getInstance(this).getPrefSpeed();
 
         mPlayStatus.//set play status of image that show playing playing status
-                setBackground(Objects.requireNonNull(this).getDrawable(R.drawable.ic_play_circle_filled));
+                setBackground(this.getDrawable(R.drawable.ic_play_circle_filled));
 
         if (isTablet) {//listContentFragment with displayActivity in tablet will be in one screen :)
-            initFragment();
+            initTabletViewWithFragment();
         }
 
         int mBackgroundColor;
@@ -340,9 +363,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mSlideShowScroll.setBackgroundColor(mBackgroundColor);
         mScrollText.setText(mScrollString);
 
-        setSpeed(seekProgress);//get suitable value of speed by bas seekbar progress
+        displayUtils.setSpeed(seekProgress);//get suitable value of speed by bas seekbar progress
 
-        clickToScrolling();//perform scrolling
+        displayUtils.clickToScrolling();//perform scrolling
         initNavigationDrawer();//initialize navigation drawer
         setupSharedPreferences();
 
@@ -353,10 +376,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void setListener() {
 
         mPlayStatus.setOnClickListener(this);
-
-
-        getScrollMaxAmount();//get all scrollView amount after text length inside
-
+        displayUtils.getScrollMaxAmount(verticalOuterLayout);//get all scrollView amount after text length inside
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -376,6 +396,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (isTablet) {
@@ -389,9 +410,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                     break;
 
                 case R.id.action_setting:
-
-
-                    showIntAdd();
+                    if (mOpenDrawer) {
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
+                        mOpenDrawer = false;
+                    } else {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                        mOpenDrawer = true;
+                    }
 
                 default:
                     break;
@@ -400,7 +425,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         } else {
             if (item.getItemId() == R.id.action_setting) {
 
-                showIntAdd();
+                if (mOpenDrawer) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                    mOpenDrawer = false;
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    mOpenDrawer = true;
+                }
             }
         }
         return super.onOptionsItemSelected(item);
@@ -411,19 +442,19 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         String jpgPattern = ".jpg";
         String mp3Pattern = ".mp3";
 
-        File listFile[] = dir.listFiles();
+        File[] listFile = dir.listFiles();
 
         if (listFile != null) {
-            for (int i = 0; i < listFile.length; i++) {
+            for (File file : listFile) {
 
-                if (listFile[i].isDirectory()) {
-                    walkdir(listFile[i]);
+                if (file.isDirectory()) {
+                    walkdir(file);
                 } else {
-                    if (listFile[i].getName().endsWith(txtPattern)) {
+                    if (file.getName().endsWith(txtPattern)) {
                         //put in txt folder
-                    } else if (listFile[i].getName().endsWith(jpgPattern.toLowerCase())) {
+                    } else if (file.getName().endsWith(jpgPattern.toLowerCase())) {
                         // put in jpg folder
-                    } else if (listFile[i].getName().endsWith(mp3Pattern.toLowerCase())) {
+                    } else if (file.getName().endsWith(mp3Pattern.toLowerCase())) {
                         // put in  mp3 folder
                     }
                 }
@@ -438,22 +469,29 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
         outState.putLong(Contract.EXTRA_CHRONOTIME, mChronometer.getBase());
-
         if (isTablet) {//save fragment
             getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
+        }
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+            outState.putAll(permissionsUtils.onRestoreInstanceState(outState));
         }
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+            savedInstanceState.putAll(permissionsUtils.onRestoreInstanceState(savedInstanceState));
+
+        }
         final int[] position = savedInstanceState.getIntArray(Contract.EXTRA_SCROLL_POSITION);
         if (position != null)
             mSlideShowScroll.post(() -> mSlideShowScroll.scrollTo(position[0], position[1]));
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
-    private void initFragment() {
+
+    private void initTabletViewWithFragment() {
         Bundle bundle = new Bundle();
         mContentListFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -462,221 +500,43 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 .commit();
     }
 
-    //////////all methods responsible for for auto scrolling for scrolling text//////////////////////////////////////////////
-    public void startAutoScrolling(int time) {
-
-        if (mSlideShowScroll != null) {
-            if (scrollTimer == null) {
-                scrollTimer = new Timer();
-                final Runnable Timer_Tick = () -> {
-
-                    moveScrollView();
-                    melliSeconds += 1;
-                };
-                if (scrollerSchedule != null) {
-                    scrollerSchedule.cancel();
-                    scrollerSchedule = null;
-                }
-                scrollerSchedule = new TimerTask() {
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void run() {
-
-                        runOnUiThread(Timer_Tick);
-                    }
-                };
-
-                scrollTimer.schedule(scrollerSchedule, time, time);
-                Log.d("speedScrollViw", "\n delay =" + String.valueOf(time) + "\n period =" + String.valueOf(time));
-
-            }
-        }
-
-    }
-
-    private void moveScrollView() {
-
-        if (mSlideShowScroll == null) {
-            stopAutoScrolling();
-
-        } else {
-            mScrollPos = (int) (mSlideShowScroll.getScrollY() + 1.0);
-            if (mScrollPos >= verticalScrollMax) {
-                mScrollPos = 0;
-
-            }
-            mSlideShowScroll.scrollTo(0, mScrollPos);
-
-
-        }
-
-    }
-
-    public void stopAutoScrolling() {
-        if (scrollTimer != null) {
-            scrollTimer.cancel();
-            scrollTimer = null;
-
-        }
-        lastPause = SystemClock.elapsedRealtime();
-        if (mChronometer != null) {
-            mChronometer.stop();
-        }
-
-
-    }
-
-    private void getScrollMaxAmount() {
-
-        ViewTreeObserver vto = verticalOuterLayout.getViewTreeObserver();
-
-
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onGlobalLayout() {
-                verticalOuterLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                verticalScrollMax = (verticalOuterLayout.getMeasuredHeight() - (256 * 3));
-            }
-        });
-
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void clickToScrolling() {
-        mSlideShowScroll.getChildAt(0).setOnClickListener(v -> {
-
-
-            if (paused) {
-
-                startPlayStatus();
-                paused = false;
-                if (lastPause > 0) {
-                    mChronometer.setBase(mChronometer.getBase() + SystemClock.elapsedRealtime() - lastPause);
-
-                    mChronometer.start();
-
-
-                } else {
-                    mChronometer.setBase(SystemClock.elapsedRealtime());
-                    mChronometer.start();
-                }
-
-                startAutoScrolling(timeSpeed);
-
-
-            } else {
-                mPlayStatus.setVisibility(View.VISIBLE);
-                mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
-
-                mPlayStatus.setBackground(getDrawable(R.drawable.ic_play_circle_filled));
-                paused = true;
-
-                stopAutoScrolling();
-
-
-            }
-
-
-            onSlideUbDowView(mAppBarLayout);
-
-
-        });
-    }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void startPlayStatus() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mPlayStatus.setBackground(getDrawable(R.drawable.ic_pause_circle_filled));
-        }
-        mPlayStatus.postDelayed(() -> mPlayStatus.setVisibility(View.INVISIBLE), 800);
-
-    }
-
-    public void slideUp(View view) {// slide the view from below itself to the current position
-        view.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-
-    }
-
-    public void slideDown(View view) {    // slide the view from its current position to below itself
-        view.animate().translationY(-view.getBottom()).setInterpolator(new AccelerateInterpolator()).start();
-
-    }
-
-    public void onSlideUbDowView(View view) {
-        if (isUp) {
-            slideDown(view);
-
-        } else {
-            slideUp(view);
-        }
-        isUp = !isUp;
-    }
-
-
-    private void setSpeed(int progress) {//generate suitable value of scrolling by parsing seekbar progress value
-        if (progress > 1 && progress <= 10) {
-            timeSpeed = 200;
-
-        } else if (progress > 11 && progress <= 20) {
-            timeSpeed = 150;
-
-        } else if (progress >= 21 && progress <= 30) {
-            timeSpeed = 100;
-        } else if (progress >= 31 && progress <= 40) {
-            timeSpeed = 50;
-
-        } else if (progress >= 46 && progress <= 50) {
-            timeSpeed = 40;
-
-        } else if (progress >= 51 && progress <= 55) {
-            timeSpeed = 30;
-
-        } else if (progress >= 56 && progress <= 60) {
-            timeSpeed = 20;
-
-        } else if (progress >= 61 && progress <= 65) {
-            timeSpeed = 10;
-
-        } else if (progress >= 66 && progress <= 69) {
-            timeSpeed = 15;
-
-        } else if (progress >= 72 && progress < 75) {
-            timeSpeed = 10;
-
-        } else if (progress >= 78 && progress <= 81) {
-            timeSpeed = 8;
-
-        } else if (progress > 84 && progress < 87) {
-            timeSpeed = 5;
-
-        } else if (progress > 90 && progress < 93) {
-            timeSpeed = 3;
-
-        } else if (progress >= 96 && progress < 99) {
-            timeSpeed = 1;
-
-        }
-    }
-
+    //==================================================================================================
+//================================ Navigation Drawer ===============================================
+//==================================================================================================
     private void initNavigationDrawer() {
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
         TextView OtherSetting = mNavView.findViewById(R.id.other_setting);
         AdView adView3 = mNavView.findViewById(R.id.adView3);
-
+        CheckBox checkboxOpenCamera = mNavView.findViewById(R.id.checkboxOpenCamera);
+        LinearLayout videoSettingsContainer = mNavView.findViewById(R.id.videoSettingsContainer);
+        LinearLayout videoSettings = mNavView.findViewById(R.id.videoSettings);
 
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
         final TextView defaultText = mNavView.findViewById(R.id.default_text);
         final TextView undoText = mNavView.findViewById(R.id.undo_text);
         mTextSpeed = mNavView.findViewById(R.id.text_font);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(
-                        getString(R.string.banner_pup))
-                .build();
-        adView3.loadAd(adRequest);
+        checkboxOpenCamera.setChecked(SharedPrefManager.getInstance(this).isCameraEnabled());
+        checkboxOpenCamera.setText(SharedPrefManager.getInstance(this).isCameraEnabled() ? getResources().getString(R.string.close_camera) : getResources().getString(R.string.open_camera));
+        checkboxOpenCamera.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            setCameraShow(isChecked);
+            if (isChecked) {
+                mCameraUtils.showVideoFragment();
+                checkboxOpenCamera.setText(getResources().getString(R.string.close_camera));
+                videoSettingsContainer.setVisibility(View.VISIBLE);
+            } else {
+                checkboxOpenCamera.setText(getResources().getString(R.string.open_camera));
+                videoSettingsContainer.setVisibility(View.GONE);
 
+            }
+
+        });
+        videoSettings.setOnClickListener(v -> goToSettings());
+       // videoSettings.setOnClickListener(v -> showSettingVideoDialogFragment());
+
+        mVideoBrightness.setOnClickListener(v -> openBrightnessPopup());
+
+        mAdUtils.initializeBannerAd(adView3);
         if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()) {
             mSeekTextSize.setProgress(20);
             mScrollText.setTextSize(20);
@@ -687,11 +547,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
 
         if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetSpeed()) {
-            setSpeed(40);
+            displayUtils.setSpeed(40);
             mSeekScrollSpeed.setProgress(40);
 
         } else {
-            setSpeed(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
+            displayUtils.setSpeed(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
             mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
 
         }
@@ -699,20 +559,20 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                stopAutoScrolling();
+                displayUtils.stopAutoScrolling();
                 SharedPrefManager.getInstance(DisplayActivity.this).setFirstSetSpeed(true);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                stopAutoScrolling();
+                displayUtils.stopAutoScrolling();
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
-                setSpeed(progress);
-                startPlayStatus();
-                startAutoScrolling(timeSpeed);
+                displayUtils.setSpeed(progress);
+                displayUtils.startPlayStatus();
+                displayUtils.startAutoScrolling(mTimeSpeed);
                 mTextSpeed.setText(String.valueOf(progress));
                 SharedPrefManager.getInstance(DisplayActivity.this).setPrefSpeed(progress);
             }
@@ -773,7 +633,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         });
         undoText.setOnClickListener(view -> {
             if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetColor()) {
-                Toast.makeText(DisplayActivity.this, getResources().getString(R.string.first_set_color), Toast.LENGTH_LONG).show();
+                //Toast.makeText(DisplayActivity.this, getResources().getString(R.string.first_set_color), Toast.LENGTH_LONG).show();
 
             } else {
                 mScrollText.setTextColor(SharedPrefManager.getInstance(DisplayActivity.this)
@@ -792,10 +652,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
 
+    @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void launchDlgTextColors() {
         isDialogShow = true;
-        mDialogTextColors = new Dialog(Objects.requireNonNull(this));
+        mDialogTextColors = new Dialog(this);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(Objects.requireNonNull(mDialogTextColors.getWindow()).getAttributes());
         lp.width = 48;
@@ -852,7 +713,20 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onPause() {
         super.onPause();
+        if (this.mVideoFragment != null) {
+            if (this.mVideoFragment.getZoomBar() != null) {
+                this.mVideoFragment.getZoomBar().setProgress(0);
+            }
+        }
 
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+            if(mCameraUtils!=null){
+                mCameraUtils.resetPinchZoomGestureListener();
+            }
+        }
+        if (mAdUtils != null) {
+            mAdUtils.dispose("onPause");
+        }
         if (mDialogTextColors != null) {
             if (!mDialogTextColors.isShowing()) {
                 isDialogShow = false;
@@ -861,17 +735,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-
     public void onDestroy() {
         super.onDestroy();
-
-        clearTimerTaks(clickSchedule);
-        clearTimerTaks(scrollerSchedule);
-        clearTimers(scrollTimer);
-        clickSchedule = null;
-        scrollerSchedule = null;
-        scrollTimer = null;
-
+        if (displayUtils != null) {
+            displayUtils.dispose("onDestroy");
+        }
+        if (mAdUtils != null) {
+            mAdUtils.dispose("onDestroy");
+        }
         Log.d("lifCycle", "onDestroy");
 
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -881,13 +752,19 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
+        if(!isCameraInited){
+            initCame();
+        }
         Log.d("lifCycle", "onResume");
-        initializeInterstitialAds();
+
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        if(!isCameraInited){
+            initCame();
+        }
         Log.d("lifCycle", "onRestart");
 
 
@@ -897,41 +774,132 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onStart() {
         super.onStart();
         Log.d("lifCycle", "onStart");
-        initializeInterstitialAds();
-        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
+        if(!isCameraInited){
+            initCame();
         }
 
     }
 
-    @SuppressWarnings("UnusedAssignment")
-    private void clearTimers(Timer timer) {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+
+    void initCame(){
+        if(SharedPrefManager.getInstance(this).isCameraEnabled()){
+            mPlayStatus.setVisibility(View.GONE);
+            mCameraUtils.showVideoFragment();
+            setCameraShow(true);
+            isCameraInited=true;
         }
     }
-
-    @SuppressWarnings("UnusedAssignment")
-    private void clearTimerTaks(TimerTask timerTask) {
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
-        }
-    }
-
-
+//==================================================================================================
+//================================ onClick All Views ===============================================
+//==================================================================================================
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
 
         if (view.getId() == R.id.show_play) {
-            getScrollMaxAmount();
-            startPlayStatus();
-            startAutoScrolling(timeSpeed);
+            displayUtils.getScrollMaxAmount(verticalOuterLayout);
+            displayUtils.startPlayStatus();
+            displayUtils.startAutoScrolling(mTimeSpeed);
+
         }
 
+    }
+
+    @Override
+    public void onStartRecord() {
+        Log.d(TAG, "onStartRecord");
+
+        displayUtils.getScrollMaxAmount(verticalOuterLayout);
+        displayUtils.startPlayStatus();
+        displayUtils.startAutoScrolling(mTimeSpeed);
+    }
+
+    @Override
+    public void onStopRecord() {
+        Log.d(TAG, "onStopRecord");
+        displayUtils.stopAutoScrolling();
+    }
+
+
+    public void goToSettings() {
+        Log.d(TAG, "goToSettings clicked");
+
+        Intent settingsIntent = new Intent(this, SettingsCameraActivity.class);
+        startActivity(settingsIntent);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    private void showSettingVideoDialogFragment(){
+
+        FragmentManager fm = getSupportFragmentManager();
+        SettingVideoDialogFragment settingVideoDialogFragment = SettingVideoDialogFragment.newInstance("Some Title");
+        settingVideoDialogFragment.show(fm, "fragment_edit_name");
+
+    }
+
+    public void openBrightnessPopup() {
+        TextView header = (TextView) settingsRootView.findViewById(R.id.timerText);
+        header.setText(getResources().getString(R.string.brightnessHeading));
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        settingsDialog.setContentView(settingsRootView);
+        settingsDialog.setCancelable(true);
+        WindowManager.LayoutParams lp = settingsDialog.getWindow().getAttributes();
+        lp.dimAmount = 0.0f;
+        lp.width = (int) (size.x * 0.8);
+        final SeekBar brightnessBar = (SeekBar) settingsRootView.findViewById(R.id.brightnessBar);
+        brightnessBar.setMax(10);
+        brightnessBar.setProgress(mCameraUtils.getBrightnessLevel());
+        brightnessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekBar.setProgress(mCameraUtils.getBrightnessLevel());
+            }
+        });
+        Button increaseBrightness = (Button) settingsRootView.findViewById(R.id.increaseBrightness);
+        increaseBrightness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (GLUtil.colorVal < 0.25f) {
+                    GLUtil.colorVal += 0.05f;
+                    brightnessBar.incrementProgressBy(1);
+                    mCameraUtils.setBrightnessLevel(brightnessBar.getProgress());
+                } else {
+                    GLUtil.colorVal = 0.25f;
+                }
+                mCameraUtils.setBrightnessProgress(GLUtil.colorVal);
+
+            }
+        });
+        Button decreaseBrightness = (Button) settingsRootView.findViewById(R.id.setTimer);
+        decreaseBrightness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (GLUtil.colorVal > -0.25f) {
+                    GLUtil.colorVal -= 0.05f;
+                    brightnessBar.incrementProgressBy(-1);
+                    mCameraUtils.setBrightnessLevel(brightnessBar.getProgress());
+                } else {
+                    GLUtil.colorVal = -0.25f;
+                }
+                mCameraUtils.setBrightnessProgress(GLUtil.colorVal);
+            }
+        });
+        //settingsDialog.getWindow().setBackgroundDrawableResource(R.color.backColorSettingPopup);
+        settingsDialog.show();
     }
 
     @Override
@@ -944,7 +912,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 mScrollContainer.setVisibility(View.VISIBLE);
                 mEmptyTextShow.setVisibility(View.GONE);
 
-                getScrollMaxAmount();
+                displayUtils.getScrollMaxAmount(verticalOuterLayout);
 
             }
         }
@@ -995,11 +963,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         // Get all of the values from shared preferences to set it up
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setHorizontalMode(sharedPreferences.getBoolean(getString(R.string.pref_horizontal_mode_key),
-                getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
+                getResources().getBoolean(R.bool.horizontal_mode_default)));
+        //setCameraShow(sharedPreferences.getBoolean(getString(R.string.open_camera), getResources().getBoolean(R.bool.open_camera_default)));
         seTimerShow(sharedPreferences.getBoolean(getString(R.string.pref_timer_key),
-                getResources().getBoolean(R.bool.pref_timer_default)));
+                getResources().getBoolean(R.bool.timer_default)));
         setToggleMarker(sharedPreferences.getBoolean(getString(R.string.pref_toggle_marker_key),
-                getResources().getBoolean(R.bool.pref_toggle_marker_default)));
+                getResources().getBoolean(R.bool.toggle_marker_default)));
 
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
@@ -1008,12 +977,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_horizontal_mode_key))) {
-            setHorizontalMode(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_horizontal_mode_default)));
+            setHorizontalMode(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.horizontal_mode_default)));
         } else if (key.equals(getString(R.string.pref_timer_key))) {
-            seTimerShow(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_timer_default)));
+            seTimerShow(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.timer_default)));
         } else if (key.equals(getString(R.string.pref_toggle_marker_key))) {
-            setToggleMarker(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_toggle_marker_default)));
-        }
+            setToggleMarker(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.toggle_marker_default)));
+        }/*else if (key.equals(getString(R.string.open_camera))) {
+            setCameraShow(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.open_camera_default)));
+        }*/
     }
 
 
@@ -1022,6 +993,17 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mChronometer.setVisibility(View.VISIBLE);
         } else {
             mChronometer.setVisibility(View.GONE);
+
+        }
+
+    }
+
+    public void setCameraShow(boolean is) {
+        SharedPrefManager.getInstance(this).setCameraEnabled(is);
+        if (is) {
+            mCameraContent.setVisibility(View.VISIBLE);
+        } else {
+            mCameraContent.setVisibility(View.GONE);
 
         }
 
@@ -1046,6 +1028,56 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         }
+    }
+
+
+    @Override
+    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+        Log.i(TAG, "onUserEarnedReward");
+    }
+
+    @Override
+    public void onClose(int type) {
+
+    }
+
+
+    @Override
+    public void switchToPhoto() {
+
+    }
+
+    @Override
+    public boolean checkIfPhoneMemoryIsBelowLowestThresholdForVideo() {
+        return mCameraUtils.checkIfPhoneMemoryIsBelowLowThreshold();
+    }
+
+    @Override
+    public void action(int timeSpeed) {
+        mTimeSpeed = timeSpeed;
+        Log.d(TAG, "on action timeSpeed=" + timeSpeed);
+
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+            mCameraUtils.onTouchGestureDetector(event);
+        }
+        return true;
+    }
+
+    @Override
+    public void askPermission() {
+        askCameraPermission();
+    }
+
+
+    public void askCameraPermission() {
+        Log.d(TAG, "start permission act to get permissions");
+        permissionsUtils.getPermissionsStatus();
+
     }
 
 

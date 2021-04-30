@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/add_dialog_width"
     android:layout_height="wrap_content"
     android:layout_gravity="center|bottom"
@@ -18,7 +19,7 @@
         app:met_baseColor="@color/colorPrimaryText"
         app:met_floatingLabel="highlight"
         app:met_maxCharacters="20"
-        app:met_primaryColor="?colorAccent"
+        app:met_primaryColor="@color/colorAccent"
         app:met_singleLineEllipsis="true" />
 
     <com.and.ibrahim.teleprompter.util.LinedEditText
@@ -63,7 +64,8 @@
             android:textAlignment="center"
             android:textColor="@color/color_white"
             android:textSize="@dimen/add_dialog_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RtlCompat" />
 
     </RelativeLayout>
 </LinearLayout>

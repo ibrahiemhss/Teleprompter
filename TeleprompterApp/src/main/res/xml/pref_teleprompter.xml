@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <android.support.v7.preference.SwitchPreferenceCompat
+    <androidx.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/open_camera_default"
+        android:key="@string/pref_open_camera_key"
+        android:summaryOff="@string/pref_false"
+        android:summaryOn="@string/pref_true"
+        android:title="@string/open_camera" />
+    <androidx.preference.SwitchPreferenceCompat
 
-        android:defaultValue="@bool/pref_horizontal_mode_default"
+        android:defaultValue="@bool/horizontal_mode_default"
         android:key="@string/pref_horizontal_mode_key"
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
         android:title="@string/pref_horizontal_mode_label" />
 
-    <android.support.v7.preference.SwitchPreferenceCompat
-        android:defaultValue="@bool/pref_timer_default"
+    <androidx.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/timer_default"
         android:key="@string/pref_timer_key"
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
         android:title="@string/pref_timer_key_label" />
 
-    <android.support.v7.preference.SwitchPreferenceCompat
-        android:defaultValue="@bool/pref_toggle_marker_default"
+    <androidx.preference.SwitchPreferenceCompat
+        android:defaultValue="@bool/toggle_marker_default"
         android:key="@string/pref_toggle_marker_key"
         android:summaryOff="@string/pref_false"
         android:summaryOn="@string/pref_true"
@@ -29,4 +35,4 @@
             android:data="https://sites.google.com/view/teleprompter-app/home/teleprompter" />
     </Preference>
 
-</android.support.v7.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

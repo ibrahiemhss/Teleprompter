@@ -21,8 +21,10 @@ class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL(Contract.Entry.CREATE_TABLE_TELEPROMPTER);
-            db.execSQL("CREATE UNIQUE INDEX event_idx ON " + Contract.Entry.TABLE_TELEPROMPTER + " ( " + Contract.Entry._ID + " )");
+            db.execSQL(Contract.Entry.CREATE_SCRIPTS_TABLE);
+            db.execSQL("CREATE UNIQUE INDEX event_idx ON " + Contract.Entry.SCRIPTS_TABLE + " ( " + Contract.Entry._ID + " )");
+            db.execSQL(Contract.Entry.CREATE_MEDIA_TABLE);
+           // db.execSQL("CREATE UNIQUE INDEX event_idx ON " + Contract.Entry.MEDIA_TABLE + " ( " + Contract.Entry._ID + " )");
 
         } catch (SQLException e) {
             Log.d(TAG, e.getMessage());
@@ -31,8 +33,8 @@ class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(Contract.Entry.DROP_TELEPROMPTER_TELEPROMPTER);
-
+        db.execSQL(Contract.Entry.DROP_SCRIPTS_TABLE);
+        db.execSQL(Contract.Entry.DROP_MEDIA_TABLE);
 
         onCreate(db);
     }
