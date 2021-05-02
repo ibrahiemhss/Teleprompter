@@ -11,6 +11,7 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -18,12 +19,14 @@ import androidx.annotation.RequiresApi;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 import com.and.ibrahim.teleprompter.util.AdsUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -91,16 +94,22 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private static final int REQUEST_CODE_OPEN_ITEM = 1;
     private static final int REQUEST_READ_STORAGE_CODE = 2;
     public ArrayList<DataObj> mArrayList;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.fab)
     protected FloatingActionButton mFab;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.fab_add)
     protected FloatingActionButton mFabAdd;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.fab_storage)
     protected FloatingActionButton mFabStorage;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.fab_cloud)
     protected FloatingActionButton mFabCloud;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.adView)
     protected AdView mAdView;
     private AdsUtils mAdUtils;
@@ -144,8 +153,8 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.list_content_fragment, container, false);
         ButterKnife.bind(this, view);
 
-       // Fabric.with(getActivity(), new Crashlytics());
-        mAdUtils =new AdsUtils(getActivity(), data -> {
+        // Fabric.with(getActivity(), new Crashlytics());
+        mAdUtils = new AdsUtils(getActivity(), data -> {
             Log.i(TAG, "onCLose Full Screen action = " + data);
         });
         mAdUtils.initializeBannerAd(mAdView);
@@ -254,17 +263,17 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
     private void addScrollString(String mScrollString) {
 
 
-            if (mScrollString != null)
-                if (isTablet) {
+        if (mScrollString != null)
+            SharedPrefManager.getInstance(getActivity()).setCurrentText(mScrollString);
+        if (isTablet) {
 
-                    passData(mScrollString);
-                } else {
-                    Intent intent = new Intent(getActivity(), DisplayActivity.class);
-                    intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
-                    startActivity(intent);
+            passData(mScrollString);
+        } else {
+            Intent intent = new Intent(getActivity(), DisplayActivity.class);
+            //intent.putExtra(Contract.EXTRA_TEXT, mScrollString);
+            startActivity(intent);
 
-                }
-
+        }
 
 
     }
@@ -276,11 +285,11 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         int id = view.getId();
         switch (id) {
             case R.id.fab:
-                Log.d(TAG, " isFullScreenAdShown ="+SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown());
-                if(!SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown()){
+                Log.d(TAG, " isFullScreenAdShown =" + SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown());
+                if (!SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown()) {
                     SharedPrefManager.getInstance(getActivity()).setFullScreenAdShown(true);
                     mAdUtils.showAdd(Contract.REAWRDED_ADS);
-                }else{
+                } else {
                     mFabAnimations.animateFAB();
 
                 }
@@ -324,7 +333,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
         teleprompterAdapter = new TeleprompterAdapter(getLayoutInflater(), new OnItemViewClickListener() {
             @Override
             public void onEditImgClickListener(int position, View v) {
-                    launchPopUpMenu(v, position);
+                launchPopUpMenu(v, position);
 
             }
 
@@ -459,7 +468,7 @@ public class ListContentsFragment extends Fragment implements View.OnClickListen
 
 
         mAdd.setOnClickListener(v -> {
-            Log.d(TAG, " isFullScreenAdShown ="+SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown());
+            Log.d(TAG, " isFullScreenAdShown =" + SharedPrefManager.getInstance(getActivity()).isFullScreenAdShown());
 
 
             isAddDialogShow = false;

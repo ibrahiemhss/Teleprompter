@@ -120,13 +120,15 @@
     //Top and Bottom padding for no connection msg
     <dimen name="noConnMsgTopAndBottomPadding">25dp</dimen>
     //Vertical Spacing
-    <dimen name="verticalSpace">3px</dimen>
+    <dimen name="verticalSpace">3dp</dimen>
     //Margins for Teleprompter‏ gallery
     <dimen name="fcGalleryTextTopAndBottomMargin">15dp</dimen>
     <dimen name="fcGalleryTextLeftMargin">15dp</dimen>
     //Size for brightness icon
     <dimen name="brightnessWidth">30dp</dimen>
     <dimen name="brightnessHeight">30dp</dimen>
+    <dimen name="flashWidth">30dp</dimen>
+    <dimen name="flashHeight">30dp</dimen>
     <dimen name="instantSettingWidth">50dp</dimen>
     <dimen name="instantSettingHeight">150dp</dimen>
     //Dimensions for brightness popup

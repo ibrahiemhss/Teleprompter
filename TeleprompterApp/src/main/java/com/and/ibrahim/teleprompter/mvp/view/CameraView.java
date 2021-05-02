@@ -1,6 +1,7 @@
 package com.and.ibrahim.teleprompter.mvp.view;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
@@ -63,9 +64,6 @@ import java.util.Date;
 
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
-/**
- * Created by Koushick on 15-08-2017.
- */
 /*
 CameraView is used to display the camera preview using SurfaceView. This is the class where all camera related operations for both photo and video are
 performed.
@@ -714,6 +712,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
 
     //Return 'true' if this method will create a camera capture session while setting a flash, or 'false' if not.
     //If 'false' is returned, a camera capture session will be created in Camera2Manager.
+    @SuppressLint("UseCompatLoadingForDrawables")
     public boolean switchFlashOnOff(){
          Log.d(TAG,"isSwitch = "+isSwitch());
         if(isSwitch()){
@@ -1078,7 +1077,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
                 }
                 else{
                      Log.d(TAG, "adjustStreamVolumeUnMute");
-                    audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
+                    }
                 }
                  Log.d(TAG,"Recording in progress.... Stop now");
                 setRecord(false);
@@ -1202,7 +1203,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
                 }
                 else{
                     path.append(SharedPrefManager.getInstance(getContext()).getSdCardPath());
-                    SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.DATE_FORMAT_FOR_FILE));
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.DATE_FORMAT_FOR_FILE));
                     String filename = sdf.format(new Date());
                      Log.d(TAG, "sd card filename = " + filename);
                     path.append(video ? getResources().getString(R.string.FC_VID_PREFIX) + filename + getResources().getString(R.string.VID_EXT) :
@@ -1223,7 +1224,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
             if (!dcim.exists()) {
                 dcim.mkdirs();
             }
-            SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.DATE_FORMAT_FOR_FILE));
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(getResources().getString(R.string.DATE_FORMAT_FOR_FILE));
             String filename = sdf.format(new Date());
              Log.d(TAG, "filename = " + filename);
             phonePath = (video ? dcim.getPath() + getResources().getString(R.string.FC_VID_PREFIX) + filename + getResources().getString(R.string.VID_EXT) :

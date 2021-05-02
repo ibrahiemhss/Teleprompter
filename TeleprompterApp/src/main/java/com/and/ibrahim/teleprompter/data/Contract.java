@@ -43,7 +43,7 @@ public class Contract implements BaseColumns {
     public static final String BASE_CONTENT = "content://" + SCHEMA;
 
     public static final Uri BASE_CONTENT_URI = Uri.parse(SCHEMA + AUTHORITY);
-    public static String DB_PATH = "/data/data/"+AUTHORITY+"/databases/";
+    public static String DB_PATH = "/data/"+AUTHORITY+"/databases/";
     public static final class Entry implements BaseColumns {
         public static final Uri PATH_TELEPROMPTER_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH).build();
         public static final Uri PATH_ADD_MEDIA_URI = BASE_CONTENT_URI.buildUpon().appendPath(DATA).appendPath(ADD_MEDIA).build();
@@ -80,6 +80,7 @@ public class Contract implements BaseColumns {
 
 
     public static final String SHARED_NAME = "SHARED_NAME_CONTENTS";
+    public static final String CURRENT_TEXT = "current_text";
 
     public static final String SCROLL_SPEED = "Contract.speed";
     public static final String TEXT_SIZE = "Contract.text_size";

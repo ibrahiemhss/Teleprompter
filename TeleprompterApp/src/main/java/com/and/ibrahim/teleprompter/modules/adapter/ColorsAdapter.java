@@ -60,6 +60,7 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.Holder> {
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.img_background_color)
         protected RoundedImageView mBackgroundColor;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.img_text_color)
         RoundedImageView mTextColor;
 

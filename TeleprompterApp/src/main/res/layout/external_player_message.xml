@@ -30,7 +30,7 @@
             android:paddingStart="10dp"
             android:text="@string/externalVideoPlayerTitle"
             android:textAlignment="center"
-            android:textColor="@color/saveText"
+            android:textColor="@color/White"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="@string/externalVideoPlayerMessage"
-        android:textColor="@color/orange_light"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="13sp"
         android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
         android:text="@string/externalVideoPlayerCheckbox"
-        android:textColor="@color/orange_light"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="13sp"
         app:buttonTint="@color/colorAccent" />
 
@@ -84,6 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
+        android:contentDescription="@string/teleprompterContentDescription"
+        android:background="@drawable/accent_border_back"
         app:srcCompat="@drawable/ic_close" />
 
 </LinearLayout>

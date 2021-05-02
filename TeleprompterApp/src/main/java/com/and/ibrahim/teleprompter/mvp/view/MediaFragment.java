@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.mvp.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -117,6 +118,7 @@ MediaPlayer.OnErrorListener, Serializable {
         return mediaFragment;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -237,7 +239,9 @@ MediaPlayer.OnErrorListener, Serializable {
                     }
                     else{
                         Log.d(TAG, "adjustStreamVolume");
-                        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+                        }
                     }
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
@@ -247,6 +251,7 @@ MediaPlayer.OnErrorListener, Serializable {
         }
     };
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void reConstructVideo(Media savedVideo){
         videoSeek.setMax(savedVideo.getSeekDuration());
         videoSeek.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
@@ -632,6 +637,7 @@ MediaPlayer.OnErrorListener, Serializable {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void setupPlayCircleForExternalPlayer(){
         Log.d(TAG, "setupPlayCircleForExternalPlayer");
         playCircle.setVisibility(View.VISIBLE);

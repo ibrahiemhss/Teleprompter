@@ -1,6 +1,7 @@
 package com.and.ibrahim.teleprompter.modules.display;
 
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.fragment.app.FragmentManager;
 
 import com.and.ibrahim.teleprompter.ControlVisbilityPreference;
@@ -106,6 +109,7 @@ public class SettingsCameraActivity extends AppCompatActivity {
         return feedback_information;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +146,7 @@ public class SettingsCameraActivity extends AppCompatActivity {
        // getSupportActionBar().setTitle(getResources().getString(R.string.settingTitle));
         settingsPref = getSharedPreferences(Contract.FC_SETTINGS, Context.MODE_PRIVATE);
         settingsEditor = settingsPref.edit();
-        if(VERBOSE)if(VERBOSE) Log.d(TAG,"SD Card Path onCreate = "+settingsPref.getString(Contract.SD_CARD_PATH,""));
+       if(VERBOSE) Log.d(TAG,"SD Card Path onCreate = "+settingsPref.getString(Contract.SD_CARD_PATH,""));
         if(settingsPref.contains(Contract.SD_CARD_PATH) && !settingsPref.getString(Contract.SD_CARD_PATH,"").equals("")) {
             String sdcardpath = settingsPref.getString(Contract.SD_CARD_PATH, "");
             showSDCardPath(sdcardpath);
@@ -191,6 +195,16 @@ public class SettingsCameraActivity extends AppCompatActivity {
         videoResolutionParent.setOnClickListener(videoResolutionParentListener);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     View.OnClickListener photoResolutionParentListener = new View.OnClickListener(){
         @Override
         public void onClick(View view) {
@@ -378,6 +392,7 @@ public class SettingsCameraActivity extends AppCompatActivity {
         }*/
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void selectSaveMedia(View view){
         switch (view.getId()){
             case R.id.phoneMemButton:

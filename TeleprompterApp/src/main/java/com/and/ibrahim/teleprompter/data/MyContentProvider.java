@@ -41,6 +41,7 @@ public class MyContentProvider extends ContentProvider {
         uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/*", SCRIPTS_WITH_ID);
         uriMatcher.addURI(Contract.AUTHORITY, Contract.PATH + "/#", SCRIPTS_WITH_NO_ID);
         uriMatcher.addURI(Contract.AUTHORITY,Contract.AUTHORITY+"/addMedia",INSERT_MEDIA);
+        uriMatcher.addURI(Contract.AUTHORITY,Contract.AUTHORITY+"/deleteMedia",DELETE_MEDIA);
 
 
         return uriMatcher;
@@ -217,49 +218,59 @@ public class MyContentProvider extends ContentProvider {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         int match = sUriMatcher.match(uri);
-        int idDeleted; // starts as 0
+        int idDeleted=0; // starts as 0
+        Uri returnUri=null;
+        Log.d(TAG,"uri data = "+uri.toString());
 
-        switch (match) {
-            case SCRIPTS_WITH_NO_ID:
-                String id = uri.getPathSegments().get(1);
-                if (id != null) {
+        if(uri.toString().contains(Contract.DELETE_MEDIA)){
+            Log.d(TAG,"deleting Media = "+selectionArgs[0]);
+            String id = uri.getPathSegments().get(0);
+            if (id != null) {
+                // Use selections/selectionArgs to filter for this ID
+                idDeleted = db.delete(Contract.Entry.MEDIA_TABLE,
+                        Contract.Entry.FILE_NAME + " =?",
+                        new String[]{id});
+                Log.d(TAG, "idDeleted =is " + id);
+            } else {
+                idDeleted = db.delete(Contract.Entry.MEDIA_TABLE, selection, selectionArgs);
+                Log.d(TAG, "idDeleted = all ");
+
+            }
+
+        }else{
+            switch (match) {
+                case SCRIPTS_WITH_NO_ID:
+                    String id = uri.getPathSegments().get(1);
+                    if (id != null) {
+                        // Use selections/selectionArgs to filter for this ID
+                        idDeleted = db.delete(Contract.Entry.SCRIPTS_TABLE,
+                                Contract.Entry.COL_UNIQUE_ID + " =?",
+                                new String[]{id});
+                        Log.d(TAG, "idDeleted =is " + id);
+                    } else {
+                        idDeleted = db.delete(Contract.Entry.SCRIPTS_TABLE, selection, selectionArgs);
+                        Log.d(TAG, "idDeleted = all ");
+
+                    }
                     // Use selections/selectionArgs to filter for this ID
-                    idDeleted = db.delete(Contract.Entry.SCRIPTS_TABLE,
-                            Contract.Entry.COL_UNIQUE_ID + " =?",
-                            new String[]{id});
-                    Log.d(TAG, "idDeleted =is " + id);
-                } else {
-                    idDeleted = db.delete(Contract.Entry.SCRIPTS_TABLE, selection, selectionArgs);
-                    Log.d(TAG, "idDeleted = all ");
+                    break;
 
+                case SCRIPTS_CODE:
+                case SCRIPTS_WITH_ID:
+                    idDeleted = db.delete(
+                            Contract.Entry.SCRIPTS_TABLE, selection, selectionArgs);
+                    Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
+
+                    break;
+
+
+                default:
+                    throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+            if (idDeleted != 0) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
                 }
-                // Use selections/selectionArgs to filter for this ID
-                break;
-
-            case SCRIPTS_CODE:
-            case SCRIPTS_WITH_ID:
-                idDeleted = db.delete(
-                        Contract.Entry.SCRIPTS_TABLE, selection, selectionArgs);
-                Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
-
-                break;
-
-            case DELETE_MEDIA:
-                 Log.d(TAG,"deleting Media = "+selectionArgs[0]);
-                idDeleted = db.delete(
-                        Contract.Entry.MEDIA_TABLE, selection, selectionArgs);
-                Log.d(TAG, "idDeleted =TELEPROMPTER_WITH_ID ");
-
-                // Use selections/selectionArgs to filter for this ID
-                break;
-
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
-        }
-
-        if (idDeleted != 0) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
             }
         }
 

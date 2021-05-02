@@ -13,6 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="false"
         android:layout_marginTop="@dimen/featureAndValueTopAndBottomMargin"
+        android:contentDescription="@string/teleprompterContentDescription"
         app:srcCompat="@drawable/orange_circle" />
 
     <LinearLayout

@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.display;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.LoaderManager;
 import android.appwidget.AppWidgetManager;
@@ -13,6 +14,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AbsListView;
@@ -24,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 
 import com.and.ibrahim.teleprompter.ControlVisbilityPreference;
@@ -40,22 +43,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GalleryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<FileMedia[]>{
-    @Override
-    public Loader<FileMedia[]> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
 
-    @Override
-    public void onLoadFinished(Loader<FileMedia[]> loader, FileMedia[] data) {
 
-    }
-
-    @Override
-    public void onLoaderReset(Loader<FileMedia[]> loader) {
-
-    }
-
-   /* public static final String TAG = "GalleryActivity";
+  public static final String TAG = "GalleryActivity";
     int scrollPosition = 0;
     SharedPreferences sharedPreferences;
     View warningMsgRoot;
@@ -68,16 +58,19 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
     IntentFilter mediaFilters;
     SDCardEventReceiver sdCardEventReceiver;
     boolean sdCardUnavailWarned = false;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.mediaCount)
     TextView mediaCount;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.mediaGrid)
     GridView mediaGrid;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.mediaSourceImage)
     ImageView mediaSourceImage;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.gridHeader)
     LinearLayout gridHeader;
-    @BindView(R.id.videoCapture)
-    FloatingActionButton videoCapture;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.openMediaProgress)
     ProgressBar openMediaProgress;
     ControlVisbilityPreference controlVisbilityPreference;
@@ -110,12 +103,12 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
         phoneLoc = getResources().getString(R.string.phoneLocation);
         sdcardLoc = getResources().getString(R.string.sdcardLocation);
         allLoc = getResources().getString(R.string.allLocation);
-        videoCapture.setOnClickListener((view) -> {
-            Intent videoCamAct = new Intent(this, CameraActivity.class);
+/*        videoCapture.setOnClickListener((view) -> {
+            Intent videoCamAct = new Intent(this, DisplayActivity.class);
             videoCamAct.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(videoCamAct);
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-        });
+        });*/
         //fromMedia is set to true only if Gallery is opened from MediaActivity. This should be reset to false in onResume()
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -123,7 +116,16 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
             selectedFolder = bundle.getString("selectedFolder");
         }
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -139,28 +141,29 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
         SharedPreferences.Editor mediaLocEdit = sharedPreferences.edit();
         //Since user did not select any media, go back to previous option for view
         mediaLocEdit.putString(Contract.MEDIA_LOCATION_VIEW_SELECT, sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT_PREV, phoneLoc));
-        mediaLocEdit.commit();
+        mediaLocEdit.apply();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void updateMediaGridFromSource(){
         ImageView noImage = (ImageView) findViewById(R.id.noImage);
         TextView noImageText = (TextView) findViewById(R.id.noImageText);
         if(medias != null && medias.length > 0) {
             noImage.setVisibility(View.GONE);
             noImageText.setVisibility(View.GONE);
-            mediaCount.setText(getResources().getString(R.string.galleryCount, MediaUtil.getPhotosCount(), MediaUtil.getVideosCount()));
+            mediaCount.setText(getResources().getString(R.string.galleryCount, MediaUtil.getVideosCount()));
             if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(phoneLoc)){
                 if(VERBOSE) Log.d(TAG, "SET TO PHONE");
-                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.phone));
+                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_folder));
             }
             else if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)){
                 if(VERBOSE) Log.d(TAG, "SET TO SDCARD");
-                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.sdcard));
+                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_sd_snippet_folder));
             }
             else{
                 if(VERBOSE) Log.d(TAG, "SET TO ALL");
-                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.phone_sdcard));
+                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_folder_special));
             }
             MediaAdapter mediaAdapter = new MediaAdapter(getApplicationContext(), medias);
             mediaGrid.setAdapter(mediaAdapter);
@@ -187,8 +190,8 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
                 controlVisbilityPreference.setFromGallery(true);
                 controlVisbilityPreference.setMediaSelectedPosition(position);
                 SharedPreferences.Editor mediaLocEdit = sharedPreferences.edit();
-                mediaLocEdit.putString(Constants.MEDIA_LOCATION_VIEW_SELECT, selectedFolder);
-                mediaLocEdit.commit();
+                mediaLocEdit.putString(Contract.MEDIA_LOCATION_VIEW_SELECT, selectedFolder);
+                mediaLocEdit.apply();
                 if(VERBOSE) Log.d(TAG, "SAVE selectedFolder = "+selectedFolder);
                 startActivity(mediaAct);
             });
@@ -198,22 +201,22 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
             }
         }
         else{
-            mediaCount.setText(getResources().getString(R.string.galleryCount, 0, 0));
+            mediaCount.setText(getResources().getString(R.string.galleryCount,  0));
             noImage.setVisibility(View.VISIBLE);
             noImageText.setVisibility(View.VISIBLE);
             //Refresh Media Grid to remove any earlier stored media previews
             mediaGrid.setVisibility(View.GONE);
-            if(sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(phoneLoc)){
+            if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(phoneLoc)){
                 if(VERBOSE) Log.d(TAG, "SET TO PHONE 222");
-                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.phone));
+                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_folder));
             }
-            else if(sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)){
+            else if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)){
                 if(VERBOSE) Log.d(TAG, "SET TO SDCARD 222");
-                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.sdcard));
+                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_sd_snippet_folder));
             }
             else{
                 if(VERBOSE) Log.d(TAG, "SET TO ALL 222");
-                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.phone_sdcard));
+                mediaSourceImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_folder_special));
             }
         }
     }
@@ -234,17 +237,17 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
         mediaFilters.addAction(Intent.ACTION_MEDIA_MOUNTED);
         mediaFilters.addDataScheme("file");
         registerReceiver(sdCardEventReceiver, mediaFilters);
-        if(!sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(phoneLoc)) {
+        if(!sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(phoneLoc)) {
             //SD Card Location
             String sdCardPath = SDCardUtil.doesSDCardExist(getApplicationContext());
             if ((sdCardPath == null || sdCardPath.equalsIgnoreCase("")) && !sdCardUnavailWarned) {
                 sdCardUnavailWarned = true;
                 if(fromMedia) {
-                    if(sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)) {
+                    if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)) {
                         closePreviousMessages();
                         checkForSDCardAndShowMessage();
                     }
-                    else if(sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(allLoc)){
+                    else if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(allLoc)){
                         closePreviousMessages();
                         checkForSDCardAndShowGalleryMessage();
                     }
@@ -266,7 +269,7 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
             }
             else if(sdCardPath != null){
                 //SD Card Exists. Check if com.flipcam folder exists and is not empty
-                if (!SDCardUtil.doesSDCardFlipCamFolderContainMedia(sdCardPath, getApplicationContext())) {
+                if (!SDCardUtil.doesSDCardTeleprompter‏FolderContainMedia(sdCardPath, getApplicationContext())) {
                     showMessage(getResources().getString(R.string.sdCardFCFolderEmptyTitle), getResources().getString(R.string.sdCardFCFolderEmptyMessage), true);
                 }
             }
@@ -294,7 +297,7 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
         signInImage.setVisibility(View.INVISIBLE);
         signInText.setText(getResources().getString(R.string.loadMediaMsg));
         savetocloudtitle.setText(getResources().getString(R.string.loadTitle));
-        taskInProgressRoot.setBackgroundColor(getResources().getColor(R.color.mediaControlColor));
+        taskInProgressRoot.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
         taskAlert.setContentView(taskInProgressRoot);
         taskAlert.setCancelable(false);
         taskAlert.show();
@@ -323,9 +326,9 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
             sdCardUnavailWarned = false;
             String receivedAction = intent.getAction();
             if (receivedAction.equalsIgnoreCase(Intent.ACTION_MEDIA_UNMOUNTED) ||
-                    receivedAction.equalsIgnoreCase(Constants.MEDIA_UNMOUNTED)) {
+                    receivedAction.equalsIgnoreCase(Contract.MEDIA_UNMOUNTED)) {
                 //Check if SD Card was selected
-                if (sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(allLoc)
+                if (sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(allLoc)
                         && !sdCardUnavailWarned) {
                     if(VERBOSE) Log.d(TAG, "SD Card Removed For ALL Select");
                     closePreviousMessages();
@@ -333,7 +336,7 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
                     checkForSDCardAndShowGalleryMessage();
                     loadMediaContent();
                 }
-                else if(sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)
+                else if(sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)
                     && !sdCardUnavailWarned){
                     if(VERBOSE) Log.d(TAG, "SD Card Removed For SD Card Select");
                     closePreviousMessages();
@@ -343,10 +346,10 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
                 }
             }
             else if(receivedAction.equalsIgnoreCase(Intent.ACTION_MEDIA_MOUNTED) ||
-                        receivedAction.equalsIgnoreCase(Constants.MEDIA_MOUNTED)){
+                        receivedAction.equalsIgnoreCase(Contract.MEDIA_MOUNTED)){
                 //Refresh the page to show the SD Card contents as well if chosen view is All or SD Card
-                if ((sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)
-                        || sharedPreferences.getString(Constants.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(allLoc))
+                if ((sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(sdcardLoc)
+                        || sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc).equalsIgnoreCase(allLoc))
                         && !sdCardUnavailWarned) {
                     if(VERBOSE) Log.d(TAG, "SD Card ADDED");
                     closePreviousMessages();
@@ -374,12 +377,12 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
     }
 
     private void checkForSDCardAndShowGalleryMessage(){
-        if(!sharedPreferences.getBoolean(Constants.SAVE_MEDIA_PHONE_MEM, true)){
+        if(!sharedPreferences.getBoolean(Contract.SAVE_MEDIA_PHONE_MEM, true)){
             //If SD Card was selected, show an additional message about switching back to phone memory.
             showMessage(getResources().getString(R.string.sdCardRemovedTitle),
                     getResources().getString(R.string.sdCardNotPresentForViewDefLocChanged), true);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(Constants.SAVE_MEDIA_PHONE_MEM, true);
+            editor.putBoolean(Contract.SAVE_MEDIA_PHONE_MEM, true);
             editor.commit();
         }
         else {
@@ -389,12 +392,12 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
     }
 
     private void checkForSDCardAndShowMessage(){
-        if(!sharedPreferences.getBoolean(Constants.SAVE_MEDIA_PHONE_MEM, true)){
+        if(!sharedPreferences.getBoolean(Contract.SAVE_MEDIA_PHONE_MEM, true)){
             //If SD Card was selected, show an additional message about switching back to phone memory.
             showMessage(getResources().getString(R.string.sdCardNotDetectTitle),
                     getResources().getString(R.string.sdCardNotDetectMessageDefLocChanged), true);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(Constants.SAVE_MEDIA_PHONE_MEM, true);
+            editor.putBoolean(Contract.SAVE_MEDIA_PHONE_MEM, true);
             editor.commit();
         }
         else {
@@ -412,7 +415,7 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
 
     private void showMessage(String title, String text, boolean warngSig){
         LinearLayout warningParent = (LinearLayout)warningMsgRoot.findViewById(R.id.warningParent);
-        warningParent.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
+        warningParent.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
         TextView warningTitle = (TextView)warningMsgRoot.findViewById(R.id.warningTitle);
         warningTitle.setText(title);
         ImageView warningSign = (ImageView) warningMsgRoot.findViewById(R.id.warningSign);
@@ -431,5 +434,5 @@ public class GalleryActivity extends AppCompatActivity implements LoaderManager.
         okButton.setOnClickListener((view) -> {
             warningMsg.dismiss();
         });
-    }*/
+    }
 }

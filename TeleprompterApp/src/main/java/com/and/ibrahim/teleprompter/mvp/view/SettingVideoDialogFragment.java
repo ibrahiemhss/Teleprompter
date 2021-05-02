@@ -1,6 +1,7 @@
 package com.and.ibrahim.teleprompter.mvp.view;
 
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -69,6 +70,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class SettingVideoDialogFragment extends DialogFragment {
 
@@ -161,6 +163,7 @@ public class SettingVideoDialogFragment extends DialogFragment {
         return inflater.inflate(R.layout.activity_camera_setting, container);
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -185,9 +188,9 @@ public class SettingVideoDialogFragment extends DialogFragment {
         videoResolutionParent = (LinearLayout)view.findViewById(R.id.videoResolutionParent);
         thresholdText.setText(getString(R.string.memoryThresholdLimit, getResources().getInteger(R.integer.minimumMemoryWarning) + "MB"));
         // getSupportActionBar().setTitle(getResources().getString(R.string.settingTitle));
-        settingsPref = getActivity().getSharedPreferences(Contract.FC_SETTINGS, Context.MODE_PRIVATE);
+        settingsPref = Objects.requireNonNull(getActivity()).getSharedPreferences(Contract.FC_SETTINGS, Context.MODE_PRIVATE);
         settingsEditor = settingsPref.edit();
-        if(VERBOSE)if(VERBOSE) Log.d(TAG,"SD Card Path onCreate = "+settingsPref.getString(Contract.SD_CARD_PATH,""));
+        if(VERBOSE) Log.d(TAG,"SD Card Path onCreate = "+settingsPref.getString(Contract.SD_CARD_PATH,""));
         if(settingsPref.contains(Contract.SD_CARD_PATH) && !settingsPref.getString(Contract.SD_CARD_PATH,"").equals("")) {
             String sdcardpath = settingsPref.getString(Contract.SD_CARD_PATH, "");
             showSDCardPath(sdcardpath);
@@ -403,6 +406,7 @@ public class SettingVideoDialogFragment extends DialogFragment {
         }*/
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void selectSaveMedia(View view){
         switch (view.getId()){
             case R.id.phoneMemButton:
@@ -1325,6 +1329,7 @@ public class SettingVideoDialogFragment extends DialogFragment {
                         showCreateProgress();
                         final DbxUserFilesRequests dbxUserFilesRequests = dbxClientV2.files();
                         new Thread(new Runnable() {
+                            @SuppressLint("UseCompatLoadingForDrawables")
                             @Override
                             public void run() {
                                 try {

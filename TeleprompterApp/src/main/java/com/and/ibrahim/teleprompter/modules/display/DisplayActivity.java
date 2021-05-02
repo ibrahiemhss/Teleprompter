@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 
 
 import com.and.ibrahim.teleprompter.callback.OnActionAd;
+import com.and.ibrahim.teleprompter.callback.OnBrightnessChange;
 import com.and.ibrahim.teleprompter.callback.OnStartRecordVideoListener;
 import com.and.ibrahim.teleprompter.modules.adapter.ColorsAdapter;
 import com.and.ibrahim.teleprompter.mvp.view.OnScrollViewActions;
@@ -97,6 +98,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     private PermissionsUtils permissionsUtils;
 
+    private  OnBrightnessChange onBrightnessChange;
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+        if (fragment instanceof OnBrightnessChange) {
+            onBrightnessChange = (OnBrightnessChange) fragment;
+        }
+    }
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.parentCamera)
@@ -143,9 +154,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.adView2)
     protected AdView mAdView;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.editBrightness)
+    protected LinearLayout editBrightness;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.imgBrightness)
+    protected ImageView imgBrightness;
 
     DisplayUtils displayUtils;
-    LinearLayout mVideoBrightness;
     //For camera -------------------------------------------
     VideoFragment mVideoFragment = null;
     //PhotoFragment photoFragment = null;
@@ -180,6 +196,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private AdsUtils mAdUtils;
     CameraUtils mCameraUtils;
     private  boolean isCameraEnable=false;
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -218,10 +235,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         displayUtils = new DisplayUtils(this, this,
                 mSlideShowScroll, mChronometer, mPlayStatus, mAdUtils, mAppBarLayout, mScrollPos,isCameraEnable);
         mVideoFragment = VideoFragment.newInstance();
-        mCameraUtils = new CameraUtils(mVideoFragment, this, mVideoBrightness);
+        mCameraUtils = new CameraUtils(mVideoFragment, this, editBrightness);
 
         displayUtils.scrollViewConfig();
 
+        editBrightness.setOnClickListener(v -> {
+           openBrightnessPopup();
+        });
         Log.d(TAG, "saved instance state == " + savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -232,16 +252,20 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         settingsRootView = layoutInflater.inflate(R.layout.brightness_settings, null);
         settingsDialog = new Dialog(this);
         sharedPreferences = getSharedPreferences(Contract.FC_SETTINGS, Context.MODE_PRIVATE);
+        mScrollString = SharedPrefManager.getInstance(this).getCurrentText();
+        Log.d(TAG, "get extras mScrollString == " + mScrollString);
 
         Bundle extras = intent.getExtras();
-        if (extras != null) {
+       /* if (extras != null) {
             Log.d(TAG, "get extras mScrollString == " + mScrollString);
             mScrollString = extras.getString(Contract.EXTRA_TEXT);
+            if(mScrollString==null){
+                mScrollString = SharedPrefManager.getInstance(this).getCurrentText();
+            }
             fromGallery = extras.getBoolean(Contract.EXTRA_FROM_GALLERY);
-        }
+        }*/
         permissionsUtils = new PermissionsUtils(this);
-        mVideoBrightness = mNavView.findViewById(R.id.videoBrightness);
-        mCameraUtils = new CameraUtils(mVideoFragment, this, mVideoBrightness);
+        mCameraUtils = new CameraUtils(mVideoFragment, this, editBrightness);
        // if (savedInstanceState == null) {
             //Start with video fragment
             if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
@@ -327,7 +351,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         //toStartCamera();
 
     }
-
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -463,12 +486,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    boolean calledOnSaveInstanceState=false;
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(Contract.EXTRA_SCROLL_STRING, mScrollString);
         outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
         outState.putLong(Contract.EXTRA_CHRONOTIME, mChronometer.getBase());
+        calledOnSaveInstanceState=true;
+        initCame();
         if (isTablet) {//save fragment
             getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
         }
@@ -510,12 +537,18 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         AdView adView3 = mNavView.findViewById(R.id.adView3);
         CheckBox checkboxOpenCamera = mNavView.findViewById(R.id.checkboxOpenCamera);
         LinearLayout videoSettingsContainer = mNavView.findViewById(R.id.videoSettingsContainer);
+        if(SharedPrefManager.getInstance(this).isCameraEnabled()){
+            videoSettingsContainer.setVisibility(View.VISIBLE);
+        }else{
+            videoSettingsContainer.setVisibility(View.GONE);
+        }
         LinearLayout videoSettings = mNavView.findViewById(R.id.videoSettings);
 
         final LinearLayout onClickDialogTextColor = mNavView.findViewById(R.id.ln_launch_text_color);
         final TextView defaultText = mNavView.findViewById(R.id.default_text);
         final TextView undoText = mNavView.findViewById(R.id.undo_text);
         mTextSpeed = mNavView.findViewById(R.id.text_font);
+
         checkboxOpenCamera.setChecked(SharedPrefManager.getInstance(this).isCameraEnabled());
         checkboxOpenCamera.setText(SharedPrefManager.getInstance(this).isCameraEnabled() ? getResources().getString(R.string.close_camera) : getResources().getString(R.string.open_camera));
         checkboxOpenCamera.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -534,7 +567,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         videoSettings.setOnClickListener(v -> goToSettings());
        // videoSettings.setOnClickListener(v -> showSettingVideoDialogFragment());
 
-        mVideoBrightness.setOnClickListener(v -> openBrightnessPopup());
 
         mAdUtils.initializeBannerAd(adView3);
         if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetText()) {
@@ -651,6 +683,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    public int getBrightnessLevel() {
+        return  mCameraUtils.getBrightnessLevel();
+    }
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -752,9 +787,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isCameraInited){
+        //if(!isCameraInited){
+            Log.d("lifCycle", "onResume = initedCame");
+
             initCame();
-        }
+        //}
         Log.d("lifCycle", "onResume");
 
     }
@@ -762,9 +799,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(!isCameraInited){
+       // if(!isCameraInited){
+            Log.d("lifCycle", "onRestart = initedCame");
+
             initCame();
-        }
+      //  }
         Log.d("lifCycle", "onRestart");
 
 
@@ -775,6 +814,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         super.onStart();
         Log.d("lifCycle", "onStart");
         if(!isCameraInited){
+            Log.d("lifCycle", "onStart = initedCame");
+
             initCame();
         }
 
@@ -784,7 +825,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     void initCame(){
         if(SharedPrefManager.getInstance(this).isCameraEnabled()){
             mPlayStatus.setVisibility(View.GONE);
-            mCameraUtils.showVideoFragment();
+            if(!calledOnSaveInstanceState){
+                mCameraUtils.showVideoFragment();
+            }
+
             setCameraShow(true);
             isCameraInited=true;
         }
@@ -851,10 +895,23 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         final SeekBar brightnessBar = (SeekBar) settingsRootView.findViewById(R.id.brightnessBar);
         brightnessBar.setMax(10);
         brightnessBar.setProgress(mCameraUtils.getBrightnessLevel());
+       // onBrightnessChange.brightness(mCameraUtils.getBrightnessLevel());
+        if(mCameraUtils.getBrightnessLevel()>=5){
+            imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_high_24));
+        }else{
+            imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_low_24));
+
+        }
         brightnessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress>=5){
+                    imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_high_24));
+                }else{
+                    imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_low_24));
 
+                }
+               // onBrightnessChange.brightness(progress);
             }
 
             @Override
@@ -864,6 +921,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+               // onBrightnessChange.brightness(mCameraUtils.getBrightnessLevel());
+                if(mCameraUtils.getBrightnessLevel()>=5){
+                    imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_high_24));
+                }else{
+                    imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_low_24));
+
+                }
                 seekBar.setProgress(mCameraUtils.getBrightnessLevel());
             }
         });

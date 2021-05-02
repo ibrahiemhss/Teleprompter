@@ -26,7 +26,9 @@
         android:layout_alignTop="@+id/minBrightness"
         android:layout_marginBottom="@dimen/brightnessBottomMargin"
         android:layout_marginEnd="@dimen/brightnessBottomMargin"
-        app:srcCompat="@drawable/ic_baseline_brightness_high_24" />
+        app:srcCompat="@drawable/ic_baseline_brightness_high_24"
+        android:contentDescription="@string/teleprompterContentDescription"
+        />
 
     <ImageView
         android:id="@+id/minBrightness"
@@ -35,6 +37,7 @@
         android:layout_below="@+id/timerText"
         android:layout_marginBottom="@dimen/brightnessBottomMargin"
         android:layout_marginStart="@dimen/brightnessBottomMargin"
+        android:contentDescription="@string/teleprompterContentDescription"
         app:srcCompat="@drawable/ic_baseline_brightness_low_24" />
 
     <SeekBar
@@ -60,6 +63,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="false"
         android:layout_marginBottom="20dp"
+        android:contentDescription="@string/teleprompterContentDescription"
         app:srcCompat="@drawable/ic_baseline_arrow_drop_up_24" />
 
     <LinearLayout

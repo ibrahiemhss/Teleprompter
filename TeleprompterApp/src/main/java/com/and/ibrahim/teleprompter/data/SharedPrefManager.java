@@ -46,10 +46,19 @@ public class SharedPrefManager {
     public void setPrefTextSize(int size) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.TEXT_SIZE, size);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
+    public String getCurrentText() {
+        return pref.getString(Contract.CURRENT_TEXT, null);
+    }
+    public void  setCurrentText(String val) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(Contract.CURRENT_TEXT, val);
+        editor.commit();
+        editor.commit();
+    }
 
     public int getPrefSpeed() {
         return pref.getInt(Contract.SCROLL_SPEED, 0);
@@ -58,7 +67,7 @@ public class SharedPrefManager {
     public void setPrefSpeed(int progress) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.SCROLL_SPEED, progress);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -69,7 +78,7 @@ public class SharedPrefManager {
     public void setPrefTextColor(int color) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.TEXT_COLOR, color);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -80,7 +89,7 @@ public class SharedPrefManager {
     public void setPrefUndoTextSize(int size) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.UNDO_TEXT_COLOR, size);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -91,7 +100,7 @@ public class SharedPrefManager {
     public void setPrefUndoBackgroundColor(int color) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.UNDO_BACKGROUND_COLOR, color);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -102,7 +111,7 @@ public class SharedPrefManager {
     public void setPrefBackgroundColor(int color) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.BACKGROUND_COLOR, color);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -113,7 +122,7 @@ public class SharedPrefManager {
     public void setColorPref(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.COLOR_PREF, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -124,7 +133,7 @@ public class SharedPrefManager {
     public void setInitedSdk(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.INIT_SDK, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -135,7 +144,7 @@ public class SharedPrefManager {
     public void setFirstEntry(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.FIRST_ENTRY, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -146,7 +155,7 @@ public class SharedPrefManager {
     public void setFirstSetColor(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.FIRST_COLOR_SET, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -157,7 +166,7 @@ public class SharedPrefManager {
     public void setAllAdsOn(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.REMOTE_CONFIG_AlL_ADs, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -170,7 +179,7 @@ public class SharedPrefManager {
     public void setFullScreenAdShown(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.FULL_SCREEN_AD_SHOWN, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public boolean isFullScreenAdsOn() {
@@ -180,7 +189,7 @@ public class SharedPrefManager {
     public void setFullScreenAdsOn(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.REMOTE_CONFIG_FULL_SCREEN_ADs, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -191,7 +200,7 @@ public class SharedPrefManager {
     public void setCameraEnabled(boolean value) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.IS_CAMERA_ENAPLED, value);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getPhoneMemoryLimit() {
@@ -201,7 +210,7 @@ public class SharedPrefManager {
     public void setPhoneMemoryLimit(String value) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.PHONE_MEMORY_LIMIT, value);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -212,7 +221,7 @@ public class SharedPrefManager {
     public void setPhoneMemoryMetric(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.PHONE_MEMORY_METRIC, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -223,7 +232,7 @@ public class SharedPrefManager {
     public void setPhoneMemoryDisable(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.PHONE_MEMORY_DISABLE, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -234,7 +243,7 @@ public class SharedPrefManager {
     public void  setPreviewResolution(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.PREVIEW_RESOLUTION, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getVideoResolution() {
@@ -243,7 +252,7 @@ public class SharedPrefManager {
     public void  setVideoResolution(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.SELECT_VIDEO_RESOLUTION, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getSelectVideoResolution() {
@@ -252,7 +261,7 @@ public class SharedPrefManager {
     public void  setSelectVideoResolution(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.SELECT_VIDEO_RESOLUTION, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -263,7 +272,7 @@ public class SharedPrefManager {
     public void  setVideoCapture(boolean v) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.VIDEO_CAPTUE, v);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getSelectVideoPlayer(String defValue) {
@@ -272,7 +281,7 @@ public class SharedPrefManager {
     public void  setSelectVideoPlayer(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.SELECT_VIDEO_PLAYER, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -282,7 +291,7 @@ public class SharedPrefManager {
     public void  setShutterSound(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SHUTTER_SOUND, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getSelectPhotoResolution() {
@@ -291,7 +300,7 @@ public class SharedPrefManager {
     public void  setSelectPhotoResolution(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.SELECT_PHOTO_RESOLUTION, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getSelectFrontPhotoResolution() {
@@ -300,7 +309,7 @@ public class SharedPrefManager {
     public void  setSelectFrontPhotoResolution(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.SELECT_PHOTO_RESOLUTION_FRONT, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public Set<String> getSupportVideoResolution() {
@@ -309,7 +318,7 @@ public class SharedPrefManager {
     public void  setSupportVideoResolution(Set<String> value) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putStringSet(Contract.SUPPORT_VIDEO_RESOLUTIONS, value);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -319,7 +328,7 @@ public class SharedPrefManager {
     public void  setSupportCamersResolution(Set<String> value) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putStringSet(Contract.SUPPORT_PHOTO_RESOLUTIONS, value);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public Set<String> getSupportFrontCamersResolution() {
@@ -328,7 +337,7 @@ public class SharedPrefManager {
     public void  setSupportFrontCamersResolution(Set<String> value) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putStringSet(Contract.SUPPORT_PHOTO_RESOLUTIONS_FRONT, value);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -338,7 +347,7 @@ public class SharedPrefManager {
     public void  setSavedMediaMem(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SAVE_MEDIA_PHONE_MEM, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -348,7 +357,7 @@ public class SharedPrefManager {
     public void  setMediaCountMem(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SAVE_MEDIA_PHONE_MEM, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -358,7 +367,7 @@ public class SharedPrefManager {
     public void  setMediaLocation(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.MEDIA_LOCATION_VIEW_SELECT, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -369,7 +378,7 @@ public class SharedPrefManager {
     public void  setSdCardPath(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.SD_CARD_PATH, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -381,7 +390,7 @@ public class SharedPrefManager {
     public void  setShowMemoryConsumedText(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SHOW_MEMORY_CONSUMED_MSG, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getPreviousMediaLocation() {
@@ -390,7 +399,7 @@ public class SharedPrefManager {
     public void  setPreviousMediaLocation(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.MEDIA_LOCATION_VIEW_SELECT_PREV, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -400,7 +409,7 @@ public class SharedPrefManager {
     public void  setShowExternalPlayerMessage(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SHOW_EXTERNAL_PLAYER_MESSAGE, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -412,7 +421,7 @@ public class SharedPrefManager {
     public void  setSaveToDrive(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SAVE_TO_GOOGLE_DRIVE, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -422,7 +431,7 @@ public class SharedPrefManager {
     public void  setGoogleDriveAccName(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.GOOGLE_DRIVE_ACC_NAME, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -432,7 +441,7 @@ public class SharedPrefManager {
     public void  setGoogleDriveFolder(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.GOOGLE_DRIVE_FOLDER, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getDropBoxAccessToken() {
@@ -441,7 +450,7 @@ public class SharedPrefManager {
     public void  setDropBoxAccessToken(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.DROPBOX_ACCESS_TOKEN, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public boolean isSaveToDropBox() {
@@ -450,7 +459,7 @@ public class SharedPrefManager {
     public void  setSaveToDropBox(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.SAVE_TO_DROPBOX, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public String getDropboxFolder() {
@@ -459,7 +468,7 @@ public class SharedPrefManager {
     public void  setDropboxFolder(String val) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Contract.DROPBOX_FOLDER, val);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public boolean isCameraStart() {
@@ -468,7 +477,7 @@ public class SharedPrefManager {
     public void  setCameraStart(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.START_CAMERA, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
     public boolean isFirstSetText() {
@@ -478,7 +487,7 @@ public class SharedPrefManager {
     public void setFirstSetText(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.FIRST_TEXT_SET, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 
@@ -489,7 +498,7 @@ public class SharedPrefManager {
     public void setFirstSetSpeed(boolean is) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(Contract.FIRST_SPEED_SET, is);
-        editor.apply();
+        editor.commit();
         editor.commit();
     }
 

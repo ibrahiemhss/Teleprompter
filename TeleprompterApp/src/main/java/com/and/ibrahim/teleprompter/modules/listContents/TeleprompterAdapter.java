@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.listContents;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,13 +74,16 @@ public class TeleprompterAdapter extends RecyclerView.Adapter<TeleprompterAdapte
     @SuppressWarnings("unused")
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         final Context mContext;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.text_title)
         protected TextView mTextTitle;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.edit_item)
         protected ImageView mImgEdit;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.lin_view)
         protected LinearLayout mLinearLayout;
-
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.img_note)
         ImageView mIconImg;
 

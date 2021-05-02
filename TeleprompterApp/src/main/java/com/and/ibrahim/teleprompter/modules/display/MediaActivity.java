@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.display;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.appwidget.AppWidgetManager;
@@ -133,6 +134,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
     boolean VERBOSE = true;
     AudioManager audioManager;
     ImageView folderViewOn;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.infoMedia)
     ImageView infoMedia;
     FolderLayout phoneFolder;
@@ -355,7 +357,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
                 mediaLocation.setCancelable(true);
                 mediaLocation.show();
         });
-        notifyIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.ic_launcher);
+        notifyIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.mipmap.ic_launcher);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         queueNotification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         taskInProgressRoot = layoutInflater.inflate(R.layout.task_in_progress, null);
@@ -378,7 +380,9 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
                     }
                     else{
                         if(VERBOSE) Log.d(TAG, "adjustStreamVolume");
-                        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+                        }
                     }
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
@@ -388,6 +392,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
         }
     };
 
+    @SuppressLint("CutPasteId")
     private void showExternalPlayerMessage(){
         if(videoPrefs.getBoolean(Contract.SHOW_EXTERNAL_PLAYER_MESSAGE,false)) {
             WindowManager.LayoutParams winParams = externalPlayerDialog.getWindow().getAttributes();
@@ -427,7 +432,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
         SharedPreferences.Editor mediaLocEdit = sharedPreferences.edit();
         mediaLocEdit.putString(Contract.MEDIA_LOCATION_VIEW_SELECT_PREV, sharedPreferences.getString(Contract.MEDIA_LOCATION_VIEW_SELECT, phoneLoc));
         mediaLocEdit.putString(Contract.MEDIA_LOCATION_VIEW_SELECT, selectedFolderLabel);
-        mediaLocEdit.commit();
+        mediaLocEdit.apply();
         Intent galleryAct = new Intent(getApplicationContext(), GalleryActivity.class);
         galleryAct.putExtra("fromMedia", true);
         galleryAct.putExtra("selectedFolder", selectedFolderLabel);
@@ -463,7 +468,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
                     mediaState.putInt(Contract.MEDIA_COUNT_ALL, medias.length);
                 }
             }
-            mediaState.commit();
+            mediaState.apply();
             if(VERBOSE) Log.d(TAG, "Media length before leaving = " + medias.length);
         }
         else{
@@ -531,6 +536,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
         return sharedPreferences.getString(Contract.SD_CARD_PATH, "");
     }
 
+    @SuppressLint("SimpleDateFormat")
     public void showMediaInfo(View view){
         if(medias!=null) {
             mediaMsg = new Dialog(this);
@@ -578,7 +584,8 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
                 mediaInfo.setResolution(dimension);
                 File selectedFile = new File(path);
                 Date dateCreated = new Date(selectedFile.lastModified());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getResources().getString(R.string.mediaInfoDateFormat));
+                SimpleDateFormat simpleDateFormat;
+                simpleDateFormat = new SimpleDateFormat(getResources().getString(R.string.mediaInfoDateFormat));
                 String dateDisplay = simpleDateFormat.format(dateCreated);
                 if (VERBOSE) Log.d(TAG, "Date display = " + dateDisplay);
                 mediaInfo.setDateCreated(dateDisplay);
@@ -775,7 +782,9 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
         taskInProgressRoot.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         taskAlert.setContentView(taskInProgressRoot);
         taskAlert.setCancelable(false);
-        taskAlert.show();
+        if(!taskAlert.isShowing()){
+            taskAlert.show();
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -800,7 +809,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
             mediaState = mediaValues.edit();
             if(mediaState!=null){
                 mediaState.clear();
-                mediaState.commit();
+                mediaState.apply();
                 if(VERBOSE) Log.d(TAG,"CLEAR ALL");
             }
         }
@@ -963,6 +972,7 @@ public class MediaActivity extends AppCompatActivity implements ViewPager.OnPage
 
     boolean wasPlaying = false;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void setupVideo(final MediaFragment currentFrag, int position){
         setupVideoControls(position);
         currentFrag.play=false;

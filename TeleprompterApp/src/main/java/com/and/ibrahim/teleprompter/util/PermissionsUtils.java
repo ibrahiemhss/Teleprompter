@@ -91,7 +91,6 @@ public class PermissionsUtils {
                 SharedPreferences videoPref = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
                 String videoResPref = videoPref.getString(Contract.SELECT_VIDEO_RESOLUTION, null);
                 if(VERBOSE) Log.d(TAG, "videoResPref = "+videoResPref);
-                SharedPreferences.Editor editor = videoPref.edit();
                 SharedPrefManager.getInstance(mContext).remove(Contract.SELECT_VIDEO_RESOLUTION);
                 SharedPrefManager.getInstance(mContext).remove(Contract.SUPPORT_VIDEO_RESOLUTIONS);
                 SharedPrefManager.getInstance(mContext).remove(Contract.VIDEO_DIMENSION_HIGH);

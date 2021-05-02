@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.util;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -115,6 +116,7 @@ public class DisplayUtils {
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void clickToScrolling() {
         if(!isCameraEnable){

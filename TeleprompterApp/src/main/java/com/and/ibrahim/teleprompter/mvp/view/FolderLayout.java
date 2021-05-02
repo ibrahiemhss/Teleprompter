@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.mvp.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -21,15 +22,18 @@ import butterknife.ButterKnife;
 public class FolderLayout extends LinearLayout {
 
     public static final String TAG = "FolderLayout";
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.displayLabel)
     TextView displayLabel;
     TypedArray attr;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.mediaFolder)
     ImageView mediaFolder;
     Drawable folder_circle;
     Drawable folder_no_circle;
     MediaActivity mediaActivity;
 
+    @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     public FolderLayout(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         Log.d(TAG, "FolderLayout");

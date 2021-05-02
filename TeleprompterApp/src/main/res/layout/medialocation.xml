@@ -32,7 +32,7 @@
             android:paddingStart="10dp"
             android:text="@string/folderSelectTitle"
             android:textAlignment="center"
-            android:textColor="@color/backColorDialog"
+            android:textColor="@color/White"
             android:textStyle="bold" />
 
         <ImageView
@@ -61,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:layout_margin="8dp"
             custom:displayImage="@drawable/ic_folder"
             custom:displayText="@string/phoneLocation" />
 
@@ -69,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_margin="8dp"
             custom:displayImage="@drawable/ic_sd_snippet_folder"
             custom:displayText="@string/sdcardLocation" />
     </LinearLayout>
@@ -80,6 +82,7 @@
         android:layout_below="@+id/folderParent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
+        android:layout_margin="8dp"
         custom:displayImage="@drawable/ic_folder_special"
         custom:displayText="@string/allLocation" />
 

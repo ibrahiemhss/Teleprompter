@@ -20,15 +20,39 @@
         android:background="@color/colorTransparent"
         >
 
+
         <ImageButton
             android:id="@+id/flashOn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:background="@color/colorTransparent"
+            android:layout_width="@dimen/flashWidth"
+            android:layout_height="@dimen/flashHeight"
+            android:layout_margin="8dp"
             android:contentDescription="@string/switchCamera"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/camera_flash_on"
             />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            />
+    <LinearLayout
+        android:id="@+id/editBrightness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="4dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_gravity="center_vertical"
+        >
+        <ImageView
+            android:id="@+id/imgBrightness"
+            android:layout_width="@dimen/brightnessWidth"
+            android:layout_height="@dimen/brightnessHeight"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/brightnessContentDescription"
+            android:src="@drawable/ic_baseline_brightness_high_24" />
+
+    </LinearLayout>
 
         <View
             android:layout_width="0dp"

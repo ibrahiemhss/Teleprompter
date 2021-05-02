@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorTransparent"
     android:orientation="vertical">
 
     <TextView
@@ -12,6 +12,6 @@
         android:gravity="center"
         android:padding="@dimen/videoPlayerNotFoundPaddingAll"
         android:text="@string/noExternalVideoPlayer"
-        android:textColor="@color/saveText"
+        android:textColor="@color/colorPrimaryText"
         android:textStyle="bold" />
 </LinearLayout>

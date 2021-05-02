@@ -100,14 +100,17 @@
         <activity
             android:name=".modules.display.SettingsCameraActivity"
             android:screenOrientation="nosensor"
+            android:parentActivityName=".modules.display.DisplayActivity"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".modules.display.VideoResolutionActivity"
             android:screenOrientation="nosensor"
+            android:parentActivityName=".modules.display.SettingsCameraActivity"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".modules.display.MemoryLimitActivity"
             android:screenOrientation="nosensor"
+            android:parentActivityName=".modules.display.SettingsCameraActivity"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".modules.display.RefreshActivity"
@@ -115,6 +118,12 @@
         <activity
             android:name=".modules.display.MediaActivity"
             android:screenOrientation="nosensor"
+            android:parentActivityName=".modules.display.DisplayActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".modules.display.GalleryActivity"
+            android:screenOrientation="nosensor"
+            android:parentActivityName=".modules.display.DisplayActivity"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".modules.setting.SettingsActivity"

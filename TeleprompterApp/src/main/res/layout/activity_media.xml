@@ -22,7 +22,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="@string/NO_IMAGE"
+        android:text="@string/NO_VIDEO"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/noImageTextSize"
         android:visibility="gone" />

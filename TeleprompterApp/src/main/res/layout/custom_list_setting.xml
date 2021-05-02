@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorTransparent"
-    android:foreground="@drawable/ripple"
     android:orientation="vertical">
 
     <TextView

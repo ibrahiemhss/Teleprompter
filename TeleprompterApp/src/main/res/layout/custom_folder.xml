@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorTransparent"
     android:orientation="vertical">
 
     <ImageView
@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="15dp"
-        android:background="@color/settingsBarColor"
-        android:textColor="@color/orange_light"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
 </LinearLayout>

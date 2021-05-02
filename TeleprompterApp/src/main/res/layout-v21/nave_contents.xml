@@ -224,6 +224,7 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:background="@color/colorTransparent"
+                 android:visibility="gone"
             android:layout_height="wrap_content">
                  <View
                      android:layout_width="match_parent"
@@ -261,39 +262,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/goAllVideoSettings"
+                    android:text="@string/videoSettings"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimaryText"
                     tools:ignore="InconsistentLayout" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="4dp"
-                android:id="@+id/videoBrightness"
-                android:background="@drawable/accent_border_back"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/brightnessHeight"
-                    android:padding="4dp"
-                    android:contentDescription="@string/brightnessContentDescription"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_baseline_brightness_high_24" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/brightnessHeading"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorPrimaryText"
-                    tools:ignore="InconsistentLayout" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

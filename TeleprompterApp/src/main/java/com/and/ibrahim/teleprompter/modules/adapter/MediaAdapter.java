@@ -1,5 +1,6 @@
 package com.and.ibrahim.teleprompter.modules.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -20,6 +21,7 @@ import androidx.annotation.Nullable;
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.mvp.model.media.FileMedia;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 
@@ -58,6 +60,7 @@ public class MediaAdapter extends ArrayAdapter {
         return mediaList.length;
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -66,13 +69,13 @@ public class MediaAdapter extends ArrayAdapter {
         FrameLayout.LayoutParams thumbnailParams;
         if(listItem == null)
         {
-          /*  listItem = LayoutInflater.from(getContext()).inflate(R.layout.media_item,parent,false);
+            listItem = LayoutInflater.from(getContext()).inflate(R.layout.media_item,parent,false);
             viewHolderImage = new ViewHolderImage();
             viewHolderImage.mediaGrid = (GridView)parent.findViewById(R.id.mediaGrid);
             viewHolderImage.mediaPlaceHolder = (FrameLayout)listItem.findViewById(R.id.mediaPlaceholder);
             viewHolderImage.recordedMedia = (ImageView)listItem.findViewById(R.id.recordedMedia);
             viewHolderImage.playVideo = (ImageView)listItem.findViewById(R.id.playVideo);
-            listItem.setTag(viewHolderImage);*/
+            listItem.setTag(viewHolderImage);
             display = windowManager.getDefaultDisplay();
         }
         else
@@ -83,33 +86,33 @@ public class MediaAdapter extends ArrayAdapter {
         thumbnailParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         if(orientation == Configuration.ORIENTATION_PORTRAIT){
             calculateThumbnailSizeAndCols();
-           // viewHolderImage.mediaGrid.setNumColumns(numOfCols);
+            viewHolderImage.mediaGrid.setNumColumns(numOfCols);
         }
         else{
             calculateThumbnailSizeAndCols();
-          //  viewHolderImage.mediaGrid.setNumColumns(numOfCols);
+            viewHolderImage.mediaGrid.setNumColumns(numOfCols);
         }
         thumbnailParams.width = thumbnailParams.height = thumbnailWidthAndHeight;
-        //viewHolderImage.recordedMedia.setLayoutParams(thumbnailParams);
+        viewHolderImage.recordedMedia.setLayoutParams(thumbnailParams);
         FileMedia media = mediaList[position];
         if(!isImage(media.getPath())){
             File thumbnailVideo = new File(media.getPath());
-           /* Glide.with(getContext())
+            Glide.with(getContext())
                     .load(thumbnailVideo)
                     .thumbnail(0.1f)
-                    .into(viewHolderImage.recordedMedia);*/
-           // viewHolderImage.playVideo.setVisibility(View.VISIBLE);
+                    .into(viewHolderImage.recordedMedia);
+            viewHolderImage.playVideo.setVisibility(View.VISIBLE);
             if(showFCPlayer) {
-             //   viewHolderImage.playVideo.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_play_circle_outline));
+                viewHolderImage.playVideo.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_play_circle_outline));
             }
             else{
-              //  viewHolderImage.playVideo.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_external_play_circle_outline));
+                viewHolderImage.playVideo.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_external_play_circle_outline));
             }
         }
         else{
             File thumbnailImage = new File(media.getPath());
-           // Glide.with(getContext()).load(thumbnailImage).into(viewHolderImage.recordedMedia);
-           // viewHolderImage.playVideo.setVisibility(View.INVISIBLE);
+            Glide.with(getContext()).load(thumbnailImage).into(viewHolderImage.recordedMedia);
+            viewHolderImage.playVideo.setVisibility(View.INVISIBLE);
         }
         return listItem;
     }

@@ -89,11 +89,6 @@ public class AdsUtils {
             }
 
             @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
             public void onAdClosed() {
                 Log.i(TAG, "AdView onAdClosed");
 

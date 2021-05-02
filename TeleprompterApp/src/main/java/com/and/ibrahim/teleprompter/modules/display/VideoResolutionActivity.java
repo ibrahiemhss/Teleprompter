@@ -11,12 +11,14 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.and.ibrahim.teleprompter.R;
 import com.and.ibrahim.teleprompter.data.Contract;
@@ -40,16 +42,20 @@ public class VideoResolutionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(VERBOSE) Log.d(TAG, "onCreate");
+        if(VERBOSE)Log.d(TAG, "onCreate");
         mContext = getApplicationContext();
-        ActionBar actionBar = this.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getResources().getString(R.string.videoResolutionHeading));
-        }
         getFragmentManager().beginTransaction().replace(android.R.id.content, new VideoSettingFragment()).commit();
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     public static class VideoSettingFragment extends PreferenceFragment {
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,7 +79,7 @@ public class VideoResolutionActivity extends AppCompatActivity {
             memoryConsumedPref.setKey(Contract.SHOW_MEMORY_CONSUMED_MSG);
             memoryConsumedPref.setLayoutResource(R.layout.shutter_checkbox_setting);
             boolean memCon = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(Contract.SHOW_MEMORY_CONSUMED_MSG, false);
-            if(VERBOSE) Log.d(TAG, "MEMORY CONSUMED PREF MGR = "+memCon);
+            if(VERBOSE)Log.d(TAG, "MEMORY CONSUMED PREF MGR = "+memCon);
             getPreferenceScreen().addPreference(memoryConsumedPref);
             //Video Player
             SharedPreferences settingsPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
@@ -100,8 +106,8 @@ public class VideoResolutionActivity extends AppCompatActivity {
             getPreferenceScreen().addPreference(playerPreference);
             playerPreference.setOnPreferenceChangeListener((preference,newValue ) -> {
                 String newRes = (String) newValue;
-                if(VERBOSE) Log.d(TAG, "onPreferenceChange 2222 = " + newRes);
-                if(VERBOSE) Log.d(TAG, "onPreferenceChange pref 2222 = " + preference.getKey());
+                if(VERBOSE)Log.d(TAG, "onPreferenceChange 2222 = " + newRes);
+                if(VERBOSE)Log.d(TAG, "onPreferenceChange pref 2222 = " + preference.getKey());
                 return true;
             });
         }
@@ -110,8 +116,9 @@ public class VideoResolutionActivity extends AppCompatActivity {
             ListPreference listPreference;
             Set<String> entries;
             SharedPreferences settingsPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                listPreference = new CustomListPreference(getActivity(), true);
-            entries = SharedPrefManager.getInstance(getActivity()).getSupportVideoResolution();
+            SharedPreferences.Editor editor = settingsPrefs.edit();
+            listPreference = new CustomListPreference(getActivity(), true);
+            entries = settingsPrefs.getStringSet(Contract.SUPPORT_VIDEO_RESOLUTIONS, null);
             int index=0;
             TreeSet<Dimension> sortedVidsSizes = new TreeSet<>();
             if (VERBOSE) Log.d(TAG, "videoRes SIZE = " + entries.size());
@@ -119,14 +126,11 @@ public class VideoResolutionActivity extends AppCompatActivity {
             //Sort all sizes in descending order.
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Log.d(TAG, "Use forEach");
-                if(entries!=null){
-                    entries.forEach((resol) -> {
-                        int wid = Integer.parseInt(resol.substring(0, resol.indexOf(" ")));
-                        int heig = Integer.parseInt(resol.substring(resol.lastIndexOf(" ") + 1));
-                        sortedVidsSizes.add(new Dimension(wid, heig));
-                    });
-                }
-
+                entries.forEach((resol) -> {
+                    int wid = Integer.parseInt(resol.substring(0, resol.indexOf(" ")));
+                    int heig = Integer.parseInt(resol.substring(resol.lastIndexOf(" ") + 1));
+                    sortedVidsSizes.add(new Dimension(wid, heig));
+                });
             }
             else {
                 for (String resol : entries) {
