@@ -228,6 +228,7 @@ public class CameraUtils {
                     mWarningMsg.dismiss();
                     mVideoFragment.getLatestFileIfExists();
                 }
+
             });
             mWarningMsg.setContentView(mWarningMsgRoot);
             mWarningMsg.setCancelable(false);
