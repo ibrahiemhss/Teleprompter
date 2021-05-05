@@ -14,7 +14,7 @@
         android:layout_centerInParent="false"
         android:layout_marginTop="@dimen/featureAndValueTopAndBottomMargin"
         android:contentDescription="@string/teleprompterContentDescription"
-        app:srcCompat="@drawable/orange_circle" />
+        app:srcCompat="@drawable/white_circle" />
 
     <LinearLayout
         android:id="@+id/featureParent"

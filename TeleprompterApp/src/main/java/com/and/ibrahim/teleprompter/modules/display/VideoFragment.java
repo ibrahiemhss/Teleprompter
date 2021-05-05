@@ -45,6 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 
@@ -95,7 +96,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
     //TextView modeText;
     TextView resInfo;
     LinearLayout modeLayout;
-    OrientationEventListener orientationEventListener;
+    //OrientationEventListener orientationEventListener;
     int orientation = -1;
     LinearLayout flashParentLayout;
     LinearLayout timeElapsedParentLayout;
@@ -294,6 +295,17 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
         });
         startRecord = (ImageButton)view.findViewById(R.id.cameraRecord);
         videoBar = (LinearLayout)view.findViewById(R.id.videoFunctions);
+         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        startRecord = new ImageButton(getActivity().getApplicationContext());
+        startRecord.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        startRecord.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
+        startRecord.setImageDrawable(getResources().getDrawable(R.drawable.camera_record_start));
+        startRecord.setForegroundGravity(Gravity.CENTER);
+        layoutParams.height=(int)getResources().getDimension(R.dimen.stopButtonHeight);
+        layoutParams.width=(int)getResources().getDimension(R.dimen.stopButtonWidth);
+        layoutParams.setMargins(8,8,8,8);
+        startRecord.setLayoutParams(layoutParams);
         startRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -303,7 +315,11 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
         Log.d(TAG,"passing videofragment to cameraview");
         cameraView.setFragmentInstance(this);
         imagePreview = (ImageView)view.findViewById(R.id.imagePreview);
-        orientationEventListener = new OrientationEventListener(getActivity().getApplicationContext(), SensorManager.SENSOR_DELAY_UI){
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+      /*  orientationEventListener = new OrientationEventListener(getActivity().getApplicationContext(), SensorManager.SENSOR_DELAY_UI){
             @Override
             public void onOrientationChanged(int i) {
                 if(orientationEventListener.canDetectOrientation()) {
@@ -312,7 +328,12 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
                     rotateIcons();
                 }
             }
-        };
+        };*/
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
         flashParentLayout = new LinearLayout(getActivity());
         timeElapsedParentLayout = new LinearLayout(getActivity());
         memoryConsumedParentLayout = new LinearLayout(getActivity());
@@ -516,6 +537,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void prepareAndStartRecord(){
         AudioManager audioManager = cameraView.getAudioManager();
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
@@ -625,20 +647,20 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
         return zoombar;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void addStopAndPauseIcons()
     {
-        videoBar.setBackground(getResources().getDrawable(R.drawable.accent_border_back));
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 
         stopRecord = new ImageButton(getActivity().getApplicationContext());
-       // stopRecord.setScaleType(ImageView.ScaleType.CENTER_CROP);
-       // stopRecord.setBackgroundColor(getResources().getColor(R.color.colorTransparentBlack));
+        stopRecord.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        stopRecord.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
         stopRecord.setImageDrawable(getResources().getDrawable(R.drawable.camera_record_stop));
         cameraView.setStopButton(stopRecord);
-
-        //layoutParams.height=(int)getResources().getDimension(R.dimen.stopButtonHeight);
-        //layoutParams.width=(int)getResources().getDimension(R.dimen.stopButtonWidth);
-        //layoutParams.setMargins((int)getResources().getDimension(R.dimen.stopBtnLeftMargin),0,(int)getResources().getDimension(R.dimen.stopBtnRightMargin),0);
+        stopRecord.setForegroundGravity(Gravity.CENTER);
+        layoutParams.height=(int)getResources().getDimension(R.dimen.stopButtonHeight);
+        layoutParams.width=(int)getResources().getDimension(R.dimen.stopButtonWidth);
+        layoutParams.setMargins(8,8,8,8);
         stopRecord.setLayoutParams(layoutParams);
         stopRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -649,6 +671,8 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
         });
         switchCamera.setBackgroundColor(getResources().getColor(R.color.transparentBar));
         switchCamera.setRotation(rotationAngle);
+        LinearLayout.LayoutParams videoBarParams = new LinearLayout.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,Gravity.CENTER | Gravity.CENTER_VERTICAL);
+        videoBar.setLayoutParams(videoBarParams);
         videoBar.removeAllViews();
         videoBar.addView(switchCamera);
         videoBar.addView(stopRecord);
@@ -680,7 +704,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
             }
         });
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0, 0, (int) getResources().getDimension(R.dimen.recordSubsBtnRightMargin), 0);
+        layoutParams.setMargins(4, 4, 4, 4);
         layoutParams.width = (int)getResources().getDimension(R.dimen.pauseButtonWidth);
         layoutParams.height = (int)getResources().getDimension(R.dimen.pauseButtonHeight);
         pauseRecord.setLayoutParams(layoutParams);
@@ -1271,7 +1295,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
 
             cameraView.setVisibility(View.VISIBLE);
         }
-        orientationEventListener.enable();
+       // orientationEventListener.enable();
         mediaFilters.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
         mediaFilters.addDataScheme("file");
         if(getActivity() != null){
@@ -1304,7 +1328,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
                 cameraView.setVisibility(View.GONE);
             }
         }
-        orientationEventListener.disable();
+        //orientationEventListener.disable();
         if(getActivity() != null){
             getActivity().unregisterReceiver(sdCardEventReceiver);
         }

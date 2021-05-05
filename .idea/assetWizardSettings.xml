@@ -79,8 +79,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$PROJECT_DIR$/TeleprompterApp/src/main/res/mipmap-xxxhdpi/teleprompter_icon.png" />
-                                                <entry key="scalingPercent" value="68" />
+                                                <entry key="imagePath" value="$PROJECT_DIR$/app_icon.png" />
+                                                <entry key="scalingPercent" value="93" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -108,6 +108,11 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="previewDensity" value="XXHIGH" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -271,6 +276,11 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="previewDensity" value="XXHIGH" />
                                     </map>
                                   </option>
                                 </PersistentState>

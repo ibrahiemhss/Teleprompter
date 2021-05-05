@@ -793,7 +793,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
     public void record(boolean noSDCard)
     {
         if(!isRecord()) {
-            determineOrientation();
+           // determineOrientation();
              Log.d(TAG,"Rot angle == "+rotationAngle+", portrait = "+portrait);
             Matrix.rotateM(RECORD_IDENTITY_MATRIX, 0, rotationAngle , 0, 0, 1);
             setLayoutAspectRatio();
@@ -881,8 +881,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
                 totalRotation = (camera1.getCameraInfo().orientation + orientation) % 360;
             }
 //            Log.d(TAG,"Rotation in CAMVIEW = "+totalRotation);
-            camera1.setRotation(totalRotation);
-            setTotalRotation(totalRotation);
+         //   camera1.setRotation(totalRotation);
+          //  setTotalRotation(totalRotation);
         }
     }
 

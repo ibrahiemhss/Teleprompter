@@ -76,7 +76,10 @@ public class CameraUtils {
     }
 
     public void resetPinchZoomGestureListener() {
-        pinchZoomGestureListener.setProgress(0);
+        if(pinchZoomGestureListener!=null){
+            pinchZoomGestureListener.setProgress(0);
+        }
+
 
     }
     public PinchZoomGestureListener getPinchZoomGestureListener() {
@@ -92,7 +95,10 @@ public class CameraUtils {
     }
 
     public boolean onTouchGestureDetector(MotionEvent event) {
-        scaleGestureDetector.onTouchEvent(event);
+        if(scaleGestureDetector!=null){
+            scaleGestureDetector.onTouchEvent(event);
+
+        }
         return true;
     }
     public void init() {

@@ -26,8 +26,10 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="@dimen/photoResSummaryTopBottomMargin"
         android:buttonTint="@color/colorAccent"
-        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:text="Checkbox"
+        android:background="@drawable/accent_border_back"
         android:textColor="@color/colorPrimaryText" />
 
     <LinearLayout

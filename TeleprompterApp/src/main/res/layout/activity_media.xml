@@ -142,7 +142,7 @@
             android:id="@+id/videoSeek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:thumb="@drawable/orange_circle" />
+            android:thumb="@drawable/white_circle" />
 
         <LinearLayout
             android:id="@+id/parentMedia"

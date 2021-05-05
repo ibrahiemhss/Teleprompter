@@ -40,7 +40,6 @@ public class AdsUtils {
     final private Handler handler = new Handler();
     private int mTime;
     private final OnActionAd onActionAd;
-
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {

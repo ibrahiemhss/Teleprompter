@@ -73,7 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
+        android:padding="8dp"
         android:text="@string/externalVideoPlayerCheckbox"
+        android:background="@drawable/accent_border_back"
         android:textColor="@color/colorPrimaryText"
         android:textSize="13sp"
         app:buttonTint="@color/colorAccent" />

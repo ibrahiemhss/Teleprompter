@@ -89,6 +89,11 @@ public class Contract implements BaseColumns {
     public static final String UNDO_TEXT_COLOR = "Contract.undo_text_color";
     public static final String UNDO_BACKGROUND_COLOR = "Contract.uno_background_color";
     public static final String COLOR_PREF = "color_pref";
+
+    public static final String CAMERA_PERMISSION_PREF = "cameraPermission_pref";
+    public static final String AUDIO_PERMISSION_PREF = "audioPermission_pref";
+    public static final String STORAGE_PERMISSION_PREF = "storagePermission_pref";
+
     public static final String FIRST_ENTRY = "Contract.first_entry";
     public static final String INIT_SDK = "Contract.init_sdk";
     public static final String FIRST_COLOR_SET = "Contract.first_color";

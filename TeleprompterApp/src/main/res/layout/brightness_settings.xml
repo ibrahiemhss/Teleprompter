@@ -26,7 +26,7 @@
         android:layout_alignTop="@+id/minBrightness"
         android:layout_marginBottom="@dimen/brightnessBottomMargin"
         android:layout_marginEnd="@dimen/brightnessBottomMargin"
-        app:srcCompat="@drawable/ic_baseline_brightness_high_24"
+        app:srcCompat="@drawable/ic_baseline_brightness_high_orange"
         android:contentDescription="@string/teleprompterContentDescription"
         />
 
@@ -38,7 +38,7 @@
         android:layout_marginBottom="@dimen/brightnessBottomMargin"
         android:layout_marginStart="@dimen/brightnessBottomMargin"
         android:contentDescription="@string/teleprompterContentDescription"
-        app:srcCompat="@drawable/ic_baseline_brightness_low_24" />
+        app:srcCompat="@drawable/ic_baseline_brightness_low_orange" />
 
     <SeekBar
         android:id="@+id/brightnessBar"
@@ -53,7 +53,7 @@
         android:indeterminate="false"
         android:progressBackgroundTint="@color/orange_light"
         android:progressTint="@color/orange_light"
-        android:thumb="@drawable/orange_circle" />
+        android:thumb="@drawable/white_circle" />
 
     <ImageView
         android:id="@+id/normalBrightness"

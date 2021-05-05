@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/headTextLeftMargin"
                 android:layout_weight=".5"
+                android:background="@drawable/accent_border_back"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -104,8 +105,10 @@
             android:layout_marginEnd="@dimen/headTextLeftMargin"
             android:checked="false"
             android:gravity="top"
+            android:background="@drawable/accent_border_back"
             android:onClick="disableThresholdCheck"
             android:paddingTop="7dp"
+            android:padding="8dp"
             android:text="@string/disableThreshold"
             android:textColor="@color/colorPrimaryText"
             android:buttonTint="@color/orange_light" />

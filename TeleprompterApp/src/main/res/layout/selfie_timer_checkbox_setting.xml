@@ -26,7 +26,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="@dimen/photoResSummaryTopBottomMargin"
         android:buttonTint="@color/colorAccent"
-        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="@drawable/accent_border_back"
         android:textColor="@color/colorPrimaryText" />
 
     <LinearLayout
@@ -35,6 +37,6 @@
         android:layout_height="1dp"
         android:background="@color/colorAccent"
         android:orientation="horizontal"
-        android:visibility="gone"></LinearLayout>
+        android:visibility="gone" />
 
 </LinearLayout>

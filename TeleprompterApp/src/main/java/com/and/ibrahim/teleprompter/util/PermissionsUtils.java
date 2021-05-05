@@ -4,10 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.and.ibrahim.teleprompter.R;
+import com.and.ibrahim.teleprompter.callback.OnPermissionStatusChange;
 import com.and.ibrahim.teleprompter.data.Contract;
 import com.and.ibrahim.teleprompter.data.SharedPrefManager;
 
@@ -32,6 +36,7 @@ public class PermissionsUtils {
      boolean cameraPermission = false;
      boolean audioPermission = false;
       boolean storagePermission = false;
+    private final OnPermissionStatusChange onPermissionStatusChange;
 
     public boolean isShowMessage() {
         return showMessage;
@@ -48,9 +53,10 @@ public class PermissionsUtils {
      boolean VERBOSE = false;
 
 
-    public PermissionsUtils(Context context) {
+    public PermissionsUtils(Context context, OnPermissionStatusChange onPermissionStatusChange) {
         this.mContext=context;
 
+        this.onPermissionStatusChange = onPermissionStatusChange;
     }
 
     public void requestPermissions(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -79,13 +85,17 @@ public class PermissionsUtils {
             int storagepermission = ContextCompat.checkSelfPermission(mContext.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (camerapermission == PackageManager.PERMISSION_GRANTED && audiopermission == PackageManager.PERMISSION_GRANTED &&
                     storagepermission == PackageManager.PERMISSION_GRANTED) {
-                if(VERBOSE) Log.d(TAG, "ALL permissions obtained.");
+                 Log.d(TAG, "ALL permissions obtained.");
                 cameraPermission = true;
                 audioPermission = true;
                 storagePermission= true;
+                SharedPrefManager.getInstance(mContext).setCameraPermission(true);
+                SharedPrefManager.getInstance(mContext).setAudioPermission(true);
+                SharedPrefManager.getInstance(mContext).setStoragePermission(true);
+                onPermissionStatusChange.onChanged(true);
                 permissionStatus= true;
             } else if(!showPermission){
-                if(VERBOSE) Log.d(TAG, "Permissions not obtained. Obtain explicitly");
+                Log.d(TAG, "Permissions not obtained. Obtain explicitly");
                 //Remove shared preferences. This is necessary, since for some devices it is pre-selected
                 //leading to errors.
                 SharedPreferences videoPref = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
@@ -107,11 +117,16 @@ public class PermissionsUtils {
                 SharedPrefManager.getInstance(mContext).setSavedMediaMem(true);
                 SharedPrefManager.getInstance(mContext).setMediaLocation(phoneLoc);
                 SharedPrefManager.getInstance(mContext).setPreviousMediaLocation(phoneLoc);
-                if(VERBOSE) Log.d(TAG, "REMOVED SHAREDPREFS");
+                Log.d(TAG, "REMOVED SHAREDPREFS");
                 ActivityCompat.requestPermissions((Activity) mContext,
                         new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         ALL_PERMISSIONS);
                 permissionStatus = false;
+                SharedPrefManager.getInstance(mContext).setCameraPermission(false);
+                SharedPrefManager.getInstance(mContext).setAudioPermission(false);
+                SharedPrefManager.getInstance(mContext).setStoragePermission(false);
+                onPermissionStatusChange.onChanged(false);
+
             }
         }
         return permissionStatus;
@@ -123,14 +138,17 @@ public class PermissionsUtils {
             @Override
             public void onClick(DialogInterface dialogInterface, int which)
             {
-                android.os.Process.killProcess(android.os.Process.myPid());
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", mContext.getPackageName(), null));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         };
         alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle(mContext.getString(R.string.no_permission_title));
         alertDialog.setMessage(mContext.getString(R.string.unavailable_permissions_message));
-        alertDialog.setNeutralButton(R.string.exit, exitListener);
-        alertDialog.setCancelable(false);
+        alertDialog.setNeutralButton(R.string.setting, exitListener);
+        alertDialog.setCancelable(true);
         alertDialog.show();
         setShowMessage(true);
     }

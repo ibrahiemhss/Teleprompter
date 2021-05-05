@@ -39,18 +39,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/accent_border_back"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/phoneMemButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginStart="@dimen/headTextLeftMargin"
                     android:layout_marginTop="@dimen/headTextTopMargin"
                     android:layout_weight="1"
-                    android:background="@drawable/ripple"
+                    android:background="@drawable/accent_border_back"
                     android:buttonTint="@color/orange_light"
                     android:checked="true"
                     android:onClick="selectSaveMedia"
@@ -65,17 +64,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/accent_border_back"
                 android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/sdCardbutton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginStart="@dimen/headTextLeftMargin"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ripple"
+                    android:background="@drawable/accent_border_back"
                     android:buttonTint="@color/orange_light"
                     android:onClick="selectSaveMedia"
                     android:text="@string/sdCard"
@@ -118,16 +116,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@drawable/accent_border_back"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/videoResolutionHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/headTextLeftMargin"
+                android:layout_marginStart="@dimen/headTextLeftMargin"
                 android:paddingBottom="@dimen/photoResTopBottomMargin"
-                android:paddingTop="@dimen/photoResTopBottomMargin"
+                android:padding="16dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/accent_border_back"
                 android:text="@string/videoResolutionHeading"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/settingsMainText" />
@@ -189,7 +188,6 @@
             android:onClick="showMemoryConsumed"
             android:layout_margin="8dp"
             android:padding="8dp"
-            android:background="@drawable/medium_container_background"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/headTextTopMargin"
             android:paddingTop="@dimen/headTextTopMargin">
@@ -216,6 +214,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/headTextLeftMargin"
                     android:layout_marginTop="@dimen/headTextTopMargin"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:background="@drawable/accent_border_back"
                     android:text="@string/phoneMemoryLimitMsg"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorPrimaryText"
@@ -228,7 +229,7 @@
                     android:layout_marginStart="@dimen/headTextLeftMargin"
                     android:layout_marginTop="@dimen/headTextTopMargin"
                     android:text="@string/memoryThresholdLimit"
-                    android:textColor="@color/colorPrimaryText" />
+                    android:textColor="@color/colorAccent" />
 
             </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -16,11 +17,13 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
 import com.and.ibrahim.teleprompter.callback.OnActionAd;
 import com.and.ibrahim.teleprompter.callback.OnBrightnessChange;
+import com.and.ibrahim.teleprompter.callback.OnPermissionStatusChange;
 import com.and.ibrahim.teleprompter.callback.OnStartRecordVideoListener;
 import com.and.ibrahim.teleprompter.modules.adapter.ColorsAdapter;
 import com.and.ibrahim.teleprompter.mvp.view.OnScrollViewActions;
@@ -38,6 +41,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -47,7 +51,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,6 +61,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -85,16 +92,18 @@ import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.Optional;
 
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.END;
 
 @SuppressWarnings("WeakerAccess")
-public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener, OnUserEarnedRewardListener, OnActionAd, VideoFragment.PermissionInterface, VideoFragment.SwitchInterface, VideoFragment.LowestThresholdCheckForVideoInterface, OnScrollViewActions, OnStartRecordVideoListener {
+public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener, OnUserEarnedRewardListener, OnActionAd, VideoFragment.PermissionInterface, VideoFragment.SwitchInterface, VideoFragment.LowestThresholdCheckForVideoInterface, OnScrollViewActions, OnStartRecordVideoListener, OnPermissionStatusChange {
 
 
     private static final String TAG = "DisplayActivity";
     boolean VERBOSE = false;
+    boolean allPermissionsGranted = false;
 
     private PermissionsUtils permissionsUtils;
 
@@ -112,6 +121,13 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.parentCamera)
     protected FrameLayout mCameraContent;
+     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.container_contents)
+    protected LinearLayout containerContents;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.container_script)
+    protected RelativeLayout containerScript;
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_toolbar)
     protected Toolbar mToolbar;
@@ -155,6 +171,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.adView2)
     protected AdView mAdView;
     @SuppressLint("NonConstantResourceId")
+    @Nullable
     @BindView(R.id.editBrightness)
     protected LinearLayout editBrightness;
     @SuppressLint("NonConstantResourceId")
@@ -215,12 +232,54 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         return R.layout.activity_display;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            changeToLandScapeUi();
+            isLandScapeChanged=true;
+            finish();
+            startActivity(getIntent());
+            initCame();
+        }else{
+            containerContents.removeView(mCameraContent);
+            verticalOuterLayout.removeAllViews();
+            verticalOuterLayout.addView(mCameraContent);
+            verticalOuterLayout.addView(mScrollText);
+
+
+        }
+    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
 
+        permissionsUtils = new PermissionsUtils(this, this);
+
+        int orientation = getResources().getConfiguration().orientation;
+       /* if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int height = displayMetrics.heightPixels;
+            int width = displayMetrics.widthPixels;
+            verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(width/2, WindowManager.LayoutParams.MATCH_PARENT));
+            mCameraContent.setLayoutParams(new FrameLayout.LayoutParams(width/2, WindowManager.LayoutParams.MATCH_PARENT));
+            containerContents.removeAllViews();
+            verticalOuterLayout.removeAllViews();
+            containerContents.addView(mCameraContent);
+            containerContents.addView(containerScript);
+            verticalOuterLayout.addView(mScrollText);
+            //mSlideShowScroll.addView(verticalOuterLayout);
+            //mSlideShowScroll.addView(containerContents);
+
+        } else {
+            verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
+            containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+
+        }*/
 
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
         mAdUtils = new AdsUtils(this, this);
@@ -238,7 +297,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mCameraUtils = new CameraUtils(mVideoFragment, this, editBrightness);
 
         displayUtils.scrollViewConfig();
-
+        permissionsUtils.getPermissionsStatus();
         editBrightness.setOnClickListener(v -> {
            openBrightnessPopup();
         });
@@ -264,7 +323,6 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             }
             fromGallery = extras.getBoolean(Contract.EXTRA_FROM_GALLERY);
         }*/
-        permissionsUtils = new PermissionsUtils(this);
         mCameraUtils = new CameraUtils(mVideoFragment, this, editBrightness);
        // if (savedInstanceState == null) {
             //Start with video fragment
@@ -527,7 +585,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 .commit();
     }
 
-    //==================================================================================================
+ //==================================================================================================
 //================================ Navigation Drawer ===============================================
 //==================================================================================================
     private void initNavigationDrawer() {
@@ -538,7 +596,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         CheckBox checkboxOpenCamera = mNavView.findViewById(R.id.checkboxOpenCamera);
         LinearLayout videoSettingsContainer = mNavView.findViewById(R.id.videoSettingsContainer);
         if(SharedPrefManager.getInstance(this).isCameraEnabled()){
-            videoSettingsContainer.setVisibility(View.VISIBLE);
+            if(allPermissionsGranted){
+                videoSettingsContainer.setVisibility(View.VISIBLE);
+            }
         }else{
             videoSettingsContainer.setVisibility(View.GONE);
         }
@@ -554,11 +614,21 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         checkboxOpenCamera.setOnCheckedChangeListener((buttonView, isChecked) -> {
             setCameraShow(isChecked);
             if (isChecked) {
+                Log.d(TAG, "on Checked permissions values changed == "+allPermissionsGranted);
+                videoSettingsContainer.setVisibility(View.VISIBLE);
+                if(!allPermissionsGranted){
+                    mCameraContent.setVisibility(View.GONE);
+                    permissionsUtils.quitAppCam();
+                }else{
+                    isLandScapeChanged=false;
                 mCameraUtils.showVideoFragment();
                 checkboxOpenCamera.setText(getResources().getString(R.string.close_camera));
-                videoSettingsContainer.setVisibility(View.VISIBLE);
+                mCameraContent.setVisibility(View.VISIBLE);
+                }
+
             } else {
                 checkboxOpenCamera.setText(getResources().getString(R.string.open_camera));
+                mCameraContent.setVisibility(View.GONE);
                 videoSettingsContainer.setVisibility(View.GONE);
 
             }
@@ -772,6 +842,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     public void onDestroy() {
         super.onDestroy();
+
         if (displayUtils != null) {
             displayUtils.dispose("onDestroy");
         }
@@ -1065,14 +1136,68 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void setCameraShow(boolean is) {
         SharedPrefManager.getInstance(this).setCameraEnabled(is);
         if (is) {
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if(!isLandScapeChanged){
+                    changeToLandScapeUi();
+                }
+            } else {
+                verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
+                containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+
+            }
             mCameraContent.setVisibility(View.VISIBLE);
         } else {
+            verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
+            containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+
             mCameraContent.setVisibility(View.GONE);
 
         }
 
     }
 
+    boolean isLandScapeChanged=false;
+    void  changeToLandScapeUi(){
+        isLandScapeChanged=true;
+        initCame();
+        if(!isTablet){
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int height = displayMetrics.heightPixels;
+            int width = displayMetrics.widthPixels;
+            CoordinatorLayout.LayoutParams cameraContentParams = (new CoordinatorLayout.LayoutParams((int)(width/2.2), WindowManager.LayoutParams.MATCH_PARENT));
+            cameraContentParams.setMargins(10,width/9, width/50, 10);
+            mCameraContent.setForegroundGravity( BOTTOM );
+            cameraContentParams.setMarginStart(width/2);
+            mCameraContent.setLayoutParams(cameraContentParams);
+
+
+            FrameLayout.LayoutParams verticalOuterLayoutParams = (new FrameLayout.LayoutParams(width/2, WindowManager.LayoutParams.MATCH_PARENT));
+            verticalOuterLayoutParams.setMargins(width/50,0, width/50, 0);
+
+            verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
+            //params.setMarginStart(width/2);
+            //mCameraContent.setForegroundGravity( Gravity.START );
+            verticalOuterLayout.setGravity( END );
+            containerContents.removeAllViews();
+            verticalOuterLayout.removeAllViews();
+
+            if(containerScript.getParent() != null) {
+                ((ViewGroup)containerScript.getParent()).removeView(containerScript); // <- fix
+            }
+            if(mCameraContent.getParent() != null) {
+                ((ViewGroup)mCameraContent.getParent()).removeView(mCameraContent); // <- fix
+            }
+            if(mScrollText.getParent() != null) {
+                ((ViewGroup)mScrollText.getParent()).removeView(mScrollText); // <- fix
+            }
+            containerContents.addView(containerScript);
+            containerContents.addView(mCameraContent);
+            mScrollText.setText(mScrollString);
+            verticalOuterLayout.addView(mScrollText);
+        }
+    }
     private void setToggleMarker(boolean is) {
 
         if (is) {
@@ -1145,4 +1270,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
 
+    @Override
+    public void onChanged(boolean status) {
+        allPermissionsGranted=status;
+        Log.d(TAG, "on permissions values changed == "+allPermissionsGranted);
+
+        setCameraShow(status);
+        if(!status){
+            permissionsUtils.quitAppCam();
+        }
+    }
 }

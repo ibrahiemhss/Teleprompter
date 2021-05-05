@@ -6,6 +6,7 @@
     <dimen name="scroll_text_margin_top">300dp</dimen>
     <dimen name="scroll_text_margin_bottom">300dp</dimen>
     <dimen name="camera_view_height">232dp</dimen>
+    <dimen name="camera_view_width">232dp</dimen>
     <dimen name="up_view_height">232dp</dimen>
     <dimen name="down_view_height">232dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>

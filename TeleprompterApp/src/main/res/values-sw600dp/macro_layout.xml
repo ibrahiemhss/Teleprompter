@@ -14,6 +14,8 @@
     <dimen name="marker_width">32dp</dimen>
     <dimen name="scroll_text_margin_top">472dp</dimen>
     <dimen name="scroll_text_margin_bottom">472dp</dimen>
+    <dimen name="camera_view_height">404dp</dimen>
+    <dimen name="camera_view_width">404dp</dimen>
     <dimen name="up_view_height">404dp</dimen>
     <dimen name="down_view_height">404dp</dimen>
     <dimen name="container_margin_top">88dp</dimen>

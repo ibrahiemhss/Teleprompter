@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection, AndroidDomInspection -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorTransparent"
+    tools:ignore="Overdraw">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/display_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/toolbar_container_margin"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/display_collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="@dimen/toolbar_text_end_margin"
+            app:expandedTitleMarginStart="@dimen/toolbar_text_start_margin"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/display_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:id="@+id/slide_show_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/vertical_outer_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:translationZ="90dp"
+            android:orientation="vertical">
+
+            <com.and.ibrahim.teleprompter.util.ScrollingTextView
+                android:id="@+id/text_scrolling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/scroll_text_margin"
+                android:layout_marginLeft="@dimen/scroll_text_side_margin"
+                android:layout_marginRight="@dimen/scroll_text_side_margin"
+                android:paddingTop="@dimen/scroll_text_margin_top"
+                android:paddingBottom="@dimen/scroll_text_margin_bottom"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/container_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/container_script"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/up_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/up_view_height"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorTransparentBlack" />
+            <RelativeLayout
+                android:id="@+id/container_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_play_width"
+                android:layout_below="@+id/up_view"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/toggle_marker"
+                    android:layout_width="@dimen/marker_width"
+                    android:layout_height="@dimen/marker_height"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/arrow_marker"
+                    android:contentDescription="@string/marker_description" />
+
+                <ImageView
+                    android:id="@+id/show_play"
+                    android:layout_width="@dimen/image_play_height"
+                    android:layout_height="@dimen/image_play_width"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/play_description" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/down_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/down_view_height"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/container_toggle"
+                android:background="@color/colorTransparentBlack" />
+
+            <Chronometer
+                android:id="@+id/chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/white_back"
+                android:padding="4dp"
+                android:textColor="@color/orange_light" />
+
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chronometer"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_pup" />
+
+        </RelativeLayout>
+        <include
+            layout="@layout/camera_layout"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:layout_width="0dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

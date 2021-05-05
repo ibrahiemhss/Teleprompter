@@ -88,30 +88,33 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="f_storage_description">To add text from the internal memory device</string>
     <string name="f_drive_description">Add text from your Google Drive files from your own Google Drive account</string>
     <string name="f_parent_description">Click here to show different input options</string>
-    <string name="loading" translatable="false">Loading ...</string>
+    <string name="loading">Loading ...</string>
 
+    <string name="facebook_app_id" translatable="false">308890512940081</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb308890512940081</string>
+    <string name="mediaInfoDateFormat" translatable="false">dd MMMM yyyy HH:mm:ss</string>
+    <string name="dropBoxAppKey" translatable="false">169uf2hzn1n0iov</string>
 
     <!--
       //For ِAll Camera Actions=================================================
   -->
+    <string name="FC_VID_PREFIX" translatable="false">/FC_VID_</string>
+    <string name="FC_IMG_PREFIX" translatable="false">/FC_IMG_</string>
+    <string name="VID_EXT" translatable="false">.mp4</string>
+    <string name="IMG_EXT" translatable="false">.jpeg</string>
+    <string name="ANOTHER_IMG_EXT" translatable="false">.jpg</string>
+    <string name="DATE_FORMAT_FOR_FILE" translatable="false">yyyy-MM-dd-HH-mm-ss</string>
+    <string name="MEM_PF_KB" translatable="false"> KB</string>
+    <string name="MEM_PF_MB" translatable="false"> MB</string>
+    <string name="MEM_PF_GB" translatable="false"> GB</string>
+    <string name="START_TIME" translatable="false">00 : 00 : 00</string>
+    <string name="START_MEMORY" translatable="false">0 MB</string>
 
     <string name="no_permission_title">No Permission</string>
-    <string name="unavailable_permissions_message">Unavailability of permissions will render Teleprompter not to function correctly.\n\n
-        Please reopen the application or go to Settings, if you wish to grant permission.</string>
+    <string name="unavailable_permissions_message">Unavailability of permissions will render Teleprompter not to function correctly.</string>
 
     <string name="exit">EXIT</string>
     <string name="FC_ROOT">/Teleprompter/</string>
-    <string name="FC_VID_PREFIX">/FC_VID_</string>
-    <string name="FC_IMG_PREFIX">/FC_IMG_</string>
-    <string name="VID_EXT">.mp4</string>
-    <string name="IMG_EXT">.jpeg</string>
-    <string name="ANOTHER_IMG_EXT">.jpg</string>
-    <string name="DATE_FORMAT_FOR_FILE">yyyy-MM-dd-HH-mm-ss</string>
-    <string name="MEM_PF_KB"> KB</string>
-    <string name="MEM_PF_MB"> MB</string>
-    <string name="MEM_PF_GB"> GB</string>
-    <string name="START_TIME">00 : 00 : 00</string>
-    <string name="START_MEMORY">0 MB</string>
     <string name="VIDEO_MODE">VIDEO</string>
     <string name="PHOTO_MODE">PHOTO</string>
     <string name="photo">Photo</string>
@@ -139,7 +142,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="logoutFB">LOGOUT OF FACEBOOK</string>
     <string name="permissionTitleFacebook">Permission for Facebook</string>
     <string name="noWhatsapp">WhatsApp not available</string>
-    <string name="whatsappRequired">WhatsApp needs to be installed to be able to share Photos/Videos to another WhatsApp contact.</string>
+    <string name="whatsappRequired">WhatsApp needs to be installed to be able to share Videos to another WhatsApp contact.</string>
     <string name="uploadFB">Upload to Facebook</string>
     <string name="permissionMessageFacebook">Teleprompter requires you to login to Facebook to request below permission(s) to upload Photos/Videos:</string>
     <string name="optionlogoutMessageFacebook">You have an option to logout before you upload.</string>
@@ -148,8 +151,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="notnow">NOT NOW</string>
     <string name="facebook">Facebook</string>
     <string name="whatsapp">WhatsApp</string>
-    <string name="facebook_app_id">308890512940081</string>
-    <string name="fb_login_protocol_scheme">fb308890512940081</string>
     <string name="mediaService">Teleprompter Media Upload Service</string>
     <string name="googleDriveService">Google Drive Upload Service</string>
     <string name="dropboxService">Dropbox Upload Service</string>
@@ -201,7 +202,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="saveToCloudTitle">Sign in to %1$s</string>
     <string name="continuesignin">CONTINUE</string>
     <string name="notnowsignin">NOT NOW</string>
-    <string name="uploadmsg">This option enables you to automatically upload any photos/videos created from now, onto the cloud.\n\nUser Sign in required for the cloud service, to which the user is opting to upload.</string>
+    <string name="uploadmsg">This option enables you to automatically upload any videos created from now, onto the cloud.\n\nUser Sign in required for the cloud service, to which the user is opting to upload.</string>
     <string name="signinfail">Sign In failed either due to Internet connection issue or cancellation by user.</string>
     <string name="signoutcloud">Signed out of %1$s.\n\nAuto upload has been disabled.</string>
     <string name="uploadFolder">Name of the upload folder in %1$s.</string>
@@ -218,8 +219,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="permissionHeader">Account Check Permission</string>
     <string name="yesPermission">YES</string>
     <string name="noPermission">NO</string>
-    <string name="autouploadFolderCreated">Teleprompter will now auto upload your photos/videos onto this folder in %1$s.\n\nPlease check your notifications for upload status.</string>
-    <string name="autouploadFolderUpdated">Teleprompter will now auto upload your photos/videos onto <u>%1$s</u> folder in %2$s.\n\nPlease check your notifications for upload status.</string>
+    <string name="autouploadFolderCreated">Teleprompter will now auto upload your videos onto this folder in %1$s.\n\nPlease check your notifications for upload status.</string>
+    <string name="autouploadFolderUpdated">Teleprompter will now auto upload your videos onto <u>%1$s</u> folder in %2$s.\n\nPlease check your notifications for upload status.</string>
     <string name="signInProgress">Fetching Google Account information in your phone for signing into %1$s.\n\nPlease Wait...</string>
     <string name="signInProgressDropbox">Redirecting to Dropbox Website...</string>
     <string name="createFolder">Creating folder in %1$s...</string>
@@ -245,7 +246,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="uploadCheckDropboxMsg">Checking for earlier created subfolder inside Teleprompter folder in user\'s %1$s account.</string>
     <string name="uploadFolderNotExist">Upload Folder Moved/Deleted</string>
     <string name="uploadFolderMovedDeleted">The earlier created folder %1$s in Dropbox has been moved/deleted.\n\nSetting upload folder as Teleprompter...</string>
-    <string name="dropBoxAppKey">169uf2hzn1n0iov</string>
     <string name="dropBoxUploadFolder">Dropbox Upload Folder</string>
     <string name="TeleprompterAppFolder">Teleprompter</string>
     <string name="createUploadFolderDropbox">Create a subfolder inside Teleprompter for my uploads.</string>
@@ -299,16 +299,16 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="brightnessContentDescription">Brightness Icon</string>
     <string name="flashOn">Flash On</string>
     <string name="settings">Settings</string>
-    <string name="noImage">No Photos/Videos</string>
+    <string name="noImage">No Videos</string>
     <string name="playVideoCircle">Play inside circle</string>
-    <string name="deleteMedia">Delete Photo/Video</string>
-    <string name="shareMedia">Share Photo/Video</string>
+    <string name="deleteMedia">Delete Video</string>
+    <string name="shareMedia">Share Video</string>
     <string name="infoMediaContentDescription">Display Media Info</string>
     <string name="playVideo">Play Video</string>
     <string name="greenArrow">Navigate to Memory Threshold Activity</string>
     <string name="folderCreated">Folder Created Successfully.</string>
     <string name="imagePreview">Camera Preview</string>
-    <string name="thumbnail">Photo/Video Thumbnail</string>
+    <string name="thumbnail">Video Thumbnail</string>
     <string name="switchCamera">Switch Camera</string>
     <string name="clickCamera">Camera Click</string>
     <string name="videoMode">Switch to Video</string>
@@ -394,7 +394,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="mediaInfoDateCreated">DATE CREATED :&#160;</string>
     <string name="mediaInfoDimension">DIMENSION :&#160;</string>
     <string name="closeButton">CLOSE</string>
-    <string name="mediaInfoDateFormat">dd MMMM yyyy HH:mm:ss</string>
 
     <string name="nokia71">Nokia 7.1</string>
 </resources>

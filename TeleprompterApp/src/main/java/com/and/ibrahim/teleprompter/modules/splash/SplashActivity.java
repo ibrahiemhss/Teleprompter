@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         isTablet = getResources().getBoolean(R.bool.isTablet);
-        MobileAds.initialize(this, initializationStatus -> {
+       /* MobileAds.initialize(this, initializationStatus -> {
         });
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
@@ -63,12 +63,13 @@ public class SplashActivity extends AppCompatActivity {
                         }
                         goToMain();
                     }
-                });
+                });*/
 //        // Initialize a dummy banner using the default test banner id provided by google to get the device id from logcat using 'Ads' tag
       // ConsentSDK.initDummyBanner(this);
 
         // Initialize ConsentSDK
         // Loading indicator
+        goToMain();
         loadingHandler();
     }
 

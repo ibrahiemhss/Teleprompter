@@ -39,6 +39,39 @@ public class SharedPrefManager {
         editor.remove(key);
         editor.commit();
     }
+
+
+
+    public boolean isCameraPermission() {
+        return pref.getBoolean(Contract.CAMERA_PERMISSION_PREF, false);
+    }
+
+    public void setCameraPermission(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Contract.CAMERA_PERMISSION_PREF, is);
+        editor.commit();
+        editor.commit();
+    }
+    public boolean isAudioPermission() {
+        return pref.getBoolean(Contract.AUDIO_PERMISSION_PREF, false);
+    }
+
+    public void setAudioPermission(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Contract.AUDIO_PERMISSION_PREF, is);
+        editor.commit();
+        editor.commit();
+    }
+    public boolean isStoragePermission() {
+        return pref.getBoolean(Contract.STORAGE_PERMISSION_PREF, false);
+    }
+
+    public void setStoragePermission(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Contract.STORAGE_PERMISSION_PREF, is);
+        editor.commit();
+        editor.commit();
+    }
     public int getPrefTextSize() {
         return pref.getInt(Contract.TEXT_SIZE, 0);
     }

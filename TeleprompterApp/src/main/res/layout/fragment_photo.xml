@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:progressBackgroundTint="@color/orange_light"
-            android:thumb="@drawable/orange_circle" />
+            android:thumb="@drawable/white_circle" />
 
         <LinearLayout
             android:id="@+id/photoFunctions"
