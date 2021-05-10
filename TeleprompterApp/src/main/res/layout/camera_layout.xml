@@ -77,6 +77,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/modeInfoBottomMargin"
                 android:text="@string/resolution"
+                android:textSize="12sp"
+
                 android:textColor="@color/White" />
 
             <TextView
@@ -84,8 +86,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="18sp"
-                android:textColor="@color/colorAccent" />
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_white" />
 
         </LinearLayout>
 

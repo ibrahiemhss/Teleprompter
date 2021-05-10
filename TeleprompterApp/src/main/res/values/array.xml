@@ -21,4 +21,26 @@
         <item name="Black">@color/Black</item>
         <item name="Blue">@color/Blue</item>
     </array>
+
+    <array name="transparent_background_colors">
+        <item name="Black">@color/colorTransparentBlack</item>
+        <item name="green">@color/transparentGreen</item>
+        <item name="Snow">@color/transparentSnow</item>
+        <item name="Maroon">@color/transparentMaroon</item>
+        <item name="LightBlue">@color/transparentLightBlue</item>
+        <item name="Blue">@color/transparentBlue</item>
+        <item name="Snow">@color/transparentSnow</item>
+        <item name="LightBlue">@color/transparentLightBlue</item>
+    </array>
+
+    <array name="transparent_text_colors">
+        <item name="White">@color/White</item>
+        <item name="White">@color/White</item>
+        <item name="Maroon">@color/transparentMaroon</item>
+        <item name="Snow">@color/transparentSnow</item>
+        <item name="Blue">@color/transparentBlue</item>
+        <item name="LightBlue">@color/transparentLightBlue</item>
+        <item name="Black">@color/transparentBlack</item>
+        <item name="Blue">@color/transparentBlue</item>
+    </array>
 </resources>

@@ -71,7 +71,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="short_title">शीर्षक छोटा है। कृपया कम से कम 6 वर्णों वाला शीर्षक दर्ज करें।</string>
     <string name="short_script">पाठ छोटा है। कृपया कम से कम 100 शब्दों के साथ टेक्स्ट जोड़ें।</string>
     <string name="privacy">गोपनीयता नीति</string>
-
+    <string name="text_transparency">पाठ पारदर्शिता</string>
+    <string name="background_transparency">पृष्ठभूमि की पारदर्शिता</string>
     <string name="list_description">पूर्ण पाठ सामग्री देखने और प्रेजेंटेशन चलाने के लिए यहां क्लिक करें</string>
     <string name="marker_description">लाइन चयन पढ़ने की आसानी को चिह्नित करें</string>
     <string name="play_description">टेक्स्ट स्क्रॉलिंग को चालू या बंद करने के लिए यहां क्लिक करें</string>
@@ -330,7 +331,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="sendFeedbackTitleMsg">प्रतिपुष्टि...</string>
     <string name="mediaSlideview">स्लाइड देखें</string>
     <string name="brightnessHeading">चमक</string>
-    <string name="resolutionDisplay">%1$s  X  %2$s</string>
     <string name="resolution">संकल्प</string>
     <string name="backCamResTitle">बैक कैमरा रिज़ॉल्यूशन</string>
     <string name="frontCamResTitle">फ्रंट कैमरा रिज़ॉल्यूशन</string>

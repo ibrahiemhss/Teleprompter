@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorTransparent"
+    android:id="@+id/parentAll"
+    android:background="@color/colorTransparentBlack"
     tools:ignore="Overdraw">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,41 +38,54 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-    <ScrollView
-        android:id="@+id/slide_show_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
 
-        <LinearLayout
-            android:id="@+id/vertical_outer_id"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:translationZ="90dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:clickable="true"
+            android:id="@+id/parentScriptView">
 
-            <com.and.ibrahim.teleprompter.util.ScrollingTextView
-                android:id="@+id/text_scrolling"
+            <ScrollView
+                android:id="@+id/slide_show_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="2dp"
+                android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/vertical_outer_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/scroll_text_margin"
-                android:layout_marginLeft="@dimen/scroll_text_side_margin"
-                android:layout_marginRight="@dimen/scroll_text_side_margin"
-                android:paddingTop="@dimen/scroll_text_margin_top"
-                android:paddingBottom="@dimen/scroll_text_margin_bottom"
-                android:textSize="24sp" />
-        </LinearLayout>
+                android:gravity="end"
+                android:orientation="vertical">
 
-    </ScrollView>
-    <LinearLayout
-        android:id="@+id/container_contents"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+                <com.and.ibrahim.teleprompter.util.ScrollingTextView
+                    android:id="@+id/text_scrolling"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/scroll_text_margin"
+                    android:layout_marginLeft="@dimen/scroll_text_side_margin"
+                    android:layout_marginRight="@dimen/scroll_text_side_margin"
+                    android:paddingTop="@dimen/scroll_text_margin_top"
+                    android:paddingBottom="@dimen/scroll_text_margin_bottom"
+                    android:textSize="24sp" />
+            </LinearLayout>
+            </ScrollView>
+            <include
+                layout="@layout/camera_layout"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?android:attr/actionBarSize"
+                android:elevation="2dp"
+                android:duplicateParentState="true"
+                android:layout_width="match_parent" />
+        </FrameLayout>
+
+
+
         <RelativeLayout
             android:id="@+id/container_script"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <View
@@ -112,13 +126,7 @@
                 android:layout_below="@+id/container_toggle"
                 android:background="@color/colorTransparentBlack" />
 
-            <include
-                layout="@layout/camera_layout"
-                android:layout_height="@dimen/camera_view_height"
-                android:layout_below="@+id/container_toggle"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                android:layout_width="match_parent" />
+
             <Chronometer
                 android:id="@+id/chronometer"
                 android:layout_width="wrap_content"
@@ -141,6 +149,5 @@
                 ads:adUnitId="@string/banner_pup" />
 
         </RelativeLayout>
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

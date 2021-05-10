@@ -71,6 +71,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="content_loaded">File contents successfully read.</string>
     <string name="select_file">Select file</string>
 
+    <string name="text_transparency">Text transparency</string>
+    <string name="background_transparency">Background transparency</string>
 
     <string name="Delete">Delete</string>
     <string name="click_delete">Click yes to delete selected files!</string>
@@ -94,6 +96,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="fb_login_protocol_scheme" translatable="false">fb308890512940081</string>
     <string name="mediaInfoDateFormat" translatable="false">dd MMMM yyyy HH:mm:ss</string>
     <string name="dropBoxAppKey" translatable="false">169uf2hzn1n0iov</string>
+    <string name="resolutionDisplay" translatable="false">%1$s*%2$s</string>
+
 
     <!--
       //For ِAll Camera Actions=================================================
@@ -354,7 +358,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="sendFeedbackTitleMsg">Feedback...</string>
     <string name="mediaSlideview">Slide View</string>
     <string name="brightnessHeading">BRIGHTNESS</string>
-    <string name="resolutionDisplay">%1$s X %2$s</string>
     <string name="resolution">Resolution</string>
     <string name="backCamResTitle">Back Camera Resolution</string>
     <string name="frontCamResTitle">Front Camera Resolution</string>

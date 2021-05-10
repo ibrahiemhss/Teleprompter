@@ -95,7 +95,10 @@
             android:name=".modules.display.DisplayActivity"
             android:parentActivityName=".modules.listContents.ListContentsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@style/AppThemeNoActionBar" />
+            android:theme="@style/AppThemeNoActionBar"
+            android:screenOrientation="nosensor"
+
+            />
         <activity android:name=".modules.listContents.ListContentsActivity" />
         <activity
             android:name=".modules.display.SettingsCameraActivity"
@@ -117,17 +120,19 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".modules.display.MediaActivity"
-            android:screenOrientation="nosensor"
+            android:configChanges="orientation|screenSize"
             android:parentActivityName=".modules.display.DisplayActivity"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".modules.display.GalleryActivity"
             android:screenOrientation="nosensor"
             android:parentActivityName=".modules.display.DisplayActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".modules.setting.SettingsActivity"
             android:parentActivityName=".modules.listContents.ListContentsActivity"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme" />
 
 

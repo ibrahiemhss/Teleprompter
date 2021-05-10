@@ -72,8 +72,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="short_title">العنوان قصير جدا من فضلك اجعله 6 حروف علي الاقل</string>
     <string name="short_script">محتوي النص قصير جدا من فضلك اجعله 100 كلمه علي الاقل</string>
     <string name="privacy">سياسة الخصوصية</string>
-
-
+    <string name="text_transparency">شفافية النص</string>
+    <string name="background_transparency">شفافية الخلفية</string>
     <string name="list_description">لعرض محتوى النص كاملا وتشغيل العرض اضغط هنا</string>
     <string name="marker_description">علامه تسهيل تحديد سطر القرائه</string>
     <string name="play_description">انقر هنا لتشغيل تمرير النص او ايقافه</string>
@@ -327,7 +327,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="sendFeedbackTitleMsg">تعليق...</string>
     <string name="mediaSlideview">عرض الشرائح</string>
     <string name="brightnessHeading">سطوع</string>
-    <string name="resolutionDisplay">%1$s X %2$s</string>
     <string name="resolution">الدقه</string>
     <string name="backCamResTitle">دقة الكاميرا الخلفية</string>
     <string name="frontCamResTitle">دقة الكاميرا الأمامية</string>

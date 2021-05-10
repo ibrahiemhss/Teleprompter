@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentAll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_graylt"
@@ -39,55 +40,63 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/container_contents"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/container_script"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/contents_container"
+            android:layout_width="@dimen/container_width"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/container_margin_top"
+            tools:ignore="InconsistentLayout" />
+
+
         <RelativeLayout
-            android:id="@+id/container_script"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_toEndOf="@+id/contents_container"
+            android:layout_toRightOf="@+id/contents_container"
+            android:background="@color/color_graydr">
 
-            <FrameLayout
-                android:id="@+id/contents_container"
-                android:layout_width="@dimen/container_width"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/container_margin_top"
+            <TextView
+                android:id="@+id/text_empty_show"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="8dp"
+                android:text="@string/empty_text"
+                android:textAppearance="@style/Theme.Design"
+                android:textColor="@color/orange_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone"
                 tools:ignore="InconsistentLayout" />
 
-
-            <RelativeLayout
+            <FrameLayout
+                android:id="@+id/scroll_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/contents_container"
-                android:layout_toRightOf="@+id/contents_container"
-                android:background="@color/color_graydr">
-
-                <TextView
-                    android:id="@+id/text_empty_show"
-                    android:layout_width="192dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:padding="8dp"
-                    android:text="@string/empty_text"
-                    android:textAppearance="@style/Theme.Design"
-                    android:textColor="@color/orange_light"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    tools:ignore="InconsistentLayout" />
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/scroll_container_side_margin"
+                android:paddingRight="@dimen/scroll_container_side_margin"
+                android:visibility="gone"
+                tools:ignore="InconsistentLayout">
 
                 <FrameLayout
-                    android:id="@+id/scroll_container"
+                    android:id="@+id/outerScript"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:paddingLeft="@dimen/scroll_container_side_margin"
-                    android:paddingRight="@dimen/scroll_container_side_margin"
-                    android:visibility="gone"
-                    tools:ignore="InconsistentLayout">
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <include
+                        layout="@layout/camera_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="?android:attr/actionBarSize" />
 
                     <ScrollView
                         android:id="@+id/slide_show_scroll"
@@ -115,87 +124,79 @@
                                 android:textColor="@color/color_white"
                                 android:textSize="24sp" />
                         </LinearLayout>
-
                     </ScrollView>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-
-
-                        <View
-                            android:id="@+id/up_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/up_view_height"
-                            android:layout_alignParentTop="true"
-                            android:background="@color/colorTransparentBlack" />
-
-                        <RelativeLayout
-                            android:id="@+id/container_toggle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/image_play_width"
-                            android:layout_below="@+id/up_view"
-                            android:layout_centerInParent="true">
-
-                            <ImageView
-                                android:id="@+id/toggle_marker"
-                                android:layout_width="@dimen/marker_width"
-                                android:layout_height="@dimen/marker_height"
-                                android:layout_centerInParent="true"
-                                android:background="@drawable/arrow_marker"
-                                android:contentDescription="@string/marker_description" />
-
-                            <ImageView
-                                android:id="@+id/show_play"
-                                android:layout_width="@dimen/image_play_height"
-                                android:layout_height="@dimen/image_play_width"
-                                android:layout_centerInParent="true"
-                                android:contentDescription="@string/play_description" />
-
-                        </RelativeLayout>
-
-                        <View
-                            android:id="@+id/down_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/down_view_height"
-                            android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/container_toggle"
-                            android:background="@color/colorTransparentBlack" />
-                        <include
-                            layout="@layout/camera_layout"
-                            android:layout_height="@dimen/camera_view_height"
-                            android:layout_below="@+id/container_toggle"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="?android:attr/actionBarSize"
-                            android:layout_width="@dimen/camera_view_width" />
-                        <Chronometer
-                            android:id="@+id/chronometer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginBottom="4dp"
-                            android:background="@drawable/white_back"
-                            android:padding="4dp"
-                            android:textColor="@color/orange_light" />
-
-                        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/adView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/chronometer"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            ads:adSize="BANNER"
-                            ads:adUnitId="@string/banner_pup" />
-                    </RelativeLayout>
-
                 </FrameLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+
+                    <View
+                        android:id="@+id/up_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/up_view_height"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/colorTransparentBlack" />
+
+                    <RelativeLayout
+                        android:id="@+id/container_toggle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/image_play_width"
+                        android:layout_below="@+id/up_view"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:id="@+id/toggle_marker"
+                            android:layout_width="@dimen/marker_width"
+                            android:layout_height="@dimen/marker_height"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/arrow_marker"
+                            android:contentDescription="@string/marker_description" />
+
+                        <ImageView
+                            android:id="@+id/show_play"
+                            android:layout_width="@dimen/image_play_height"
+                            android:layout_height="@dimen/image_play_width"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@string/play_description" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/down_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/down_view_height"
+                        android:layout_below="@+id/container_toggle"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/colorTransparentBlack" />
+
+                    <Chronometer
+                        android:id="@+id/chronometer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/white_back"
+                        android:padding="4dp"
+                        android:textColor="@color/orange_light" />
+
+                    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/chronometer"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        ads:adSize="BANNER"
+                        ads:adUnitId="@string/banner_pup" />
+                </RelativeLayout>
+
+            </FrameLayout>
+
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

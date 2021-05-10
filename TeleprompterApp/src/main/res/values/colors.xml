@@ -7,6 +7,8 @@
     <color name="colorAccentLight">#F67D57</color>
     <color name="colorAccentDark">#F44710</color>
     <color name="colorTransparentBlack">#73000000</color>
+    <color name="colorTransparentWhite">#37FFFFFF</color>
+
     <color name="colorTransparent">#00ffffff</color>
     <color name="lime_green">#25d366</color>
     <color name="orange_light">#f7a101</color>
@@ -30,6 +32,17 @@
     <color name="Green">#075e54</color>
     <color name="Blue">#1438b7</color>
     <color name="LightBlue">#cdd8ff</color>
+
+
+    <color name="transparentIvory">#70FFFFF0</color>
+    <color name="transparentMaroon">#7A800000</color>
+    <color name="transparentBlack">#72000000</color>
+
+    <color name="transparentSnow">#6BFFFAFA</color>
+
+    <color name="transparentGreen">#7A075E54</color>
+    <color name="transparentBlue">#791438B7</color>
+    <color name="transparentLightBlue">#75CDD8FF</color>
 
     <color name="saveText">#ffffff</color>
     <color name="settingsBarColor">#000000</color>

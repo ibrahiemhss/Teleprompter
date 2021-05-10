@@ -8,10 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,9 +24,12 @@ import androidx.annotation.RequiresApi;
 import com.and.ibrahim.teleprompter.callback.OnActionAd;
 import com.and.ibrahim.teleprompter.callback.OnBrightnessChange;
 import com.and.ibrahim.teleprompter.callback.OnPermissionStatusChange;
+import com.and.ibrahim.teleprompter.callback.OnRecordVideo;
+import com.and.ibrahim.teleprompter.callback.OnRotationChanged;
 import com.and.ibrahim.teleprompter.callback.OnStartRecordVideoListener;
 import com.and.ibrahim.teleprompter.modules.adapter.ColorsAdapter;
 import com.and.ibrahim.teleprompter.mvp.view.OnScrollViewActions;
+import com.and.ibrahim.teleprompter.mvp.view.PinchZoomGestureListener;
 import com.and.ibrahim.teleprompter.mvp.view.SettingVideoDialogFragment;
 import com.and.ibrahim.teleprompter.util.AdsUtils;
 import com.and.ibrahim.teleprompter.util.DisplayUtils;
@@ -42,6 +45,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -53,13 +57,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -92,22 +96,24 @@ import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.Optional;
 
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.END;
 
 @SuppressWarnings("WeakerAccess")
-public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener, OnUserEarnedRewardListener, OnActionAd, VideoFragment.PermissionInterface, VideoFragment.SwitchInterface, VideoFragment.LowestThresholdCheckForVideoInterface, OnScrollViewActions, OnStartRecordVideoListener, OnPermissionStatusChange {
+public class DisplayActivity extends BaseActivity implements View.OnClickListener, OnDataPassListener, SharedPreferences.OnSharedPreferenceChangeListener, OnUserEarnedRewardListener, OnActionAd, VideoFragment.PermissionInterface, VideoFragment.SwitchInterface, VideoFragment.LowestThresholdCheckForVideoInterface, OnScrollViewActions, OnStartRecordVideoListener,
+        OnPermissionStatusChange {
 
 
     private static final String TAG = "DisplayActivity";
     boolean VERBOSE = false;
     boolean allPermissionsGranted = false;
-
+    float rotationAngle = 0f;
+    OrientationEventListener orientationEventListener;
     private PermissionsUtils permissionsUtils;
 
-    private  OnBrightnessChange onBrightnessChange;
+    private OnBrightnessChange onBrightnessChange;
+
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -118,15 +124,24 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
+    public PinchZoomGestureListener getPinchZoomGestureListener() {
+        return mCameraUtils.getPinchZoomGestureListener();
+    }
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.parentCamera)
     protected FrameLayout mCameraContent;
-     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.container_contents)
-    protected LinearLayout containerContents;
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.container_script)
     protected RelativeLayout containerScript;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.container_toggle)
+    protected RelativeLayout mContainerToggle;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.parentScriptView)
+    protected FrameLayout parentScriptView;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_toolbar)
@@ -143,6 +158,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.slide_show_scroll)
     protected ScrollView mSlideShowScroll;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.parentAll)
+    protected CoordinatorLayout parentAll;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.vertical_outer_id)
     protected LinearLayout verticalOuterLayout;
@@ -201,6 +220,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private Dialog mDialogTextColors;
     private int[] mTextColorArray;
     private int[] mBackGroundColorArray;
+    private int[] mTransparentTextColorArray;
+    private int[] mTransparentBackGroundColorArray;
     private boolean isOpen = false;
     private int textSpeedValue;
     private boolean mOpenDrawer;
@@ -212,16 +233,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     private FragmentEditListRefreshListener fragmentEditListRefreshListener;
     private AdsUtils mAdUtils;
     CameraUtils mCameraUtils;
-    private  boolean isCameraEnable=false;
-
+    private boolean isCameraEnable = false;
+    private boolean isColorSet = false;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PermissionsUtils.ALL_PERMISSIONS) {
             if (permissions != null && permissions.length > 0) {
                 permissionsUtils.getPermissionsStatus();
-              }
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         }
     }
@@ -232,25 +253,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         return R.layout.activity_display;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
-            changeToLandScapeUi();
-            isLandScapeChanged=true;
-            finish();
-            startActivity(getIntent());
-            initCame();
-        }else{
-            containerContents.removeView(mCameraContent);
-            verticalOuterLayout.removeAllViews();
-            verticalOuterLayout.addView(mCameraContent);
-            verticalOuterLayout.addView(mScrollText);
 
-
-        }
-    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -259,7 +262,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
         permissionsUtils = new PermissionsUtils(this, this);
 
-        int orientation = getResources().getConfiguration().orientation;
+        //  parentScriptView.addView(mSlideShowScroll);
+
+        final int[] orientation = {getResources().getConfiguration().orientation};
        /* if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -280,7 +285,14 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
 
         }*/
-
+        orientationEventListener = new OrientationEventListener(DisplayActivity.this, SensorManager.SENSOR_DELAY_UI) {
+            @Override
+            public void onOrientationChanged(int i) {
+                if (orientationEventListener.canDetectOrientation()) {
+                    determineOrientation(i);
+                }
+            }
+        };
         boolean isFirstEntry = SharedPrefManager.getInstance(this).isFirstEntry();
         mAdUtils = new AdsUtils(this, this);
         mAdUtils.initializeBannerAd(mAdView);
@@ -290,16 +302,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         verticalOuterLayout.bringToFront();
         verticalOuterLayout.invalidate();
         mVideoFragment = VideoFragment.newInstance();
-
+        mVideoFragment.setApplicationContext(getApplicationContext());
         displayUtils = new DisplayUtils(this, this,
-                mSlideShowScroll, mChronometer, mPlayStatus, mAdUtils, mAppBarLayout, mScrollPos,isCameraEnable);
+                mSlideShowScroll, mChronometer, mPlayStatus, mAdUtils, mAppBarLayout, mScrollPos, isCameraEnable);
         mVideoFragment = VideoFragment.newInstance();
         mCameraUtils = new CameraUtils(mVideoFragment, this, editBrightness);
 
         displayUtils.scrollViewConfig();
-        permissionsUtils.getPermissionsStatus();
+
         editBrightness.setOnClickListener(v -> {
-           openBrightnessPopup();
+            openBrightnessPopup();
         });
         Log.d(TAG, "saved instance state == " + savedInstanceState);
 
@@ -324,19 +336,20 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             fromGallery = extras.getBoolean(Contract.EXTRA_FROM_GALLERY);
         }*/
         mCameraUtils = new CameraUtils(mVideoFragment, this, editBrightness);
-       // if (savedInstanceState == null) {
-            //Start with video fragment
-            if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
-                isCameraEnable=true;
-                if(!isCameraInited){
-                    initCame();
-                }
-            } else {
-                isCameraEnable=false;
-                setCameraShow(false);
-                mPlayStatus.setVisibility(View.VISIBLE);
-
+        // if (savedInstanceState == null) {
+        //Start with video fragment
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+            isCameraEnable = true;
+            permissionsUtils.getPermissionsStatus();
+            if (!isCameraInited) {
+                initCame();
             }
+        } else {
+            isCameraEnable = false;
+            setCameraShow(false);
+            mPlayStatus.setVisibility(View.VISIBLE);
+
+        }
         //}
 
 
@@ -355,7 +368,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 launchDlgTextColors();
             }
             if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
-                isCameraEnable=true;
+                isCameraEnable = true;
                 if (savedInstanceState.getBoolean(Contract.EXTRA_RESTART)) {
                     permissionsUtils.setShowMessage(true);
                     permissionsUtils.quitAppCam();
@@ -418,7 +431,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         textSpeedValue = 1;//default value generator of speed text in first open
         mTextColorArray = getResources().getIntArray(R.array.text_colors);//initialize text colors
         mBackGroundColorArray = getResources().getIntArray(R.array.background_colors);//initialize background colors
-        boolean isColorSet = SharedPrefManager.getInstance(this).isColorPref();
+         mTransparentTextColorArray= getResources().getIntArray(R.array.transparent_text_colors);//initialize background colors;
+         mTransparentBackGroundColorArray= getResources().getIntArray(R.array.transparent_background_colors);//initialize background colors;
+        isColorSet = SharedPrefManager.getInstance(this).isColorPref();
 
         final int seekProgress = //get recorded seekbar value
                 SharedPrefManager.getInstance(this).getPrefSpeed();
@@ -430,19 +445,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             initTabletViewWithFragment();
         }
 
-        int mBackgroundColor;
-        int mTextColor;
-        if (!isColorSet) {//setting default colors of scrolling text in first opening of app
-            mTextColor = getResources().getColor(R.color.White);
-            mBackgroundColor = getResources().getColor(R.color.Black);
-        } else {//get recorded value of colors from SharedPrefManager class
-            mTextColor = SharedPrefManager.getInstance(this).getPrefTextColor();
-            mBackgroundColor = SharedPrefManager.getInstance(this).getPrefBackgroundColor();
-        }
-
-        mScrollText.setTextColor(mTextColor);
-        mSlideShowScroll.setBackgroundColor(mBackgroundColor);
-        mScrollText.setText(mScrollString);
+        setViewsColors();
 
         displayUtils.setSpeed(seekProgress);//get suitable value of speed by bas seekbar progress
 
@@ -451,6 +454,36 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         setupSharedPreferences();
 
 
+    }
+    int mBackgroundColor;
+    int mTextColor;
+    private void setViewsColors() {
+
+        if (!isColorSet) {//setting default colors of scrolling text in first opening of app
+            if (isCameraEnable) {
+                mBackgroundColor = getResources().getColor(R.color.colorTransparentBlack);
+                mTextColor = getResources().getColor(R.color.colorTransparentWhite);
+
+            } else {
+                mTextColor = getResources().getColor(R.color.White);
+                mBackgroundColor = getResources().getColor(R.color.Black);
+
+            }
+        } else {//get recorded value of colors from SharedPrefManager class
+            if (isCameraEnable) {
+                mTextColor = SharedPrefManager.getInstance(this).getPrefTransparentTextColor();
+                mBackgroundColor = SharedPrefManager.getInstance(this).getTransparentPrefBackgroundColor();
+
+            } else {
+                mTextColor = SharedPrefManager.getInstance(this).getPrefTextColor();
+                mBackgroundColor = SharedPrefManager.getInstance(this).getPrefBackgroundColor();
+
+            }
+        }
+
+        mScrollText.setTextColor(mTextColor);
+        mSlideShowScroll.setBackgroundColor(mBackgroundColor);
+        mScrollText.setText(mScrollString);
     }
 
     @Override
@@ -544,7 +577,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    boolean calledOnSaveInstanceState=false;
+    boolean calledOnSaveInstanceState = false;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -552,7 +585,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         outState.putBoolean(Contract.EXTRA_SHOW_COLOR_DIALOG, isDialogShow);
         outState.putInt(Contract.EXTRA_SCROLL_POS, mScrollPos);
         outState.putLong(Contract.EXTRA_CHRONOTIME, mChronometer.getBase());
-        calledOnSaveInstanceState=true;
+        calledOnSaveInstanceState = true;
         initCame();
         if (isTablet) {//save fragment
             getSupportFragmentManager().putFragment(outState, Contract.EXTRA_FRAGMENT, mContentListFragment);
@@ -585,21 +618,24 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 .commit();
     }
 
- //==================================================================================================
+    //==================================================================================================
 //================================ Navigation Drawer ===============================================
 //==================================================================================================
     private void initNavigationDrawer() {
         SeekBar mSeekScrollSpeed = mNavView.findViewById(R.id.seek_speed_up);
         SeekBar mSeekTextSize = mNavView.findViewById(R.id.seek_text_size);
+        //SeekBar mSeekTextAlpha = mNavView.findViewById(R.id.seek_text_alpha);
+        //SeekBar mSeekBackgroundAlpha = mNavView.findViewById(R.id.seek_background_alpha);
+
         TextView OtherSetting = mNavView.findViewById(R.id.other_setting);
         AdView adView3 = mNavView.findViewById(R.id.adView3);
         CheckBox checkboxOpenCamera = mNavView.findViewById(R.id.checkboxOpenCamera);
         LinearLayout videoSettingsContainer = mNavView.findViewById(R.id.videoSettingsContainer);
-        if(SharedPrefManager.getInstance(this).isCameraEnabled()){
-            if(allPermissionsGranted){
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
+            if (allPermissionsGranted) {
                 videoSettingsContainer.setVisibility(View.VISIBLE);
             }
-        }else{
+        } else {
             videoSettingsContainer.setVisibility(View.GONE);
         }
         LinearLayout videoSettings = mNavView.findViewById(R.id.videoSettings);
@@ -612,30 +648,33 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         checkboxOpenCamera.setChecked(SharedPrefManager.getInstance(this).isCameraEnabled());
         checkboxOpenCamera.setText(SharedPrefManager.getInstance(this).isCameraEnabled() ? getResources().getString(R.string.close_camera) : getResources().getString(R.string.open_camera));
         checkboxOpenCamera.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            permissionsUtils.getPermissionsStatus();
             setCameraShow(isChecked);
+            setVerticalOuterLayoutParams(rotationAngle, isChecked);
             if (isChecked) {
-                Log.d(TAG, "on Checked permissions values changed == "+allPermissionsGranted);
+                Log.d(TAG, "on Checked permissions values changed == " + allPermissionsGranted);
                 videoSettingsContainer.setVisibility(View.VISIBLE);
-                if(!allPermissionsGranted){
+                if (!allPermissionsGranted) {
                     mCameraContent.setVisibility(View.GONE);
                     permissionsUtils.quitAppCam();
-                }else{
-                    isLandScapeChanged=false;
-                mCameraUtils.showVideoFragment();
-                checkboxOpenCamera.setText(getResources().getString(R.string.close_camera));
-                mCameraContent.setVisibility(View.VISIBLE);
+                } else {
+                    isLandScapeChanged = false;
+                    mCameraUtils.showVideoFragment();
+                    checkboxOpenCamera.setText(getResources().getString(R.string.close_camera));
+                    mCameraContent.setVisibility(View.VISIBLE);
                 }
 
+                setViewsColors();
             } else {
                 checkboxOpenCamera.setText(getResources().getString(R.string.open_camera));
                 mCameraContent.setVisibility(View.GONE);
                 videoSettingsContainer.setVisibility(View.GONE);
-
+                setViewsColors();
             }
 
         });
         videoSettings.setOnClickListener(v -> goToSettings());
-       // videoSettings.setOnClickListener(v -> showSettingVideoDialogFragment());
+        // videoSettings.setOnClickListener(v -> showSettingVideoDialogFragment());
 
 
         mAdUtils.initializeBannerAd(adView3);
@@ -657,8 +696,63 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mSeekScrollSpeed.setProgress(SharedPrefManager.getInstance(DisplayActivity.this).getPrefSpeed());
 
         }
+        /*mSeekTextAlpha.setMax(100);
 
-        mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mSeekTextAlpha.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                  }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                //mScrollText.setAlpha(progress);
+                if(isCameraEnable){
+                    mScrollText.setTextColor(getColorWithAlpha(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTransparentTextColor(),progress));
+
+                }else{
+                    mScrollText.setTextColor(getColorWithAlpha(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTextColor(),progress));
+
+                }
+
+              *//*  Log.d(TAG, "mScrollText.setAlpha progress  = "+progress);
+                int color = getResources().getColor(SharedPrefManager.getInstance(DisplayActivity.this).getPrefTransparentTextColor());
+                float red   = (color >> 16) & 0xFF;
+                float green = (color >> 8)  & 0xFF;
+                float blue  = (color)       & 0xFF;
+                float alpha = (color >> 24) & 0xFF;*//*
+            }
+        });
+
+        mSeekBackgroundAlpha.setMax(100);
+
+        mSeekBackgroundAlpha.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                           }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+
+                    @Override
+                    public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+
+                        if(isCameraEnable){
+                            mScrollText.setBackgroundColor(getColorWithAlpha(SharedPrefManager.getInstance(DisplayActivity.this).getTransparentPrefBackgroundColor(),progress));
+
+                        }else{
+                            mScrollText.setBackgroundColor(getColorWithAlpha(SharedPrefManager.getInstance(DisplayActivity.this).getPrefBackgroundColor(),progress));
+
+                        }
+                    }
+                });
+
+*/        mSeekScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 displayUtils.stopAutoScrolling();
@@ -728,10 +822,17 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             }
         });
         defaultText.setOnClickListener(view -> {
-            mScrollText.setTextColor(getResources().getColor(R.color.White));
-            mSlideShowScroll.setBackgroundColor(getResources().getColor(R.color.Black));
-            SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(false);
+            if (isCameraEnable) {
+                mBackgroundColor = getResources().getColor(R.color.colorTransparentBlack);
+                mTextColor = getResources().getColor(R.color.colorTransparentWhite);
 
+            } else {
+                mTextColor = getResources().getColor(R.color.White);
+                mBackgroundColor = getResources().getColor(R.color.Black);
+
+            }
+            SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(false);
+            setViewsColors();
         });
         undoText.setOnClickListener(view -> {
             if (!SharedPrefManager.getInstance(DisplayActivity.this).isFirstSetColor()) {
@@ -744,7 +845,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                         .getPrefUndoBackgroundColor());
 
             }
-
+            setViewsColors();
         });
         OtherSetting.setOnClickListener(view -> {
             Intent intent = new Intent(DisplayActivity.this, SettingsActivity.class);
@@ -753,8 +854,53 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    private int getColorWithAlpha(int color, int ratio) {
+        Log.d(TAG, "ratio progress ="+ratio);
+
+        int newColor = 0;
+        int alpha = Math.round(Color.alpha(color) * ratio);
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        Log.d(TAG, "alpha ="+alpha);
+        Log.d(TAG, "r ="+r);
+        Log.d(TAG, "g ="+g);
+        Log.d(TAG, "b ="+b);
+
+        newColor = Color.argb(ratio, r, g, b);
+
+        return newColor;
+    }
+    private float getAlphaFloat(int ratio){
+       // float alpha=0.9f;
+
+        switch (ratio){
+            case 1:
+                return 1.9f;
+            case 2:
+                return 1.9f;
+            case 3:
+                return 2.9f;
+            case 4:
+                return 3.9f;
+            case 5:
+                return 4.9f;
+            case 6:
+                return 5.9f;
+            case 7:
+                return 6.9f;
+            case 8:
+                return 7.9f;
+            case 9:
+                return 8.9f;
+            case 10:
+                return 9.9f;
+            default: return 0.9f;
+        }
+
+    }
     public int getBrightnessLevel() {
-        return  mCameraUtils.getBrightnessLevel();
+        return mCameraUtils.getBrightnessLevel();
     }
 
     @SuppressLint("WrongConstant")
@@ -774,6 +920,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         mDialogTextColors.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialogTextColors.setContentView(R.layout.dialog_colors);
 
+
         FloatingActionButton fab = mDialogTextColors.findViewById(R.id.cancel_text_color_dialog);
         RecyclerView mColorsRV = mDialogTextColors.findViewById(R.id.rv_colors);
         mColorsRV.setHasFixedSize(true);
@@ -791,10 +938,20 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             SharedPrefManager.getInstance(DisplayActivity.this).setPrefUndoBackgroundColor(
                     SharedPrefManager.getInstance(DisplayActivity.this).getPrefBackgroundColor());
 
-            mScrollText.setTextColor(mTextColorArray[position]);
-            SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
-            mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
-            SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
+
+            if(isCameraEnable){
+                mSlideShowScroll.setBackgroundColor(mTransparentBackGroundColorArray[position]);
+                mScrollText.setTextColor(mTransparentTextColorArray[position]);
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTransparentTextColor(mTransparentTextColorArray[position]);
+                SharedPrefManager.getInstance(DisplayActivity.this).setTransparentPrefBackgroundColor(mTransparentBackGroundColorArray[position]);
+
+            }else{
+                mScrollText.setTextColor(mTextColorArray[position]);
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
+                mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
+                SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
+
+            }
             SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(true);
             SharedPrefManager.getInstance(DisplayActivity.this).setFirstSetColor(true);
 
@@ -818,6 +975,8 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onPause() {
         super.onPause();
+        orientationEventListener.disable();
+
         if (this.mVideoFragment != null) {
             if (this.mVideoFragment.getZoomBar() != null) {
                 this.mVideoFragment.getZoomBar().setProgress(0);
@@ -825,7 +984,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
 
         if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
-            if(mCameraUtils!=null){
+            if (mCameraUtils != null) {
                 mCameraUtils.resetPinchZoomGestureListener();
             }
         }
@@ -859,9 +1018,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         //if(!isCameraInited){
-            Log.d("lifCycle", "onResume = initedCame");
+        Log.d("lifCycle", "onResume = initedCame");
+        orientationEventListener.enable();
 
-            initCame();
+        initCame();
         //}
         Log.d("lifCycle", "onResume");
 
@@ -870,11 +1030,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onRestart() {
         super.onRestart();
-       // if(!isCameraInited){
-            Log.d("lifCycle", "onRestart = initedCame");
+        // if(!isCameraInited){
+        Log.d("lifCycle", "onRestart = initedCame");
 
-            initCame();
-      //  }
+        initCame();
+        //  }
         Log.d("lifCycle", "onRestart");
 
 
@@ -884,7 +1044,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     protected void onStart() {
         super.onStart();
         Log.d("lifCycle", "onStart");
-        if(!isCameraInited){
+        if (!isCameraInited) {
             Log.d("lifCycle", "onStart = initedCame");
 
             initCame();
@@ -893,18 +1053,19 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-    void initCame(){
-        if(SharedPrefManager.getInstance(this).isCameraEnabled()){
+    void initCame() {
+        if (SharedPrefManager.getInstance(this).isCameraEnabled()) {
             mPlayStatus.setVisibility(View.GONE);
-            if(!calledOnSaveInstanceState){
+            if (!calledOnSaveInstanceState) {
                 mCameraUtils.showVideoFragment();
             }
 
             setCameraShow(true);
-            isCameraInited=true;
+            isCameraInited = true;
         }
     }
-//==================================================================================================
+
+    //==================================================================================================
 //================================ onClick All Views ===============================================
 //==================================================================================================
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -945,7 +1106,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
-    private void showSettingVideoDialogFragment(){
+    private void showSettingVideoDialogFragment() {
 
         FragmentManager fm = getSupportFragmentManager();
         SettingVideoDialogFragment settingVideoDialogFragment = SettingVideoDialogFragment.newInstance("Some Title");
@@ -966,23 +1127,23 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         final SeekBar brightnessBar = (SeekBar) settingsRootView.findViewById(R.id.brightnessBar);
         brightnessBar.setMax(10);
         brightnessBar.setProgress(mCameraUtils.getBrightnessLevel());
-       // onBrightnessChange.brightness(mCameraUtils.getBrightnessLevel());
-        if(mCameraUtils.getBrightnessLevel()>=5){
+        // onBrightnessChange.brightness(mCameraUtils.getBrightnessLevel());
+        if (mCameraUtils.getBrightnessLevel() >= 5) {
             imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_high_24));
-        }else{
+        } else {
             imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_low_24));
 
         }
         brightnessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(progress>=5){
+                if (progress >= 5) {
                     imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_high_24));
-                }else{
+                } else {
                     imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_low_24));
 
                 }
-               // onBrightnessChange.brightness(progress);
+                // onBrightnessChange.brightness(progress);
             }
 
             @Override
@@ -992,10 +1153,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               // onBrightnessChange.brightness(mCameraUtils.getBrightnessLevel());
-                if(mCameraUtils.getBrightnessLevel()>=5){
+                // onBrightnessChange.brightness(mCameraUtils.getBrightnessLevel());
+                if (mCameraUtils.getBrightnessLevel() >= 5) {
                     imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_high_24));
-                }else{
+                } else {
                     imgBrightness.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_brightness_low_24));
 
                 }
@@ -1124,11 +1285,16 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
 
     public void seTimerShow(boolean is) {
-        if (is) {
+        if(isCameraEnable){
+          mChronometer.setVisibility(View.GONE);
+
+        }else{
+            if (is) {
             mChronometer.setVisibility(View.VISIBLE);
         } else {
             mChronometer.setVisibility(View.GONE);
 
+        }
         }
 
     }
@@ -1136,71 +1302,76 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
     public void setCameraShow(boolean is) {
         SharedPrefManager.getInstance(this).setCameraEnabled(is);
         if (is) {
-            int orientation = getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                if(!isLandScapeChanged){
-                    changeToLandScapeUi();
-                }
-            } else {
-                verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
-                containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
 
-            }
             mCameraContent.setVisibility(View.VISIBLE);
         } else {
-            verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT));
-            containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
 
             mCameraContent.setVisibility(View.GONE);
 
         }
-
+        setViewsColors();
     }
 
-    boolean isLandScapeChanged=false;
-    void  changeToLandScapeUi(){
-        isLandScapeChanged=true;
+    boolean isLandScapeChanged = false;
+
+    void changeToLandScapeUi() {
+        isLandScapeChanged = true;
         initCame();
-        if(!isTablet){
+        if (!isTablet) {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int height = displayMetrics.heightPixels;
             int width = displayMetrics.widthPixels;
-            CoordinatorLayout.LayoutParams cameraContentParams = (new CoordinatorLayout.LayoutParams((int)(width/2.2), WindowManager.LayoutParams.MATCH_PARENT));
-            cameraContentParams.setMargins(10,width/9, width/50, 10);
-            mCameraContent.setForegroundGravity( BOTTOM );
-            cameraContentParams.setMarginStart(width/2);
+            CoordinatorLayout.LayoutParams cameraContentParams = (new CoordinatorLayout.LayoutParams((int) (width / 2.2), WindowManager.LayoutParams.MATCH_PARENT));
+            cameraContentParams.setMargins(10, width / 9, width / 50, 10);
+            mCameraContent.setForegroundGravity(BOTTOM);
+            cameraContentParams.setMarginStart(width / 2);
             mCameraContent.setLayoutParams(cameraContentParams);
 
 
-            FrameLayout.LayoutParams verticalOuterLayoutParams = (new FrameLayout.LayoutParams(width/2, WindowManager.LayoutParams.MATCH_PARENT));
-            verticalOuterLayoutParams.setMargins(width/50,0, width/50, 0);
+            FrameLayout.LayoutParams verticalOuterLayoutParams = (new FrameLayout.LayoutParams(width / 2, WindowManager.LayoutParams.MATCH_PARENT));
+            verticalOuterLayoutParams.setMargins(width / 50, 0, width / 50, 0);
 
             verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
             //params.setMarginStart(width/2);
             //mCameraContent.setForegroundGravity( Gravity.START );
-            verticalOuterLayout.setGravity( END );
-            containerContents.removeAllViews();
+            verticalOuterLayout.setGravity(END);
+            // containerContents.removeAllViews();
             verticalOuterLayout.removeAllViews();
 
-            if(containerScript.getParent() != null) {
-                ((ViewGroup)containerScript.getParent()).removeView(containerScript); // <- fix
+            if (containerScript.getParent() != null) {
+                ((ViewGroup) containerScript.getParent()).removeView(containerScript); // <- fix
             }
-            if(mCameraContent.getParent() != null) {
-                ((ViewGroup)mCameraContent.getParent()).removeView(mCameraContent); // <- fix
+            if (mCameraContent.getParent() != null) {
+                ((ViewGroup) mCameraContent.getParent()).removeView(mCameraContent); // <- fix
             }
-            if(mScrollText.getParent() != null) {
-                ((ViewGroup)mScrollText.getParent()).removeView(mScrollText); // <- fix
+            if (mScrollText.getParent() != null) {
+                ((ViewGroup) mScrollText.getParent()).removeView(mScrollText); // <- fix
             }
-            containerContents.addView(containerScript);
-            containerContents.addView(mCameraContent);
+            //  containerContents.addView(containerScript);
+            // containerContents.addView(mCameraContent);
             mScrollText.setText(mScrollString);
             verticalOuterLayout.addView(mScrollText);
         }
     }
-    private void setToggleMarker(boolean is) {
 
-        if (is) {
+    public void changeViewRotation(float rotationAngle) {
+        // verticalOuterLayout.setRotation(rotationAngle);
+
+        //  mScrollContainer.setRotation(rotationAngle);
+        mSlideShowScroll.setRotation(rotationAngle);
+        // mScrollText.setRotation(rotationAngle);
+
+        mPlayStatus.setRotation(rotationAngle);
+    }
+
+    private void setToggleMarker(boolean is) {
+        if (rotationAngle == 270.0 || rotationAngle == 90.0){
+            mToggleMarker.setVisibility(View.INVISIBLE);
+            mUpView.setVisibility(View.INVISIBLE);
+            mDownView.setVisibility(View.INVISIBLE);
+        }else{
+             if (is) {
             mToggleMarker.setVisibility(View.VISIBLE);
             mUpView.setVisibility(View.VISIBLE);
             mDownView.setVisibility(View.VISIBLE);
@@ -1209,6 +1380,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mUpView.setVisibility(View.INVISIBLE);
             mDownView.setVisibility(View.INVISIBLE);
         }
+        }
+
+
 
     }
 
@@ -1272,12 +1446,171 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onChanged(boolean status) {
-        allPermissionsGranted=status;
-        Log.d(TAG, "on permissions values changed == "+allPermissionsGranted);
+        allPermissionsGranted = status;
+        Log.d(TAG, "on permissions values changed == " + allPermissionsGranted);
 
         setCameraShow(status);
-        if(!status){
+        if (!status) {
             permissionsUtils.quitAppCam();
         }
+    }
+
+
+    public void determineOrientation(int orientation) {
+        if (orientation != -1) {
+            if (((orientation >= 315 && orientation <= 360) || (orientation >= 0 && orientation <= 45)) || (orientation >= 135 && orientation <= 195)) {
+                if (orientation >= 135 && orientation <= 195) {
+                    //Reverse portrait
+                    rotationAngle = 180f;
+                } else {
+                    //Portrait
+                    rotationAngle = 0f;
+                }
+            } else {
+                if (orientation >= 46 && orientation <= 134) {
+                    //Reverse Landscape
+                    rotationAngle = 270f;
+                } else {
+                    //Landscape
+                    rotationAngle = 90f;
+                }
+            }
+        }
+
+        setVerticalOuterLayoutParams(rotationAngle, SharedPrefManager.getInstance(this).isCameraEnabled());
+    }
+
+    void setVerticalOuterLayoutParams(float val, boolean isCameraEnabled) {
+        Log.d(TAG, "onRotationChanged angle =" + val);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        Log.d(TAG, "height  =" + height);
+        Log.d(TAG, "width  =" + width);
+
+        FrameLayout.LayoutParams verticalOuterLayoutParams;
+        CoordinatorLayout.LayoutParams containerScriptLayoutParams;
+        FrameLayout.LayoutParams slideShowScrollLayoutParams;
+        // RelativeLayout.LayoutParams upViewLayoutParams;
+        // RelativeLayout.LayoutParams downViewLayoutParams;
+
+        if (!isTablet) {
+            if(isCameraEnabled){
+
+                if (val != 180.0) {
+                    // mPlayStatus.setRotation(val);
+                    mSlideShowScroll.setRotation(val);
+                    // mContainerToggle.setRotation(val);
+                    containerScript.setRotation(val);
+                    //verticalOuterLayout.removeAllViews();
+                    if (val == 270.0 || val == 90.0) {
+                        mDownView.setVisibility(View.INVISIBLE);
+                        mToggleMarker.setVisibility(View.INVISIBLE);
+                        mUpView.setVisibility(View.INVISIBLE);
+
+                        containerScriptLayoutParams = (new CoordinatorLayout.LayoutParams(height / 2, CoordinatorLayout.LayoutParams.MATCH_PARENT));
+                        // containerToggleLayoutParams = (new RelativeLayout.LayoutParams(height,width));
+                        //containerToggleLayoutParams.setMargins(0,width/4, width/4, 0);
+                        //upViewLayoutParams = (new RelativeLayout.LayoutParams(width,height/2));
+                        // downViewLayoutParams = (new RelativeLayout.LayoutParams(width, (int) getResources().getDimension(R.dimen.down_view_height)));
+                        //  mUpView.setBackgroundColor(getResources().getColor(R.color.lime_green));
+                        //  mDownView.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
+
+                  /*  if (isCameraEnabled) {
+                        mSlideShowScroll.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,width));
+
+                        Log.d(TAG, "360 landscape angle ="+val);
+                        Log.d(TAG, "on change rotation isCameraEnabled  ="+val);
+
+                        verticalOuterLayoutParams = (new FrameLayout.LayoutParams((int) (height/3), WindowManager.LayoutParams.MATCH_PARENT));
+
+                        if(val==270.0){
+                            verticalOuterLayoutParams.setMargins((int) (height/9),0, height/10, 0);
+                        }else if(val==90.0){
+                            verticalOuterLayoutParams.setMargins(height/10,0, height/10, 0);
+                        }
+                    }else{
+
+                        Log.d(TAG, "on change rotation isCameraDisabled  ="+val);
+
+                        verticalOuterLayoutParams = (new FrameLayout.LayoutParams( WindowManager.LayoutParams.WRAP_CONTENT,  WindowManager.LayoutParams.MATCH_PARENT));
+                        if(val==270.0){
+                            verticalOuterLayoutParams.setMargins(height/80,0, height/3, 0);
+                        }else if(val==90.0){
+                            verticalOuterLayoutParams.setMargins(height/10,height/10, height/10, 0);
+                        }
+                        mSlideShowScroll.setLayoutParams(new FrameLayout.LayoutParams( height-3, FrameLayout.LayoutParams.MATCH_PARENT));
+
+                    }
+*/
+                        Log.d(TAG, "on change rotation isCameraDisabled  =" + val);
+                        slideShowScrollLayoutParams = new FrameLayout.LayoutParams((int) (height / 1.4), FrameLayout.LayoutParams.MATCH_PARENT);
+                        //slideShowScrollLayoutParams.setMargins(height/8,0, height/8, 0);
+                        verticalOuterLayoutParams = (new FrameLayout.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT));
+                        if (val == 270.0) {
+                            verticalOuterLayoutParams.setMargins(height / 80, 0, height / 3, 0);
+                        } else if (val == 90.0) {
+                            verticalOuterLayoutParams.setMargins(height / 10, height / 10, height / 10, 0);
+
+                        }
+
+                        mSlideShowScroll.setLayoutParams(slideShowScrollLayoutParams);
+
+                        verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
+                        //mContainerToggle.setLayoutParams(containerToggleLayoutParams);
+                        containerScript.setLayoutParams(containerScriptLayoutParams);
+                        //mUpView.setLayoutParams(upViewLayoutParams);
+                        //mDownView.setLayoutParams(downViewLayoutParams);
+
+                        // verticalOuterLayout.setGravity( END );
+                        //* verticalOuterLayout.removeAllViews();
+                        // mScrollText.setText(mScrollString);
+                        // verticalOuterLayout.addView(mScrollText);
+                    } else {
+                        slideShowScrollLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+                        slideShowScrollLayoutParams.setMargins(0, height / 20, 0, height / 8);
+
+                        verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+                        // containerContents.setLayoutParams(new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+                        mSlideShowScroll.setLayoutParams(slideShowScrollLayoutParams);
+
+                    }
+                } else {
+                    slideShowScrollLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                    slideShowScrollLayoutParams.setMargins(0, height / 20, 0, height / 8);
+                    mSlideShowScroll.setLayoutParams(slideShowScrollLayoutParams);
+
+                    verticalOuterLayout.setLayoutParams(new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+
+                    if (isCameraEnabled) {
+                        mSlideShowScroll.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, height));
+                    } else {
+                        mSlideShowScroll.setLayoutParams(new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.MATCH_PARENT));
+
+                    }
+                    mPlayStatus.setRotation(0);
+                    mSlideShowScroll.setRotation(0);
+                    mScrollText.setRotation(0);
+                    mContainerToggle.setRotation(0);
+                    mSlideShowScroll.setRotation(0);
+                    // mContainerToggle.setRotation(val);
+                    containerScript.setRotation(0);
+
+                }
+            }else{
+                verticalOuterLayoutParams = (new FrameLayout.LayoutParams( WindowManager.LayoutParams.WRAP_CONTENT,  WindowManager.LayoutParams.MATCH_PARENT));
+                if(val==270.0){
+                    verticalOuterLayoutParams.setMargins(height/80,0, height/3, 0);
+                }else if(val==90.0){
+                    verticalOuterLayoutParams.setMargins(height/10,height/10, height/10, 0);
+                }
+                mSlideShowScroll.setLayoutParams(new FrameLayout.LayoutParams( height-3, FrameLayout.LayoutParams.MATCH_PARENT));
+
+            }
+        }
+
+
     }
 }

@@ -85,7 +85,10 @@ public class Contract implements BaseColumns {
     public static final String SCROLL_SPEED = "Contract.speed";
     public static final String TEXT_SIZE = "Contract.text_size";
     public static final String TEXT_COLOR = "Contract.text_color";
+    public static final String TRANSPARENT_TEXT_COLOR = "Contract.Transparent.text_color";
     public static final String BACKGROUND_COLOR = "Contract.background_color";
+    public static final String TRANSPARENT_BACKGROUND_COLOR = "Contract.Transparent.background_color";
+
     public static final String UNDO_TEXT_COLOR = "Contract.undo_text_color";
     public static final String UNDO_BACKGROUND_COLOR = "Contract.uno_background_color";
     public static final String COLOR_PREF = "color_pref";

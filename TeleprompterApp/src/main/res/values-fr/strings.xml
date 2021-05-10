@@ -69,7 +69,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="short_title">Le titre est court. Veuiller entrer un titre avec 6 caractères au moins.</string>
     <string name="short_script">Le texte est court. Veuiller ajouter du texte avec 100 mots de long au moins.</string>
     <string name="privacy">Politique de confidentialité</string>
-
+    <string name="text_transparency">Transparence du texte</string>
+    <string name="background_transparency">Transparence d\'arrière-plan</string>
     <string name="list_description">Pour afficher le contenu en texte intégral et lancer la présentation, cliquez ici</string>
     <string name="marker_description">Marquer la facilité de la sélection des lignes de lecture</string>
     <string name="play_description">Cliquez ici pour activer ou désactiver le défilement du texte</string>
@@ -327,7 +328,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="sendFeedbackTitleMsg">Retour...</string>
     <string name="mediaSlideview">Vue de diapositive</string>
     <string name="brightnessHeading">LUMINOSITÉ</string>
-    <string name="resolutionDisplay">%1$s X %2$s</string>
     <string name="resolution">Résolution</string>
     <string name="backCamResTitle">Résolution de la caméra arrière</string>
     <string name="frontCamResTitle">Résolution de la caméra frontale</string>

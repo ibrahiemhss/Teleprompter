@@ -103,18 +103,78 @@
             android:layout_below="@+id/rv2" />
 
         <View
-            android:id="@+id/rv55"
+            android:id="@+id/rv44"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/seek_speed_up"
             android:background="@color/lime_green" />
+        <!-- <RelativeLayout
+                android:id="@+id/rv3"
+                android:layout_width="@dimen/nav_veiw_group_width"
+                android:layout_height="@dimen/nav_veiw_group_height"
+                android:layout_below="@+id/rv44">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/nav_text_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:textAlignment="center"
+                    android:text="@string/text_transparency"
+                    android:textColor="@color/orange_light"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/seek_text_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:layout_below="@+id/rv3" />
+            <View
+                android:id="@+id/rv55"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/seek_text_alpha"
+                android:background="@color/lime_green" />
+
+
+            <RelativeLayout
+                android:id="@+id/rv4"
+                android:layout_width="@dimen/nav_veiw_group_width"
+                android:layout_height="@dimen/nav_veiw_group_height"
+                android:layout_below="@+id/rv55">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/nav_text_height"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/orange_light"
+                    android:text="@string/background_transparency"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <SeekBar
+                android:id="@+id/seek_background_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:layout_below="@+id/rv4" />
+            <View
+                android:id="@+id/rv66"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/seek_background_alpha"
+                android:background="@color/lime_green" />-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rv55"
+            android:layout_below="@+id/rv44"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:id="@+id/ln_launch_text_color"

@@ -3,6 +3,8 @@ package com.and.ibrahim.teleprompter.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.and.ibrahim.teleprompter.R;
+
 import java.util.Set;
 
 
@@ -114,6 +116,16 @@ public class SharedPrefManager {
         editor.commit();
         editor.commit();
     }
+    public int getPrefTransparentTextColor() {
+        return pref.getInt(Contract.TRANSPARENT_TEXT_COLOR, R.color.colorTransparentWhite);
+    }
+
+    public void setPrefTransparentTextColor(int color) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(Contract.TRANSPARENT_TEXT_COLOR, color);
+        editor.commit();
+        editor.commit();
+    }
 
     public int getPrefUndoTextSize() {
         return pref.getInt(Contract.UNDO_TEXT_COLOR, 0);
@@ -144,6 +156,16 @@ public class SharedPrefManager {
     public void setPrefBackgroundColor(int color) {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(Contract.BACKGROUND_COLOR, color);
+        editor.commit();
+        editor.commit();
+    }
+    public int getTransparentPrefBackgroundColor() {
+        return pref.getInt(Contract.TRANSPARENT_BACKGROUND_COLOR, R.color.transparentBlack);
+    }
+
+    public void setTransparentPrefBackgroundColor(int color) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(Contract.TRANSPARENT_BACKGROUND_COLOR, color);
         editor.commit();
         editor.commit();
     }

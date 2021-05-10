@@ -27,40 +27,38 @@
         android:visibility="invisible" />
 
     <LinearLayout
-        android:id="@+id/seekParent"
+        android:id="@+id/cameraActionContents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="center"
         android:orientation="vertical"
-        >
+        android:weightSum="1">
 
         <SeekBar
             android:id="@+id/zoomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:progressBackgroundTint="@color/White"
+            android:progressBackgroundTint="@color/settingsBarColor"
             android:thumb="@drawable/white_circle" />
 
         <LinearLayout
             android:id="@+id/videoFunctions"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_weight="0.90"
             android:background="@color/colorTransparent"
             android:gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"
             android:orientation="horizontal"
-            >
+            android:weightSum="1">
 
             <ImageButton
                 android:id="@+id/substitute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="4dp"
-                android:layout_weight=".4"
+                android:layout_marginStart="5dp"
                 android:background="@color/colorTransparent"
                 android:contentDescription="@string/placeholderContentDescription"
                 android:src="@drawable/placeholder" />
@@ -70,8 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="4dp"
-                android:layout_weight=".1"
+                android:layout_marginStart="15dp"
                 android:background="@color/colorTransparent"
                 android:contentDescription="@string/switchCamera"
                 android:src="@drawable/ic_switch_camera" />
@@ -81,18 +78,29 @@
                 android:layout_width="@dimen/startButtonWidth"
                 android:layout_height="@dimen/startButtonHeight"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight=".6"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_weight="0.08"
                 android:background="@color/colorTransparent"
                 android:contentDescription="@string/recordVideo"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:src="@drawable/camera_record_start" />
 
+            <ImageButton
+                android:id="@+id/photoMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:visibility="invisible"
+                android:background="@color/settingsBarColor"
+                android:contentDescription="@string/photoMode"
+                android:src="@drawable/photo_highlight" />
 
             <FrameLayout
                 android:id="@+id/thumbnailParent"
                 android:layout_width="wrap_content"
-                android:layout_weight=".5"
                 android:layout_height="wrap_content">
 
                 <ImageView

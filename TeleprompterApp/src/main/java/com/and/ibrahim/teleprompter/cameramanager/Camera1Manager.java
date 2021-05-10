@@ -27,6 +27,7 @@ import com.and.ibrahim.teleprompter.mvp.view.CameraView;
 import com.and.ibrahim.teleprompter.mvp.model.Dimension;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
@@ -52,6 +53,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
     int cameraId = -1;
     Camera.Parameters parameters;
     Camera.CameraInfo info = new Camera.CameraInfo();
+   // private PhotoFragment photoFrag;
     private VideoFragment videoFrag;
     String photoPath;
     private static Camera1Manager camera1Manager;
@@ -128,6 +130,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         Log.d(TAG, "SupportedVids = " + supportedVids);
         fetchSupportedVideoSizesForCamera(supportedVids, sharedPreferences, mCamera, cameraId);
     }
+
     private boolean isResolutionPresentInCamcorder(String camResolution){
         Set<String> resolKeys = camcorderVideoRes.keySet();
         return resolKeys.contains(camResolution);
@@ -184,7 +187,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
     }
 
     private static Set<String> supportedVideoResolutions = new HashSet<>();
-   private void fetchSupportedVideoSizesForCamera(Set<String> supportedVids, SharedPreferences sharedPreferences, Camera selectedCam, int camId){
+    private void fetchSupportedVideoSizesForCamera(Set<String> supportedVids, SharedPreferences sharedPreferences, Camera selectedCam, int camId){
         if (supportedVids == null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             List<Camera.Size> videoSizes = selectedCam.getParameters().getSupportedVideoSizes();
@@ -312,6 +315,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         screenWidth = screenSize.x;
         resources = appContext.getResources();
     }
+
     @Override
     public void releaseCamera() {
         mCamera.release();
@@ -349,15 +353,13 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
 
     @Override
     public void setResolution(int width, int height) {
-        setVideoSize();
-        setPreviewSizeForTargetRatio();
-        mCamera.setParameters(parameters);
+
     }
 
     @Override
     public void setAutoExposureAndLock() {
         if(parameters.isAutoExposureLockSupported()) {
-             Log.d(TAG, "setAutoExposureLock false");
+            if(VERBOSE)Log.d(TAG, "setAutoExposureLock false");
             parameters.setAutoExposureLock(false);
             mCamera.setParameters(parameters);
         }
@@ -368,11 +370,11 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         // and targetPhotoRatio for photo.
         double targetRatio;
         if(this.videoFrag != null){
-             Log.d(TAG, "Video Mode");
+            if(VERBOSE)Log.d(TAG, "Video Mode");
             targetRatio = targetVideoRatio;
         }
         else{
-             Log.d(TAG, "Photo Mode");
+            if(VERBOSE)Log.d(TAG, "Photo Mode");
             targetRatio = targetPhotoRatio;
         }
         double arDiff = Double.MAX_VALUE;
@@ -380,14 +382,14 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         Collections.sort(previewSizes, new CameraSizeComparator());
         for (Camera.Size previews : previewSizes) {
             double previewAR = (double) previews.width / (double) previews.height;
-             Log.d(TAG, "PREVIEW res = " + previews.width + " / " + previews.height);
-             Log.d(TAG, "PREVIEWAR = " + previewAR);
+            if(VERBOSE)Log.d(TAG, "PREVIEW res = " + previews.width + " / " + previews.height);
+            if(VERBOSE)Log.d(TAG, "PREVIEWAR = " + previewAR);
             if (Math.abs(previewAR - targetRatio) < arDiff) {
                 arDiff = Math.abs(previewAR - targetRatio);
-                 Log.d(TAG, "arDiff = " + arDiff);
+                if(VERBOSE)Log.d(TAG, "arDiff = " + arDiff);
                 VIDEO_WIDTH = previews.width;
                 VIDEO_HEIGHT = previews.height;
-                 Log.d(TAG, "Video width = " + VIDEO_WIDTH + ", Video height = " + VIDEO_HEIGHT);
+                if(VERBOSE)Log.d(TAG, "Video width = " + VIDEO_WIDTH + ", Video height = " + VIDEO_HEIGHT);
             }
         }
         parameters.setPreviewSize(VIDEO_WIDTH, VIDEO_HEIGHT);
@@ -395,7 +397,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         int scaleWidth = (int)(targetRatio * (double)screenWidth);
         DISPLAY_WIDTH = scaleWidth;
         DISPLAY_HEIGHT = screenWidth;
-         Log.d(TAG, "SCALED Video width = " + DISPLAY_WIDTH + ", Video height = " + DISPLAY_HEIGHT);
+        if(VERBOSE)Log.d(TAG, "SCALED Video width = " + DISPLAY_WIDTH + ", Video height = " + DISPLAY_HEIGHT);
     }
 
     @Override
@@ -444,7 +446,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         }
         catch(RuntimeException runtime){
             //This catch block is necessary to prevent application crashes when user is trying to zoom in/out.
-             Log.d(TAG, "ZOOM EXCEPTION");
+            if(VERBOSE)Log.d(TAG, "ZOOM EXCEPTION");
         }
     }
 
@@ -473,16 +475,16 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
     String previousFocusMode = null;
     @Override
     public void capturePicture() {
-       /* photo = null;
-        //Reset previousFocusMode in case camera is switched. Front camera may not support the same focus mode as rear camera.
+        photo = null;
+       /* //Reset previousFocusMode in case camera is switched. Front camera may not support the same focus mode as rear camera.
         previousFocusMode = null;
-        int zoomedVal = photoFrag.getZoomBar().getProgress();
+        //int zoomedVal = photoFrag.getZoomBar().getProgress();
         if (VERBOSE) Log.d(TAG, "take pic = "+zoomedVal);
         if(!parameters.getFlashMode().equalsIgnoreCase(Camera.Parameters.FLASH_MODE_TORCH)) {
             capture = true;
         }
         Camera.Parameters parameters = mCamera.getParameters();
-        parameters.setZoom(zoomedVal);
+        //parameters.setZoom(zoomedVal);
         mCamera.setParameters(parameters);
         if(zoomedVal > 0) {
             mCamera.takePicture(this, null, null, this);
@@ -492,7 +494,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
             the camera. Once the picture is captured, we reset the focus mode back to Continuous picture, if that was the previous mode.
             *//*
             if(isFocusModeSupported(Camera.Parameters.FOCUS_MODE_AUTO)){
-                 Log.d(TAG, "take Focused picture");
+                if(VERBOSE)Log.d(TAG, "take Focused picture");
                 previousFocusMode = mCamera.getParameters().getFocusMode();
                 takeFocusedPicture();
             }
@@ -508,6 +510,11 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         setAutoFocus(false);
     }
 
+   /* @Override
+    public void setPhotoFragmentInstance(PhotoFragment photoFragment) {
+        this.photoFrag = photoFragment;
+    }
+*/
     @Override
     public void setVideoFragmentInstance(VideoFragment videoFragment) {
         this.videoFrag = videoFragment;
@@ -520,8 +527,8 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
 
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
-        /*if (VERBOSE) Log.d(TAG, "Picture wil be saved at loc = " + photoPath);
-        try {
+        if (VERBOSE) Log.d(TAG, "Picture wil be saved at loc = " + photoPath);
+       /* try {
             picture = new FileOutputStream(photoPath);
             picture.write(data);
             picture.close();
@@ -538,21 +545,21 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (photoFrag.isFlashOn()) {
-                 Log.d(TAG,"Switch off Torch");
+            *//*if (photoFrag.isFlashOn()) {
+                if(VERBOSE)Log.d(TAG,"Switch off Torch");
                 setFlashOnOff(false);
-            }
-            int zoomedVal = photoFrag.getZoomBar().getProgress();
-             Log.d(TAG, "Zoom = "+zoomedVal);
+            }*//*
+            //int zoomedVal = photoFrag.getZoomBar().getProgress();
+           // if(VERBOSE)Log.d(TAG, "Zoom = "+zoomedVal);
             Camera.Parameters parameters = camera.getParameters();
-            parameters.setZoom(zoomedVal);
+            //parameters.setZoom(zoomedVal);
             //Start the preview no matter if photo is saved or not.
             if (VERBOSE) Log.d(TAG, "photo is ready");
-            photoFrag.animatePhotoShrink();
+           // photoFrag.animatePhotoShrink();
             camera.startPreview();
-            photoFrag.hideImagePreview();
-            photoFrag.getZoomBar().setClickable(true);
-            photoFrag.enableButtons();
+           // photoFrag.hideImagePreview();
+           // photoFrag.getZoomBar().setClickable(true);
+           // photoFrag.enableButtons();
             //Reset Focus mode to Continuous AF if applicable
             if(previousFocusMode != null){
                 //Cancel AF point
@@ -560,16 +567,16 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
                 parameters.setFocusMode(previousFocusMode);
                 mCamera.setParameters(parameters);
             }
-            if(zoomedVal > 0){
+           *//* if(zoomedVal > 0){
                 parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            }
-            camera.setParameters(parameters);
-        }*/
+            }*//*
+            camera.setParameters(parameters);*/
+        //}
     }
 
     @Override
     public void setPictureSize() {
-        /*List<Integer> formats = mCamera.getParameters().getSupportedPictureFormats();
+        List<Integer> formats = mCamera.getParameters().getSupportedPictureFormats();
         for (int i = 0; i < formats.size(); i++) {
             if (formats.get(i) == ImageFormat.JPEG) {
                 mCamera.getParameters().setPreviewFormat(formats.get(i));
@@ -585,14 +592,18 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
             photoDimen = sharedPreferences.getString(Contract.SELECT_PHOTO_RESOLUTION_FRONT, null);
         }
         String[] dimensions = photoDimen.split(" X ");
-         Log.d(TAG, "SET PIC SIZE = "+photoDimen);
+        if(VERBOSE)Log.d(TAG, "SET PIC SIZE = "+photoDimen);
         parameters.setPictureSize(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
-        if(this.photoFrag != null){
+     /*   if(this.photoFrag != null){
             this.photoFrag.setPhotoResInfo(dimensions[0], dimensions[1]);
-        }
+        }*/
         mCamera.setParameters(parameters);
         targetPhotoRatio = Double.parseDouble(dimensions[0]) / Double.parseDouble(dimensions[1]);
-         Log.d(TAG, "targetPhotoRatio = "+targetPhotoRatio);*/
+        if(VERBOSE)Log.d(TAG, "targetPhotoRatio = "+targetPhotoRatio);
+    }
+
+    private SharedPreferences obtainSettingsPrefs() {
+        return PreferenceManager.getDefaultSharedPreferences(appContext);
     }
 
     /*
@@ -602,20 +613,13 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
     If the preview size for the second camera is different from the first camera, we are still picking the best possible resolution for preview,
     so that the mediarecorder is still able to record with the same resolution without too much scaling.
     The recording dimensions will not be changed.*/
-    private SharedPreferences obtainSettingsPrefs() {
-        return PreferenceManager.getDefaultSharedPreferences(appContext);
-    }
+
     @Override
     public void setVideoSize() {
-         Log.d(TAG, "cameraView.isRecord() = "+cameraView.isRecord());
         SharedPreferences sharedPreferences = obtainSettingsPrefs();
         if(VERBOSE)Log.d(TAG, "cameraView.isRecord() = "+cameraView.isRecord());
         String selectedRes;
         selectedRes = sharedPreferences.getString(Contract.SELECT_VIDEO_RESOLUTION, null);
-        targetWidth = selectedRes.split(" X ")[0];
-        targetHeight = selectedRes.split(" X ")[1];
-        Log.d(TAG, "targetWidth === " + targetWidth);
-        Log.d(TAG, "targetHeight === " + targetHeight);
         if(selectedRes!=null) {
             targetWidth = selectedRes.split(" X ")[0];
             targetHeight = selectedRes.split(" X ")[1];
@@ -643,7 +647,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
 
     }
 
-    class CameraSizeComparator implements Comparator<Camera.Size> {
+    class CameraSizeComparator implements Comparator<Camera.Size>{
         @Override
         public int compare(Camera.Size size1, Camera.Size size2) {
             if(size1.width < size2.width){
@@ -682,13 +686,13 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         public void onAutoFocus(boolean success, Camera camera) {
             //Take a picture regardless of AF success, otherwise we would need to keep retrying more number of times, which would delay
             //the picture capturing process for the user significantly.
-             Log.d(TAG, "success = "+success);
+            if(VERBOSE)Log.d(TAG, "success = "+success);
             if(!isNoPicture()) {
                 try{
                     mCamera.takePicture(Camera1Manager.getInstance(), null, null, Camera1Manager.getInstance());
                 }
                 catch(RuntimeException runtime){
-                     Log.d(TAG, "TAKE PIC EXCEPTION");
+                    if(VERBOSE)Log.d(TAG, "TAKE PIC EXCEPTION");
                     //Catch block necessary since, after takePicture fires, the image is actually saved, even though exception is thrown.
                 }
             }
@@ -747,7 +751,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
     //Flash On for photo mode
     @Override
     public void setFlashOnOff(boolean flashOn) {
-         Log.d(TAG, "SET FLASH TO "+flashOn);
+        if(VERBOSE)Log.d(TAG, "SET FLASH TO "+flashOn);
         if(!flashOn){
             parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         }
@@ -795,7 +799,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
     @Override
     public void enableShutterSound(boolean enable) {
         if(!enable) {
-             Log.d(TAG, "getCameraInfo().canDisableShutterSound? = "+getCameraInfo().canDisableShutterSound);
+            if(VERBOSE)Log.d(TAG, "getCameraInfo().canDisableShutterSound? = "+getCameraInfo().canDisableShutterSound);
             if (getCameraInfo().canDisableShutterSound) {
                 mCamera.enableShutterSound(enable);
             }
@@ -811,7 +815,7 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
         {
             try {
                 capture = false;
-                 Log.d(TAG, "inside onpreviewframe");
+                if(VERBOSE)Log.d(TAG, "inside onpreviewframe");
                 int previewWidth = camera.getParameters().getPreviewSize().width;
                 int previewHeight = camera.getParameters().getPreviewSize().height;
                 YuvImage yuvImage = new YuvImage(bytes, ImageFormat.NV21, previewWidth, previewHeight, null);
@@ -833,10 +837,10 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
                         rotate.setRotate(270);
                     }
                 }
-                 Log.d(TAG,"Total rotation = "+cameraView.getTotalRotation());
+                if(VERBOSE)Log.d(TAG,"Total rotation = "+cameraView.getTotalRotation());
                 thumb = Bitmap.createBitmap(thumb, 0, 0, previewWidth, previewHeight, rotate, false);
               //  photoFrag.createAndShowPhotoThumbnail(thumb);
-                 Log.d(TAG, "photo thumbnail created");
+                if(VERBOSE)Log.d(TAG, "photo thumbnail created");
             } catch (IOException e) {
                 e.printStackTrace();
             }

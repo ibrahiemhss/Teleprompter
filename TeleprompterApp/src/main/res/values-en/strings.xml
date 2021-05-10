@@ -72,7 +72,8 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="short_title">Title is very short Make it 6 characters at least</string>
     <string name="short_script">Script is very short Make it 100 words at least</string>
     <string name="privacy">Privacy Policy</string>
-
+    <string name="text_transparency">Text transparency</string>
+    <string name="background_transparency">Background transparency</string>
     <string name="list_description">To view the full text content and run the presentation click here</string>
     <string name="marker_description">Mark the ease of reading line selection</string>
     <string name="play_description">Click here to turn text scrolling on or off</string>
@@ -336,7 +337,6 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="sendFeedbackTitleMsg">Feedback...</string>
     <string name="mediaSlideview">Slide View</string>
     <string name="brightnessHeading">BRIGHTNESS</string>
-    <string name="resolutionDisplay">%1$s X %2$s</string>
     <string name="resolution">Resolution</string>
     <string name="backCamResTitle">Back Camera Resolution</string>
     <string name="frontCamResTitle">Front Camera Resolution</string>
