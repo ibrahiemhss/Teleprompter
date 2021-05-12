@@ -829,13 +829,15 @@ public class Camera1Manager implements CameraOperations, Camera.OnZoomChangeList
                     rotate.setRotate(cameraView.getTotalRotation());
                 }
                 else {
-                    //Portrait
+                    //TODO==========================================================================
+                    rotate.setRotate(90);
+                  /*  //Portrait
                     if(cameraView.isBackCamera()) {
                         rotate.setRotate(90);
                     }
                     else{
                         rotate.setRotate(270);
-                    }
+                    }*/
                 }
                 if(VERBOSE)Log.d(TAG,"Total rotation = "+cameraView.getTotalRotation());
                 thumb = Bitmap.createBitmap(thumb, 0, 0, previewWidth, previewHeight, rotate, false);

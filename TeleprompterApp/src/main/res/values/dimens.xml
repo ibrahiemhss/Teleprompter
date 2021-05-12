@@ -17,11 +17,11 @@
     //Video fragment bar
     <dimen name="switchBtnLeftMargin">10dp</dimen>
     //Stop button
-    <dimen name="stopButtonHeight">80dp</dimen>
-    <dimen name="stopButtonWidth">72dp</dimen>
+    <dimen name="stopButtonHeight">32dp</dimen>
+    <dimen name="stopButtonWidth">32dp</dimen>
     //Start button
-    <dimen name="startButtonHeight">80dp</dimen>
-    <dimen name="startButtonWidth">72dp</dimen>
+    <dimen name="startButtonHeight">32dp</dimen>
+    <dimen name="startButtonWidth">32dp</dimen>
     //Pause button
     <dimen name="pauseButtonHeight">24dp</dimen>
     <dimen name="pauseButtonWidth">24dp</dimen>

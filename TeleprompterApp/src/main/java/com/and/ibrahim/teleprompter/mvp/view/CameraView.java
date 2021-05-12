@@ -13,6 +13,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
@@ -177,7 +180,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
 
     public boolean isCamera2Supported(Context context){
         //Camera 2 API support deferred.
-        /*boolean supported = false;
+        Log.d(TAG, "======================== Camera2Supported ======================== ");
+
+        boolean supported = false;
         CameraManager cameraManager = (CameraManager)context.getSystemService(Context.CAMERA_SERVICE);
         try {
             CameraCharacteristics cameraCharacteristics=null;
@@ -201,7 +206,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
-        }*/
+        }
         return false;
     }
 
@@ -826,9 +831,11 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
                     //Portrait
                     rotationAngle = 0f;
                     imageRotationAngle = 90f;
-                    if(!backCamera){
+
+                    //TODO==========================================================================
+                   /* if(!backCamera){
                         imageRotationAngle = 270f;
-                    }
+                    }*/
                 }
                 portrait = true;
             } else {
@@ -856,12 +863,14 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
         }
         if(!isCamera2()) {
             orientation = (orientation + 45) / 90 * 90;
+            //TODO==========================================================================
+            totalRotation = (camera1.getCameraInfo().orientation + orientation) % 360;
 
-            if (!backCamera) {
+          /*  if (!backCamera) {
                 totalRotation = (camera1.getCameraInfo().orientation - orientation + 360) % 360;
             } else {  // back-facing camera
                 totalRotation = (camera1.getCameraInfo().orientation + orientation) % 360;
-            }
+            }*/
 //            if(VERBOSE)Log.d(TAG,"Rotation in CAMVIEW = "+totalRotation);
             Log.d("RotateV", "setRotation = 2" + totalRotation);
 
@@ -891,16 +900,20 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, S
         }
         int degree;
         if(VERBOSE)Log.d(TAG, "backCamera = "+backCamera);
+        //TODO==========================================================================
+
         if(backCamera) {
             degree = 180;
         }
         else{
-            degree = 0;
+            degree = 180;
         }
         if(!isCamera2()) {
             if (VERBOSE) Log.d(TAG, "Orientation == " + camera1.getCameraInfo().orientation);
             int orien = camera1.getCameraInfo().orientation;
-            if(orien == 270 && backCamera){
+            //TODO==========================================================================
+            //if(orien == 270 && backCamera){
+            if(orien == 270){
                 //Fix for Xiaomi Redmi where the camera orientation is upside down for back camera, when the user starts the application for the first time.
                 orien = 90;
             }

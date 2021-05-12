@@ -171,6 +171,7 @@
             android:layout_below="@+id/seek_background_alpha"
             android:background="@color/lime_green" />-->
         <LinearLayout
+            android:id="@+id/line4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rv44"

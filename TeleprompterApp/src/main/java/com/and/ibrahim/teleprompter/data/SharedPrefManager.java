@@ -42,7 +42,16 @@ public class SharedPrefManager {
         editor.commit();
     }
 
+    public boolean isFirstSetPermission() {
+        return pref.getBoolean(Contract.FIRST_SET_PERMISSION_PREF, false);
+    }
 
+    public void setFirstSetPermission(boolean is) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Contract.FIRST_SET_PERMISSION_PREF, is);
+        editor.commit();
+        editor.commit();
+    }
 
     public boolean isCameraPermission() {
         return pref.getBoolean(Contract.CAMERA_PERMISSION_PREF, false);

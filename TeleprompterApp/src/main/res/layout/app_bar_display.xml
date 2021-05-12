@@ -75,13 +75,15 @@
             <include
                 layout="@layout/camera_layout"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?android:attr/actionBarSize"
                 android:elevation="2dp"
                 android:duplicateParentState="true"
                 android:layout_width="match_parent" />
         </FrameLayout>
 
 
+<!--
+    android:layout_marginTop="?android:attr/actionBarSize"
+-->
 
         <RelativeLayout
             android:id="@+id/container_script"

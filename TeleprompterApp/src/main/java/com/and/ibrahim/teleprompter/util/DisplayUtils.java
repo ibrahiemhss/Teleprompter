@@ -119,7 +119,7 @@ public class DisplayUtils {
     @SuppressLint("UseCompatLoadingForDrawables")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void clickToScrolling() {
-        if(!isCameraEnable){
+        //if(!isCameraEnable){
             mSlideShowScroll.getChildAt(0).setOnClickListener(v -> {
 
                 if (paused) {
@@ -164,7 +164,7 @@ public class DisplayUtils {
 
 
             });
-        }
+       // }
 
     }
     public void stopAutoScrolling() {
@@ -215,10 +215,10 @@ public class DisplayUtils {
     public void startPlayStatus() {
         Log.d(TAG, " isFullScreenAdShown ="+ SharedPrefManager.getInstance(mContext).isFullScreenAdShown());
 
-        if(SharedPrefManager.getInstance(mContext).isCameraEnabled()){
+      /* if(SharedPrefManager.getInstance(mContext).isCameraEnabled()){
             mPlayStatus.postDelayed(() -> mPlayStatus.setVisibility(View.INVISIBLE), 800);
 
-        }else{
+        }else{*/
             if(!SharedPrefManager.getInstance(mContext).isFullScreenAdShown()){
                 SharedPrefManager.getInstance(mContext).setFullScreenAdShown(true);
                 mAdUtils.showAdd(INTERSTITAI_ADS);
@@ -228,7 +228,7 @@ public class DisplayUtils {
             }
             mPlayStatus.postDelayed(() -> mPlayStatus.setVisibility(View.INVISIBLE), 800);
 
-        }
+      //  }
 
     }
 
@@ -257,11 +257,22 @@ public class DisplayUtils {
             stopAutoScrolling();
 
         } else {
-            mScrollPos = (int) (mSlideShowScroll.getScrollY() + 1.0);
+            if(isCameraEnable){
+                mSlideShowScroll.setScrollY(600);
+            }
+
+                mScrollPos = (int) (mSlideShowScroll.getScrollY() + 1.0);
+
+
             if (mScrollPos >= verticalScrollMax) {
                 mScrollPos = 0;
             }
+
+                Log.d(TAG, "moveScrollView to 1 ============ : "+String.valueOf(mScrollPos));
+
+
             mSlideShowScroll.scrollTo(0, mScrollPos);
+
         }
 
     }

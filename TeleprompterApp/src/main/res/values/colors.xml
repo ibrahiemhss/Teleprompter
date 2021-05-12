@@ -8,6 +8,8 @@
     <color name="colorAccentDark">#F44710</color>
     <color name="colorTransparentBlack">#73000000</color>
     <color name="colorTransparentWhite">#37FFFFFF</color>
+    <color name="colorTransparentBackTextBlack">#19000000</color>
+    <color name="colorTransparentTextBlack">#CDFFFFFF</color>
 
     <color name="colorTransparent">#00ffffff</color>
     <color name="lime_green">#25d366</color>
