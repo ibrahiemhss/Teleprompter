@@ -135,7 +135,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // Loading Txt
                 if(loadingTxt.getText().length() > 10) {
-                    loadingTxt.setText("Loading ");
+                    loadingTxt.setText(getResources().getString(R.string.loading));
                 } else {
                     loadingTxt.setText(loadingTxt.getText()+".");
                 }

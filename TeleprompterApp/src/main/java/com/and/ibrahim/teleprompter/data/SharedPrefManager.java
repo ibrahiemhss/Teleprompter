@@ -7,13 +7,6 @@ import com.and.ibrahim.teleprompter.R;
 
 import java.util.Set;
 
-
-/**
- * Created by ibrahim on 30/12/17.
- * SharedPrefManager will save the value of selected sort of show that will base in query url
- *
- * @see <a href="https://github.com/ibrahiemhss/Mashaweer-master/blob/master/app/src/main/java/com/mashaweer/ibrahim/mashaweer/data/SharedPrefManager.java"">https://github.com</a>
- */
 public class SharedPrefManager {
     private static final String SHARED_NAME = "save_contents";
 

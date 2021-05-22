@@ -81,7 +81,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="f_storage_description">لأضافة نص من ذاكره الجهاز الداخليه</string>
     <string name="f_drive_description">لإضافة نص من ملفات Google Drive من حسابك الخاص في Google Drive</string>
     <string name="f_parent_description">انقر هنا اظهار خيارات الادخال المختلفه</string>
-    <string name="loading">تحميل ...</string>
+    <string name="loading">تحميل</string>
 
     <string name="no_permission_title">لا يوجد إذن</string>
     <string name="unavailable_permissions_message">سيؤدي عدم توفر الأذونات إلى جعل Teleprompter لا يعمل بشكل صحيح.</string>

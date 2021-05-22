@@ -8,7 +8,6 @@
         <item name="LightBlue">@color/LightBlue</item>
         <item name="Blue">@color/Blue</item>
         <item name="Snow">@color/Snow</item>
-        <item name="LightBlue">@color/LightBlue</item>
     </array>
 
     <array name="text_colors">
@@ -19,7 +18,6 @@
         <item name="Blue">@color/Blue</item>
         <item name="LightBlue">@color/LightBlue</item>
         <item name="Black">@color/Black</item>
-        <item name="Blue">@color/Blue</item>
     </array>
 
     <array name="transparent_background_colors">

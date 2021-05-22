@@ -80,7 +80,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="f_storage_description">आंतरिक मेमोरी डिवाइस से टेक्स्ट जोड़ने के लिए</string>
     <string name="f_drive_description">अपनी Google ड्राइव फ़ाइलों से अपने Google ड्राइव खाते में टेक्स्ट जोड़ें</string>
     <string name="f_parent_description">विभिन्न इनपुट विकल्प दिखाने के लिए यहां क्लिक करें</string>
-    <string name="loading">लोड हो रहा है ...</string>
+    <string name="loading">लोड हो रहा है</string>
 
 
     <!--

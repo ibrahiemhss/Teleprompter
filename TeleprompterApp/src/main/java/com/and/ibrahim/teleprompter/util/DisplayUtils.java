@@ -143,16 +143,11 @@ public class DisplayUtils {
 
 
                 } else {
-                    if(SharedPrefManager.getInstance(mContext).isCameraEnabled()){
-                        mPlayStatus.setVisibility(View.INVISIBLE);
+                    mPlayStatus.setVisibility(View.VISIBLE);
+                    mPlayStatus.setBackground(mContext.getDrawable(R.drawable.ic_pause_circle_filled));
 
-                    }else{
-                        mPlayStatus.setVisibility(View.VISIBLE);
-                        mPlayStatus.setBackground(mContext.getDrawable(R.drawable.ic_pause_circle_filled));
-
-                        mPlayStatus.setBackground(mContext.getDrawable(R.drawable.ic_play_circle_filled));
-                        paused = true;
-                    }
+                    mPlayStatus.setBackground(mContext.getDrawable(R.drawable.ic_play_circle_filled));
+                    paused = true;
 
                     stopAutoScrolling();
 
@@ -257,9 +252,9 @@ public class DisplayUtils {
             stopAutoScrolling();
 
         } else {
-            if(isCameraEnable){
+           /* if(isCameraEnable){
                 mSlideShowScroll.setScrollY(600);
-            }
+            }*/
 
                 mScrollPos = (int) (mSlideShowScroll.getScrollY() + 1.0);
 

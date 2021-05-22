@@ -79,6 +79,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.and.ibrahim.teleprompter.R;
@@ -480,25 +481,34 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
             mBackgroundColor = getResources().getColor(R.color.colorTransparentBackTextBlack);
             mTextColor = getResources().getColor(R.color.colorTransparentTextBlack);
             Log.d(TAG, "onColorSet  isColorSet  isCameraEnable");
-
+            verticalOuterLayout.setBackgroundColor(mBackgroundColor);
+            mScrollText.setText(mScrollString);
         } else if (!isColorSet) {//setting default colors of scrolling text in first opening of app
             Log.d(TAG, "onColorSet isColorSet");
 
             mTextColor = getResources().getColor(R.color.White);
             mBackgroundColor = getResources().getColor(R.color.Black);
+            mScrollText.setText(mScrollString);
+
         } else {//get recorded value of colors from SharedPrefManager class
             Log.d(TAG, "onColorSet not isColorSet");
             Log.d(TAG, "onColorSet not isColorSet not isCameraEnable");
             mTextColor = SharedPrefManager.getInstance(this).getPrefTextColor();
             mBackgroundColor = SharedPrefManager.getInstance(this).getPrefBackgroundColor();
-
+            mSlideShowScroll.setBackgroundColor(mBackgroundColor);
 
         }
 
-        mScrollText.setTextColor(mTextColor);
+
+
+       // parentAll.setBackgroundColor(mBackgroundColor);
+       // containerScript.setBackgroundColor(mBackgroundColor);
+       // mSlideShowScroll.setBackgroundColor(mBackgroundColor);
+      //  parentScriptView.setBackgroundColor(mBackgroundColor);
+        Log.d(TAG, "onColorSet");
         verticalOuterLayout.setBackgroundColor(mBackgroundColor);
         mScrollText.setText(mScrollString);
-        Log.d(TAG, "onColorSet");
+        mScrollText.setTextColor(mTextColor);
 
     }
 
@@ -620,13 +630,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         }
         final int[] position = savedInstanceState.getIntArray(Contract.EXTRA_SCROLL_POSITION);
         if (position != null)
-            if(isCameraEnable){
-                mSlideShowScroll.post(() -> mSlideShowScroll.scrollTo(position[0], position[10]));
 
-            }else{
                 mSlideShowScroll.post(() -> mSlideShowScroll.scrollTo(position[0], position[1]));
 
-            }
+
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -679,11 +686,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         checkboxOpenCamera.setText(SharedPrefManager.getInstance(this).isCameraEnabled() ? getResources().getString(R.string.close_camera) : getResources().getString(R.string.open_camera));
         checkboxOpenCamera.setOnCheckedChangeListener((buttonView, isChecked) -> {
             permissionsUtils.getPermissionsStatus();
-
+            setViewsColors(isChecked);
             if (isChecked) {
                 Log.d(TAG, "on Checked permissions values changed == " + allPermissionsGranted);
                 videoSettingsContainer.setVisibility(View.VISIBLE);
-                colorsContainer.setVisibility(View.INVISIBLE);
+                colorsContainer.setVisibility(View.GONE);
 
                 if (!SharedPrefManager.getInstance(this).isFirstSetPermission()){
                     SharedPrefManager.getInstance(this).setFirstSetPermission(true);
@@ -696,6 +703,9 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                         mCameraUtils.showVideoFragment();
                         checkboxOpenCamera.setText(getResources().getString(R.string.close_camera));
                         mCameraContent.setVisibility(View.VISIBLE);
+                        setVerticalOuterLayoutParams(rotationAngle, isChecked);
+                        setCameraShow(true);
+
                     }
 
                 }
@@ -706,10 +716,11 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 mCameraContent.setVisibility(View.GONE);
                 videoSettingsContainer.setVisibility(View.GONE);
                 colorsContainer.setVisibility(View.VISIBLE);
+                setVerticalOuterLayoutParams(rotationAngle, isChecked);
+                setCameraShow(false);
 
             }
-            setCameraShow(isChecked);
-            setVerticalOuterLayoutParams(rotationAngle, isChecked);
+
         });
         videoSettings.setOnClickListener(v -> goToSettings());
         // videoSettings.setOnClickListener(v -> showSettingVideoDialogFragment());
@@ -984,8 +995,10 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
                 mScrollText.setTextColor(mTextColorArray[position]);
                 SharedPrefManager.getInstance(DisplayActivity.this).setPrefTextColor(mTextColorArray[position]);
-                mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
-                SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
+                verticalOuterLayout.setBackgroundColor(mBackGroundColorArray[position]);
+            mSlideShowScroll.setBackgroundColor(mBackGroundColorArray[position]);
+
+            SharedPrefManager.getInstance(DisplayActivity.this).setPrefBackgroundColor(mBackGroundColorArray[position]);
 
 
             SharedPrefManager.getInstance(DisplayActivity.this).setColorPref(true);
@@ -1365,7 +1378,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
 
 
             FrameLayout.LayoutParams verticalOuterLayoutParams = (new FrameLayout.LayoutParams(width / 2, WindowManager.LayoutParams.MATCH_PARENT));
-            verticalOuterLayoutParams.setMargins(width / 50, 0, width / 50, 0);
+            verticalOuterLayoutParams.setMargins(width / 50, 0, width / 50, (int) (height/2.5));
 
             verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
             //params.setMarginStart(width/2);
@@ -1497,9 +1510,7 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         Log.d(TAG, "on permissions values changed == " + allPermissionsGranted);
 
         setCameraShow(status);
-        if (!status) {
-            permissionsUtils.quitAppCam();
-        }
+
     }
 
 
@@ -1542,10 +1553,12 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
         FrameLayout.LayoutParams slideShowScrollLayoutParams;
         // RelativeLayout.LayoutParams upViewLayoutParams;
         // RelativeLayout.LayoutParams downViewLayoutParams;
+        CoordinatorLayout.LayoutParams parentScriptViewLayoutParams;
+        TableRow.LayoutParams scrollTextParams ;
 
         if (!isTablet) {
             if (isCameraEnabled) {
-                mPlayStatus.setVisibility(View.INVISIBLE);
+               // mPlayStatus.setVisibility(View.INVISIBLE);
                 mDownView.setVisibility(View.INVISIBLE);
                 mToggleMarker.setVisibility(View.INVISIBLE);
                 mUpView.setVisibility(View.INVISIBLE);
@@ -1554,43 +1567,39 @@ public class DisplayActivity extends BaseActivity implements View.OnClickListene
                 // You can add your random color generator here
                 // and set color
 
+                slideShowScrollLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, (int) (height / 2.3));
+               // parentScriptViewLayoutParams =  new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, (int) (height / 1.5));
 
-                slideShowScrollLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
-                //containerScriptLayoutParams = new CoordinatorLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
-               // verticalOuterLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                slideShowScrollLayoutParams.setMargins(0, height / 10, 0, height / 10);
+                scrollTextParams = new TableRow.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT,1.0f);
+                scrollTextParams.setMargins(0, 0, 0, (int) (height / 2.3));
 
-                slideShowScrollLayoutParams.setMargins(width / 30, height / 10, width / 30, (int) (height / 2.4));
-                // containerScriptLayoutParams.setMargins(0, 0, 0, height / 2);
-               //  verticalOuterLayoutParams.setMargins(0, 0, 0, (int) (height/1.2));
-
-               // verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
+                // verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
+               // parentScriptView.setLayoutParams(parentScriptViewLayoutParams);
                 mSlideShowScroll.setLayoutParams(slideShowScrollLayoutParams);
-                mSlideShowScroll.setBackgroundResource(R.drawable.tags_rounded_corners);
-                GradientDrawable drawable = (GradientDrawable) mSlideShowScroll.getBackground();
-                drawable.setColor(getResources().getColor(R.color.colorTransparent));
+                mScrollText.setLayoutParams(scrollTextParams);
                 verticalOuterLayout.removeView(mScrollText);
                 verticalOuterLayout.setBackgroundColor(getResources().getColor(R.color.colorTransparentBackTextBlack));
                 verticalOuterLayout.addView(mScrollText);
-               // containerScript.setLayoutParams(containerScriptLayoutParams);
             } else {
-                verticalOuterLayoutParams = new FrameLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                slideShowScrollLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
-                containerScriptLayoutParams = new CoordinatorLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT);
-
+                parentScriptViewLayoutParams =  new CoordinatorLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+                verticalOuterLayoutParams = new FrameLayout.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT);
+                slideShowScrollLayoutParams = new FrameLayout.LayoutParams(width, height);
+                containerScriptLayoutParams = new CoordinatorLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, CoordinatorLayout.LayoutParams.MATCH_PARENT);
                 slideShowScrollLayoutParams.setMargins(0, 0, 0, 0);
                 containerScriptLayoutParams.setMargins(0, 0, 0, 0);
-
-                //verticalOuterLayoutParams.setMargins(0, 0, 0, 0);
-
+                verticalOuterLayoutParams.setMargins(0, 0, 0, 0);
+                parentScriptViewLayoutParams.setMargins(0, 0, 0, 0);
+                parentScriptView.setLayoutParams(parentScriptViewLayoutParams);
                 mSlideShowScroll.setLayoutParams(slideShowScrollLayoutParams);
                 verticalOuterLayout.setLayoutParams(verticalOuterLayoutParams);
                 containerScript.setLayoutParams(containerScriptLayoutParams);
 
 
             }
+            setViewsColors(isCameraEnabled);
 
         }
-        setViewsColors(isCameraEnabled);
     }
 
 

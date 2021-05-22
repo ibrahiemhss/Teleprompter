@@ -88,7 +88,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
     //ImageView substitute;
     ImageView thumbnail;
     //ImageButton settings;
-    LinearLayout cameraActionContents;
+   // LinearLayout cameraActionContents;
     LinearLayout videoBar;
     LinearLayout settingsBar;
     TextView timeElapsed;
@@ -316,7 +316,7 @@ public class VideoFragment extends Fragment implements OnBrightnessChange {
         });
         startRecord = (ImageButton)view.findViewById(R.id.cameraRecord);
         videoBar = (LinearLayout)view.findViewById(R.id.videoFunctions);
-        cameraActionContents= (LinearLayout)view.findViewById(R.id.cameraActionContents);
+       // cameraActionContents= (LinearLayout)view.findViewById(R.id.cameraActionContents);
         startRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

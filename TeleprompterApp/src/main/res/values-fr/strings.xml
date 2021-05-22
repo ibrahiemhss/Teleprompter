@@ -78,7 +78,7 @@ In semper maximus purus, id sollicitudin ligula molestie vel. Nunc rutrum purus 
     <string name="f_storage_description">Pour ajouter du texte à partir du périphérique de mémoire interne</string>
     <string name="f_drive_description">Ajoutez du texte à partir de vos fichiers Google Drive à partir de votre propre compte Google Drive</string>
     <string name="f_parent_description">Cliquez ici pour afficher différentes options de saisie</string>
-    <string name="loading">Chargement ...</string>
+    <string name="loading">Chargement</string>
 
 
     <!--

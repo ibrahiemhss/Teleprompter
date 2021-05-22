@@ -112,7 +112,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="previewDensity" value="XXHIGH" />
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="128c7e" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -276,11 +277,6 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
-                                    </map>
-                                  </option>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="previewDensity" value="XXHIGH" />
                                     </map>
                                   </option>
                                 </PersistentState>
